@@ -6,45 +6,36 @@ function [r,f] = GetReward( x,maxDistance, time, Vth, ro_max )
 
 Pr = x(1);
 Pb = x(2); 
-Vb = x(3); 
-Vr = x(4); 
+Vb = x(3);
+Vr = x(4);
 ro = x(5);
-%dV = Vb-Vr;
 dV = x(6);
+gama  = x(7);
+fi = x(8);
 
-Vavg = Pr/time;
-maxTime = maxDistance/Vth;
 Vx_max=100;
-
 f=false;
 
-if ro>ro_max 
-    r=-1;
+xb = abs(ro*cosd(gama));
+yb = abs(ro*sind(gama));
+yfi = abs(ro*sind(fi));
+
+if xb>ro_max || yb>ro_max/4 || yfi>ro_max/4
+    r=-2;
 elseif Vr > Vth
     r=1;
 else 
     r=-1;
 end
 
-% if ro > ro_max
-%     r = -(ro - ro_max) - (2*Vx_max - Vr);
-% else
-%     r = Vr;
+
+% if ro>ro_max 
+%     r=-2;
+% elseif Vr > Vth
+%     r=1;
+% else 
+%     r=-1;
 % end
-
-%if ro > ro_max
-%    r = -2;
-%else
-%    r = -(Vx_max-Vr)/Vx_max;
-%end
-
-%r = -(Vx_max-Vr);
-
-
-% SI se usan dos estados: pho,dV, funciona mejor la recompensa -1,1,-2
-% SI se usa un solo estado: pho, funciona mejor la recompensa -2,1,-1
-
-%r = -ro/Vr;
 
 
 if Pr > maxDistance

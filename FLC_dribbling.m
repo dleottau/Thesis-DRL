@@ -28,3 +28,5 @@ g4= gauss_bell(gama, g14m, g14d);
 k1= (0.6*f1*g1 + 0*f2*g1 + 0*f3*g1 + 0.9*f1*g2 + 0.9*f2*g2 + 0*f3*g2 + 0*f1*g3 + 0.9*f2*g3 + 0.9*f3*g3 + 0*f1*g4 +0*f2*g4 + 0.6*f3*g4)/(f1*g1 + f2*g1 + f3*g1 + f1*g2 + f2*g2 + f3*g2 + f1*g3 + f2*g3 + f3*g3 + f1*g4 +f2*g4 + f3*g4);
 Vx=k1*ro;
 Vx=sat(Vx,Voffset,Vx_max);% 
+
+

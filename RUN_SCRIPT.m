@@ -2,8 +2,8 @@ clear all
 episodes = 100;   % maximum number of  episode
 maxDistance = 6000;    % maximum ball distance permited before to end the episode X FIELD DIMENSION
 ro_max = 500;      % maximum pho desired
-Runs = 10;
-NOISE = 1.0;
+Runs = 5;
+NOISE = 0.5;
 tic
 DRAWS = 1;
 a_spot={'r' 'g' 'b' 'c' 'm' 'y' 'k' '--r' '--g' '--b' '--c' };
@@ -23,7 +23,6 @@ for i=1:Runs
 %    disp(['Test= ', num2str(a), '.', num2str(i), ' lambda= ', num2str(lambda(a))])
     [reward(:,i) fitness(:,i) Vavg(:,i) tp_faults(:,i) Q] = Dribbling2d( DRAWS, episodes,maxDistance,ro_max,NOISE);
      
-    
     mf(i) = mean(fitness(floor(0.9*episodes):episodes,i));
     if mf(i) < mf_min
         mf_min=mf(i);
