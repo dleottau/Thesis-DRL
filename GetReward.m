@@ -1,8 +1,10 @@
-function [r,f] = GetReward( x,maxDistance, time, Vth, ro_max )
+function [r,f] = GetReward( x,maxDistance, time, Vth, th_max, Vr_max )
 % Dribbling1d returns the reward at the current state
 % x: a vector of Pr Pb and Pt
 % r: the returned reward.
 % f: true if the ball is far, otherwise f is false
+
+Vxrmax=Vr_max(1);
 
 Pr = x(1);
 Pb = x(2); 
@@ -13,20 +15,33 @@ dV = x(6);
 gama  = x(7);
 fi = x(8);
 
-Vx_max=100;
 f=false;
 
 xb = abs(ro*cosd(gama));
 yb = abs(ro*sind(gama));
 yfi = abs(ro*sind(fi));
 
-if xb>ro_max || yb>ro_max/4 || yfi>ro_max/4
-    r=-2;
-elseif Vr > Vth
-    r=1;
-else 
+
+if ro>th_max(1) || abs(gama)>th_max(2) || abs(fi)>th_max(3) || Vr < 0.9*Vxrmax
     r=-1;
+else
+    r=1;
 end
+
+% if ro>th_max(1) || abs(gama)>th_max(2) || abs(fi)>th_max(3) || Vr < 0.9*Vxrmax
+%     r=-1;
+% else
+%     r=1;
+% end
+
+
+% if ro>th_max(1) || abs(gama)>th_max(2) || abs(fi)>th_max(3)
+%     r=-2;
+% elseif Vr > Vth
+%     r=1;
+% else 
+%     r=-1;
+% end
 
 
 % if ro>ro_max 

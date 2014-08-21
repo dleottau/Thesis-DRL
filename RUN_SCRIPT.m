@@ -1,9 +1,11 @@
 clear all
-episodes = 100;   % maximum number of  episode
+clc
+close all
+episodes = 150;   % maximum number of  episode
 maxDistance = 6000;    % maximum ball distance permited before to end the episode X FIELD DIMENSION
-ro_max = 500;      % maximum pho desired
+th_max = [500 15 15];      % maximum pho desired
 Runs = 5;
-NOISE = 0.5;
+NOISE = 0.99;
 tic
 DRAWS = 1;
 a_spot={'r' 'g' 'b' 'c' 'm' 'y' 'k' '--r' '--g' '--b' '--c' };
@@ -18,12 +20,14 @@ mf_max=-Inf;
 cr_min=Inf;
 v_min=Inf;
 pf_max=-Inf;
+interval=0.9;
+
 
 for i=1:Runs
 %    disp(['Test= ', num2str(a), '.', num2str(i), ' lambda= ', num2str(lambda(a))])
-    [reward(:,i) fitness(:,i) Vavg(:,i) tp_faults(:,i) Q] = Dribbling2d( DRAWS, episodes,maxDistance,ro_max,NOISE);
+    [reward(:,i), fitness(:,i), Vavg(:,i), tp_faults(:,i), Q] = Dribbling2d( DRAWS, episodes,maxDistance,th_max,NOISE);
      
-    mf(i) = mean(fitness(floor(0.9*episodes):episodes,i));
+    mf(i) = mean(fitness(floor(interval*episodes):episodes,i));
     if mf(i) < mf_min
         mf_min=mf(i);
         Qok=Q;
@@ -32,7 +36,7 @@ for i=1:Runs
         mf_max=mf(i);
     end
        
-    vm(i) = mean(Vavg(floor(0.9*episodes):episodes,i));
+    vm(i) = mean(Vavg(floor(interval*episodes):episodes,i));
     if vm(i) > v_max
         v_max=vm(i);
     end
@@ -40,7 +44,7 @@ for i=1:Runs
         v_min=vm(i);
     end
         
-    pf(i) = mean(tp_faults(floor(0.9*episodes):episodes,i));
+    pf(i) = mean(tp_faults(floor(interval*episodes):episodes,i));
     if pf(i) < pf_min
         pf_min=pf(i);
     end
@@ -48,7 +52,7 @@ for i=1:Runs
         pf_max=pf(i);
     end
     
-    cr(i) = mean(reward(floor(0.9*episodes):episodes,i));
+    cr(i) = mean(reward(floor(interval*episodes):episodes,i));
     if cr(i) > cr_max
         cr_max=cr(i);
         mf_xxx=mf(i);
@@ -86,10 +90,27 @@ save Qok;
 save results;
 
 if DRAWS==1
-
-    figure,plot(mean(reward,2))
-    figure,plot(mean(fitness,2))
-    figure,plot(mean(Vavg,2))
+    subplot(2,2,1)
+    plot(mean(reward,2))
+    title('Mean Reward')
+             
+    subplot(2,2,2)
+    plot(mean(Vavg,2))
+    title('Mean Vavg')
+        
+    subplot(2,2,3)
+    plot(mean(tp_faults,2))
+    title('Mean %TimeFaults')
+    
+    subplot(2,2,4)
+    plot(mean(fitness,2))
+    title('Mean Fitness')
+    drawnow
+    
+%     figure,plot(mean(reward,2))
+%     figure,plot(mean(fitness,2))
+%     figure,plot(mean(Vavg,2))
+%     figure,plot(mean(tp_faults,2))
 end
 
 toc

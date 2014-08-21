@@ -2,12 +2,11 @@ function [ States ] = StateTable
 %BuildStateList builds a state list from a state matrix
 
 ro=0:50:600;
-% gama=[-60 -15 0 15 60];
-% fi=[-60 -15 0 15 60];
 
-gama=[-45 -10 0 10 45];
-fi=[-60 -15 0 15 60];
-
+%gama=[-45 -10 0 10 45];
+%fi=[-60 -15 0 15 60];
+gama=-20:10:20;
+fi= -20:10:20;
 
 %dV=[-50 -25 0 50 100 200];  %OK con esta converge en 200 s y Vavg 70
 %Vr=[20 40 60 80 100];
