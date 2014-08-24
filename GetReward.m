@@ -22,7 +22,7 @@ yb = abs(ro*sind(gama));
 yfi = abs(ro*sind(fi));
 
 
-if ro>th_max(1) || abs(gama)>th_max(2) || abs(fi)>th_max(3) || Vr < 0.9*Vxrmax
+if ro>th_max(1) || abs(gama)>th_max(2) || abs(fi)>th_max(3) || Vr < 0.81*Vxrmax
     r=-1;
 else
     r=1;

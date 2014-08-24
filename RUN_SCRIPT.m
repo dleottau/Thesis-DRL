@@ -1,11 +1,12 @@
-clear all
-clc
+%clear all
+%clc
 close all
-episodes = 150;   % maximum number of  episode
+
+episodes = 100;   % maximum number of  episode
 maxDistance = 6000;    % maximum ball distance permited before to end the episode X FIELD DIMENSION
 th_max = [500 15 15];      % maximum pho desired
-Runs = 5;
-NOISE = 0.99;
+Runs = 10;
+NOISE = 0.5;
 tic
 DRAWS = 1;
 a_spot={'r' 'g' 'b' 'c' 'm' 'y' 'k' '--r' '--g' '--b' '--c' };
@@ -20,13 +21,13 @@ mf_max=-Inf;
 cr_min=Inf;
 v_min=Inf;
 pf_max=-Inf;
-interval=0.9;
+interval=0.7;
 
 
 for i=1:Runs
 %    disp(['Test= ', num2str(a), '.', num2str(i), ' lambda= ', num2str(lambda(a))])
     [reward(:,i), fitness(:,i), Vavg(:,i), tp_faults(:,i), Q] = Dribbling2d( DRAWS, episodes,maxDistance,th_max,NOISE);
-     
+                              
     mf(i) = mean(fitness(floor(interval*episodes):episodes,i));
     if mf(i) < mf_min
         mf_min=mf(i);
@@ -69,9 +70,9 @@ results(3,1)=v_min;
 results(1,1)=mean(vm);
 results(2,1)=v_max;
 
-results(2,2)=mf_min;
+results(3,2)=mf_min;
 results(1,2)=mean(mf);
-results(3,2)=mf_max;
+results(2,2)=mf_max;
 
 results(2,3)=pf_min;
 results(1,3)=mean(pf);
@@ -90,6 +91,7 @@ save Qok;
 save results;
 
 if DRAWS==1
+    figure
     subplot(2,2,1)
     plot(mean(reward,2))
     title('Mean Reward')
