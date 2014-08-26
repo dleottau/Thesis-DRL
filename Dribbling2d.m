@@ -1,19 +1,17 @@
-function  [reward, fitness, Vavg, tp_faults, Q] =Dribbling2d(  DRAWS, maxepisodes, maxDistance, th_max, NOISE)
+function  [reward, fitness, Vavg, tp_faults, Q] =Dribbling2d( nRun, DRAWS, maxepisodes, maxDistance, th_max, NOISE, Q_INIT, TRANSFER, EXPL_EPISODES_FACTOR)
 %Dribbling1d SARSA, the main function of the trainning
 %maxepisodes: maximum number of episodes to run the demo
 
 %  SARSA 
 
-
-Q_INIT=-100;
-TRANSFER=1;  %=1 transfer, >1 acts gready from source policy, =0 learns from scratch,
-
 load W-FLC;
-%load ene11;
+load Qnoise0;
+Qs=Qnoise0;
 
-%dt = 0.2;  %sample time of the kinematics model updating
+% load QPho;
+% Qs=QPho;
+
 Ts = 0.2; %Sample time of a RL step
-Vth = 65; %60 minimum expected speed of robot @ mm/s
 States   = StateTable();  % the table of states
 Actions  = ActionTable(); % the table of actions
 nstates     = size(States,1);
@@ -23,12 +21,12 @@ trace       = QTable( nstates,nactions,0 );  % the elegibility trace
 
 alpha       = 0.1;   % learning rate
 gamma       = 1;   % discount factor
-epsilon0     = 0.2;  % probability of a random action selection
+epsilon0     = 1;  % probability of a random action selection
 lambda      = 0.6;   % the decaying elegibiliy trace parameter
 p0=1;
 
-EXPLORATION_STEPS = maxepisodes/10;
-epsDec = -log(0.05) * 1/EXPLORATION_STEPS;  %epsilon decrece a un 5% (0.005) en maxEpisodes cuartos (maxepisodes/4), de esta manera el decrecimiento de epsilon es independiente del numero de episodios
+EXPLORATION = maxepisodes/EXPL_EPISODES_FACTOR;
+epsDec = -log(0.05) * 1/EXPLORATION;  %epsilon decrece a un 5% (0.005) en maxEpisodes cuartos (maxepisodes/4), de esta manera el decrecimiento de epsilon es independiente del numero de episodios
 epsilon = epsilon0;
 p=p0;
 
@@ -38,7 +36,7 @@ for i=1:maxepisodes
     elseif TRANSFER==0, p=0; %learns from scratch
     end %else Transfer from source decaying as p
     
-    [Vr,ro,fi,gama,Pt,Pb,Pr,Vb,total_reward,steps,Q,trace,fitness_k,btd_k,Vavg_k,Vth,time,faults] = Episode( wf,maxDistance, Q, alpha, gamma, epsilon, p, States, Actions, Ts, Vth, th_max, lambda, trace, NOISE);
+    [Vr,ro,fi,gama,Pt,Pb,Pr,Vb,total_reward,steps,Q,trace,fitness_k,btd_k,Vavg_k,time,faults] = Episode( wf,maxDistance, Q,Qs, alpha, gamma, epsilon, p, States, Actions, Ts, th_max, lambda, trace, NOISE, Q_INIT);
     
     %disp(['Epsilon:',num2str(eps),'  Espisode: ',int2str(i),'  Steps:',int2str(steps),'  Reward:',num2str(total_reward),' epsilon: ',num2str(epsilon)])
         
@@ -59,7 +57,7 @@ for i=1:maxepisodes
         plot(xpoints,reward,'b')      
         hold on
         plot(xpoints,btd,'r')      
-        title([ 'Mean Reward(blue). Episode:',int2str(i) ])
+        title([ 'Mean Reward(blue) Episode:',int2str(i), ' Run: ',int2str(nRun)])
         hold
                 
         subplot(4,2,3)

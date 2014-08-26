@@ -29,4 +29,4 @@ cv=find(statelist(:,3)==statelist(sd,3));
 i1=intersect(zx,xc);
 s=intersect(i1,cv);
 
-%s=intersect(zx,xc);
+% %s=intersect(zx,xc);

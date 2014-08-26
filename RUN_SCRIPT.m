@@ -1,5 +1,5 @@
-%clear all
-%clc
+clear all
+clc
 close all
 
 episodes = 100;   % maximum number of  episode
@@ -9,6 +9,11 @@ Runs = 10;
 NOISE = 0.5;
 tic
 DRAWS = 1;
+
+Q_INIT = 5;
+TRANSFER = 1;  %=1 transfer, >1 acts gready from source policy, =0 learns from scratch,
+EXPL_EPISODES_FACTOR = 10;
+
 a_spot={'r' 'g' 'b' 'c' 'm' 'y' 'k' '--r' '--g' '--b' '--c' };
 
 
@@ -26,7 +31,7 @@ interval=0.7;
 
 for i=1:Runs
 %    disp(['Test= ', num2str(a), '.', num2str(i), ' lambda= ', num2str(lambda(a))])
-    [reward(:,i), fitness(:,i), Vavg(:,i), tp_faults(:,i), Q] = Dribbling2d( DRAWS, episodes,maxDistance,th_max,NOISE);
+    [reward(:,i), fitness(:,i), Vavg(:,i), tp_faults(:,i), Q] = Dribbling2d( i, DRAWS, episodes,maxDistance,th_max,NOISE, Q_INIT, TRANSFER, EXPL_EPISODES_FACTOR);
                               
     mf(i) = mean(fitness(floor(interval*episodes):episodes,i));
     if mf(i) < mf_min

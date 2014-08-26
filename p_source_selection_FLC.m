@@ -1,4 +1,4 @@
-function [ a ] = p_source_selection_FLC( Q, s, epsilon, at, p)
+function [ a ] = p_source_selection_FLC( Q, s, epsilon, at, p, Q_INIT)
 % source_action_selection selects an action using p probability
 % Q: the Qtable
 % s: the current state
@@ -6,18 +6,38 @@ function [ a ] = p_source_selection_FLC( Q, s, epsilon, at, p)
 % at transferred action
 % p probability for choosing transferred action
 
-%p=0; % p= 1 for gready from source policy, 0 to learn from scratch
-
-%Method 1 DLF acciones vecinas
+actions = size(Q,2);
 ab = GetBestAction(Q,s);
-a = round((ab*(1-p) + at*p));
 
-if a>6 || a<1 
-    at=a; 
+%Method 1 DLF
+% if (rand()>p) 
+%     a = ab;
+% else
+%     a = at;
+% end
+
+
+% Method 2 DLF
+if (rand()>p) 
+    a = clipDLF( round(ab + randn()*p), 1,actions ); %e_greedy_selection(Q,s,epsilon);
+else
+    a = clipDLF( round(at + randn()*(1-p)), 1,actions );
 end
 
+% Method 3 DLF
+% a = clipDLF( round(at + randn()*(1-p)), 1,actions );
+% if (rand()>p)  && Q(s,ab)~=Q_INIT
+%     a=ab;
+% end
 
-% Method 7
+%a = round((ab*(1-p) + at*p));
+
+%if a>6 || a<1 
+%    at=a; 
+%end
+
+
+% % Method 7
 % if (rand()>p) 
 %     a = e_greedy_selection(Q,s,epsilon);
 % else

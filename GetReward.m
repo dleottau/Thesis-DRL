@@ -1,4 +1,4 @@
-function [r,f] = GetReward( x,maxDistance, time, Vth, th_max, Vr_max )
+function [r,f] = GetReward( x,maxDistance, th_max, Vr_max )
 % Dribbling1d returns the reward at the current state
 % x: a vector of Pr Pb and Pt
 % r: the returned reward.

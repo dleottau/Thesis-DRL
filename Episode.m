@@ -1,4 +1,4 @@
-function [ Vr,ro,fi,gama,Pt,Pb,Pr,Vb,total_reward,steps,Q,trace,fitness,btd,Vavg,Vth,time,faults] = Episode( w, maxDistance, Q , alpha, gamma,epsilon,p, statelist,actionlist,Ts,Vth,th_max, lambda, trace,NOISE)
+function [ Vr,ro,fi,gama,Pt,Pb,Pr,Vb,total_reward,steps,Q,trace,fitness,btd,Vavg,time,faults] = Episode( w, maxDistance, Q,Qs, alpha, gamma,epsilon,p, statelist,actionlist,Ts,th_max, lambda, trace,NOISE, Q_INIT)
            
 
 %Dribbling1d do one episode  with sarsa learning              
@@ -97,7 +97,7 @@ a   = e_greedy_selection(Q,s,epsilon);
     Vr(i,:) = clipDLF(Vr(i,:),Vr_min,Vr_max); 
         
     % Updating kinematincs model 
-    [Pr(i,:), Ptr(i,:), Pbr(i,:), alfa, fi(i,1), gama(i,1), ro(i,1), Vb(i,1), dirb(i,1), Pb(i,:)]=mov(Ts,Pr(i-1,:),Pt,Pb(i-1,:),Vr(i,1),Vr(i,2),Vr(i,3),Vxrmax,Vyrmax,Vthetamax,Vb(i-1,1),dirb(i-1,1),Fr, clipDLF(randn(2,1)*NoiseBall, -2, 2) );
+    [Pr(i,:), Ptr(i,:), Pbr(i,:), alfa, fi(i,1), gama(i,1), ro(i,1), Vb(i,1), dirb(i,1), Pb(i,:)]=mov(Ts,Pr(i-1,:),Pt,Pb(i-1,:),Vr(i,1),Vr(i,2),Vr(i,3),Vxrmax,Vyrmax,Vthetamax,Vb(i-1,1),dirb(i-1,1),Fr, clipDLF(randn(2,1)*NoiseBall,-2,2));
     dV = Vb(i,1) * cosd( Pr(i,3)-dirb(i,1) ) - Vr(i,1);
     % Ground thruth state vector
     x = [Pr(i,1),Pb(i,1),Vb(i,1),Vr(i,1),ro(i,1),dV,gama(i,1),fi(i,1)];
@@ -115,7 +115,7 @@ a   = e_greedy_selection(Q,s,epsilon);
       
     
     % observe the reward at state xp and the final state flag
-    [r,f]   = GetReward(x_obs,maxDistance,time(i),Vth,th_max,Vr_max);
+    [r,f]   = GetReward(x_obs,maxDistance,th_max,Vr_max);
         
     total_reward = total_reward + r;
            
@@ -125,8 +125,11 @@ a   = e_greedy_selection(Q,s,epsilon);
     % select action prime
     %ap = e_greedy_selection(Q,sp,epsilon);
     
-	a_transf=1+floor(V_FLC(1)/20);
-    ap = p_source_selection_FLC(Q,sp,epsilon,a_transf,p);
+	a_transf=1+floor(V_FLC(1)/20);  % from FLC
+    %a_transf=GetBestAction(Qs,1+floor((sp-1)/49));  % from QPho
+    %a_transf=GetBestAction(Qs,sp);  % from Qnoise0
+    
+    ap = p_source_selection_FLC(Q,sp,epsilon,a_transf,p,Q_INIT);
    
 	% Update the Qtable, that is,  learn from the experience
     [Q, trace] = UpdateSARSAlambda( s, a, r, sp, ap, Q, alpha, gamma, lambda, trace );
