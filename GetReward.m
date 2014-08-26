@@ -17,16 +17,26 @@ fi = x(8);
 
 f=false;
 
-xb = abs(ro*cosd(gama));
-yb = abs(ro*sind(gama));
-yfi = abs(ro*sind(fi));
+% xb = abs(ro*cosd(gama));
+% yb = abs(ro*sind(gama));
+% yfi = abs(ro*sind(fi));
 
-
-if ro>th_max(1) || abs(gama)>th_max(2) || abs(fi)>th_max(3) || Vr < 0.81*Vxrmax
-    r=-1;
+thres = [ro  abs(gama) abs(fi)] > th_max;
+if sum(thres)~=0 || Vr < 0.9*Vxrmax
+    r = - ( (1-Vr/(Vxrmax*1)) + sum(thres .* [ro abs(gama) abs(fi)] .*1/th_max) );
 else
-    r=1;
+    r = 1;
 end
+
+
+% if ro>th_max(1) || abs(gama)>th_max(2) || abs(fi)>th_max(3) || Vr < 0.81*Vxrmax
+%     r=-1;
+% else
+%     r=1;
+% end
+
+
+
 
 % if ro>th_max(1) || abs(gama)>th_max(2) || abs(fi)>th_max(3) || Vr < 0.9*Vxrmax
 %     r=-1;

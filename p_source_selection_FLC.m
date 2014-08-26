@@ -9,6 +9,14 @@ function [ a ] = p_source_selection_FLC( Q, s, epsilon, at, p, Q_INIT)
 actions = size(Q,2);
 ab = GetBestAction(Q,s);
 
+% % Method 7
+if (rand()>p) 
+    a = e_greedy_selection(Q,s,epsilon);
+else
+    a=at;
+end
+
+
 %Method 1 DLF
 % if (rand()>p) 
 %     a = ab;
@@ -18,11 +26,13 @@ ab = GetBestAction(Q,s);
 
 
 % Method 2 DLF
-if (rand()>p) 
-    a = clipDLF( round(ab + randn()*p), 1,actions ); %e_greedy_selection(Q,s,epsilon);
-else
-    a = clipDLF( round(at + randn()*(1-p)), 1,actions );
-end
+% if (rand()>p) 
+%     a = clipDLF( round(ab + randn()*p), 1,actions ); %e_greedy_selection(Q,s,epsilon);
+% else
+%     a = clipDLF( round(at + randn()*(1-p)), 1,actions );
+% end
+
+
 
 % Method 3 DLF
 % a = clipDLF( round(at + randn()*(1-p)), 1,actions );
@@ -37,12 +47,6 @@ end
 %end
 
 
-% % Method 7
-% if (rand()>p) 
-%     a = e_greedy_selection(Q,s,epsilon);
-% else
-%     a=at;
-% end
 
 
 % Method 6

@@ -5,9 +5,9 @@ function  [reward, fitness, Vavg, tp_faults, Q] =Dribbling2d( nRun, DRAWS, maxep
 %  SARSA 
 
 load W-FLC;
-load Qnoise0;
-Qs=Qnoise0;
 
+%load Qnoise0;
+%Qs=Qnoise0;
 % load QPho;
 % Qs=QPho;
 
@@ -18,6 +18,8 @@ nstates     = size(States,1);
 nactions    = size(Actions,1);
 Q           = QTable( nstates,nactions,Q_INIT );  % the Qtable
 trace       = QTable( nstates,nactions,0 );  % the elegibility trace
+
+Qs=Q;
 
 alpha       = 0.1;   % learning rate
 gamma       = 1;   % discount factor
