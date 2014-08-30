@@ -2,7 +2,7 @@ clear all
 clc
 close all
 
-episodes = 200;   % maximum number of  episode
+episodes = 100;   % maximum number of  episode
 maxDistance = 6000;    % maximum ball distance permited before to end the episode X FIELD DIMENSION
 th_max = [250 15 15];      % maximum pho desired
 Runs = 3;
@@ -12,7 +12,7 @@ DRAWS = 1;
 
 Q_INIT = 0;
 TRANSFER = 0;  %=1 transfer, >1 acts gready from source policy, =0 learns from scratch,
-EXPL_EPISODES_FACTOR = 20;
+EXPL_EPISODES_FACTOR = 10;
 
 a_spot={'r' 'g' 'b' 'c' 'm' 'y' 'k' '--r' '--g' '--b' '--c' };
 

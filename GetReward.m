@@ -4,7 +4,7 @@ function [r,f, r_y] = GetReward( x,maxDistance, th_max, Vr_max )
 % r: the returned reward.
 % f: true if the ball is far, otherwise f is false
 
-Vxrmax=Vr_max(1) * 0.8;
+Vxrmax=Vr_max(1) * 0.7;
 
 Pr = x(1);
 Pb = x(2); 
@@ -25,7 +25,7 @@ thres = [ro  abs(gama) abs(fi)] > th_max;
 if sum(thres)~=0 || Vr < Vxrmax
     r = - ( (1-Vr/Vxrmax) + sum(thres .* [ro abs(gama) abs(fi)] .*1/th_max) );
 else
-    r = 1;%Vr/Vxrmax;
+    r = Vr/Vxrmax;
 end
 
 

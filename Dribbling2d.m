@@ -28,7 +28,7 @@ trace_y       = QTable( nstates,nactions_y,0 );  % the elegibility trace for the
 
 %Qs=Q;
 
-alpha       = 0.5;   % learning rate
+alpha       = 0.3;   % learning rate
 gamma       = 1;   % discount factor
 epsilon0     = 1;  % probability of a random action selection
 lambda      = 0.9;   % the decaying elegibiliy trace parameter
