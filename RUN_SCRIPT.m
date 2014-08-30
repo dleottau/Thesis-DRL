@@ -10,8 +10,8 @@ NOISE = 0.1;
 tic
 DRAWS = 1;
 
-Q_INIT = 0;
-TRANSFER = 0;  %=1 transfer, >1 acts gready from source policy, =0 learns from scratch,
+Q_INIT = 5;
+TRANSFER = 1;  %=1 transfer, >1 acts gready from source policy, =0 learns from scratch,
 EXPL_EPISODES_FACTOR = 10;
 
 a_spot={'r' 'g' 'b' 'c' 'm' 'y' 'k' '--r' '--g' '--b' '--c' };

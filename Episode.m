@@ -126,16 +126,16 @@ a_y = e_greedy_selection(Q_y,s,epsilon);
     % select action prime
     %ap = e_greedy_selection(Q,sp,epsilon);
     
-	%a_transf = 1 + round(V_FLC(1)/V_action_steps(1));  % from FLC
+	a_transf = 1 + round(V_FLC(1)/V_action_steps(1));  % from FLC
     a_transf_y = 1 + round(V_FLC(2)/V_action_steps(2)) +2;
         
     %a_transf=GetBestAction(Qs,1+floor((sp-1)/49));  % from QPho
-    a_transf=GetBestAction(Qs,sp);  % 
+    %a_transf=GetBestAction(Qs,sp);  % 
     
     p_=1;
     ap = p_source_selection_FLC(Q,sp,epsilon,a_transf,p,Q_INIT);
-    %ap_y = p_source_selection_FLC(Q_y,sp,epsilon,a_transf_y,p_,Q_INIT);
-    ap_y = e_greedy_selection(Q_y,sp,epsilon);
+    ap_y = p_source_selection_FLC(Q_y,sp,epsilon,a_transf_y,p_,Q_INIT);
+    %ap_y = e_greedy_selection(Q_y,sp,epsilon);
     
 	% Update the Qtable, that is,  learn from the experience
     [Q, trace] = UpdateSARSAlambda( s, a, r, sp, ap, Q, alpha, gamma, lambda, trace );
