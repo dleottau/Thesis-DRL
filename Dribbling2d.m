@@ -10,21 +10,28 @@ load W-FLC;
 %Qs=Qnoise0;
 % load QPho;
 % Qs=QPho;
+load QokVx;
+Qs=QokVx;
 
+V_action_steps=[25, 25, 10];
 Ts = 0.2; %Sample time of a RL step
 States   = StateTable();  % the table of states
-Actions  = ActionTable(); % the table of actions
+Actions  = ActionTable(V_action_steps); % the table of actions
 nstates     = size(States,1);
-nactions    = size(Actions,1);
-Q           = QTable( nstates,nactions,Q_INIT );  % the Qtable
-trace       = QTable( nstates,nactions,0 );  % the elegibility trace
+nactions_x    = size(Actions(:,1),1);
+nactions_y    = size(Actions(:,2),1);
 
-Qs=Q;
+Q           = QTable( nstates,nactions_x,Q_INIT );  % the Qtable for the vx agent
+trace       = QTable( nstates,nactions_x,0 );  % the elegibility trace for the vx agent
+Q_y           = QTable( nstates,nactions_y,Q_INIT );  % the Qtable for the vy agent
+trace_y       = QTable( nstates,nactions_y,0 );  % the elegibility trace for the vy agent
 
-alpha       = 0.1;   % learning rate
+%Qs=Q;
+
+alpha       = 0.5;   % learning rate
 gamma       = 1;   % discount factor
 epsilon0     = 1;  % probability of a random action selection
-lambda      = 0.6;   % the decaying elegibiliy trace parameter
+lambda      = 0.9;   % the decaying elegibiliy trace parameter
 p0=1;
 
 EXPLORATION = maxepisodes/EXPL_EPISODES_FACTOR;
@@ -38,7 +45,7 @@ for i=1:maxepisodes
     elseif TRANSFER==0, p=0; %learns from scratch
     end %else Transfer from source decaying as p
     
-    [Vr,ro,fi,gama,Pt,Pb,Pr,Vb,total_reward,steps,Q,trace,fitness_k,btd_k,Vavg_k,time,faults] = Episode( wf,maxDistance, Q,Qs, alpha, gamma, epsilon, p, States, Actions, Ts, th_max, lambda, trace, NOISE, Q_INIT);
+    [Vr,ro,fi,gama,Pt,Pb,Pr,Vb,total_reward,steps, Q,Q_y,trace,trace_y, fitness_k,btd_k,Vavg_k,time,faults] = Episode( wf,maxDistance, Q,Qs,Q_y, alpha, gamma, epsilon, p, States, Actions, Ts, th_max, lambda, trace, trace_y, NOISE, Q_INIT, V_action_steps);
     
     %disp(['Epsilon:',num2str(eps),'  Espisode: ',int2str(i),'  Steps:',int2str(steps),'  Reward:',num2str(total_reward),' epsilon: ',num2str(epsilon)])
         

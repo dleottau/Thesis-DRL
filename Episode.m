@@ -1,5 +1,5 @@
-function [ Vr,ro,fi,gama,Pt,Pb,Pr,Vb,total_reward,steps,Q,trace,fitness,btd,Vavg,time,faults] = Episode( w, maxDistance, Q,Qs, alpha, gamma,epsilon,p, statelist,actionlist,Ts,th_max, lambda, trace,NOISE, Q_INIT)
-           
+function [ Vr,ro,fi,gama,Pt,Pb,Pr,Vb,total_reward,steps,Q,Q_y,trace, trace_y, fitness,btd,Vavg,time,faults] = Episode( w, maxDistance, Q,Qs,Q_y, alpha, gamma,epsilon,p, statelist,actionlist,Ts,th_max, lambda, trace,trace_y, NOISE, Q_INIT, V_action_steps)
+    
 
 %Dribbling1d do one episode  with sarsa learning              
 % maxDistance: the maximum number of steps per episode
@@ -31,7 +31,7 @@ Pt=[maxDistance+th_max(1) 0];
 
 
 NoiseRobotVel = [NOISE*0.15 NOISE*0.05 NOISE*0.03]; %
-NoiseBall = NOISE*0.8; %  0.7
+NoiseBall = [0.1; 0]+NOISE*0.8; %  0.7
 NoisePerception = NOISE*0.0025; % 
 
 % ------------- INIT PARAMETERS ---------------------
@@ -51,7 +51,7 @@ Fr=150;
 Vr(i,:)=[Vr_min(1) 0 0]; %velocidad del robot
 Vb(i,1)=0; %velocidad de la bola
 dirb(i,1)=atan2(Pb(i,2)-Pr(i,2),Pb(i,1)-Pr(i,1))*180/pi; %dirección bola
-[Pr(i,:), Ptr(i,:), Pbr(i,:), alfa, fi(i,1), gama(i,1), ro(i,1), Vb(i,1), dirb(i,1), Pb(i,:)]=mov(Ts,Pr,Pt,Pb,Vr(i,1),Vr(i,2),Vr(i,3),Vxrmax,Vyrmax,Vthetamax,Vb,dirb,Fr, clipDLF(randn(2,1)*NoiseBall,-2,2));
+[Pr(i,:), Ptr(i,:), Pbr(i,:), alfa, fi(i,1), gama(i,1), ro(i,1), Vb(i,1), dirb(i,1), Pb(i,:)]=mov(Ts,Pr,Pt,Pb,Vr(i,1),Vr(i,2),Vr(i,3),Vxrmax,Vyrmax,Vthetamax,Vb,dirb,Fr, clipDLF(randn(2,1).*NoiseBall,-2,2));
 dV=0;
 
 x = [Pr(i,1),Pb(i,1),Vb(i,1),Vr(i,1),ro(i,1),dV,gama(i,1),fi(i,1)];
@@ -63,7 +63,7 @@ x = [Pr(i,1),Pb(i,1),Vb(i,1),Vr(i,1),ro(i,1),dV,gama(i,1),fi(i,1)];
 s   = DiscretizeState(x,statelist);
 % selects an action using the epsilon greedy selection strategy
 a   = e_greedy_selection(Q,s,epsilon);
-
+a_y = e_greedy_selection(Q_y,s,epsilon);
 
 
 %for i=1:maxsteps    
@@ -73,7 +73,8 @@ a   = e_greedy_selection(Q,s,epsilon);
     time(i) = time(i-1) + Ts; 
          
     % convert the index of the action into an action value
-    action = actionlist(a);    
+    action = actionlist(a,1);    
+    action_y = actionlist(a_y,2);    
         
     %-------DO ACTION -----------------
     % do the selected action and get the next  state  
@@ -81,12 +82,12 @@ a   = e_greedy_selection(Q,s,epsilon);
     % ADDING SATURATONS AND NOISE
     
     %Vr_ req is the robot speed requested
-    Vr_req=[action V_FLC(2) V_FLC(3)]; 
+    Vr_req=[action action_y V_FLC(3)]; 
     %Vr is the current robot speed
     dVelReq = Vr_req - Vr(i-1,:);
     
     % Vro is the observed speed, without noise
-    Vro = action;
+    %Vro = action;
     
     saturation=abs(dVelReq)>maxDeltaV;
     Vr(i,:) = Vr(i-1,:) + sign(dVelReq).*saturation.*maxDeltaV + not(saturation).*dVelReq;
@@ -97,7 +98,7 @@ a   = e_greedy_selection(Q,s,epsilon);
     Vr(i,:) = clipDLF(Vr(i,:),Vr_min,Vr_max); 
         
     % Updating kinematincs model 
-    [Pr(i,:), Ptr(i,:), Pbr(i,:), alfa, fi(i,1), gama(i,1), ro(i,1), Vb(i,1), dirb(i,1), Pb(i,:)]=mov(Ts,Pr(i-1,:),Pt,Pb(i-1,:),Vr(i,1),Vr(i,2),Vr(i,3),Vxrmax,Vyrmax,Vthetamax,Vb(i-1,1),dirb(i-1,1),Fr, clipDLF(randn(2,1)*NoiseBall,-2,2));
+    [Pr(i,:), Ptr(i,:), Pbr(i,:), alfa, fi(i,1), gama(i,1), ro(i,1), Vb(i,1), dirb(i,1), Pb(i,:)]=mov(Ts,Pr(i-1,:),Pt,Pb(i-1,:),Vr(i,1),Vr(i,2),Vr(i,3),Vxrmax,Vyrmax,Vthetamax,Vb(i-1,1),dirb(i-1,1),Fr, clipDLF(randn(2,1).*NoiseBall,-2,2));
     dV = Vb(i,1) * cosd( Pr(i,3)-dirb(i,1) ) - Vr(i,1);
     % Ground thruth state vector
     x = [Pr(i,1),Pb(i,1),Vb(i,1),Vr(i,1),ro(i,1),dV,gama(i,1),fi(i,1)];
@@ -112,12 +113,12 @@ a   = e_greedy_selection(Q,s,epsilon);
     % Get velocity FLC 
     [V_FLC] = FLC_dribbling (w,x_obs,Vr_min,Vr_max);
     %---------------------------------------        
-      
-    
+          
     % observe the reward at state xp and the final state flag
-    [r,f]   = GetReward(x_obs,maxDistance,th_max,Vr_max);
+    [r,f, r_y]   = GetReward(x_obs,maxDistance,th_max,Vr_max);
         
-    total_reward = total_reward + r;
+    %total_reward = total_reward + r;
+    total_reward = total_reward + r_y;
            
     % convert the continous state variables in [xp] to an index of the statelist    
     sp  = DiscretizeState(x_obs,statelist);
@@ -125,18 +126,25 @@ a   = e_greedy_selection(Q,s,epsilon);
     % select action prime
     %ap = e_greedy_selection(Q,sp,epsilon);
     
-	a_transf=1+floor(V_FLC(1)/20);  % from FLC
+	%a_transf = 1 + round(V_FLC(1)/V_action_steps(1));  % from FLC
+    a_transf_y = 1 + round(V_FLC(2)/V_action_steps(2)) +2;
+        
     %a_transf=GetBestAction(Qs,1+floor((sp-1)/49));  % from QPho
-    %a_transf=GetBestAction(Qs,sp);  % from Qnoise0
+    a_transf=GetBestAction(Qs,sp);  % 
     
+    p_=1;
     ap = p_source_selection_FLC(Q,sp,epsilon,a_transf,p,Q_INIT);
-   
+    %ap_y = p_source_selection_FLC(Q_y,sp,epsilon,a_transf_y,p_,Q_INIT);
+    ap_y = e_greedy_selection(Q_y,sp,epsilon);
+    
 	% Update the Qtable, that is,  learn from the experience
     [Q, trace] = UpdateSARSAlambda( s, a, r, sp, ap, Q, alpha, gamma, lambda, trace );
+    [Q_y, trace_y] = UpdateSARSAlambda( s, a_y, r_y, sp, ap_y, Q_y, alpha, gamma, lambda, trace_y );
         
     %update the current variables
     s = sp;
     a = ap;
+    a_y = ap_y;
             
     %Compute performance index
     Vrx = x(4);
@@ -163,7 +171,7 @@ a   = e_greedy_selection(Q,s,epsilon);
     end
     
     % terminal state?
-    if (f==true)
+    if (f==true || time(i)>300)
         Pt(1)=Pt(1)-th_max(1);
         btd = (btd + norm(Pt-Pb(i,:))) / (Pt(1)-Pb(1,1));
         fitness = fitness * btd;
