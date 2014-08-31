@@ -2,7 +2,6 @@ function [ States ] = StateTable
 %BuildStateList builds a state list from a state matrix
 
 ro=0:50:600;
-
 %gama=[-45 -10 0 10 45];
 %fi=[-60 -15 0 15 60];
 gama=-30:10:30;

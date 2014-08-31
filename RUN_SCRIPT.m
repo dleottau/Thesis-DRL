@@ -2,7 +2,7 @@ clear all
 clc
 close all
 
-episodes = 100;   % maximum number of  episode
+episodes = 500;   % maximum number of  episode
 maxDistance = 6000;    % maximum ball distance permited before to end the episode X FIELD DIMENSION
 th_max = [250 15 15];      % maximum pho desired
 Runs = 3;
@@ -10,7 +10,7 @@ NOISE = 0.1;
 tic
 DRAWS = 1;
 
-Q_INIT = 5;
+Q_INIT = -20;
 TRANSFER = 1;  %=1 transfer, >1 acts gready from source policy, =0 learns from scratch,
 EXPL_EPISODES_FACTOR = 10;
 
@@ -58,16 +58,16 @@ for i=1:Runs
         pf_max=pf(i);
     end
     
-    cr(i) = mean(reward(floor(interval*episodes):episodes,i));
-    if cr(i) > cr_max
-        cr_max=cr(i);
-        mf_xxx=mf(i);
-        v_xxx=vm(i);
-        pf_xxx=pf(i);
-    end
-    if cr(i) < cr_min
-        cr_min=cr(i);
-    end
+%     cr(i) = mean(reward(floor(interval*episodes):episodes,i));
+%     if cr(i) > cr_max
+%         cr_max=cr(i);
+%         mf_xxx=mf(i);
+%         v_xxx=vm(i);
+%         pf_xxx=pf(i);
+%     end
+%     if cr(i) < cr_min
+%         cr_min=cr(i);
+%     end
     
 end
 
@@ -87,10 +87,10 @@ results(3,4)=cr_min;
 results(1,4)=mean(cr);
 results(2,4)=cr_max;
 
-results(4,4)=cr_max;
-results(4,3)=pf_xxx;
-results(4,2)=mf_xxx;
-results(4,1)=v_xxx;
+% results(4,4)=cr_max;
+% results(4,3)=pf_xxx;
+% results(4,2)=mf_xxx;
+% results(4,1)=v_xxx;
 
 save Qok;
 save results;
@@ -98,8 +98,8 @@ save results;
 if DRAWS==1
     figure
     subplot(2,2,1)
-    plot(mean(reward,2))
-    title('Mean Reward')
+    %plot(mean(reward,2))
+    %title('Mean Reward')
              
     subplot(2,2,2)
     plot(mean(Vavg,2))
