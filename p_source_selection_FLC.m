@@ -1,4 +1,4 @@
-function [ a ] = p_source_selection_FLC( Q, s, epsilon, at, p, Q_INIT)
+function [ a, ft ] = p_source_selection_FLC( Q, s, epsilon, at, p, Q_INIT)
 % source_action_selection selects an action using p probability
 % Q: the Qtable
 % s: the current state
@@ -6,8 +6,8 @@ function [ a ] = p_source_selection_FLC( Q, s, epsilon, at, p, Q_INIT)
 % at transferred action
 % p probability for choosing transferred action
 
-actions = size(Q,2);
-ab = GetBestAction(Q,s);
+%actions = size(Q,2);
+%ab = GetBestAction(Q,s);
 
 % % Method 7
 if (rand()>p) 
@@ -16,6 +16,10 @@ else
     a=at;
 end
 
+ft=0;
+if a==at && p>0.5
+    ft=1; 
+end
 
 %Method 1 DLF
 % if (rand()>p) 

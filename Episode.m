@@ -66,6 +66,7 @@ a   = e_greedy_selection(Q,s,epsilon);
 a_y = e_greedy_selection(Q_y,s,epsilon);
 a_rot = e_greedy_selection(Q_rot,s,epsilon);
 
+ft=[1 1 1];
 
 %for i=1:maxsteps    
  while 1  
@@ -117,7 +118,7 @@ a_rot = e_greedy_selection(Q_rot,s,epsilon);
     %---------------------------------------        
           
     % observe the reward at state xp and the final state flag
-    [r,f]   = GetReward(x_obs,maxDistance,th_max,Vr_max);
+    [r,f]   = GetReward(x_obs,maxDistance,th_max,Vr_max,ft);
         
     %total_reward = total_reward + r;
     total_reward = total_reward + r;
@@ -136,9 +137,9 @@ a_rot = e_greedy_selection(Q_rot,s,epsilon);
     %a_transf=GetBestAction(Qs,sp);  % 
     
     p_=1;
-    ap = p_source_selection_FLC(Q,sp,epsilon,a_transf,p,Q_INIT);
-    ap_y = p_source_selection_FLC(Q_y,sp,epsilon,a_transf_y,p,Q_INIT);
-    ap_rot = p_source_selection_FLC(Q_rot,sp,epsilon,a_transf_rot,p,Q_INIT);
+    [ap, ft(1)] = p_source_selection_FLC(Q,sp,epsilon,a_transf,p,Q_INIT);
+    [ap_y, ft(2)] = p_source_selection_FLC(Q_y,sp,epsilon,a_transf_y,p,Q_INIT);
+    [ap_rot, ft(3)] = p_source_selection_FLC(Q_rot,sp,epsilon,a_transf_rot,p,Q_INIT);
         
 	% Update the Qtable, that is,  learn from the experience
     [Q, trace] = UpdateSARSAlambda( s, a, r(1), sp, ap, Q, alpha, gamma, lambda, trace );
@@ -174,7 +175,7 @@ a_rot = e_greedy_selection(Q_rot,s,epsilon);
     end
     
     % terminal state?
-    if (f==true || time(i)>1000)
+    if (f==true || time(i)>1000 || abs(Pr(i,2))>maxDistance/2 || abs(Pb(i,2))>maxDistance/2 )
         Pt(1)=Pt(1)-th_max(1);
         btd = (btd + norm(Pt-Pb(i,:))) / (Pt(1)-Pb(1,1));
         fitness = fitness * btd;

@@ -69,7 +69,7 @@ for i=1:maxepisodes
         plot(xpoints,reward(:,2),'g')      
         plot(xpoints,reward(:,3),'b')      
         plot(xpoints,btd,'k')      
-        title([ 'Mean Reward(rgb) Episode:',int2str(i), ' Run: ',int2str(nRun)])
+        title([ 'Mean Reward(rgb) Episode:',int2str(i), ' p=',sprintf('%.2f',p) ' Run: ',int2str(nRun)])
         hold
                 
         subplot(4,2,3)
