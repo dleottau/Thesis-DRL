@@ -13,7 +13,7 @@ function [ Vr,ro,fi,gama,Pt,Pb,Pr,Vb,total_reward,steps, Q,Q_y,Q_rot,trace,trace
 % Dribbling1d with SARSA 
 
 Voffset = 1; %Offset Speed in mm/s
-Vr_max=[100 50 40]; %x,y,rot Max Speed achieved by the robot
+Vr_max=[100 40 40]; %x,y,rot Max Speed achieved by the robot
 Vr_min=-Vr_max;
 Vr_min(1)=Voffset;
 maxDeltaV = Vr_max.*[1/3 1/3 1/2]; %mm/s/Ts
@@ -25,8 +25,8 @@ Vthetamax=100;
 
 
 Pr=[0 0 0];
-Pb=[th_max(1) 0];
-Pt=[maxDistance+th_max(1) 0];
+Pb=[th_max(1)/5 0];
+Pt=[maxDistance+1000 0];
 
 
 
@@ -85,7 +85,9 @@ ft=[1 1 1];
     % ADDING SATURATONS AND NOISE
     
     %Vr_ req is the robot speed requested
-    Vr_req=[action action_y action_rot]; 
+    %Vr_req=[action action_y action_rot]; 
+    Vr_req=[action V_FLC(2) action_rot]; 
+    
     %Vr is the current robot speed
     dVelReq = Vr_req - Vr(i-1,:);
     
@@ -118,7 +120,7 @@ ft=[1 1 1];
     %---------------------------------------        
           
     % observe the reward at state xp and the final state flag
-    [r,f]   = GetReward(x_obs,maxDistance,th_max,Vr_max,ft);
+    [r,f]   = GetReward(x_obs,maxDistance,th_max,Vr_max,ft,faults/steps*100);
         
     %total_reward = total_reward + r;
     total_reward = total_reward + r;
@@ -130,7 +132,7 @@ ft=[1 1 1];
     %ap = e_greedy_selection(Q,sp,epsilon);
     
 	a_transf = 1 + round(V_FLC(1)/V_action_steps(1));  % from FLC
-    a_transf_y = 1 + round(V_FLC(2)/V_action_steps(2)) +2;
+    %a_transf_y = 1 + round(V_FLC(2)/V_action_steps(2)) +2;
     a_transf_rot = 1 + round(V_FLC(3)/V_action_steps(3)) +2;
         
     %a_transf=GetBestAction(Qs,1+floor((sp-1)/49));  % from QPho
@@ -138,18 +140,18 @@ ft=[1 1 1];
     
     p_=1;
     [ap, ft(1)] = p_source_selection_FLC(Q,sp,epsilon,a_transf,p,Q_INIT);
-    [ap_y, ft(2)] = p_source_selection_FLC(Q_y,sp,epsilon,a_transf_y,p,Q_INIT);
+    %[ap_y, ft(2)] = p_source_selection_FLC(Q_y,sp,epsilon,a_transf_y,p_,Q_INIT);
     [ap_rot, ft(3)] = p_source_selection_FLC(Q_rot,sp,epsilon,a_transf_rot,p,Q_INIT);
         
 	% Update the Qtable, that is,  learn from the experience
     [Q, trace] = UpdateSARSAlambda( s, a, r(1), sp, ap, Q, alpha, gamma, lambda, trace );
-    [Q_y, trace_y] = UpdateSARSAlambda( s, a_y, r(2), sp, ap_y, Q_y, alpha, gamma, lambda, trace_y );
+    %[Q_y, trace_y] = UpdateSARSAlambda( s, a_y, r(2), sp, ap_y, Q_y, alpha, gamma, lambda, trace_y );
     [Q_rot, trace_rot] = UpdateSARSAlambda( s, a_rot, r(3), sp, ap_rot, Q_rot, alpha, gamma, lambda, trace_rot );
         
     %update the current variables
     s = sp;
     a = ap;
-    a_y = ap_y;
+    %a_y = ap_y;
     a_rot = ap_rot;
             
     %Compute performance index
@@ -176,7 +178,7 @@ ft=[1 1 1];
     
     % terminal state?
     if (f==true || time(i)>1000 || abs(Pr(i,2))>maxDistance/2 || abs(Pb(i,2))>maxDistance/2 )
-        Pt(1)=Pt(1)-th_max(1);
+        Pt(1)=maxDistance;
         btd = (btd + norm(Pt-Pb(i,:))) / (Pt(1)-Pb(1,1));
         fitness = fitness * btd;
         break
@@ -184,5 +186,7 @@ ft=[1 1 1];
       
     
 end
+
+
 
 

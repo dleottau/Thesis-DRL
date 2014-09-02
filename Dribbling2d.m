@@ -13,7 +13,7 @@ load W-FLC;
 load QokVx;
 Qs=QokVx;
 
-V_action_steps=[25, 25, 20];
+V_action_steps=[6, 5, 5];
 Ts = 0.2; %Sample time of a RL step
 States   = StateTable();  % the table of states
 Actions  = ActionTable(V_action_steps); % the table of actions
@@ -31,7 +31,7 @@ trace_rot = trace;  % the elegibility trace for the v_rot agent
 
 alpha       = 0.5;   % learning rate
 gamma       = 1;   % discount factor
-epsilon0     = 0;  % probability of a random action selection
+epsilon0     = 1;  % probability of a random action selection
 lambda      = 0.9;   % the decaying elegibiliy trace parameter
 p0=1;
 
@@ -58,7 +58,7 @@ for i=1:maxepisodes
 
         xpoints(i)=i-1;
         reward(i,:)=total_reward/steps;
-        fitness(i,1)=fitness_k;
+        fitness(i,1)=fitness_k/(steps*Ts);
         Vavg(i,1)=Vavg_k;
         btd(i,1)=btd_k;
         tp_faults(i,1)=faults/steps*100;
@@ -79,7 +79,7 @@ for i=1:maxepisodes
         
         subplot(4,2,5); 
         plot(xpoints,fitness)
-        title('Fitness')
+        title('Fitness/EpisodeTime')
         %drawnow
         
         subplot(4,2,7); 

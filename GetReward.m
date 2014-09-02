@@ -1,10 +1,10 @@
-function [r,f] = GetReward( x,maxDistance, th_max, Vr_max, ft )
+function [r,f] = GetReward( x,maxDistance, th_max, Vr_max, ft, faults )
 % Dribbling1d returns the reward at the current state
 % x: a vector of Pr Pb and Pt
 % r: the returned reward.
 % f: true if the ball is far, otherwise f is false
 
-Vxrmax=Vr_max(1) * 0.7;
+Vxrmax=Vr_max(1) * 0.9;
 
 Pr = x(1);
 Pb = x(2); 
@@ -23,32 +23,24 @@ f=false;
 
 thres = [ro  abs(gama) abs(fi)] > th_max;
 
-if ft(1)==1, r(1)=1;
+if sum(thres)~=0 || Vr < Vxrmax
+    r(1) = - ( (1-Vr/Vxrmax) + sum(thres .* [ro abs(gama) abs(fi)] .*1/th_max) );
 else
-    if sum(thres)~=0 || Vr < Vxrmax
-        r(1) = - ( (1-Vr/Vxrmax) + sum(thres .* [ro abs(gama) abs(fi)] .*1/th_max) );
-    else
-        r(1) = Vr/Vxrmax;
-    end
+    r(1) = Vr/Vxrmax;
 end
 
-if ft(2)==1, r(2)=1;
+if abs(fi) > .5*th_max(3)
+    r(2) = -1;
 else
-    if abs(fi) > .3*th_max(3)
-        r(2) = -1;
-    else
-        r(2) = 1 + ( 1 - abs(fi)/(.3*th_max(3)) );
-    end
+    r(2) = 1 + ( 1 - abs(fi)/(.5*th_max(3)) );
 end
 
-if ft(3)==1, r(3)=1;
+if abs(gama) > .5*th_max(2) || abs(fi) > .5*th_max(3)
+    r(3) = -1;
 else
-    if abs(gama) > .3*th_max(2) || abs(fi) > .3*th_max(3)
-        r(3) = -1;
-    else
-        r(3) = 1 + ( 1 - abs(gama)/(.3*th_max(2)) ) + ( 1 - abs(fi)/(.3*th_max(3)) );
-    end
+    r(3) = 1 + ( 1 - abs(gama)/(.5*th_max(2)) ) + ( 1 - abs(fi)/(.5*th_max(3)) );
 end
+
 
 %if sum(thres)~=0 || Vr < 0.9*Vxrmax
 %     r=-1;
@@ -56,15 +48,11 @@ end
 %     r=1;
 % end
 
-
-
-
 % if ro>th_max(1) || abs(gama)>th_max(2) || abs(fi)>th_max(3) || Vr < 0.9*Vxrmax
 %     r=-1;
 % else
 %     r=1;
 % end
-
 
 % if ro>th_max(1) || abs(gama)>th_max(2) || abs(fi)>th_max(3)
 %     r=-2;
@@ -74,7 +62,6 @@ end
 %     r=-1;
 % end
 
-
 % if ro>ro_max 
 %     r=-2;
 % elseif Vr > Vth
@@ -83,8 +70,10 @@ end
 %     r=-1;
 % end
 
-
-if Pr  > maxDistance || Pb > maxDistance %|| Pr  < 0 || Pb < 0
+if Pr  > maxDistance || Pb > maxDistance
+    f = true;
+    %r=[1 1 1]*20;%*exp(1-faults/20);
+elseif abs(gama) > 120    
     f = true;
 end
    

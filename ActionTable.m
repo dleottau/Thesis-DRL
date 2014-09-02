@@ -3,7 +3,7 @@ function [ Actions ] = ActionTable (V_action_steps)
 
 %actions for the Dribbling
 Ax = 0:V_action_steps(1):100;
-Ay = -50:V_action_steps(2):50;
+Ay = -40:V_action_steps(2):40;
 Arot = -40:V_action_steps(3):40;
 % Ojo, por ahora Ax y Ay deben tener el mismo numero de acciones
 
