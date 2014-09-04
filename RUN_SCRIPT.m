@@ -2,9 +2,9 @@ clear all
 clc
 close all
 
-episodes = 200;   % maximum number of  episode
+episodes = 2000;   % maximum number of  episode
 maxDistance = 6000;    % maximum ball distance permited before to end the episode X FIELD DIMENSION
-th_max = [250 10 10];      % maximum pho desired
+th_max = [250 15 15];      % maximum pho desired
 Runs = 2;
 NOISE = 0.0;
 tic

@@ -85,8 +85,8 @@ ft=[1 1 1];
     % ADDING SATURATONS AND NOISE
     
     %Vr_ req is the robot speed requested
-    %Vr_req=[action action_y action_rot]; 
-    Vr_req=[action V_FLC(2) action_rot]; 
+    Vr_req=[action action_y action_rot]; 
+    %Vr_req=[action V_FLC(2) action_rot]; 
     
     %Vr is the current robot speed
     dVelReq = Vr_req - Vr(i-1,:);
@@ -132,7 +132,7 @@ ft=[1 1 1];
     %ap = e_greedy_selection(Q,sp,epsilon);
     
 	a_transf = 1 + round(V_FLC(1)/V_action_steps(1));  % from FLC
-    %a_transf_y = 1 + round(V_FLC(2)/V_action_steps(2)) +2;
+    a_transf_y = 1 + round(V_FLC(2)/V_action_steps(2)) +2;
     a_transf_rot = 1 + round(V_FLC(3)/V_action_steps(3)) +2;
         
     %a_transf=GetBestAction(Qs,1+floor((sp-1)/49));  % from QPho
@@ -140,18 +140,18 @@ ft=[1 1 1];
     
     p_=1;
     [ap, ft(1)] = p_source_selection_FLC(Q,sp,epsilon,a_transf,p,Q_INIT);
-    %[ap_y, ft(2)] = p_source_selection_FLC(Q_y,sp,epsilon,a_transf_y,p_,Q_INIT);
+    [ap_y, ft(2)] = p_source_selection_FLC(Q_y,sp,epsilon,a_transf_y,p,Q_INIT);
     [ap_rot, ft(3)] = p_source_selection_FLC(Q_rot,sp,epsilon,a_transf_rot,p,Q_INIT);
         
 	% Update the Qtable, that is,  learn from the experience
     [Q, trace] = UpdateSARSAlambda( s, a, r(1), sp, ap, Q, alpha, gamma, lambda, trace );
-    %[Q_y, trace_y] = UpdateSARSAlambda( s, a_y, r(2), sp, ap_y, Q_y, alpha, gamma, lambda, trace_y );
+    [Q_y, trace_y] = UpdateSARSAlambda( s, a_y, r(2), sp, ap_y, Q_y, alpha, gamma, lambda, trace_y );
     [Q_rot, trace_rot] = UpdateSARSAlambda( s, a_rot, r(3), sp, ap_rot, Q_rot, alpha, gamma, lambda, trace_rot );
         
     %update the current variables
     s = sp;
     a = ap;
-    %a_y = ap_y;
+    a_y = ap_y;
     a_rot = ap_rot;
             
     %Compute performance index

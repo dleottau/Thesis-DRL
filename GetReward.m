@@ -17,6 +17,8 @@ fi = x(8);
 
 f=false;
 
+angleFactor=0.3;
+
 % xb = abs(ro*cosd(gama));
 % yb = abs(ro*sind(gama));
 % yfi = abs(ro*sind(fi));
@@ -29,16 +31,16 @@ else
     r(1) = Vr/Vxrmax;
 end
 
-if abs(fi) > .5*th_max(3)
+if abs(fi) > angleFactor*th_max(3)
     r(2) = -1;
 else
-    r(2) = 1 + ( 1 - abs(fi)/(.5*th_max(3)) );
+    r(2) = 1 + ( 1 - abs(fi)/(angleFactor*th_max(3)) );
 end
 
-if abs(gama) > .5*th_max(2) || abs(fi) > .5*th_max(3)
+if abs(gama) > angleFactor*th_max(2) || abs(fi) > angleFactor*th_max(3)
     r(3) = -1;
 else
-    r(3) = 1 + ( 1 - abs(gama)/(.5*th_max(2)) ) + ( 1 - abs(fi)/(.5*th_max(3)) );
+    r(3) = 1 + ( 1 - abs(gama)/(angleFactor*th_max(2)) ) + ( 1 - abs(fi)/(angleFactor*th_max(3)) );
 end
 
 
@@ -72,8 +74,8 @@ end
 
 if Pr  > maxDistance || Pb > maxDistance
     f = true;
-    %r=[1 1 1]*20;%*exp(1-faults/20);
-elseif abs(gama) > 120    
+    %r=[1 1 1]*5;%*exp(1-faults/20);
+elseif abs(gama) > 90    
     f = true;
 end
    
