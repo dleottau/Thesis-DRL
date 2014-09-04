@@ -13,7 +13,7 @@ load W-FLC;
 load QokVx;
 Qs=QokVx;
 
-V_action_steps=[6, 5, 5];
+V_action_steps=[6.25, 5, 5];
 Ts = 0.2; %Sample time of a RL step
 States   = StateTable();  % the table of states
 Actions  = ActionTable(V_action_steps); % the table of actions

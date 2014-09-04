@@ -132,8 +132,8 @@ ft=[1 1 1];
     %ap = e_greedy_selection(Q,sp,epsilon);
     
 	a_transf = 1 + round(V_FLC(1)/V_action_steps(1));  % from FLC
-    a_transf_y = 1 + round(V_FLC(2)/V_action_steps(2)) +2;
-    a_transf_rot = 1 + round(V_FLC(3)/V_action_steps(3)) +2;
+    a_transf_y = 1 + round(V_FLC(2)/V_action_steps(2)) +8;
+    a_transf_rot = 1 + round(V_FLC(3)/V_action_steps(3)) +8;
         
     %a_transf=GetBestAction(Qs,1+floor((sp-1)/49));  % from QPho
     %a_transf=GetBestAction(Qs,sp);  % 
