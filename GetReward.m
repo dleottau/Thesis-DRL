@@ -44,34 +44,6 @@ else
 end
 
 
-%if sum(thres)~=0 || Vr < 0.9*Vxrmax
-%     r=-1;
-% else
-%     r=1;
-% end
-
-% if ro>th_max(1) || abs(gama)>th_max(2) || abs(fi)>th_max(3) || Vr < 0.9*Vxrmax
-%     r=-1;
-% else
-%     r=1;
-% end
-
-% if ro>th_max(1) || abs(gama)>th_max(2) || abs(fi)>th_max(3)
-%     r=-2;
-% elseif Vr > Vth
-%     r=1;
-% else 
-%     r=-1;
-% end
-
-% if ro>ro_max 
-%     r=-2;
-% elseif Vr > Vth
-%     r=1;
-% else 
-%     r=-1;
-% end
-
 if Pr  > maxDistance || Pb > maxDistance
     f = true;
     %r=[1 1 1]*5;%*exp(1-faults/20);

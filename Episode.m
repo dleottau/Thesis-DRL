@@ -1,5 +1,5 @@
-function [ Vr,ro,fi,gama,Pt,Pb,Pr,Vb,total_reward,steps, Q,Q_y,Q_rot,trace,trace_y,trace_rot, fitness,btd,Vavg,time,faults] = Episode( w, maxDistance, Q,Q_y,Q_rot,Qs, alpha, gamma,epsilon,p, statelist,actionlist,Ts,th_max, lambda, trace,trace_y,trace_rot, NOISE, Q_INIT, V_action_steps)
-    
+function [ RL, Vr,ro,fi,gama,Pt,Pb,Pr,Vb,total_reward,steps, fitness,btd,Vavg,time,faults] = Episode( w, RL, statelist, actionlist, conf)
+         
 
 %Dribbling1d do one episode  with sarsa learning              
 % maxDistance: the maximum number of steps per episode
@@ -12,23 +12,26 @@ function [ Vr,ro,fi,gama,Pt,Pb,Pr,Vb,total_reward,steps, Q,Q_y,Q_rot,trace,trace
 
 % Dribbling1d with SARSA 
 
-Voffset = 1; %Offset Speed in mm/s
-Vr_max=[100 40 40]; %x,y,rot Max Speed achieved by the robot
-Vr_min=-Vr_max;
-Vr_min(1)=Voffset;
-maxDeltaV = Vr_max.*[1/3 1/3 1/2]; %mm/s/Ts
-
+Vr_max = conf.Vr_max; %x,y,rot Max Speed achieved by the robot
+Vr_min = conf.Vr_min;
+maxDeltaV = conf.maxDeltaV; %mm/s/Ts
+state_steps = conf.state_steps;
+V_action_steps = conf.V_action_steps;
+cores = conf.cores;
+div_disc = conf.div_disc;
+th_max = conf.th_max;
+Ts = conf.Ts;
+NOISE=conf.NOISE;
+Q_INIT=conf.Q_INIT;
+maxDistance=conf.maxDistance;
 
 Vxrmax=100;
 Vyrmax=100;
 Vthetamax=100;
 
-
 Pr=[0 0 0];
 Pb=[th_max(1)/5 0];
-Pt=[maxDistance+1000 0];
-
-
+Pt=[maxDistance+2000 0];
 
 NoiseRobotVel = [NOISE*0.15 NOISE*0.05 NOISE*0.03]; %
 NoiseBall = [0.1; 0]+NOISE*0.8; %  0.7
@@ -45,9 +48,6 @@ btd=0;
 
 Fr=150;
 
-%Vr(1,1)=Voffset;  
-%Vr(1,1)=100;  
-
 Vr(i,:)=[Vr_min(1) 0 0]; %velocidad del robot
 Vb(i,1)=0; %velocidad de la bola
 dirb(i,1)=atan2(Pb(i,2)-Pr(i,2),Pb(i,1)-Pr(i,1))*180/pi; %dirección bola
@@ -60,11 +60,13 @@ x = [Pr(i,1),Pb(i,1),Vb(i,1),Vr(i,1),ro(i,1),dV,gama(i,1),fi(i,1)];
 [V_FLC] = FLC_dribbling (w,x,Vr_min,Vr_max);
 
 % convert the continous state variables to an index of the statelist
-s   = DiscretizeState(x,statelist);
+%s   = DiscretizeState(x,statelist);
+s  = DiscretizeStateDLF(x,cores,state_steps,div_disc);
+
 % selects an action using the epsilon greedy selection strategy
-a   = e_greedy_selection(Q,s,epsilon);
-a_y = e_greedy_selection(Q_y,s,epsilon);
-a_rot = e_greedy_selection(Q_rot,s,epsilon);
+a   = e_greedy_selection(RL.Q,s, RL.param.epsilon);
+a_y = e_greedy_selection(RL.Q_y,s, RL.param.epsilon);
+a_rot = e_greedy_selection(RL.Q_rot,s, RL.param.epsilon);
 
 ft=[1 1 1];
 
@@ -126,27 +128,26 @@ ft=[1 1 1];
     total_reward = total_reward + r;
            
     % convert the continous state variables in [xp] to an index of the statelist    
-    sp  = DiscretizeState(x_obs,statelist);
+    %sp  = DiscretizeState(x_obs,statelist);
+    sp  = DiscretizeStateDLF(x_obs,cores,state_steps,div_disc);
     
     % select action prime
-    %ap = e_greedy_selection(Q,sp,epsilon);
+    %ap = e_greedy_selection(RL.Q,sp,epsilon);
     
 	a_transf = 1 + round(V_FLC(1)/V_action_steps(1));  % from FLC
-    a_transf_y = 1 + round(V_FLC(2)/V_action_steps(2)) +8;
-    a_transf_rot = 1 + round(V_FLC(3)/V_action_steps(3)) +8;
+    a_transf_y = 1 + round(V_FLC(2)/V_action_steps(2)  + Vr_max(2)/V_action_steps(2) );
+    a_transf_rot = 1 + round(V_FLC(3)/V_action_steps(3) + Vr_max(3)/V_action_steps(3) );
         
-    %a_transf=GetBestAction(Qs,1+floor((sp-1)/49));  % from QPho
-    %a_transf=GetBestAction(Qs,sp);  % 
     
     p_=1;
-    [ap, ft(1)] = p_source_selection_FLC(Q,sp,epsilon,a_transf,p,Q_INIT);
-    [ap_y, ft(2)] = p_source_selection_FLC(Q_y,sp,epsilon,a_transf_y,p,Q_INIT);
-    [ap_rot, ft(3)] = p_source_selection_FLC(Q_rot,sp,epsilon,a_transf_rot,p,Q_INIT);
+    [ap] = p_source_selection_FLC(RL.Q,sp, RL.param, a_transf, Q_INIT);
+    [ap_y] = p_source_selection_FLC(RL.Q_y,sp, RL.param, a_transf_y,Q_INIT);
+    [ap_rot] = p_source_selection_FLC(RL.Q_rot,sp, RL.param, a_transf_rot,Q_INIT);
         
 	% Update the Qtable, that is,  learn from the experience
-    [Q, trace] = UpdateSARSAlambda( s, a, r(1), sp, ap, Q, alpha, gamma, lambda, trace );
-    [Q_y, trace_y] = UpdateSARSAlambda( s, a_y, r(2), sp, ap_y, Q_y, alpha, gamma, lambda, trace_y );
-    [Q_rot, trace_rot] = UpdateSARSAlambda( s, a_rot, r(3), sp, ap_rot, Q_rot, alpha, gamma, lambda, trace_rot );
+    [RL.Q, RL.trace] = UpdateSARSAlambda( s, a, r(1), sp, ap, RL.Q, RL.param, RL.trace );
+    [RL.Q_y, RL.trace_y] = UpdateSARSAlambda( s, a_y, r(2), sp, ap_y, RL.Q_y, RL.param, RL.trace_y );
+    [RL.Q_rot, RL.trace_rot] = UpdateSARSAlambda( s, a_rot, r(3), sp, ap_rot, RL.Q_rot, RL.param, RL.trace_rot );
         
     %update the current variables
     s = sp;
@@ -184,9 +185,4 @@ ft=[1 1 1];
         break
     end
       
-    
-end
-
-
-
-
+ end

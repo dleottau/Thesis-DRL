@@ -1,18 +1,29 @@
-clear all
+%clear all
 clc
 close all
 
-episodes = 2000;   % maximum number of  episode
-maxDistance = 6000;    % maximum ball distance permited before to end the episode X FIELD DIMENSION
-th_max = [250 15 15];      % maximum pho desired
-Runs = 2;
-NOISE = 0.0;
+conf.episodes = 1500;   % maximum number of  episode
+conf.maxDistance = 6000;    % maximum ball distance permited before to end the episode X FIELD DIMENSION
+conf.th_max = [250 15 15];      % maximum pho desired
+conf.Runs = 1;
+conf.NOISE = 0.0;
 tic
-DRAWS = 1;
+conf.DRAWS = 1;
 
-Q_INIT = 0;
-TRANSFER = 0;  %=1 transfer, >1 acts gready from source policy, =0 learns from scratch,
-EXPL_EPISODES_FACTOR = 3;
+conf.Q_INIT = 0;
+conf.TRANSFER = 0;  %=1 transfer, >1 acts gready from source policy, =0 learns from scratch,
+conf.EXPL_EPISODES_FACTOR = 3;
+
+
+conf.Voffset = 1; %Offset Speed in mm/s
+conf.V_action_steps = [25, 20, 20]/1; % /4 works good
+conf.state_steps = [50, 10, 10];
+conf.Vr_max = [100 40 40]; %x,y,rot Max Speed achieved by the robot
+conf.Vr_min = -conf.Vr_max;
+conf.Vr_min(1) = conf.Voffset;
+conf.maxDeltaV = conf.Vr_max.*[1/3 1/3 1/2]; %mm/s/Ts
+conf.Ts = 0.2; %Sample time of a RL step
+
 
 a_spot={'r' 'g' 'b' 'c' 'm' 'y' 'k' '--r' '--g' '--b' '--c' };
 
@@ -29,9 +40,9 @@ pf_max=-Inf;
 interval=0.7;
 
 
-for i=1:Runs
+for i=1:conf.Runs
 %    disp(['Test= ', num2str(a), '.', num2str(i), ' lambda= ', num2str(lambda(a))])
-    [reward(:,i), fitness(:,i), Vavg(:,i), tp_faults(:,i), Q] = Dribbling2d( i, DRAWS, episodes,maxDistance,th_max,NOISE, Q_INIT, TRANSFER, EXPL_EPISODES_FACTOR);
+    [reward(:,i), fitness(:,i), Vavg(:,i), tp_faults(:,i), Q] = Dribbling2d( i, conf);
                               
     mf(i) = mean(fitness(floor(interval*episodes):episodes,i));
     if mf(i) < mf_min

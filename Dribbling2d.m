@@ -1,60 +1,51 @@
-function  [reward, fitness, Vavg, tp_faults, Q] =Dribbling2d( nRun, DRAWS, maxepisodes, maxDistance, th_max, NOISE, Q_INIT, TRANSFER, EXPL_EPISODES_FACTOR)
+function  [reward, fitness, Vavg, tp_faults, Q] =Dribbling2d( nRun, conf)
 %Dribbling1d SARSA, the main function of the trainning
-%maxepisodes: maximum number of episodes to run the demo
+
 
 %  SARSA 
 
 load W-FLC;
 
-%load Qnoise0;
-%Qs=Qnoise0;
-% load QPho;
-% Qs=QPho;
-load QokVx;
-Qs=QokVx;
-
-V_action_steps=[6.25, 5, 5];
-Ts = 0.2; %Sample time of a RL step
-States   = StateTable();  % the table of states
-Actions  = ActionTable(V_action_steps); % the table of actions
+Ts = conf.Ts; %Sample time of a RL step
+[States, conf.cores, conf.div_disc]   = StateTable( conf.state_steps );  % the table of states
+Actions  = ActionTable( conf.Vr_min, conf.V_action_steps, conf.Vr_max, conf.Voffset ); % the table of actions
 nstates     = size(States,1);
-nactions    = size(Actions(:,1),1);
+nactions    = size(Actions,1);
 
-Q        = QTable( nstates,nactions,Q_INIT );  % the Qtable for the vx agent
-trace    = QTable( nstates,nactions,0 );  % the elegibility trace for the vx agent
-Q_y      = Q;  % the Qtable for the vy agent
-trace_y  = trace;  % the elegibility trace for the vy agent
-Q_rot    = Q;  % the Qtable for the v_rot agent
-trace_rot = trace;  % the elegibility trace for the v_rot agent
+RL.Q        = QTable( nstates,nactions, conf.Q_INIT );  % the Qtable for the vx agent
+RL.trace    = QTable( nstates,nactions,0 );  % the elegibility trace for the vx agent
+RL.Q_y      = RL.Q;  % the Qtable for the vy agent
+RL.trace_y  = RL.trace;  % the elegibility trace for the vy agent
+RL.Q_rot    = RL.Q;  % the Qtable for the v_rot agent
+RL.trace_rot = RL.trace;  % the elegibility trace for the v_rot agent
 
-%Qs=Q;
-
-alpha       = 0.5;   % learning rate
-gamma       = 1;   % discount factor
+RL.param.alpha       = 0.5;   % learning rate
+RL.param.gamma       = 1;   % discount factor
+RL.param.lambda      = 0.9;   % the decaying elegibiliy trace parameter
 epsilon0     = 1;  % probability of a random action selection
-lambda      = 0.9;   % the decaying elegibiliy trace parameter
 p0=1;
 
-EXPLORATION = maxepisodes/EXPL_EPISODES_FACTOR;
+EXPLORATION = conf.episodes/conf.EXPL_EPISODES_FACTOR;
 epsDec = -log(0.05) * 1/EXPLORATION;  %epsilon decrece a un 5% (0.005) en maxEpisodes cuartos (maxepisodes/4), de esta manera el decrecimiento de epsilon es independiente del numero de episodios
-epsilon = epsilon0;
-p=p0;
 
-for i=1:maxepisodes    
+RL.param.epsilon = epsilon0;
+RL.param.p=p0;
+
+for i=1:conf.episodes    
             
-    if TRANSFER>1, p=1; %acts greedy from source policy
-    elseif TRANSFER==0, p=0; %learns from scratch
+    if conf.TRANSFER>1, RL.param.p=1; %acts greedy from source policy
+    elseif conf.TRANSFER == 0, RL.param.p=0; %learns from scratch
     end %else Transfer from source decaying as p
     
-    [Vr,ro,fi,gama,Pt,Pb,Pr,Vb,total_reward,steps, Q,Q_y,Q_rot,trace,trace_y,trace_rot, fitness_k,btd_k,Vavg_k,time,faults] = Episode( wf,maxDistance, Q,Q_y,Q_rot,Qs, alpha, gamma, epsilon, p, States, Actions, Ts, th_max, lambda, trace,trace_y,trace_rot, NOISE, Q_INIT, V_action_steps);
+    [RL, Vr,ro,fi,gama,Pt,Pb,Pr,Vb,total_reward,steps,fitness_k,btd_k,Vavg_k,time,faults] = Episode( wf, RL, States, Actions, conf);
     
     %disp(['Epsilon:',num2str(eps),'  Espisode: ',int2str(i),'  Steps:',int2str(steps),'  Reward:',num2str(total_reward),' epsilon: ',num2str(epsilon)])
         
-    epsilon = epsilon0 * exp(-i*epsDec);
-    p = p0*exp(-i*epsDec*1);
+    RL.param.epsilon = epsilon0 * exp(-i*epsDec);
+    RL.param.p = p0*exp(-i*epsDec*1);
         
      
-     if DRAWS==1
+     if conf.DRAWS==1
 
         xpoints(i)=i-1;
         reward(i,:)=total_reward/steps;
@@ -69,7 +60,7 @@ for i=1:maxepisodes
         plot(xpoints,reward(:,2),'g')      
         plot(xpoints,reward(:,3),'b')      
         plot(xpoints,btd,'k')      
-        title([ 'Mean Reward(rgb) Episode:',int2str(i), ' p=',sprintf('%.2f',p) ' Run: ',int2str(nRun)])
+        title([ 'Mean Reward(rgb) Episode:',int2str(i), ' p=',sprintf('%.2f',RL.param.p) ' Run: ',int2str(nRun)])
         hold
                 
         subplot(4,2,3)
@@ -92,7 +83,7 @@ for i=1:maxepisodes
         hold on
         plot(Pb(:,1),Pb(:,2),'*r')%posición de la bola
         plot(Pr(:,1),Pr(:,2),'g')% posición del robot
-        axis([-100 maxDistance+100 -4000 4000])
+        axis([-100 conf.maxDistance+100 -4000 4000])
         title('X-Y Plane');
         hold
         %drawnow
@@ -144,7 +135,8 @@ for i=1:maxepisodes
         
      
      end
-
+     
+     Q=RL.Q;
 
 end
 
