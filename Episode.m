@@ -15,7 +15,7 @@ function [ RL, Vr,ro,fi,gama,Pt,Pb,Pr,Vb,total_reward,steps, fitness,btd,Vavg,ti
 Vr_max = conf.Vr_max; %x,y,rot Max Speed achieved by the robot
 Vr_min = conf.Vr_min;
 maxDeltaV = conf.maxDeltaV; %mm/s/Ts
-state_steps = conf.state_steps;
+feature_step = conf.feature_step;
 V_action_steps = conf.V_action_steps;
 cores = conf.cores;
 div_disc = conf.div_disc;
@@ -30,7 +30,7 @@ Vyrmax=100;
 Vthetamax=100;
 
 Pr=[0 0 0];
-Pb=[th_max(1)/5 0];
+Pb=[th_max(1) 0];
 Pt=[maxDistance+2000 0];
 
 NoiseRobotVel = [NOISE*0.15 NOISE*0.05 NOISE*0.03]; %
@@ -61,25 +61,24 @@ x = [Pr(i,1),Pb(i,1),Vb(i,1),Vr(i,1),ro(i,1),dV,gama(i,1),fi(i,1)];
 
 % convert the continous state variables to an index of the statelist
 %s   = DiscretizeState(x,statelist);
-s  = DiscretizeStateDLF(x,cores,state_steps,div_disc);
+s  = DiscretizeStateDLF(x,cores,feature_step,div_disc);
 
 % selects an action using the epsilon greedy selection strategy
-a   = e_greedy_selection(RL.Q,s, RL.param.epsilon);
-a_y = e_greedy_selection(RL.Q_y,s, RL.param.epsilon);
-a_rot = e_greedy_selection(RL.Q_rot,s, RL.param.epsilon);
+a   = e_greedy_selection(RL.Q, s, RL.param.epsilon);
+%a_y = e_greedy_selection(RL.Q_y,s, RL.param.epsilon);
+%a_rot = e_greedy_selection(RL.Q_rot,s, RL.param.epsilon);
+action = ones(1,3);
 
-ft=[1 1 1];
-
-%for i=1:maxsteps    
- while 1  
+while 1  
     steps=i;
     i = i+1; % OJO, ESTO E SIMPORTANTE PUES SE EVALUAN ESTADOS ANTERIORES, i-1
     time(i) = time(i-1) + Ts; 
          
     % convert the index of the action into an action value
-    action = actionlist(a,1);    
-    action_y = actionlist(a_y,2);    
-    action_rot = actionlist(a_rot,3);    
+    action = actionlist(a,:);    
+    %action = actionlist(a,1);    
+    %action_y = actionlist(a_y,2);    
+    %action_rot = actionlist(a_rot,3);    
         
     %-------DO ACTION -----------------
     % do the selected action and get the next  state  
@@ -87,7 +86,8 @@ ft=[1 1 1];
     % ADDING SATURATONS AND NOISE
     
     %Vr_ req is the robot speed requested
-    Vr_req=[action action_y action_rot]; 
+    Vr_req=action; 
+    %Vr_req=[action action_y action_rot]; 
     %Vr_req=[action V_FLC(2) action_rot]; 
     
     %Vr is the current robot speed
@@ -122,38 +122,38 @@ ft=[1 1 1];
     %---------------------------------------        
           
     % observe the reward at state xp and the final state flag
-    [r,f]   = GetReward(x_obs,maxDistance,th_max,Vr_max,ft,faults/steps*100);
+    [r,f]   = GetReward(x_obs,maxDistance,th_max,Vr_max,faults/steps*100);
         
     %total_reward = total_reward + r;
     total_reward = total_reward + r;
            
     % convert the continous state variables in [xp] to an index of the statelist    
     %sp  = DiscretizeState(x_obs,statelist);
-    sp  = DiscretizeStateDLF(x_obs,cores,state_steps,div_disc);
+    sp  = DiscretizeStateDLF(x_obs,cores,feature_step,div_disc);
     
     % select action prime
-    %ap = e_greedy_selection(RL.Q,sp,epsilon);
+    ap = e_greedy_selection(RL.Q , sp, RL.param.epsilon);
     
-	a_transf = 1 + round(V_FLC(1)/V_action_steps(1));  % from FLC
-    a_transf_y = 1 + round(V_FLC(2)/V_action_steps(2)  + Vr_max(2)/V_action_steps(2) );
-    a_transf_rot = 1 + round(V_FLC(3)/V_action_steps(3) + Vr_max(3)/V_action_steps(3) );
+	%a_transf = 1 + round(V_FLC(1)/V_action_steps(1));  % from FLC
+    %a_transf_y = 1 + round(V_FLC(2)/V_action_steps(2)  + Vr_max(2)/V_action_steps(2) );
+    %a_transf_rot = 1 + round(V_FLC(3)/V_action_steps(3) + Vr_max(3)/V_action_steps(3) );
         
     
-    p_=1;
-    [ap] = p_source_selection_FLC(RL.Q,sp, RL.param, a_transf, Q_INIT);
-    [ap_y] = p_source_selection_FLC(RL.Q_y,sp, RL.param, a_transf_y,Q_INIT);
-    [ap_rot] = p_source_selection_FLC(RL.Q_rot,sp, RL.param, a_transf_rot,Q_INIT);
+    %p_=1;
+    %[ap] = p_source_selection_FLC(RL.Q,sp, RL.param, a_transf, Q_INIT);
+    %[ap_y] = p_source_selection_FLC(RL.Q_y,sp, RL.param, a_transf_y,Q_INIT);
+    %[ap_rot] = p_source_selection_FLC(RL.Q_rot,sp, RL.param, a_transf_rot,Q_INIT);
         
 	% Update the Qtable, that is,  learn from the experience
     [RL.Q, RL.trace] = UpdateSARSAlambda( s, a, r(1), sp, ap, RL.Q, RL.param, RL.trace );
-    [RL.Q_y, RL.trace_y] = UpdateSARSAlambda( s, a_y, r(2), sp, ap_y, RL.Q_y, RL.param, RL.trace_y );
-    [RL.Q_rot, RL.trace_rot] = UpdateSARSAlambda( s, a_rot, r(3), sp, ap_rot, RL.Q_rot, RL.param, RL.trace_rot );
+    %[RL.Q_y, RL.trace_y] = UpdateSARSAlambda( s, a_y, r(2), sp, ap_y, RL.Q_y, RL.param, RL.trace_y );
+    %[RL.Q_rot, RL.trace_rot] = UpdateSARSAlambda( s, a_rot, r(3), sp, ap_rot, RL.Q_rot, RL.param, RL.trace_rot );
         
     %update the current variables
     s = sp;
     a = ap;
-    a_y = ap_y;
-    a_rot = ap_rot;
+    %a_y = ap_y;
+    %a_rot = ap_rot;
             
     %Compute performance index
     Vrx = x(4);

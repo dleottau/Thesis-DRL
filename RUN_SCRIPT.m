@@ -2,7 +2,7 @@
 clc
 close all
 
-conf.episodes = 1500;   % maximum number of  episode
+conf.episodes = 2000;   % maximum number of  episode
 conf.maxDistance = 6000;    % maximum ball distance permited before to end the episode X FIELD DIMENSION
 conf.th_max = [250 15 15];      % maximum pho desired
 conf.Runs = 1;
@@ -10,17 +10,19 @@ conf.NOISE = 0.0;
 tic
 conf.DRAWS = 1;
 
-conf.Q_INIT = 0;
+conf.Q_INIT = 5;
 conf.TRANSFER = 0;  %=1 transfer, >1 acts gready from source policy, =0 learns from scratch,
 conf.EXPL_EPISODES_FACTOR = 3;
 
 
 conf.Voffset = 1; %Offset Speed in mm/s
 conf.V_action_steps = [25, 20, 20]/1; % /4 works good
-conf.state_steps = [50, 10, 10];
 conf.Vr_max = [100 40 40]; %x,y,rot Max Speed achieved by the robot
 conf.Vr_min = -conf.Vr_max;
 conf.Vr_min(1) = conf.Voffset;
+conf.feature_step = [50, 10, 10];
+conf.feature_min = [0, -30, -30];
+conf.feature_max = [600, 30, 30];
 conf.maxDeltaV = conf.Vr_max.*[1/3 1/3 1/2]; %mm/s/Ts
 conf.Ts = 0.2; %Sample time of a RL step
 

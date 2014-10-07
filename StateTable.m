@@ -1,9 +1,9 @@
-function [ States,cores,div_disc ] = StateTable(state_steps)
+function [ States,cores,div_disc ] = StateTable(feature_min, feature_step, feature_max )
 %BuildStateList builds a state list from a state matrix
 
-ro = 0 : state_steps(1) : 600;
-gama = -30 : state_steps(2) : 30;
-fi = -30 : state_steps(3) : 30;
+ro = feature_min(1) : feature_step(1) : feature_max(1);
+gama = feature_min(2) : feature_step(2) : feature_max(2);
+fi = feature_min(3) : feature_step(3) : feature_max(3);
 
  
 N=size(ro,2);
