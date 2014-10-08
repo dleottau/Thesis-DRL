@@ -5,8 +5,8 @@ close all
 conf.episodes = 30;   % maximum number of  episode
 conf.maxDistance = 6000;    % maximum ball distance permited before to end the episode X FIELD DIMENSION
 conf.th_max = [250 15 15];      % maximum pho desired
-conf.Runs = 5;
-conf.NOISE = 0.2;
+conf.Runs = 3;
+conf.NOISE = 0.0;
 tic
 conf.DRAWS = 1;
 
@@ -39,7 +39,7 @@ et_max=-Inf;
 cr_min=Inf;
 v_min=Inf;
 pf_max=-Inf;
-interval=0.0;
+interval=0.7;
 
 
 for i=1:conf.Runs
@@ -90,9 +90,9 @@ results.performance(3,1)=v_min;
 results.performance(1,1)=mean(vm);
 results.performance(2,1)=v_max;
 
-results.performance(3,2)=et_min;
+results.performance(2,2)=et_min;
 results.performance(1,2)=mean(et);
-results.performance(2,2)=et_max;
+results.performance(3,2)=et_max;
 
 results.performance(2,3)=pf_min;
 results.performance(1,3)=mean(pf);
@@ -114,6 +114,12 @@ results.std_faults = std(tp_faults,0,2);
 results.mean_eTime = mean(e_time,2);
 results.std_eTime = std(e_time,0,2);
 
+results.mean_rewX = mean(reward(:,1),2);
+results.std_rewX = std(reward(:,1),0,2);
+results.mean_rewY = mean(reward(:,2),2);
+results.std_rewY = std(reward(:,2),0,2);
+results.mean_rewRot = mean(reward(:,3),2);
+results.std_rewRot = std(reward(:,3),0,2);
 
 save results;
 
@@ -130,8 +136,7 @@ if conf.DRAWS==1
     subplot(2,2,2)
     plot(results.mean_eTime)
     title('Mean Episode Time')
-    drawnow
-    
+        
     subplot(2,2,3)
     plot(results.mean_Vavg)
     title('Mean Vavg')
@@ -139,7 +144,7 @@ if conf.DRAWS==1
     subplot(2,2,4)
     plot(results.mean_faults)
     title('Mean %TimeFaults')
-    
+    drawnow
     
     
 %     figure,plot(mean(reward,2))
