@@ -1,4 +1,4 @@
-function  [reward, fitness, Vavg, tp_faults, Q] =Dribbling2d( nRun, conf)
+function  [reward, e_time, Vavg, tp_faults, Qx,Qy,Qrot] =Dribbling2d( nRun, conf)
 %Dribbling1d SARSA, the main function of the trainning
 
 
@@ -14,10 +14,10 @@ nactions    = size(Actions,1);
 
 RL.Q        = QTable( nstates,nactions, conf.Q_INIT );  % the Qtable for the vx agent
 RL.trace    = QTable( nstates,nactions,0 );  % the elegibility trace for the vx agent
-%RL.Q_y      = RL.Q;  % the Qtable for the vy agent
-%RL.trace_y  = RL.trace;  % the elegibility trace for the vy agent
-%RL.Q_rot    = RL.Q;  % the Qtable for the v_rot agent
-%RL.trace_rot = RL.trace;  % the elegibility trace for the v_rot agent
+RL.Q_y      = RL.Q;  % the Qtable for the vy agent
+RL.trace_y  = RL.trace;  % the elegibility trace for the vy agent
+RL.Q_rot    = RL.Q;  % the Qtable for the v_rot agent
+RL.trace_rot = RL.trace;  % the elegibility trace for the v_rot agent
 
 RL.param.alpha       = 0.5;   % learning rate
 RL.param.gamma       = 1;   % discount factor
@@ -49,7 +49,7 @@ for i=1:conf.episodes
 
         xpoints(i)=i-1;
         reward(i,:)=total_reward/steps;
-        fitness(i,1)=fitness_k/(steps*Ts);
+        e_time(i,1)=steps*Ts;
         Vavg(i,1)=Vavg_k;
         btd(i,1)=btd_k;
         tp_faults(i,1)=faults/steps*100;
@@ -69,8 +69,8 @@ for i=1:conf.episodes
         %drawnow
         
         subplot(4,2,5); 
-        plot(xpoints,fitness)
-        title('Fitness/EpisodeTime')
+        plot(xpoints,e_time)
+        title('Episode Time')
         %drawnow
         
         subplot(4,2,7); 
@@ -137,7 +137,9 @@ for i=1:conf.episodes
      
      end
      
-     Q=RL.Q;
+     Qx=RL.Q;
+     Qy=RL.Q_y;
+     Qrot=RL.Q_rot;
 
 end
 

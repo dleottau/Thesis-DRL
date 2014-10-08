@@ -10,12 +10,12 @@ actions = size(Q,2);
 ab = GetBestAction(Q,s);
 
 % % Method 7
-% if (rand()>p) 
-%     a = e_greedy_selection(Q,s,epsilon);
-% else
-%     a=at;
-% end
-% 
+if (rand()> RLparam.p) 
+    a = e_greedy_selection(Q,s,RLparam.epsilon);
+else
+    a=at;
+end
+
 
 %Method 1 DLF
 % if (rand()>p) 
@@ -26,9 +26,9 @@ ab = GetBestAction(Q,s);
 
 
 % Method 2 DLF
-if (rand() > RLparam.p) 
-    a = clipDLF( round(ab + 1*randn()* RLparam.p), 1,actions ); %e_greedy_selection(Q,s,epsilon);
-else
-    a = clipDLF( round(at + 2*randn()*(1 - RLparam.p)), 1,actions );
-end
+% if (rand() > RLparam.p) 
+%     a = clipDLF( round(ab + 1*randn()* RLparam.p), 1,actions ); %e_greedy_selection(Q,s,epsilon);
+% else
+%     a = clipDLF( round(at + 2*randn()*(1 - RLparam.p)), 1,actions );
+% end
 
