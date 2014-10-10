@@ -5,7 +5,8 @@ function  [reward, e_time, Vavg, tp_faults, Qx,Qy,Qrot] =Dribbling2d( nRun, conf
 %  SARSA 
 
 load W-FLC-RC2014;
-load Qx_1D;
+%load Qx_1D;
+load Qx_eRLFLC;
 
 Ts = conf.Ts; %Sample time of a RL step
 [States, conf.cores, conf.div_disc]   = StateTable( conf.feature_min, conf.feature_step, conf.feature_max );  % the table of states
@@ -13,7 +14,8 @@ Actions  = ActionTable( conf.Vr_min, conf.V_action_steps, conf.Vr_max, conf.Voff
 nstates     = size(States,1);
 nactions    = size(Actions,1);
 
-RL.Q        = Qx_1D;
+RL.Q         = Qx_eRLFLC;
+%RL.Q        = Qx_1D;
 %RL.Q        = QTable( nstates,nactions, conf.Q_INIT );  % the Qtable for the vx agent
 RL.trace    = QTable( nstates,nactions,0 );  % the elegibility trace for the vx agent
 RL.Q_y      = RL.Q;  % the Qtable for the vy agent
@@ -24,8 +26,8 @@ RL.trace_rot = RL.trace;  % the elegibility trace for the v_rot agent
 RL.param.alpha       = 0.5;   % learning rate
 RL.param.gamma       = 1;   % discount factor
 RL.param.lambda      = 0.9;   % the decaying elegibiliy trace parameter
-epsilon0     = 0;  % probability of a random action selection
-p0=1;
+epsilon0             = 0;  % probability of a random action selection
+p0                   = 1;
 
 EXPLORATION = conf.episodes/conf.EXPL_EPISODES_FACTOR;
 epsDec = -log(0.05) * 1/EXPLORATION;  %epsilon decrece a un 5% (0.005) en maxEpisodes cuartos (maxepisodes/4), de esta manera el decrecimiento de epsilon es independiente del numero de episodios
