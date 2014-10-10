@@ -88,7 +88,9 @@ while 1
     %Vr_ req is the robot speed requested
     %Vr_req=action; %centralized learner
     Vr_req=[action action_y action_rot]; 
-    %Vr_req=[action V_FLC(2) action_rot]; 
+    %Vr_req(1)=V_FLC(1);
+    Vr_req(2)=V_FLC(2);
+    Vr_req(3)=V_FLC(3);
     
     %Vr is the current robot speed
     dVelReq = Vr_req - Vr(i-1,:);
@@ -144,7 +146,7 @@ while 1
     [ap_rot] = p_source_selection_FLC(RL.Q_rot,sp, RL.param, a_transf_rot,Q_INIT);
         
 	% Update the Qtable, that is,  learn from the experience
-    [RL.Q, RL.trace] = UpdateSARSAlambda( s, a, r(1), sp, ap, RL.Q, RL.param, RL.trace );
+    %[RL.Q, RL.trace] = UpdateSARSAlambda( s, a, r(1), sp, ap, RL.Q, RL.param, RL.trace );
     [RL.Q_y, RL.trace_y] = UpdateSARSAlambda( s, a_y, r(2), sp, ap_y, RL.Q_y, RL.param, RL.trace_y );
     [RL.Q_rot, RL.trace_rot] = UpdateSARSAlambda( s, a_rot, r(3), sp, ap_rot, RL.Q_rot, RL.param, RL.trace_rot );
         
@@ -170,10 +172,11 @@ while 1
     
     thres = [pho_  abs(gamma_) abs(phi_)] > th_max;
     if sum(thres)~=0
+    %if pho_ > th_max(1)
         faults = faults+1;
-        fitness = fitness - ( (1-Vrx/Vr_max(1)) + sum(thres .* [pho_  abs(gamma_) abs(phi_)] .*1/th_max) );
+        %fitness = fitness - ( (1-Vrx/Vr_max(1)) + sum(thres .* [pho_  abs(gamma_) abs(phi_)] .*1/th_max) );
     else
-        fitness = fitness - (1-Vrx/Vr_max(1));
+        %fitness = fitness - (1-Vrx/Vr_max(1));
     end
     
     % terminal state?

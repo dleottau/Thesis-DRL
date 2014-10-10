@@ -2,17 +2,17 @@ clear all
 clc
 close all
 
-conf.episodes = 30;   % maximum number of  episode
+conf.episodes = 100;   % maximum number of  episode
 conf.maxDistance = 6000;    % maximum ball distance permited before to end the episode X FIELD DIMENSION
 conf.th_max = [250 15 15];      % maximum pho desired
-conf.Runs = 3;
-conf.NOISE = 0.0;
+conf.Runs = 1;
+conf.NOISE = 0.1;
 tic
 conf.DRAWS = 1;
 
-conf.Q_INIT = 5;
-conf.TRANSFER = 2;  %=1 transfer, >1 acts gready from source policy, =0 learns from scratch,
-conf.EXPL_EPISODES_FACTOR = 5;
+conf.Q_INIT = 0;
+conf.TRANSFER = 0;  %=1 transfer, >1 acts gready from source policy, =0 learns from scratch,
+conf.EXPL_EPISODES_FACTOR = 10;
 
 
 conf.Voffset = 1; %Offset Speed in mm/s
@@ -47,6 +47,7 @@ for i=1:conf.Runs
     [reward(:,:,i), e_time(:,i), Vavg(:,i), tp_faults(:,i),  Qx,Qy,Qrot] = Dribbling2d( i, conf);
                               
     et(i) = mean(e_time(ceil(interval*conf.episodes):conf.episodes,i));
+    et_sd(i) = std(e_time(ceil(interval*conf.episodes):conf.episodes,i));
     if et(i) < et_min
         et_min=et(i);
     end
@@ -55,6 +56,7 @@ for i=1:conf.Runs
     end
        
     vm(i) = mean(Vavg(ceil(interval*conf.episodes):conf.episodes,i));
+    vm_sd(i) = std(Vavg(ceil(interval*conf.episodes):conf.episodes,i));
     if vm(i) > v_max
         v_max=vm(i);
     end
@@ -63,6 +65,7 @@ for i=1:conf.Runs
     end
         
     pf(i) = mean(tp_faults(ceil(interval*conf.episodes):conf.episodes,i));
+    pf_sd(i) = std(tp_faults(ceil(interval*conf.episodes):conf.episodes,i));
     if pf(i) < pf_min
         pf_min=pf(i);
     end
@@ -89,14 +92,17 @@ end
 results.performance(3,1)=v_min;
 results.performance(1,1)=mean(vm);
 results.performance(2,1)=v_max;
+results.performance(5,1)=mean(vm_sd);
 
 results.performance(2,2)=et_min;
 results.performance(1,2)=mean(et);
 results.performance(3,2)=et_max;
+results.performance(5,2)=mean(et_sd);
 
 results.performance(2,3)=pf_min;
 results.performance(1,3)=mean(pf);
 results.performance(3,3)=pf_max;
+results.performance(5,3)=mean(pf_sd);
 
 results.performance(3,4)=cr_min;
 results.performance(1,4)=mean(cr);
