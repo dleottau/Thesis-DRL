@@ -139,8 +139,8 @@ while 1
     % select action prime
     ap = e_greedy_selection(RL.Q , sp, RL.param.epsilon);
     
-	a_transf = GetBestAction(RL.Qs,sp);   
-    %a_transf = 1 + round(V_FLC(1)/V_action_steps(1));  % from FLC
+	%a_transf = GetBestAction(RL.Qs,sp);   
+    a_transf = 1 + round(V_FLC(1)/V_action_steps(1));  % from FLC
     a_transf_y = 1 + round(V_FLC(2)/V_action_steps(2)  + Vr_max(2)/V_action_steps(2) );
     a_transf_rot = 1 + round(V_FLC(3)/V_action_steps(3) + Vr_max(3)/V_action_steps(3) );
         
@@ -150,9 +150,9 @@ while 1
     [ap_rot] = p_source_selection_FLC(RL.Q_rot,sp, RL.param, a_transf_rot,Q_INIT);
         
 	% Update the Qtable, that is,  learn from the experience
-    [RL.Q, RL.trace] = UpdateSARSAlambda( s, a, r(1), sp, ap, RL.Q, RL.param, RL.trace );
-    [RL.Q_y, RL.trace_y] = UpdateSARSAlambda( s, a_y, r(2), sp, ap_y, RL.Q_y, RL.param, RL.trace_y );
-    [RL.Q_rot, RL.trace_rot] = UpdateSARSAlambda( s, a_rot, r(3), sp, ap_rot, RL.Q_rot, RL.param, RL.trace_rot );
+    %[RL.Q, RL.trace] = UpdateSARSAlambda( s, a, r(1), sp, ap, RL.Q, RL.param, RL.trace );
+    %[RL.Q_y, RL.trace_y] = UpdateSARSAlambda( s, a_y, r(2), sp, ap_y, RL.Q_y, RL.param, RL.trace_y );
+    %[RL.Q_rot, RL.trace_rot] = UpdateSARSAlambda( s, a_rot, r(3), sp, ap_rot, RL.Q_rot, RL.param, RL.trace_rot );
         
     %update the current variables
     s = sp;

@@ -6,10 +6,10 @@ function  [reward, e_time, Vavg, tp_faults, Qx,Qy,Qrot] =Dribbling2d( nRun, conf
 
 load W-FLC-RC2014;
 %load Qx_RLFLC;
-load Qx_eRLFLC;
-%load Qx_DRL;
-%load Qy_DRL;
-%load Qrot_DRL;
+%load Qx_eRLFLC;
+load Qx_TDRL;
+load Qy_TDRL;
+load Qrot_TDRL;
 
 Ts = conf.Ts; %Sample time of a RL step
 [States, conf.cores, conf.div_disc]   = StateTable( conf.feature_min, conf.feature_step, conf.feature_max );  % the table of states
@@ -19,14 +19,14 @@ nactions    = size(Actions,1);
 
 %RL.Q         = Qx_eRLFLC;
 %RL.Q        = Qx_RLFLC;
-%RL.Q        = Qx_DRL;
-%RL.Q_y      = Qy_DRL;
-%RL.Q_rot    = Qrot_DRL;
+RL.Q        = Qx_TDRL;
+RL.Q_y      = Qy_TDRL;
+RL.Q_rot    = Qrot_TDRL;
 
-RL.Qs       = Qx_eRLFLC;
-RL.Q        = QTable( nstates,nactions, conf.Q_INIT );  % the Qtable for the vx agent
-RL.Q_y      = RL.Q;  % the Qtable for the vy agent
-RL.Q_rot    = RL.Q;  % the Qtable for the v_rot agent
+%RL.Qs       = Qx_eRLFLC;
+%RL.Q        = QTable( nstates,nactions, conf.Q_INIT );  % the Qtable for the vx agent
+%RL.Q_y      = RL.Q;  % the Qtable for the vy agent
+%RL.Q_rot    = RL.Q;  % the Qtable for the v_rot agent
 
 RL.trace    = QTable( nstates,nactions,0 );  % the elegibility trace for the vx agent
 RL.trace_y  = RL.trace;  % the elegibility trace for the vy agent
@@ -35,7 +35,7 @@ RL.trace_rot = RL.trace;  % the elegibility trace for the v_rot agent
 RL.param.alpha       = 0.5;   % learning rate
 RL.param.gamma       = 1;   % discount factor
 RL.param.lambda      = 0.9;   % the decaying elegibiliy trace parameter
-epsilon0             = 1;  % probability of a random action selection
+epsilon0             = 0;  % probability of a random action selection
 p0                   = 1;
 
 EXPLORATION = conf.episodes/conf.EXPL_EPISODES_FACTOR;
