@@ -149,9 +149,9 @@ while 1
     [ap_rot] = p_source_selection_FLC(RL.Q_rot,sp, RL.param, a_transf_rot,Q_INIT);
         
 	% Update the Qtable, that is,  learn from the experience
-    [RL.Q, RL.trace] = UpdateSARSAlambda( s, a, r(1), sp, ap, RL.Q, RL.param, RL.trace );
-    [RL.Q_y, RL.trace_y] = UpdateSARSAlambda( s, a_y, r(2), sp, ap_y, RL.Q_y, RL.param, RL.trace_y );
-    [RL.Q_rot, RL.trace_rot] = UpdateSARSAlambda( s, a_rot, r(3), sp, ap_rot, RL.Q_rot, RL.param, RL.trace_rot );
+    %[RL.Q, RL.trace] = UpdateSARSAlambda( s, a, r(1), sp, ap, RL.Q, RL.param, RL.trace );
+    %[RL.Q_y, RL.trace_y] = UpdateSARSAlambda( s, a_y, r(2), sp, ap_y, RL.Q_y, RL.param, RL.trace_y );
+    %[RL.Q_rot, RL.trace_rot] = UpdateSARSAlambda( s, a_rot, r(3), sp, ap_rot, RL.Q_rot, RL.param, RL.trace_rot );
         
     %update the current variables
     s = sp;
