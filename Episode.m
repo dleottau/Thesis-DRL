@@ -88,9 +88,9 @@ while 1
     %Vr_ req is the robot speed requested
     %Vr_req=action; %centralized learner
     Vr_req=[action action_y action_rot]; 
-    %Vr_req(1)=V_FLC(1);
-    %Vr_req(2)=V_FLC(2);
-    %Vr_req(3)=V_FLC(3);
+    Vr_req(1)=100;%V_FLC(1);
+    Vr_req(2)=V_FLC(2);
+    Vr_req(3)=V_FLC(3);
     
     %Vr is the current robot speed
     dVelReq = Vr_req - Vr(i-1,:);
