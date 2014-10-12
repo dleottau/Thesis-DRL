@@ -2,7 +2,7 @@ clear all
 clc
 close all
 
-conf.episodes = 100;   % maximum number of  episode
+conf.episodes = 2000;   % maximum number of  episode
 conf.maxDistance = 6000;    % maximum ball distance permited before to end the episode X FIELD DIMENSION
 conf.th_max = [250 15 15];      % maximum pho desired
 conf.Runs = 1;
