@@ -3,17 +3,17 @@ clc
 close all
 
 
-conf.episodes = 2000;   % maximum number of  episode
+conf.episodes = 100;   % maximum number of  episode
 conf.maxDistance = 6000;    % maximum ball distance permited before to end the episode X FIELD DIMENSION
 conf.th_max = [250 15 15];      % maximum pho desired
-conf.Runs = 3;
-conf.NOISE = 0.0;
+conf.Runs = 1;
+conf.NOISE = 0.17;
 tic
 conf.DRAWS = 1;
 
 conf.Q_INIT = 5;
 conf.TRANSFER = 1;  %=1 transfer, >1 acts gready from source policy, =0 learns from scratch,
-conf.EXPL_EPISODES_FACTOR = 6.66;
+conf.EXPL_EPISODES_FACTOR = 7;
 
 
 conf.Voffset = 1; %Offset Speed in mm/s

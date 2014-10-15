@@ -6,6 +6,8 @@ function  [reward, e_time, Vavg, tp_faults, Qx,Qy,Qrot] =Dribbling2d( nRun, conf
 
 load W-FLC-RC2014;
 %load results_Learn_ShC-TD-RL;
+load results_Learn_NASh-TD-RL;
+
 
 Ts = conf.Ts; %Sample time of a RL step
 [States, conf.cores, conf.div_disc]   = StateTable( conf.feature_min, conf.feature_step, conf.feature_max );  % the table of states
@@ -28,10 +30,10 @@ RL.Q_rot    = RL.Q;  % the Qtable for the v_rot agent
 %load Qx_DRL;
 %load Qy_DRL;
 %load Qrot_DRL;
-%RL.Q        = results.Qok_x;%Qx_DRL;
-%RL.Q_y      = results.Qok_y;%Qy_DRL;
-%RL.Q_rot    = results.Qok_rot;%Qrot_DRL;
-%clear results;
+RL.Q        = results.Qok_x;%Qx_DRL;
+RL.Q_y      = results.Qok_y;%Qy_DRL;
+RL.Q_rot    = results.Qok_rot;%Qrot_DRL;
+clear results;
 %========================
 
 
@@ -43,7 +45,7 @@ RL.trace_rot = RL.trace;  % the elegibility trace for the v_rot agent
 RL.param.alpha       = 0.5;   % learning rate
 RL.param.gamma       = 1;   % discount factor
 RL.param.lambda      = 0.9;   % the decaying elegibiliy trace parameter
-epsilon0             = 1;  % probability of a random action selection
+epsilon0             = 0;  % probability of a random action selection
 p0                   = 1;
 
 EXPLORATION = conf.episodes/conf.EXPL_EPISODES_FACTOR;
