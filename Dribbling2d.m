@@ -7,9 +7,9 @@ function  [reward, e_time, Vavg, tp_faults, Qx,Qy,Qrot] =Dribbling2d( nRun, conf
 load W-FLC-RC2014;
 %load Qx_RLFLC;
 %load Qx_eRLFLC;
-%load Qx_TDRL;
-%load Qy_TDRL;
-%load Qrot_TDRL;
+%load Qx_DRL;
+%load Qy_DRL;
+%load Qrot_DRL;
 
 Ts = conf.Ts; %Sample time of a RL step
 [States, conf.cores, conf.div_disc]   = StateTable( conf.feature_min, conf.feature_step, conf.feature_max );  % the table of states
@@ -19,9 +19,9 @@ nactions    = size(Actions,1);
 
 %RL.Q         = Qx_eRLFLC;
 %RL.Q        = Qx_RLFLC;
-%RL.Q        = Qx_TDRL;
-%RL.Q_y      = Qy_TDRL;
-%RL.Q_rot    = Qrot_TDRL;
+%RL.Q        = Qx_DRL;
+%RL.Q_y      = Qy_DRL;
+%RL.Q_rot    = Qrot_DRL;
 
 %RL.Qs       = Qx_eRLFLC;
 RL.Q        = QTable( nstates,nactions, conf.Q_INIT );  % the Qtable for the vx agent
