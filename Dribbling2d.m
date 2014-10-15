@@ -5,11 +5,7 @@ function  [reward, e_time, Vavg, tp_faults, Qx,Qy,Qrot] =Dribbling2d( nRun, conf
 %  SARSA 
 
 load W-FLC-RC2014;
-%load Qx_RLFLC;
-%load Qx_eRLFLC;
-%load Qx_DRL;
-%load Qy_DRL;
-%load Qrot_DRL;
+%load results_Learn_ShC-TD-RL;
 
 Ts = conf.Ts; %Sample time of a RL step
 [States, conf.cores, conf.div_disc]   = StateTable( conf.feature_min, conf.feature_step, conf.feature_max );  % the table of states
@@ -17,16 +13,28 @@ Actions  = ActionTable( conf.Vr_min, conf.V_action_steps, conf.Vr_max, conf.Voff
 nstates     = size(States,1);
 nactions    = size(Actions,1);
 
-%RL.Q         = Qx_eRLFLC;
-%RL.Q        = Qx_RLFLC;
-%RL.Q        = Qx_DRL;
-%RL.Q_y      = Qy_DRL;
-%RL.Q_rot    = Qrot_DRL;
 
-%RL.Qs       = Qx_eRLFLC;
+
 RL.Q        = QTable( nstates,nactions, conf.Q_INIT );  % the Qtable for the vx agent
 RL.Q_y      = RL.Q;  % the Qtable for the vy agent
 RL.Q_rot    = RL.Q;  % the Qtable for the v_rot agent
+
+%========TRANSFER=========
+%RL.Qs       = Qx_eRLFLC;
+%RL.Q         = Qx_eRLFLC;
+%RL.Q        = Qx_RLFLC;
+%load Qx_RLFLC;
+%load Qx_eRLFLC;
+%load Qx_DRL;
+%load Qy_DRL;
+%load Qrot_DRL;
+%RL.Q        = results.Qok_x;%Qx_DRL;
+%RL.Q_y      = results.Qok_y;%Qy_DRL;
+%RL.Q_rot    = results.Qok_rot;%Qrot_DRL;
+%clear results;
+%========================
+
+
 
 RL.trace    = QTable( nstates,nactions,0 );  % the elegibility trace for the vx agent
 RL.trace_y  = RL.trace;  % the elegibility trace for the vy agent

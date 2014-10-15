@@ -5,15 +5,17 @@ K=10; % # points ploted for errobar
 n=1;
 R=[];
 load 'results2_Learn_D-RL'
+%load 'results'
 [R,n] = load_results(results,R,n);
-load 'results3_Learn_D-RL'
-[R,n] = load_results(results,R,n);
-load 'results4_Learn_D-RL'
-[R,n] = load_results(results,R,n);
-load 'results5_Learn_D-RL'
-[R,n] = load_results(results,R,n);
+% load 'results3_Learn_D-RL'
+% [R,n] = load_results(results,R,n);
+% load 'results4_Learn_D-RL'
+% [R,n] = load_results(results,R,n);
+% load 'results5_Learn_D-RL'
+% [R,n] = load_results(results,R,n);
 
 R(:,:,1)=R(:,:,1)/1.5; %aqui se cuadra que el timepo del simulador corresponda al de matlab. Recordar que la caminata está acelerada 1.5 veces en el simulador y 1.8 veecs en el robot real con respecto al Vx requested
+%R(:,:,1)=R(:,:,1); 
 
 span=0.05;
 for i=1:size(R,3)

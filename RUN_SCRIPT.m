@@ -3,17 +3,17 @@ clc
 close all
 
 
-conf.episodes = 1500;   % maximum number of  episode
+conf.episodes = 2000;   % maximum number of  episode
 conf.maxDistance = 6000;    % maximum ball distance permited before to end the episode X FIELD DIMENSION
 conf.th_max = [250 15 15];      % maximum pho desired
-conf.Runs = 5;
-conf.NOISE = 0.12;
+conf.Runs = 3;
+conf.NOISE = 0.0;
 tic
 conf.DRAWS = 1;
 
-conf.Q_INIT = -20;
+conf.Q_INIT = 5;
 conf.TRANSFER = 1;  %=1 transfer, >1 acts gready from source policy, =0 learns from scratch,
-conf.EXPL_EPISODES_FACTOR = 5;
+conf.EXPL_EPISODES_FACTOR = 6.66;
 
 
 conf.Voffset = 1; %Offset Speed in mm/s
@@ -47,8 +47,8 @@ for i=1:conf.Runs
 %    disp(['Test= ', num2str(a), '.', num2str(i), ' lambda= ', num2str(lambda(a))])
     [reward(:,:,i), e_time(:,i), Vavg(:,i), tp_faults(:,i),  Qx,Qy,Qrot] = Dribbling2d( i, conf);
                               
-    et(i) = mean(e_time(ceil(interval*conf.episodes):conf.episodes,i));
-    et_sd(i) = std(e_time(ceil(interval*conf.episodes):conf.episodes,i));
+    et(i) = mean(e_time(ceil(interval*conf.episodes):conf.episodes,i))/1.5;
+    et_sd(i) = std(e_time(ceil(interval*conf.episodes):conf.episodes,i))/1.5;
     if et(i) < et_min
         et_min=et(i);
     end
