@@ -10,7 +10,7 @@ if conf.TRANSFER<0 %Para pruebas de performance
 %load results_Learn_ShC-TD-RL;
 %load results_Learn_NASh-TD-RL;
 %load results;
-load resultsFull_Learn_NASh-TD-RL-Qi5;
+load resultsFull_Learn_CoSh-TD-RL-Qi5;
 end
 
 Ts = conf.Ts; %Sample time of a RL step

@@ -11,12 +11,12 @@ actions = size(Q,2);
 
 if nash==1 %if nearby action sharing
     a_source = clipDLF( round(a_sh + 2*randn()*(1 - RLparam.p)), 1,actions );
-    %a_target = clipDLF( round(GetBestAction(Q,s) + 1*randn()* RLparam.p), 1,actions ); 
+    a_target = clipDLF( round(GetBestAction(Q,s) + 1*randn()* RLparam.epsilon), 1,actions ); 
 else
     a_source = a_sh;
-    %a_target = e_greedy_selection(Q,s,RLparam.epsilon);
+    a_target = e_greedy_selection(Q,s,RLparam.epsilon);
 end
-a_target = clipDLF( round(GetBestAction(Q,s) + 1*randn()* RLparam.p), 1,actions ); 
+
 
 
 if (rand() > RLparam.p) 
