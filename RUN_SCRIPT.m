@@ -2,19 +2,20 @@ clear all
 clc
 close all
 
+tic
 
 conf.episodes = 100;   % maximum number of  episode
+conf.EXPL_EPISODES_FACTOR = 8; %exploration decay parameter
+conf.Runs = 1;
+conf.NOISE = 0.15;
+
+conf.TRANSFER = -1;  %=1 transfer, >1 acts gready from source policy, =0 learns from scratch, =-1 just for test performance from stored policies
+conf.Q_INIT = 5;
+conf.nash = 1;
+
 conf.maxDistance = 6000;    % maximum ball distance permited before to end the episode X FIELD DIMENSION
 conf.th_max = [250 15 15];      % maximum pho desired
-conf.Runs = 1;
-conf.NOISE = 0.17;
-tic
 conf.DRAWS = 1;
-
-conf.Q_INIT = 5;
-conf.TRANSFER = 1;  %=1 transfer, >1 acts gready from source policy, =0 learns from scratch,
-conf.EXPL_EPISODES_FACTOR = 7;
-
 
 conf.Voffset = 1; %Offset Speed in mm/s
 conf.V_action_steps = [25, 20, 20]/4; % /4 works good
@@ -90,6 +91,11 @@ for i=1:conf.Runs
     
 end
 
+results.time = e_time;
+results.faults = tp_faults;
+results.reward = reward;
+
+
 results.performance(3,1)=v_min;
 results.performance(1,1)=mean(vm);
 results.performance(2,1)=v_max;
@@ -114,6 +120,7 @@ results.performance(4,3)=pf_xxx;
 results.performance(4,2)=et_xxx;
 results.performance(4,1)=v_xxx;
 
+
 results.mean_Vavg = mean(Vavg,2);
 results.std_Vavg = std(Vavg,0,2);
 results.mean_faults = mean(tp_faults,2);
@@ -127,6 +134,9 @@ results.mean_rewY = mean(reward(:,2),2);
 results.std_rewY = std(reward(:,2),0,2);
 results.mean_rewRot = mean(reward(:,3),2);
 results.std_rewRot = std(reward(:,3),0,2);
+
+
+
 
 save results;
 

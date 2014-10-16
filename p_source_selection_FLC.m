@@ -1,4 +1,4 @@
-function [ a] = p_source_selection_FLC( Q, s, RLparam, at, Q_INIT)
+function [ a] = p_source_selection_FLC( Q, s, RLparam, a_sh, nash)
 % source_action_selection selects an action using p probability
 % Q: the Qtable
 % s: the current state
@@ -7,29 +7,38 @@ function [ a] = p_source_selection_FLC( Q, s, RLparam, at, Q_INIT)
 % p probability for choosing transferred action
 
 actions = size(Q,2);
-ab = GetBestAction(Q,s);
+%a_best = GetBestAction(Q,s);
+
+if nash==1 %if nearby action sharing
+    a_source = clipDLF( round(a_sh + 2*randn()*(1 - RLparam.p)), 1,actions );
+    %a_target = clipDLF( round(GetBestAction(Q,s) + 1*randn()* RLparam.p), 1,actions ); 
+else
+    a_source = a_sh;
+    %a_target = e_greedy_selection(Q,s,RLparam.epsilon);
+end
+a_target = clipDLF( round(GetBestAction(Q,s) + 1*randn()* RLparam.p), 1,actions ); 
+
+
+if (rand() > RLparam.p) 
+    a = a_target; 
+else
+    a = a_source;
+end
 
 % % Method 7
 % if (rand()> RLparam.p) 
 %     a = e_greedy_selection(Q,s,RLparam.epsilon);
 % else
-%     a=at;
-% end
-
-
-%Method 1 DLF
-% if (rand()>p) 
-%     a = ab;
-% else
-%     a = at;
+%     a=a_sh;
 % end
 
 
 % Method 2 DLF
-if (rand() > RLparam.p) 
-    a = clipDLF( round(ab + 1*randn()* RLparam.p), 1,actions ); 
-    %a = e_greedy_selection(Q,s,RLparam.epsilon);
-else
-    a = clipDLF( round(at + 2*randn()*(1 - RLparam.p)), 1,actions );
-end
+% if (rand() > RLparam.p) 
+%     a = clipDLF( round(ab + 1*randn()* RLparam.p), 1,actions ); 
+%     %a = e_greedy_selection(Q,s,RLparam.epsilon);
+% else
+%     a = clipDLF( round(a_sh + 2*randn()*(1 - RLparam.p)), 1,actions );
+%     a=a_sh;
+% end
 

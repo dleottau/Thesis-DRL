@@ -5,9 +5,13 @@ function  [reward, e_time, Vavg, tp_faults, Qx,Qy,Qrot] =Dribbling2d( nRun, conf
 %  SARSA 
 
 load W-FLC-RC2014;
-%load results_Learn_ShC-TD-RL;
-load results_Learn_NASh-TD-RL;
 
+if conf.TRANSFER<0 %Para pruebas de performance
+%load results_Learn_ShC-TD-RL;
+%load results_Learn_NASh-TD-RL;
+%load results;
+load resultsFull_Learn_NASh-TD-RL-Qi5;
+end
 
 Ts = conf.Ts; %Sample time of a RL step
 [States, conf.cores, conf.div_disc]   = StateTable( conf.feature_min, conf.feature_step, conf.feature_max );  % the table of states
@@ -15,13 +19,12 @@ Actions  = ActionTable( conf.Vr_min, conf.V_action_steps, conf.Vr_max, conf.Voff
 nstates     = size(States,1);
 nactions    = size(Actions,1);
 
-
-
 RL.Q        = QTable( nstates,nactions, conf.Q_INIT );  % the Qtable for the vx agent
 RL.Q_y      = RL.Q;  % the Qtable for the vy agent
 RL.Q_rot    = RL.Q;  % the Qtable for the v_rot agent
 
 %========TRANSFER=========
+if conf.TRANSFER<0 %Para pruebas de performance
 %RL.Qs       = Qx_eRLFLC;
 %RL.Q         = Qx_eRLFLC;
 %RL.Q        = Qx_RLFLC;
@@ -34,6 +37,7 @@ RL.Q        = results.Qok_x;%Qx_DRL;
 RL.Q_y      = results.Qok_y;%Qy_DRL;
 RL.Q_rot    = results.Qok_rot;%Qrot_DRL;
 clear results;
+end
 %========================
 
 
@@ -45,8 +49,13 @@ RL.trace_rot = RL.trace;  % the elegibility trace for the v_rot agent
 RL.param.alpha       = 0.5;   % learning rate
 RL.param.gamma       = 1;   % discount factor
 RL.param.lambda      = 0.9;   % the decaying elegibiliy trace parameter
-epsilon0             = 0;  % probability of a random action selection
+epsilon0             = 1;  % probability of a random action selection
 p0                   = 1;
+
+
+if conf.TRANSFER<0 %Para pruebas de performance
+    epsilon0             = 0;    
+end    
 
 EXPLORATION = conf.episodes/conf.EXPL_EPISODES_FACTOR;
 epsDec = -log(0.05) * 1/EXPLORATION;  %epsilon decrece a un 5% (0.005) en maxEpisodes cuartos (maxepisodes/4), de esta manera el decrecimiento de epsilon es independiente del numero de episodios

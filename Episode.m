@@ -68,6 +68,9 @@ a   = e_greedy_selection(RL.Q, s, RL.param.epsilon);
 a_y = e_greedy_selection(RL.Q_y,s, RL.param.epsilon);
 a_rot = e_greedy_selection(RL.Q_rot,s, RL.param.epsilon);
 %action = ones(1,3);
+ap=a;
+ap_y=a_y;
+ap_rot=a_rot;
 
 while 1  
     steps=i;
@@ -136,24 +139,26 @@ while 1
     %sp  = DiscretizeState(x_obs,statelist);
     sp  = DiscretizeStateDLF(x_obs,cores,feature_step,div_disc);
     
-    % select action prime
-    ap = e_greedy_selection(RL.Q , sp, RL.param.epsilon);
-    
-	%a_transf = GetBestAction(RL.Qs,sp);   
+     % select action prime
+    %ap = e_greedy_selection(RL.Q , sp, RL.param.epsilon);
+
+    %a_transf = GetBestAction(RL.Qs,sp);   
     a_transf = 1 + round(V_FLC(1)/V_action_steps(1));  % from FLC
     a_transf_y = 1 + round(V_FLC(2)/V_action_steps(2)  + Vr_max(2)/V_action_steps(2) );
     a_transf_rot = 1 + round(V_FLC(3)/V_action_steps(3) + Vr_max(3)/V_action_steps(3) );
-        
+
     p_=1;
-    [ap] = p_source_selection_FLC(RL.Q,sp, RL.param, a_transf, Q_INIT);
-    [ap_y] = p_source_selection_FLC(RL.Q_y,sp, RL.param, a_transf_y,Q_INIT);
-    [ap_rot] = p_source_selection_FLC(RL.Q_rot,sp, RL.param, a_transf_rot,Q_INIT);
+    [ap] = p_source_selection_FLC(RL.Q,sp, RL.param, a_transf, conf.nash);
+    [ap_y] = p_source_selection_FLC(RL.Q_y,sp, RL.param, a_transf_y, conf.nash);
+    [ap_rot] = p_source_selection_FLC(RL.Q_rot,sp, RL.param, a_transf_rot, conf.nash);
+
         
 	% Update the Qtable, that is,  learn from the experience
-    %[RL.Q, RL.trace] = UpdateSARSAlambda( s, a, r(1), sp, ap, RL.Q, RL.param, RL.trace );
-    %[RL.Q_y, RL.trace_y] = UpdateSARSAlambda( s, a_y, r(2), sp, ap_y, RL.Q_y, RL.param, RL.trace_y );
-    %[RL.Q_rot, RL.trace_rot] = UpdateSARSAlambda( s, a_rot, r(3), sp, ap_rot, RL.Q_rot, RL.param, RL.trace_rot );
-        
+    if conf.TRANSFER >= 0 %Para aprendizaje, TRANSFER<0 para pruebas de performance
+        [RL.Q, RL.trace] = UpdateSARSAlambda( s, a, r(1), sp, ap, RL.Q, RL.param, RL.trace );
+        [RL.Q_y, RL.trace_y] = UpdateSARSAlambda( s, a_y, r(2), sp, ap_y, RL.Q_y, RL.param, RL.trace_y );
+        [RL.Q_rot, RL.trace_rot] = UpdateSARSAlambda( s, a_rot, r(3), sp, ap_rot, RL.Q_rot, RL.param, RL.trace_rot );
+    end    
     %update the current variables
     s = sp;
     a = ap;
