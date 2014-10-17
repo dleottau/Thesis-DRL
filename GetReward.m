@@ -47,7 +47,7 @@ else
 end
 
 
-if Pr  > maxDistance || Pb > maxDistance
+if Pr  > maxDistance %|| Pb > maxDistance
     f = true;
 elseif abs(gama) > 90   ||  abs(fi) > 150 
     f = true;
