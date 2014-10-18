@@ -10,11 +10,9 @@ conf.Runs = 5;
 conf.NOISE = 0.05;
 
 conf.TRANSFER = 0;  %=1 transfer, >1 acts gready from source policy, =0 learns from scratch, =-1 just for test performance from stored policies
-conf.Q_INIT = 0;
+conf.Q_INIT = 5;
 conf.nash = 0;
 
-
-%results=cosh5
 
 conf.maxDistance =6000;    % maximum ball distance permited before to end the episode X FIELD DIMENSION
 conf.th_max = [250 15 15];      % maximum pho desired
@@ -141,7 +139,7 @@ results.std_rewRot = std(reward(:,3),0,2);
 
 
 
-save resultsCoSH-5FastCtrl;
+save resultsFull-DRL-Qi5;
 
 if conf.DRAWS==1
     figure
