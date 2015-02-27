@@ -82,7 +82,7 @@ for i=1:conf.episodes
         xpoints(i)=i-1;
         reward(i,:)=total_reward/steps;
         e_time(i,1)=steps*Ts;
-        Vavg(i,1)=Vavg_k;
+        Vavg(i,1)=Vavg_k/conf.Vr_max(1)*100;
         btd(i,1)=btd_k;
         tp_faults(i,1)=faults/steps*100;
              
@@ -97,7 +97,7 @@ for i=1:conf.episodes
                 
         subplot(4,2,3)
         plot(xpoints,Vavg)
-        title('Speed Average')
+        title('% Max. Fw. Speed Avg.')
         %drawnow
         
         subplot(4,2,5); 

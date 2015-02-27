@@ -6,11 +6,11 @@ tic
 
 conf.episodes = 2000;   % maximum number of  episode
 conf.EXPL_EPISODES_FACTOR = 8; %exploration decay parameter
-conf.Runs = 5;
-conf.NOISE = 0.05;
+conf.Runs = 50;
+conf.NOISE = 0.1;
 
 conf.TRANSFER = 0;  %=1 transfer, >1 acts gready from source policy, =0 learns from scratch, =-1 just for test performance from stored policies
-conf.Q_INIT = 5;
+conf.Q_INIT = 0;
 conf.nash = 0;
 
 
@@ -95,6 +95,7 @@ end
 results.time = e_time;
 results.faults = tp_faults;
 results.reward = reward;
+results.Vavg = Vavg;
 
 
 results.performance(3,1)=v_min;
@@ -139,7 +140,7 @@ results.std_rewRot = std(reward(:,3),0,2);
 
 
 
-save resultsFull-DRL-Qi5;
+save resultsFull_V2-DRL-Qi0;
 
 if conf.DRAWS==1
     figure

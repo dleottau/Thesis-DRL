@@ -30,7 +30,7 @@ Vyrmax=100;
 Vthetamax=100;
 
 Pr=[0 0 0];
-Pb=[th_max(1) 0];
+Pb=[th_max(1)*0.99 0];
 Pt=[maxDistance+2000 0];
 
 NoiseRobotVel = [NOISE*0.15 NOISE*0.05 NOISE*0.03]; %
@@ -175,25 +175,23 @@ while 1
     yb(i,1) = abs(pho_*sind(gamma_));
     yfi(i,1) = abs(pho_*sind(phi_));
     
-    
     btd = btd + norm(Pb(i,:)-Pb(i-1,:));
     Vavg = x(1)/time(i);
     
+    %cumulating amount of faults commited
     thres = [pho_  abs(gamma_) abs(phi_)] > th_max;
     if sum(thres)~=0
-    %if pho_ > th_max(1)
         faults = faults+1;
-        %fitness = fitness - ( (1-Vrx/Vr_max(1)) + sum(thres .* [pho_  abs(gamma_) abs(phi_)] .*1/th_max) );
-    else
-        %fitness = fitness - (1-Vrx/Vr_max(1));
     end
     
     % terminal state?
-    if (f==true || time(i)>1000 || abs(Pr(i,2))>maxDistance/2 || abs(Pb(i,2))>maxDistance/2 )
-        Pt(1)=maxDistance;
-        btd = (btd + norm(Pt-Pb(i,:))) / (Pt(1)-Pb(1,1));
-        fitness = fitness * btd;
+    if (time(i)>1000 || abs(Pr(i,2))>maxDistance/2 || abs(Pb(i,2))>maxDistance/2 || Pr(i,1)>maxDistance || Pr(i,1)<0 || Pb(i,1)<0 || abs(gamma_) > 90 || abs(phi_) > 150)
+        Vavg=0;
         break
     end
-      
- end
+    
+    if (f==true)
+        break
+    end
+    
+end
