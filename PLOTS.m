@@ -18,12 +18,19 @@ S=[];
 %load 'results'
 
 
-load resultsFull-DRL-Qi-5.mat
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DL Pessimistic');
-load resultsFull-DRL-Qi0.mat
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DL Zeros');
-load resultsFull-DRL-Qi5.mat
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DL Optimistic');
+load RC-2015/resultsFull_RL-FLC.mat
+[M,S,n,legendN] = load_results(results,M,S,n,legendN,'RL-FLC');
+
+load RC-2015/resultsFull_eRL-FLC.mat
+[M,S,n,legendN] = load_results(results,M,S,n,legendN,'eRL-FLC');
+
+
+% load resultsFull-DRL-Qi-5.mat
+% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'DL Pessimistic');
+% load resultsFull-DRL-Qi0.mat
+% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'DL Zeros');
+% load resultsFull-DRL-Qi5.mat
+% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'DL Optimistic');
 
 
 % load resultsFull_Learn_CoSh-TD-RL-Qi-5.mat
@@ -159,16 +166,18 @@ end
 
 function [M, S, n, legendN] = load_results(results, M, S, n, legendN, leg)
     
-    A= (results.time>60) .* (6000./(results.time));
+    %A= (results.time>60) .* (6000./(results.time));
     
-    M(:,n,1) = mean(A,2)';
+    %M(:,n,1) = mean(A,2)';
+    
+    M(:,n,1) = results.mean_Vavg';
     M(:,n,2) = results.mean_faults';
     %M(:,n,3) = results.mean_rewX';
     %M(:,n,4) = results.mean_rewY';
     %M(:,n,5) = results.mean_rewRot';
     
-    S(:,n,1) = .707.*std(A,0,2)';
-    S(:,n,2) = .707.*results.std_faults';
+    S(:,n,1) = results.std_Vavg';
+    S(:,n,2) = results.std_faults';
     %S(:,n,3) = results.std_rewX';
     %S(:,n,4) = results.std_rewY';
     %S(:,n,5) = results.std_rewRot';

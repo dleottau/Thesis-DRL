@@ -32,10 +32,10 @@ fi = x(8);
 
 %Vx=1.2*ro*cosd(gama);
 Vx= 3.6*ro;
-%Vy=-1*fi; 
-Vy=-10*fi;
-%Vtheta=gama-0.3*fi; 
-Vtheta=gama-0.4*fi;
+Vy=-1*fi; 
+%Vy=-10*fi;
+Vtheta=gama-0.3*fi; 
+%Vtheta=gama-0.4*fi;
 
 V_FLC = [ Vx, Vy, Vtheta ];
 V_FLC = clipDLF(V_FLC,Vr_min,Vr_max);

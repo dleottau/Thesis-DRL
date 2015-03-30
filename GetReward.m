@@ -27,6 +27,7 @@ thres = [ro  abs(gama) abs(fi)] > th_max;
 %     r(1) = Vr/Vxrmax;
 % end
 
+
 if sum(thres)~=0 || Vr < Vxrmax
     r(1) = - ( (1-Vr/Vxrmax) + sum(thres .* [ro abs(gama) abs(fi)] .*1/th_max) );
 else
@@ -44,6 +45,17 @@ if abs(gama) > angleFactor*th_max(2) || abs(fi) > angleFactor*th_max(3)
     r(3) = -1;
 else
     r(3) = 1 + ( 1 - abs(gama)/(angleFactor*th_max(2)) ) + ( 1 - abs(fi)/(angleFactor*th_max(3)) );
+end
+
+
+
+
+% 2D RL-FLC
+
+if sum(thres)~=0 || Vr < Vxrmax
+    r(1) = -1;
+else
+    r(1) = 1;
 end
 
 
