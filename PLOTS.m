@@ -17,12 +17,13 @@ S=[];
 
 %load 'results'
 
+% 
+% load RC-2015/resultsFull_RL-FLC.mat
+% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'RL-FLC');
+% 
+% load RC-2015/resultsFull_eRL-FLC.mat
+% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'eRL-FLC');
 
-load RC-2015/resultsFull_RL-FLC.mat
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'RL-FLC');
-
-load RC-2015/resultsFull_eRL-FLC.mat
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'eRL-FLC');
 
 
 % load resultsFull-DRL-Qi-5.mat
@@ -169,6 +170,7 @@ function [M, S, n, legendN] = load_results(results, M, S, n, legendN, leg)
     %A= (results.time>60) .* (6000./(results.time));
     
     %M(:,n,1) = mean(A,2)';
+    N=size(results.time,2);
     
     M(:,n,1) = results.mean_Vavg';
     M(:,n,2) = results.mean_faults';

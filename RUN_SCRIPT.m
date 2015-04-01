@@ -4,9 +4,9 @@ close all
 
 tic
 
-conf.episodes = 200;   %2000  maximum number of  episode
-conf.EXPL_EPISODES_FACTOR = 8; % 8 exploration decay parameter
-conf.Runs = 10;
+conf.episodes = 200;%500;   %2000  maximum number of  episode
+conf.EXPL_EPISODES_FACTOR = 10; % 8 exploration decay parameter
+conf.Runs = 5;
 conf.NOISE = 0.2;
 
 conf.TRANSFER = 0;  %=1 transfer, >1 acts gready from source policy, =0 learns from scratch, =-1 just for test performance from stored policies
@@ -23,8 +23,8 @@ conf.Vr_max = [100 40 40]; %x,y,rot Max Speed achieved by the robot
 conf.Vr_min = -conf.Vr_max;
 conf.Vr_min(1) = conf.Voffset;
 conf.feature_step = [50, 10, 10];
-conf.feature_min = [0, -60, -60]; %-30, -30
-conf.feature_max = [600, 60, 60]; %30, 30
+conf.feature_min = [0, -30, -30]; %-30, -30
+conf.feature_max = [600, 30, 30]; %30, 30
 conf.maxDeltaV = conf.Vr_max.*[1/3 1/3 1/2]; %mm/s/Ts
 conf.Ts = 0.2; %Sample time of a RL step
 
@@ -146,7 +146,7 @@ if conf.DRAWS==1
     plot(mean(reward(:,2),2),'g')
     plot(mean(reward(:,3),2),'b')
     hold
-    title('Mean Reward')
+    title('Mean Cum.Reward')
     
     subplot(2,2,2)
     plot(results.mean_eTime)
@@ -154,7 +154,7 @@ if conf.DRAWS==1
         
     subplot(2,2,3)
     plot(results.mean_Vavg)
-    title('Mean Vavg')
+    title('Mean %Max.Fw.Speed')
         
     subplot(2,2,4)
     plot(results.mean_faults)

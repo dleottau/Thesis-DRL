@@ -34,7 +34,7 @@ Pb=[th_max(1)*0.99 0];
 Pt=[maxDistance+2000 0];
 
 NoiseRobotVel = [NOISE*0.15 NOISE*0.05 NOISE*0.03]; %
-NoiseBall = [0.2; 0]+NOISE*0.8; %  0.8
+NoiseBall = [0.3; 0]+NOISE*0.8; %  0.8
 NoisePerception = NOISE*0.0025; % 
 
 % ------------- INIT PARAMETERS ---------------------
@@ -152,12 +152,17 @@ while 1
     [ap_y] = p_source_selection_FLC(RL.Q_y,sp, RL.param, a_transf_y, conf.nash);
     [ap_rot] = p_source_selection_FLC(RL.Q_rot,sp, RL.param, a_transf_rot, conf.nash);
 
+    % Secuential learning
+    %ap = GetBestAction(RL.Q,sp);
+    %ap_y = GetBestAction(RL.Q_y,sp);
+    %ap_rot = GetBestAction(RL.Q_rot,sp);
         
+    
 	% Update the Qtable, that is,  learn from the experience
     if conf.TRANSFER >= 0 %Para aprendizaje, TRANSFER<0 para pruebas de performance
         [RL.Q, RL.trace] = UpdateSARSAlambda( s, a, r(1), sp, ap, RL.Q, RL.param, RL.trace );
-        [RL.Q_y, RL.trace_y] = UpdateSARSAlambda( s, a_y, r(2), sp, ap_y, RL.Q_y, RL.param, RL.trace_y );
-        [RL.Q_rot, RL.trace_rot] = UpdateSARSAlambda( s, a_rot, r(3), sp, ap_rot, RL.Q_rot, RL.param, RL.trace_rot );
+        %[RL.Q_y, RL.trace_y] = UpdateSARSAlambda( s, a_y, r(2), sp, ap_y, RL.Q_y, RL.param, RL.trace_y );
+        %[RL.Q_rot, RL.trace_rot] = UpdateSARSAlambda( s, a_rot, r(3), sp, ap_rot, RL.Q_rot, RL.param, RL.trace_rot );
     end    
     %update the current variables
     s = sp;

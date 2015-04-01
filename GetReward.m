@@ -21,13 +21,6 @@ angleFactor=0.3;
 
 thres = [ro  abs(gama) abs(fi)] > th_max;
 
-% if ro>th_max(1) || Vr < Vxrmax
-%     r(1) = -( (1-Vr/Vxrmax) + ro/th_max(1) );
-% else
-%     r(1) = Vr/Vxrmax;
-% end
-
-
 if sum(thres)~=0 || Vr < Vxrmax
     r(1) = - ( (1-Vr/Vxrmax) + sum(thres .* [ro abs(gama) abs(fi)] .*1/th_max) );
 else
@@ -50,13 +43,15 @@ end
 
 
 
-% 2D RL-FLC
 
-if sum(thres)~=0 || Vr < Vxrmax
-    r(1) = -1;
-else
-    r(1) = 1;
-end
+% 1D RL-FLC
+% if ro>th_max(1) || Vr < Vxrmax  
+% 2D RL-FLC
+%if sum(thres)~=0 || Vr < Vxrmax
+%    r(1) = -1;
+%else
+%    r(1) = 1;
+%end
 
 
 if Pb  > maxDistance %|| Pb > maxDistance

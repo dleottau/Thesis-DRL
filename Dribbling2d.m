@@ -2,7 +2,7 @@ function  [reward, e_time, Vavg, tp_faults, Qx,Qy,Qrot] =Dribbling2d( nRun, conf
 %Dribbling1d SARSA, the main function of the trainning
 
 
-%  SARSA 
+
 
 load W-FLC-RC2014;
 
@@ -23,6 +23,16 @@ RL.Q        = QTable( nstates,nactions, conf.Q_INIT );  % the Qtable for the vx 
 RL.Q_y      = RL.Q;  % the Qtable for the vy agent
 RL.Q_rot    = RL.Q;  % the Qtable for the v_rot agent
 
+%Secuential learning
+%load RC-2015/Qok_x1;
+%load RC-2015/Qok_y2;
+%load RC-2015/Qok_rot3;
+%RL.Q        = Qok_x1;
+%RL.Q_y      = Qok_y2;
+%RL.Q_rot    = Qok_rot3;
+
+
+
 %========TRANSFER=========
 if conf.TRANSFER<0 %Para pruebas de performance
 %RL.Qs       = Qx_eRLFLC;
@@ -33,12 +43,13 @@ if conf.TRANSFER<0 %Para pruebas de performance
 %load Qx_DRL;
 %load Qy_DRL;
 %load Qrot_DRL;
-RL.Q        = results.Qok_x;%Qx_DRL;
-RL.Q_y      = results.Qok_y;%Qy_DRL;
-RL.Q_rot    = results.Qok_rot;%Qrot_DRL;
+%RL.Q        = results.Qok_x;%Qx_DRL;
+%RL.Q_y      = results.Qok_y;%Qy_DRL;
+%RL.Q_rot    = results.Qok_rot;%Qrot_DRL;
 clear results;
 end
 %========================
+
 
 
 
@@ -80,6 +91,7 @@ for i=1:conf.episodes
      if conf.DRAWS==1
 
         xpoints(i)=i-1;
+        
         reward(i,:)=total_reward/steps;
         e_time(i,1)=steps*Ts;
         Vavg(i,1)=Vavg_k/conf.Vr_max(1)*100;
