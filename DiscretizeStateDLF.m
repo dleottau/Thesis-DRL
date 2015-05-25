@@ -16,6 +16,7 @@ x(1) = clipDLF( xp(5), cores.ro(1), cores.ro(size(cores.ro,2)) )  -cores.ro(1);
 x(2) = clipDLF( xp(7), cores.gama(1), cores.gama(size(cores.gama,2)) )  -cores.gama(1);
 x(3) = clipDLF( xp(8), cores.fi(1), cores.fi(size(cores.fi,2)) )  -cores.fi(1);
 
+%x = round(x./feature_step(1));
 x = round(x./feature_step);
 x = x.*div_disc;
 s=sum(x)+1;

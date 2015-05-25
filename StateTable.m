@@ -31,6 +31,8 @@ cores.gama=gama;
 cores.fi=fi;
 
 div_disc_=[size(cores.ro,2) size(cores.gama,2) size(cores.fi,2)];
+%div_disc_=size(cores.ro,2);
+
 for i=1:size(div_disc_,2)-1
     div_disc(i)=prod(div_disc_(i+1:size(div_disc_,2)));
 end

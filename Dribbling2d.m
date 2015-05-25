@@ -1,16 +1,13 @@
 function  [reward, e_time, Vavg, tp_faults, Qx,Qy,Qrot] =Dribbling2d( nRun, conf)
 %Dribbling1d SARSA, the main function of the trainning
 
-
-
-
 load W-FLC-RC2014;
 
 if conf.TRANSFER<0 %Para pruebas de performance
-%load results_Learn_ShC-TD-RL;
-%load results_Learn_NASh-TD-RL;
-%load results;
-load resultsFull_Learn_CoSh-TD-RL-Qi5;
+    %load RC-2015/results/resultsFull_RL-FLC;
+    %load RC-2015/results/resultsFull_eRL-FLC;
+    %load RC-2015/results/resultsFull_NASh;
+    load RC-2015/results/resultsFull_DRL;
 end
 
 Ts = conf.Ts; %Sample time of a RL step
@@ -43,9 +40,9 @@ if conf.TRANSFER<0 %Para pruebas de performance
 %load Qx_DRL;
 %load Qy_DRL;
 %load Qrot_DRL;
-%RL.Q        = results.Qok_x;%Qx_DRL;
-%RL.Q_y      = results.Qok_y;%Qy_DRL;
-%RL.Q_rot    = results.Qok_rot;%Qrot_DRL;
+RL.Q        = results.Qok_x;%Qx_DRL;
+RL.Q_y      = results.Qok_y;%Qy_DRL;
+RL.Q_rot    = results.Qok_rot;%Qrot_DRL;
 clear results;
 end
 %========================
@@ -66,6 +63,7 @@ p0                   = 1;
 
 if conf.TRANSFER<0 %Para pruebas de performance
     epsilon0             = 0;    
+    p0                   = 0;
 end    
 
 EXPLORATION = conf.episodes/conf.EXPL_EPISODES_FACTOR;

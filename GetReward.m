@@ -46,12 +46,12 @@ end
 
 % 1D RL-FLC
 % if ro>th_max(1) || Vr < Vxrmax  
-% 2D RL-FLC
-%if sum(thres)~=0 || Vr < Vxrmax
-%    r(1) = -1;
-%else
-%    r(1) = 1;
-%end
+% % 2D RL-FLC
+% % if sum(thres)~=0 || Vr < Vxrmax
+%      r(1) = -1;
+%  else
+%      r(1) = 1;
+%  end
 
 
 if Pb  > maxDistance %|| Pb > maxDistance

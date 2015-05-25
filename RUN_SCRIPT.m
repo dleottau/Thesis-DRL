@@ -4,12 +4,12 @@ close all
 
 tic
 
-conf.episodes = 200;%500;   %2000  maximum number of  episode
-conf.EXPL_EPISODES_FACTOR = 10; % 8 exploration decay parameter
-conf.Runs = 5;
-conf.NOISE = 0.2;
+conf.episodes = 100;%500;   %2000  maximum number of  episode
+conf.EXPL_EPISODES_FACTOR = 8; % 8 exploration decay parameter
+conf.Runs = 1;
+conf.NOISE = 0.1;
 
-conf.TRANSFER = 0;  %=1 transfer, >1 acts gready from source policy, =0 learns from scratch, =-1 just for test performance from stored policies
+conf.TRANSFER = -1;  %=1 transfer, >1 acts gready from source policy, =0 learns from scratch, =-1 just for test performance from stored policies
 conf.Q_INIT = 0;
 conf.nash = 0;
 
@@ -41,7 +41,11 @@ et_max=-Inf;
 cr_min=Inf;
 v_min=Inf;
 pf_max=-Inf;
+
 interval=0.7;
+if conf.TRANSFER < 0
+    interval=0.1;
+end
 
 
 for i=1:conf.Runs
@@ -136,7 +140,11 @@ results.std_rewY = std(reward(:,2),0,2);
 results.mean_rewRot = mean(reward(:,3),2);
 results.std_rewRot = std(reward(:,3),0,2);
 
-save RC-2015/resultsFull_eRL-FLC;
+if conf.TRANSFER >= 0
+    save ('RC-2015/resultsFull_DRL', 'results');
+else
+    save ('RC-2015/performance_DRL', 'results');
+end 
 
 if conf.DRAWS==1
     figure

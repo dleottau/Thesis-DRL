@@ -9,20 +9,27 @@ spot_dot={'.r' '.g' '.c' '.k' '.b' '.m'};
 lineW=[3 2 2 2 3 2];
 legendN=[];
 
-K=8; % # points ploted for errobar
+K=10; % # points ploted for errobar
 
 n=1;
 M=[];
 S=[];
 
-%load 'results'
+load RC-2015/results/resultsFull_DRL.mat
+[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL');
+ 
 
-% 
-% load RC-2015/resultsFull_RL-FLC.mat
-% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'RL-FLC');
-% 
-% load RC-2015/resultsFull_eRL-FLC.mat
+load RC-2015/results/resultsFull_DRLpre.mat
+[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRLpre');
+
+%load RC-2015/results/resultsFull_NASh.mat
+%[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-NASh');
+ 
+% load RC-2015/results/resultsFull_eRL-FLC.mat
 % [M,S,n,legendN] = load_results(results,M,S,n,legendN,'eRL-FLC');
+% 
+% load RC-2015/results/resultsFull_RL-FLC.mat
+% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'RL-FLC');
 
 
 
@@ -102,8 +109,8 @@ end
 
 figure
 
-%subplot(3,1,1);    
-subplot(2,1,1); 
+subplot(3,1,1);    
+%subplot(2,1,1); 
 plot(x(:,1),zeros(length(x(:,1))), '.w')
 hold on
 for j=1:size(M,2)
@@ -117,8 +124,8 @@ axis([1 E 0 100])
 grid on
 ylabel('% of max. forward speed');
 
-%subplot(3,1,2); 
-subplot(2,1,2)
+subplot(3,1,2); 
+%subplot(2,1,2)
 plot(x(:,1),zeros(length(x(:,1))), '.w')
 hold on
 for j=1:size(M,2)     
@@ -129,23 +136,23 @@ hold
 axis([1 E 0 100])
 %title('% Faults'); 
 grid on
-xlabel('Episodes');
+%xlabel('Episodes');
 ylabel('% of time in fault-state');
-legend(pt,legendN);
+%legend(pt,legendN);
 
 %Solo para el fitness global
-%subplot(3,1,3); 
+subplot(3,1,3); 
 %subplot(2,1,2)
-% hold on
-% for j=1:size(M,2)     
-%     pf2(j)=plot(.5*(100-Ms(:,j,1)+Ms(:,j,2)), spot{j}, 'LineWidth',lineW(j))
-% end
-% hold
-% axis([1 E 0 100])
-% grid on
-% xlabel('Episodes');
-% ylabel('Global Fitness');
-% legend(pt,legendN);
+ hold on
+ for j=1:size(M,2)     
+     pf2(j)=plot(.5*(100-Ms(:,j,1)+Ms(:,j,2)), spot{j}, 'LineWidth',lineW(j))
+ end
+ hold
+ axis([1 E 0 100])
+ grid on
+ xlabel('Episodes');
+ ylabel('Global Fitness');
+ legend(pt,legendN);
 % 
 
 
