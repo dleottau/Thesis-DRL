@@ -36,7 +36,7 @@ Vx=1.3*ro*cosd(gama);
 %Vy=-1*fi; 
 Vy=-15*fi;
 
-Vtheta=(gama-0.3*fi)*2; 
+Vtheta=(gama-0.3*fi)*1.5; 
 %Vtheta=gama-0.3*fi;
 
 V_FLC = [ Vx, Vy, Vtheta ];
