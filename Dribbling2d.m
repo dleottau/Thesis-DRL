@@ -5,10 +5,10 @@ load W-FLC-RC2014;
 
 if conf.TRANSFER<0 %Para pruebas de performance
     %load RC-2015/results/resultsFull_RL-FLC;
-    %load RC-2015/results/resultsFull_eRL-FLC;
+    load RC-2015/results/resultsFull_eRL-FLC;
     %load RC-2015/results/resultsFull_NASh;
     %load RC-2015/results/resultsFull_DRL;
-    load RC-2015/results/resultsFull_DRL-v2-20runs-Noise07-exp7;
+    %load RC-2015/results/resultsFull_DRL-v2-20runs-Noise07-exp7;
 end
 
 Ts = conf.Ts; %Sample time of a RL step
