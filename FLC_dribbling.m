@@ -31,10 +31,10 @@ fi = x(8);
 % Vx=k1*ro;
 
 %Vx=1.3*ro*cosd(gama);
-Vx= 3.6*ro - 0.5*abs(gama) - 0.5*abs(fi);
+Vx= 3.2*ro - 0.5*abs(gama) - 0.5*abs(fi);
 
 Vy=-1*fi; 
-%Vy=-10*fi;
+%Vy=-15*fi;
 
 %Vtheta=(gama-0.3*fi)*1.5; 
 Vtheta=gama-0.3*fi;

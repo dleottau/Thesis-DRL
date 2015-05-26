@@ -16,8 +16,16 @@ n=1;
 M=[];
 S=[];
 
-load RC-2015/results/resultsFull_DRL-v2-20runs-Noise07-exp7.mat
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL');
+%load RC-2015/resultsFull_RL-FLC-v2-20runs-Noise02-exp20.mat
+%[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL');
+
+load RC-2015/resultsFull_DRL-NASh-v4-3runs-Noise015-exp8.mat
+[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-NASh');
+
+
+
+%load RC-2015/results/resultsFull_DRL-v2-20runs-Noise07-exp7.mat
+%[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL');
 
 %load RC-2015/results/resultsFull_NASh-v2-20runs-Noise01-exp8.mat
 %[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-NASh');
