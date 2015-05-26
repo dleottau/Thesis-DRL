@@ -30,14 +30,14 @@ fi = x(8);
 % k1= (L*f1*g1 + Z*f2*g1 + Z*f3*g1 + H*f1*g2 + H*f2*g2 + Z*f3*g2 + Z*f1*g3 + H*f2*g3 + H*f3*g3 + Z*f1*g4 + Z*f2*g4 + L*f3*g4)/(f1*g1 + f2*g1 + f3*g1 + f1*g2 + f2*g2 + f3*g2 + f1*g3 + f2*g3 + f3*g3 + f1*g4 +f2*g4 + f3*g4);
 % Vx=k1*ro;
 
-Vx=1.3*ro*cosd(gama);
-%Vx= 3.6*ro - 0.5*abs(gama) - 0.5*abs(fi);
+%Vx=1.3*ro*cosd(gama);
+Vx= 3.6*ro - 0.5*abs(gama) - 0.5*abs(fi);
 
-%Vy=-1*fi; 
-Vy=-15*fi;
+Vy=-1*fi; 
+%Vy=-10*fi;
 
-Vtheta=(gama-0.3*fi)*1.5; 
-%Vtheta=gama-0.3*fi;
+%Vtheta=(gama-0.3*fi)*1.5; 
+Vtheta=gama-0.3*fi;
 
 V_FLC = [ Vx, Vy, Vtheta ];
 V_FLC = clipDLF(V_FLC,Vr_min,Vr_max);

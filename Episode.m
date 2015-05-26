@@ -34,7 +34,7 @@ Pb=[th_max(1)*0.99 0];
 Pt=[maxDistance+2000 0];
 
 NoiseRobotVel = [NOISE*0.15 NOISE*0.05 NOISE*0.03]; %
-NoiseBall = [0.12; 0]+NOISE*0.8; %  0.8
+NoiseBall = [0.2; 0]+NOISE*0.8; %  0.8
 NoisePerception = NOISE*0.0025; % 
 
 % ------------- INIT PARAMETERS ---------------------

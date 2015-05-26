@@ -5,13 +5,13 @@ close all
 tic
 
 conf.episodes = 2000;%500;   %2000  maximum number of  episode
-conf.EXPL_EPISODES_FACTOR = 7; % 8 exploration decay parameter
+conf.EXPL_EPISODES_FACTOR = 8; % 8 exploration decay parameter
 conf.Runs = 20;
-conf.NOISE = 0.07;
+conf.NOISE = 0.15;
 
-conf.TRANSFER = 0;  %=1 transfer, >1 acts gready from source policy, =0 learns from scratch, =-1 just for test performance from stored policies
-conf.Q_INIT = 0;
-conf.nash = 0;
+conf.TRANSFER = 1;  %=1 transfer, >1 acts gready from source policy, =0 learns from scratch, =-1 just for test performance from stored policies
+conf.Q_INIT = 5;
+conf.nash = 1;
 
 conf.maxDistance =6000;    % maximum ball distance permited before to end the episode X FIELD DIMENSION
 conf.th_max = [250 15 15];      % maximum pho desired
@@ -143,7 +143,7 @@ results.std_rewRot = std(reward(:,3),0,2);
 
 
 if conf.TRANSFER >= 0
-    save ('RC-2015/resultsFull_DRL-v2-20runs-Noise07-exp7', 'results');
+    save ('RC-2015/resultsFull_NASh-v3-20runs-Noise01-exp8', 'results');
 else
     save ('RC-2015/performance_DRL', 'results');
 end 
