@@ -7,7 +7,7 @@ tic
 conf.episodes = 100;%500;   %2000  maximum number of  episode
 conf.EXPL_EPISODES_FACTOR = 8; % 8 exploration decay parameter
 conf.Runs = 1;
-conf.NOISE = 0.35;
+conf.NOISE = 0.17;
 
 conf.TRANSFER = -1;  %=1 transfer, >1 acts gready from source policy, =0 learns from scratch, =-1 just for test performance from stored policies
 conf.Q_INIT = 0;
@@ -191,7 +191,7 @@ if conf.TRANSFER >= 0
     end
     
 else
-    save ('RC-2015/performance_eRL-FLC-v2', 'results');
+    save ('RC-2015/performance_RL-FLC-v2', 'results');
 end
 
 toc

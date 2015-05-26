@@ -4,8 +4,8 @@ function  [reward, e_time, Vavg, tp_faults, goals, Qx,Qy,Qrot] =Dribbling2d( nRu
 load W-FLC-RC2014;
 
 if conf.TRANSFER<0 %Para pruebas de performance
-    %load RC-2015/results/resultsFull_RL-FLC;
-    load RC-2015/results/resultsFull_eRL-FLC;
+    load RC-2015/results/resultsFull_RL-FLC;
+    %load RC-2015/results/resultsFull_eRL-FLC;
     %load RC-2015/results/resultsFull_NASh;
     %load RC-2015/results/resultsFull_DRL;
     %load RC-2015/results/resultsFull_DRL-v2-20runs-Noise07-exp7;
