@@ -4,14 +4,14 @@ close all
 
 tic
 
-conf.episodes = 2000;%500;   %2000  maximum number of  episode
+conf.episodes = 100;%500;   %2000  maximum number of  episode
 conf.EXPL_EPISODES_FACTOR = 8; % 8 exploration decay parameter
-conf.Runs = 20;
-conf.NOISE = 0.15;
+conf.Runs = 1;
+conf.NOISE = 0.17;
 
-conf.TRANSFER = 1;  %=1 transfer, >1 acts gready from source policy, =0 learns from scratch, =-1 just for test performance from stored policies
-conf.Q_INIT = 5;
-conf.nash = 1;
+conf.TRANSFER = -1;  %=1 transfer, >1 acts gready from source policy, =0 learns from scratch, =-1 just for test performance from stored policies
+conf.Q_INIT = 0;
+conf.nash = 0;
 
 conf.maxDistance =6000;    % maximum ball distance permited before to end the episode X FIELD DIMENSION
 conf.th_max = [250 15 15];      % maximum pho desired
@@ -50,7 +50,7 @@ end
 
 for i=1:conf.Runs
 %    disp(['Test= ', num2str(a), '.', num2str(i), ' lambda= ', num2str(lambda(a))])
-    [reward(:,:,i), e_time(:,i), Vavg(:,i), tp_faults(:,i),  Qx,Qy,Qrot] = Dribbling2d( i, conf);
+    [reward(:,:,i), e_time(:,i), Vavg(:,i), tp_faults(:,i), goals(i),  Qx,Qy,Qrot] = Dribbling2d( i, conf);
                               
     et(i) = mean(e_time(ceil(interval*conf.episodes):conf.episodes,i))/1.5;
     et_sd(i) = std(e_time(ceil(interval*conf.episodes):conf.episodes,i))/1.5;
@@ -79,6 +79,10 @@ for i=1:conf.Runs
         pf_max=pf(i);
     end
     
+    goals(i)=100*goals(i)/conf.episodes;
+    goals_avg = mean(goals);
+    goals_sd = std(goals);
+        
     cr(i) = mean(reward(ceil(interval*conf.episodes):conf.episodes,1,i)) + mean(reward(ceil(interval*conf.episodes):conf.episodes,2,i)) + mean(reward(ceil(interval*conf.episodes):conf.episodes,3,i));
     if cr(i) > cr_max
         cr_max=cr(i);
@@ -95,6 +99,8 @@ for i=1:conf.Runs
     
 end
 
+tested_episodes=round(conf.episodes-ceil(interval*conf.episodes));
+
 results.time = e_time;
 results.faults = tp_faults;
 results.reward = reward;
@@ -105,25 +111,34 @@ results.performance(3,1)=v_min;
 results.performance(1,1)=mean(vm);
 results.performance(2,1)=v_max;
 results.performance(5,1)=mean(vm_sd);
+results.performance(6,1)=results.performance(5,1)/tested_episodes;
+results.performance(4,1)=v_xxx; %best
 
-results.performance(2,2)=et_min;
-results.performance(1,2)=mean(et);
-results.performance(3,2)=et_max;
-results.performance(5,2)=mean(et_sd);
+results.performance(2,2)=pf_min;
+results.performance(1,2)=mean(pf);
+results.performance(3,2)=pf_max;
+results.performance(5,2)=mean(pf_sd);
+results.performance(6,2)=results.performance(5,2)/tested_episodes;
+results.performance(4,2)=pf_xxx; %best
 
-results.performance(2,3)=pf_min;
-results.performance(1,3)=mean(pf);
-results.performance(3,3)=pf_max;
-results.performance(5,3)=mean(pf_sd);
+results.performance(1,3)=(100-mean(vm)+mean(pf))/2;
 
-results.performance(3,4)=cr_min;
-results.performance(1,4)=mean(cr);
-results.performance(2,4)=cr_max;
+results.performance(1,4)=goals_avg;
+results.performance(5,4)=goals_sd;
+results.performance(6,4)=results.performance(5,4)/conf.Runs;
 
-results.performance(4,4)=cr_max;
-results.performance(4,3)=pf_xxx;
-results.performance(4,2)=et_xxx;
-results.performance(4,1)=v_xxx;
+results.performance(3,5)=cr_min;
+results.performance(1,5)=mean(cr);
+results.performance(2,5)=cr_max;
+results.performance(4,5)=cr_max;%best
+
+results.performance(2,6)=et_min;
+results.performance(1,6)=mean(et);
+results.performance(3,6)=et_max;
+results.performance(5,6)=mean(et_sd);
+results.performance(6,6)=results.performance(5,4)/tested_episodes;
+results.performance(4,6)=et_xxx; %best
+
 
 
 results.mean_Vavg = mean(Vavg,2);
@@ -143,39 +158,40 @@ results.std_rewRot = std(reward(:,3),0,2);
 
 
 if conf.TRANSFER >= 0
-    save ('RC-2015/resultsFull_NASh-v3-20runs-Noise01-exp8', 'results');
-else
-    save ('RC-2015/performance_DRL', 'results');
-end 
+    save ('RC-2015/resultsFull_NASh-v3-20runs-Noise015-exp8', 'results');
 
-if conf.DRAWS==1
-    figure
-    subplot(2,2,1)
-    plot(mean(reward(:,1),2),'r')
-    hold on
-    plot(mean(reward(:,2),2),'g')
-    plot(mean(reward(:,3),2),'b')
-    hold
-    title('Mean Cum.Reward')
+    if conf.DRAWS==1
+        figure
+        subplot(2,2,1)
+        plot(mean(reward(:,1),2),'r')
+        hold on
+        plot(mean(reward(:,2),2),'g')
+        plot(mean(reward(:,3),2),'b')
+        hold
+        title('Mean Cum.Reward')
+
+        subplot(2,2,2)
+        plot(results.mean_eTime)
+        title('Mean Episode Time')
+
+        subplot(2,2,3)
+        plot(results.mean_Vavg)
+        title('Mean %Max.Fw.Speed')
+
+        subplot(2,2,4)
+        plot(results.mean_faults)
+        title('Mean %TimeFaults')
+        drawnow
+
+
+    %     figure,plot(mean(reward,2))
+    %     figure,plot(mean(fitness,2))
+    %     figure,plot(mean(Vavg,2))
+    %     figure,plot(mean(tp_faults,2))
+    end
     
-    subplot(2,2,2)
-    plot(results.mean_eTime)
-    title('Mean Episode Time')
-        
-    subplot(2,2,3)
-    plot(results.mean_Vavg)
-    title('Mean %Max.Fw.Speed')
-        
-    subplot(2,2,4)
-    plot(results.mean_faults)
-    title('Mean %TimeFaults')
-    drawnow
-    
-    
-%     figure,plot(mean(reward,2))
-%     figure,plot(mean(fitness,2))
-%     figure,plot(mean(Vavg,2))
-%     figure,plot(mean(tp_faults,2))
+else
+    save ('RC-2015/performance_DRL-v2', 'results');
 end
 
 toc

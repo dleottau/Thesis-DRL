@@ -1,4 +1,4 @@
-function  [reward, e_time, Vavg, tp_faults, Qx,Qy,Qrot] =Dribbling2d( nRun, conf)
+function  [reward, e_time, Vavg, tp_faults, goals, Qx,Qy,Qrot] =Dribbling2d( nRun, conf)
 %Dribbling1d SARSA, the main function of the trainning
 
 load W-FLC-RC2014;
@@ -7,7 +7,8 @@ if conf.TRANSFER<0 %Para pruebas de performance
     %load RC-2015/results/resultsFull_RL-FLC;
     %load RC-2015/results/resultsFull_eRL-FLC;
     %load RC-2015/results/resultsFull_NASh;
-    load RC-2015/results/resultsFull_DRL;
+    %load RC-2015/results/resultsFull_DRL;
+    load RC-2015/results/resultsFull_DRL-v2-20runs-Noise07-exp7;
 end
 
 Ts = conf.Ts; %Sample time of a RL step
@@ -72,13 +73,14 @@ epsDec = -log(0.05) * 1/EXPLORATION;  %epsilon decrece a un 5% (0.005) en maxEpi
 RL.param.epsilon = epsilon0;
 RL.param.p=p0;
 
+goals=0;
 for i=1:conf.episodes    
             
     if conf.TRANSFER>1, RL.param.p=1; %acts greedy from source policy
     elseif conf.TRANSFER == 0, RL.param.p=0; %learns from scratch
     end %else Transfer from source decaying as p
     
-    [RL, Vr,ro,fi,gama,Pt,Pb,Pr,Vb,total_reward,steps,fitness_k,btd_k,Vavg_k,time,faults] = Episode( wf, RL, States, Actions, conf);
+    [RL, Vr,ro,fi,gama,Pt,Pb,Pr,Vb,total_reward,steps,fitness_k,btd_k,Vavg_k,time,faults,goal_k] = Episode( wf, RL, States, Actions, conf);
     
     %disp(['Epsilon:',num2str(eps),'  Espisode: ',int2str(i),'  Steps:',int2str(steps),'  Reward:',num2str(total_reward),' epsilon: ',num2str(epsilon)])
         
@@ -86,16 +88,18 @@ for i=1:conf.episodes
     RL.param.p = p0*exp(-i*epsDec*1);
         
      
-     if conf.DRAWS==1
+     
 
-        xpoints(i)=i-1;
+    xpoints(i)=i-1;
+    reward(i,:)=total_reward/steps;
+    e_time(i,1)=steps*Ts;
+    Vavg(i,1)=Vavg_k/conf.Vr_max(1)*100;
+    %btd(i,1)=btd_k;
+    tp_faults(i,1)=faults/steps*100;
+    goals=goal_k+goals;
+    
+    if conf.DRAWS==1
         
-        reward(i,:)=total_reward/steps;
-        e_time(i,1)=steps*Ts;
-        Vavg(i,1)=Vavg_k/conf.Vr_max(1)*100;
-        btd(i,1)=btd_k;
-        tp_faults(i,1)=faults/steps*100;
-             
         subplot(4,2,1);    
         plot(xpoints,reward(:,1),'r')      
         hold on

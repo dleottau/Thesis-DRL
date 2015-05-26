@@ -1,4 +1,4 @@
-function [ RL, Vr,ro,fi,gama,Pt,Pb,Pr,Vb,total_reward,steps, fitness,btd,Vavg,time,faults] = Episode( w, RL, statelist, actionlist, conf)
+function [ RL, Vr,ro,fi,gama,Pt,Pb,Pr,Vb,total_reward,steps, fitness,btd,Vavg,time,faults,goal] = Episode( w, RL, statelist, actionlist, conf)
          
 
 %Dribbling1d do one episode  with sarsa learning              
@@ -34,7 +34,7 @@ Pb=[th_max(1)*0.99 0];
 Pt=[maxDistance+2000 0];
 
 NoiseRobotVel = [NOISE*0.15 NOISE*0.05 NOISE*0.03]; %
-NoiseBall = [0.2; 0]+NOISE*0.8; %  0.8
+NoiseBall = [0.15; 0]+NOISE*0.8; %  0.8
 NoisePerception = NOISE*0.0025; % 
 
 % ------------- INIT PARAMETERS ---------------------
@@ -191,12 +191,17 @@ while 1
     end
     
     % terminal state?
-    if (time(i)>1000 || abs(Pr(i,2))>maxDistance/2 || abs(Pb(i,2))>maxDistance/2 || Pr(i,1)>maxDistance || Pr(i,1)<0 || Pb(i,1)<0 || abs(gamma_) > 90 || abs(phi_) > 150)
+    goal=0;
+    
+    if (conf.TRANSFER >= 0 && (time(i)>1000 || abs(Pr(i,2))>maxDistance/2 || abs(Pb(i,2))>maxDistance/2 || Pr(i,1)>maxDistance || Pr(i,1)<0 || Pb(i,1)<0 || abs(gamma_) > 90 || abs(phi_) > 150))
         Vavg=0;
         break
     end
     
     if (f==true)
+        if abs(Pb(i,2))<750
+            goal=1;
+        end
         break
     end
     

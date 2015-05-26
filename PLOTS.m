@@ -9,7 +9,8 @@ spot_dot={'.r' '.g' '.c' '.k' '.b' '.m'};
 lineW=[3 2 2 2 3 2];
 legendN=[];
 
-K=10; % # points ploted for errobar
+K=9; % # points ploted for errobar
+span=0.07;
 
 n=1;
 M=[];
@@ -18,8 +19,8 @@ S=[];
 load RC-2015/results/resultsFull_DRL-v2-20runs-Noise07-exp7.mat
 [M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL');
 
-load RC-2015/results/resultsFull_NASh-v2-20runs-Noise01-exp8.mat
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-NASh');
+%load RC-2015/results/resultsFull_NASh-v2-20runs-Noise01-exp8.mat
+%[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-NASh');
 
 %load RC-2015/results/resultsFull_DRLpre.mat
 %[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRLpre');
@@ -27,11 +28,11 @@ load RC-2015/results/resultsFull_NASh-v2-20runs-Noise01-exp8.mat
 %load RC-2015/results/resultsFull_NASh.mat
 %[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-NASh');
  
-% load RC-2015/results/resultsFull_eRL-FLC.mat
-% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'eRL-FLC');
+%load RC-2015/results/resultsFull_eRL-FLC.mat
+%[M,S,n,legendN] = load_results(results,M,S,n,legendN,'eRL-FLC');
 % 
-% load RC-2015/results/resultsFull_RL-FLC.mat
-% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'RL-FLC');
+%load RC-2015/results/resultsFull_RL-FLC.mat
+%[M,S,n,legendN] = load_results(results,M,S,n,legendN,'RL-FLC');
 
 
 
@@ -82,7 +83,7 @@ load RC-2015/results/resultsFull_NASh-v2-20runs-Noise01-exp8.mat
 
 Ms=M;%Smoothed means
 Ss=S;%Smoothed stdevs
-span=0.08;
+
 for i=1:size(M,3)
     for j=1:size(M,2)
         Ms(:,j,i)=smooth( M(:,j,i), span,'rloess');
@@ -121,6 +122,7 @@ for j=1:size(M,2)
 end
 hold
 axis([1 E 0 100])
+%axis([1 160 0 100])
 %legend(pt,legendN)
 %title('% Vmax') ; 
 grid on
@@ -136,6 +138,7 @@ for j=1:size(M,2)
 end
 hold
 axis([1 E 0 100])
+%axis([1 160 0 100])
 %title('% Faults'); 
 grid on
 %xlabel('Episodes');
@@ -151,6 +154,7 @@ subplot(3,1,3);
  end
  hold
  axis([1 E 0 100])
+ %axis([1 160 0 100])
  grid on
  xlabel('Episodes');
  ylabel('Global Fitness');
@@ -200,8 +204,6 @@ function [M, S, n, legendN] = load_results(results, M, S, n, legendN, leg)
 %     S(:,n,3) = S(:,n,3)/abs(min(S(:,n,3))*1.5).*normLRX + S(:,n,3).*normHRX;
     
     legendN{n} = leg;
-
-
     n = n+1;
 end
 
