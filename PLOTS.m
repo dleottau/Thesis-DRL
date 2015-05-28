@@ -9,23 +9,21 @@ spot_dot={'.r' '.g' '.c' '.k' '.b' '.m'};
 lineW=[3 2 2 2 3 2];
 legendN=[];
 
-K=9; % # points ploted for errobar
+K=10; % # points ploted for errobar
 span=0.07;
 
 n=1;
 M=[];
 S=[];
 
+load RC-2015/results/resultsFull_DRL-v2-20runs-Noise07-exp7.mat
+[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL');
+
+%load RC-2015/resultsFull_DRL-NASh-v5-10runs-Noise012-exp8-phoK3.mat
+%[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-NASh');
+
 %load RC-2015/resultsFull_RL-FLC-v2-20runs-Noise02-exp20.mat
-%[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL');
-
-load RC-2015/resultsFull_DRL-NASh-v4-3runs-Noise015-exp8.mat
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-NASh');
-
-
-
-%load RC-2015/results/resultsFull_DRL-v2-20runs-Noise07-exp7.mat
-%[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL');
+%[M,S,n,legendN] = load_results(results,M,S,n,legendN,'RL-FLC');
 
 %load RC-2015/results/resultsFull_NASh-v2-20runs-Noise01-exp8.mat
 %[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-NASh');
@@ -33,8 +31,8 @@ load RC-2015/resultsFull_DRL-NASh-v4-3runs-Noise015-exp8.mat
 %load RC-2015/results/resultsFull_DRLpre.mat
 %[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRLpre');
 
-%load RC-2015/results/resultsFull_NASh.mat
-%[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-NASh');
+load RC-2015/results/resultsFull_NASh.mat
+[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-NASh');
  
 %load RC-2015/results/resultsFull_eRL-FLC.mat
 %[M,S,n,legendN] = load_results(results,M,S,n,legendN,'eRL-FLC');

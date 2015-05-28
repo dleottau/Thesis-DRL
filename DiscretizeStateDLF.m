@@ -9,8 +9,8 @@ function s  = DiscretizeStateDLF(xp, cores, feature_step,div_disc)
 % gama  = x(7);
 % fi = x(8);
 
-xp(7)=0;
-xp(8)=0;
+%xp(7)=0;
+%xp(8)=0;
 
 x(1) = clipDLF( xp(5), cores.ro(1), cores.ro(size(cores.ro,2)) )  -cores.ro(1);
 x(2) = clipDLF( xp(7), cores.gama(1), cores.gama(size(cores.gama,2)) )  -cores.gama(1);
