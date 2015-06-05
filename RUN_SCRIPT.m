@@ -4,14 +4,18 @@ close all
 
 tic
 
-conf.episodes = 100;%500;   %2000  maximum number of  episode
-conf.EXPL_EPISODES_FACTOR = 8; % 8 exploration decay parameter
-conf.Runs = 1;
-conf.NOISE = 0.16;
+conf.episodes = 1000;%500;   %2000  maximum number of  episode
+conf.EXPL_EPISODES_FACTOR = 7; % 8 exploration decay parameter
+conf.Runs = 2;
+conf.NOISE = 0.1;
 
-conf.TRANSFER = -1;  %=1 transfer, >1 acts gready from source policy, =0 learns from scratch, =-1 just for test performance from stored policies
-conf.Q_INIT = 0;
-conf.nash = 0;   % 0 COntrol sharing, 1 NASh
+conf.TRANSFER = 1;  %=1 transfer, >1 acts gready from source policy, =0 learns from scratch, =-1 just for test performance from stored policies
+conf.Q_INIT = 5;
+conf.nash = 1;   % 0 COntrol sharing, 1 NASh
+%sync=1, synchronizes using tne same random number for the 3 D-RL agents, otherwise, uses independetn random numbers per agent
+conf.sync.nash      = 1;  
+conf.sync.nashExpl  = 1;
+conf.sync.TL        = 0;
 
 conf.maxDistance =6000;    % maximum ball distance permited before to end the episode X FIELD DIMENSION
 conf.th_max = [250 15 15];      % maximum pho desired
@@ -158,11 +162,10 @@ results.std_rewRot = std(reward(:,3),0,2);
 
 
 if conf.TRANSFER >= 0
-    save ('RC-2015/resultsFull_NASh-v2-20runs-Noise015-exp8', 'results');
-
+    save ('NASh/NASh-10runs-Noise01-1000exp7-NAShExplSync', 'results');
     if conf.DRAWS==1
         figure
-        subplot(2,2,1)
+        subplot(2,2,4)
         plot(mean(reward(:,1),2),'r')
         hold on
         plot(mean(reward(:,2),2),'g')
@@ -170,15 +173,15 @@ if conf.TRANSFER >= 0
         hold
         title('Mean Cum.Reward')
 
-        subplot(2,2,2)
-        plot(results.mean_eTime)
-        title('Mean Episode Time')
-
         subplot(2,2,3)
+        plot((100-results.mean_Vavg+results.mean_faults)/2)
+        title('Mean Global Fitness(%)')
+
+        subplot(2,2,1)
         plot(results.mean_Vavg)
         title('Mean %Max.Fw.Speed')
 
-        subplot(2,2,4)
+        subplot(2,2,2)
         plot(results.mean_faults)
         title('Mean %TimeFaults')
         drawnow

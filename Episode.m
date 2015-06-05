@@ -72,6 +72,10 @@ ap=a;
 ap_y=a_y;
 ap_rot=a_rot;
 
+rnd.nash=0;
+rnd.nashExpl=0;
+rnd.TL=0;
+
 while 1  
     steps=i;
     i = i+1; % OJO, ESTO E SIMPORTANTE PUES SE EVALUAN ESTADOS ANTERIORES, i-1
@@ -148,9 +152,13 @@ while 1
     a_transf_rot = 1 + round(V_FLC(3)/V_action_steps(3) + Vr_max(3)/V_action_steps(3) );
 
     
-    [ap] = p_source_selection_FLC(RL.Q,sp, RL.param, a_transf, conf.nash);
-    [ap_y] = p_source_selection_FLC(RL.Q_y,sp, RL.param, a_transf_y, conf.nash);
-    [ap_rot] = p_source_selection_FLC(RL.Q_rot,sp, RL.param, a_transf_rot, conf.nash);
+    if conf.sync.nash>0, rnd.nash=randn(); end
+    if conf.sync.nashExpl>0, rnd.nashExpl=randn(); end
+    if conf.sync.TL>0, rnd.TL=rand(); end
+    
+    [ap] = p_source_selection_FLC(RL.Q,sp, RL.param, a_transf, conf.nash, conf.sync, rnd);
+    [ap_y] = p_source_selection_FLC(RL.Q_y,sp, RL.param, a_transf_y, conf.nash, conf.sync, rnd);
+    [ap_rot] = p_source_selection_FLC(RL.Q_rot,sp, RL.param, a_transf_rot, conf.nash, conf.sync, rnd);
      
 
     % Secuential learning
