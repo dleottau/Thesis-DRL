@@ -17,19 +17,16 @@ M=[];
 S=[];
 
 
-load NASh/NASh-10runs-Noise01-1200exp7-NAShExplSync.mat
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'NASh-nashExplSync7');
-
-load NASh/NASh-10runs-Noise01-1200exp6-NoSync.mat
+load NASh/NASh-10runs-Noise01-1200exp7-NoSync.mat
 [M,S,n,legendN] = load_results(results,M,S,n,legendN,'NASh-NoSync');
 
-load NASh/NASh-10runs-Noise01-1200exp6-NAShExplSync.mat
+load NASh/NASh-10runs-Noise01-1200exp7-NAShExplSync.mat
 [M,S,n,legendN] = load_results(results,M,S,n,legendN,'NASh-nashExplSync');
 
-load NASh/NASh-10runs-Noise01-1200exp6-TLSync.mat
+load NASh/NASh-10runs-Noise01-1200exp7-TLSync.mat
 [M,S,n,legendN] = load_results(results,M,S,n,legendN,'NASh-TLSync');
 
-load NASh/NASh-10runs-Noise01-1200exp6-FullSync.mat
+load NASh/NASh-10runs-Noise01-1200exp7-FullSync.mat
 [M,S,n,legendN] = load_results(results,M,S,n,legendN,'NASh-FullSync');
 
 %load NASh/NASh-10runs-Noise01-1200exp6-NAShTLSync.mat

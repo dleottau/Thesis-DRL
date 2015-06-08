@@ -159,19 +159,13 @@ while 1
     [ap] = p_source_selection_FLC(RL.Q,sp, RL.param, a_transf, conf.nash, conf.sync, rnd);
     [ap_y] = p_source_selection_FLC(RL.Q_y,sp, RL.param, a_transf_y, conf.nash, conf.sync, rnd);
     [ap_rot] = p_source_selection_FLC(RL.Q_rot,sp, RL.param, a_transf_rot, conf.nash, conf.sync, rnd);
-     
-
-    % Secuential learning
-    %ap = GetBestAction(RL.Q,sp);
-    %ap_y = GetBestAction(RL.Q_y,sp);
-    %ap_rot = GetBestAction(RL.Q_rot,sp);
-        
-    
+   
+   
 	% Update the Qtable, that is,  learn from the experience
     if conf.TRANSFER >= 0 %Para aprendizaje, TRANSFER<0 para pruebas de performance
-        [RL.Q, RL.trace] = UpdateSARSAlambda( s, a, r(1), sp, ap, RL.Q, RL.param, RL.trace );
-        [RL.Q_y, RL.trace_y] = UpdateSARSAlambda( s, a_y, r(2), sp, ap_y, RL.Q_y, RL.param, RL.trace_y );
-        [RL.Q_rot, RL.trace_rot] = UpdateSARSAlambda( s, a_rot, r(3), sp, ap_rot, RL.Q_rot, RL.param, RL.trace_rot );
+        [RL.Q, RL.trace] = UpdateSARSAlambda( s, a, r(1), sp, ap, RL.Q, RL.param, RL.trace, conf.MAapproach);
+        [RL.Q_y, RL.trace_y] = UpdateSARSAlambda( s, a_y, r(2), sp, ap_y, RL.Q_y, RL.param, RL.trace_y, conf.MAapproach );
+        [RL.Q_rot, RL.trace_rot] = UpdateSARSAlambda( s, a_rot, r(3), sp, ap_rot, RL.Q_rot, RL.param, RL.trace_rot, conf.MAapproach );
     end    
     %update the current variables
     s = sp;

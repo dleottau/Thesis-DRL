@@ -5,16 +5,18 @@ close all
 tic
 
 conf.episodes = 1000;%500;   %2000  maximum number of  episode
-conf.EXPL_EPISODES_FACTOR = 7; % 8 exploration decay parameter
-conf.Runs = 2;
-conf.NOISE = 0.1;
+conf.EXPL_EPISODES_FACTOR = 6; % 8 exploration decay parameter
+conf.Runs = 3;
+conf.NOISE = 0.0;
 
 conf.TRANSFER = 1;  %=1 transfer, >1 acts gready from source policy, =0 learns from scratch, =-1 just for test performance from stored policies
-conf.Q_INIT = 5;
+conf.Q_INIT = 0;
 conf.nash = 1;   % 0 COntrol sharing, 1 NASh
+conf.MAapproach = -1;   % 0 no cordination, -1 optimistic asumption, 1 leninet
+
 %sync=1, synchronizes using tne same random number for the 3 D-RL agents, otherwise, uses independetn random numbers per agent
-conf.sync.nash      = 1;  
-conf.sync.nashExpl  = 1;
+conf.sync.nash      = 0;  
+conf.sync.nashExpl  = 0;
 conf.sync.TL        = 0;
 
 conf.maxDistance =6000;    % maximum ball distance permited before to end the episode X FIELD DIMENSION
@@ -162,7 +164,7 @@ results.std_rewRot = std(reward(:,3),0,2);
 
 
 if conf.TRANSFER >= 0
-    save ('NASh/NASh-10runs-Noise01-1000exp7-NAShExplSync', 'results');
+    save ('NASh/DLR-3runs-Noise007-1000exp6-NoSync-OptimisticAs', 'results');
     if conf.DRAWS==1
         figure
         subplot(2,2,4)
