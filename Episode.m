@@ -72,6 +72,10 @@ ap=a;
 ap_y=a_y;
 ap_rot=a_rot;
 
+rnd.nash=0;
+rnd.nashExpl=0;
+rnd.TL=0;
+
 while 1  
     steps=i;
     i = i+1; % OJO, ESTO E SIMPORTANTE PUES SE EVALUAN ESTADOS ANTERIORES, i-1
@@ -148,22 +152,20 @@ while 1
     a_transf_rot = 1 + round(V_FLC(3)/V_action_steps(3) + Vr_max(3)/V_action_steps(3) );
 
     
-    [ap] = p_source_selection_FLC(RL.Q,sp, RL.param, a_transf, conf.nash);
-    [ap_y] = p_source_selection_FLC(RL.Q_y,sp, RL.param, a_transf_y, conf.nash);
-    [ap_rot] = p_source_selection_FLC(RL.Q_rot,sp, RL.param, a_transf_rot, conf.nash);
-     
-
-    % Secuential learning
-    %ap = GetBestAction(RL.Q,sp);
-    %ap_y = GetBestAction(RL.Q_y,sp);
-    %ap_rot = GetBestAction(RL.Q_rot,sp);
-        
+    if conf.sync.nash>0, rnd.nash=randn(); end
+    if conf.sync.nashExpl>0, rnd.nashExpl=randn(); end
+    if conf.sync.TL>0, rnd.TL=rand(); end
     
+    [ap] = p_source_selection_FLC(RL.Q,sp, RL.param, a_transf, conf.nash, conf.sync, rnd);
+    [ap_y] = p_source_selection_FLC(RL.Q_y,sp, RL.param, a_transf_y, conf.nash, conf.sync, rnd);
+    [ap_rot] = p_source_selection_FLC(RL.Q_rot,sp, RL.param, a_transf_rot, conf.nash, conf.sync, rnd);
+   
+   
 	% Update the Qtable, that is,  learn from the experience
     if conf.TRANSFER >= 0 %Para aprendizaje, TRANSFER<0 para pruebas de performance
-        [RL.Q, RL.trace] = UpdateSARSAlambda( s, a, r(1), sp, ap, RL.Q, RL.param, RL.trace );
-        [RL.Q_y, RL.trace_y] = UpdateSARSAlambda( s, a_y, r(2), sp, ap_y, RL.Q_y, RL.param, RL.trace_y );
-        [RL.Q_rot, RL.trace_rot] = UpdateSARSAlambda( s, a_rot, r(3), sp, ap_rot, RL.Q_rot, RL.param, RL.trace_rot );
+        [RL.Q, RL.trace] = UpdateSARSAlambda( s, a, r(1), sp, ap, RL.Q, RL.param, RL.trace, conf.MAapproach);
+        [RL.Q_y, RL.trace_y] = UpdateSARSAlambda( s, a_y, r(2), sp, ap_y, RL.Q_y, RL.param, RL.trace_y, conf.MAapproach );
+        [RL.Q_rot, RL.trace_rot] = UpdateSARSAlambda( s, a_rot, r(3), sp, ap_rot, RL.Q_rot, RL.param, RL.trace_rot, conf.MAapproach );
     end    
     %update the current variables
     s = sp;

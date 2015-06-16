@@ -4,9 +4,9 @@ function PLOTS()
 close all
 clc
 
-spot={':r' '-g' '-.c' '--k'  ':b' '-m'};
-spot_dot={'.r' '.g' '.c' '.k' '.b' '.m'};
-lineW=[3 2 2 2 3 2];
+spot={':r' '-g' '-.c' '--k'  ':b' '-m' '-.r' '--g'};
+spot_dot={'.r' '.g' '.c' '.k' '.b' '.m' '.r' '.g'};
+lineW=[3 2 2 2 3 2 2 2];
 legendN=[];
 
 K=10; % # points ploted for errobar
@@ -16,8 +16,49 @@ n=1;
 M=[];
 S=[];
 
-load RC-2015/results/resultsFull_DRL-v2-20runs-Noise07-exp7.mat
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL');
+
+load NASh/NASh-10runs-Noise01-1200exp7-NoSync.mat
+[M,S,n,legendN] = load_results(results,M,S,n,legendN,'NASh-NoSync');
+
+load NASh/NASh-10runs-Noise01-1200exp7-NAShExplSync.mat
+[M,S,n,legendN] = load_results(results,M,S,n,legendN,'NASh-nashExplSync');
+
+load NASh/NASh-10runs-Noise01-1200exp7-TLSync.mat
+[M,S,n,legendN] = load_results(results,M,S,n,legendN,'NASh-TLSync');
+
+load NASh/NASh-10runs-Noise01-1200exp7-FullSync.mat
+[M,S,n,legendN] = load_results(results,M,S,n,legendN,'NASh-FullSync');
+
+%load NASh/NASh-10runs-Noise01-1200exp6-NAShTLSync.mat
+%[M,S,n,legendN] = load_results(results,M,S,n,legendN,'NASh-nashTLSync');
+
+
+
+%load NASh/NASh-3runs-Noise01-1000exp6-NashSync.mat
+%[M,S,n,legendN] = load_results(results,M,S,n,legendN,'NASh-nashSync');
+
+%load NASh/NASh-3runs-Noise01-1000exp6-explSync.mat
+%[M,S,n,legendN] = load_results(results,M,S,n,legendN,'NASh-explSync');
+
+% 
+% load NASh/NASh-3runs-Noise01-1000exp6-TLSync.mat
+% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'NASh-TLSync');
+% 
+% load NASh/NASh-3runs-Noise01-1000exp6-NashTLSync.mat
+% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'NASh-nashTLSync');
+
+%load NASh/NASh-3runs-Noise01-1000exp6-explTLSync.mat
+%[M,S,n,legendN] = load_results(results,M,S,n,legendN,'NASh-explTLSync');
+
+% load NASh/NASh-3runs-Noise01-1000exp6-FullSync.mat
+% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'NASh-FullSync');
+
+
+
+%=========
+
+%load RC-2015/results/resultsFull_DRL-v2-20runs-Noise07-exp7.mat
+%[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL');
 
 %load RC-2015/resultsFull_DRL-NASh-v5-10runs-Noise012-exp8-phoK3.mat
 %[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-NASh');
