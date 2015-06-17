@@ -4,10 +4,10 @@ close all
 
 tic
 
-conf.episodes = 30;%500;   %2000  maximum number of  episode
-conf.EXPL_EPISODES_FACTOR = 30; % 8 exploration decay parameter
+conf.episodes = 2000; %500;   %2000  maximum number of  episode
+conf.EXPL_EPISODES_FACTOR = 8; % 8 exploration decay parameter
 conf.Runs = 1;
-conf.NOISE = 0.2;
+conf.NOISE = 0.05;
 
 conf.record =0;
 conf.DRAWS = 1;
@@ -16,11 +16,17 @@ conf.TRANSFER = 0;  %=1 transfer, >1 acts gready from source policy, =0 learns f
 conf.Q_INIT = 0;
 conf.nash = 0;   % 0 COntrol sharing, 1 NASh
 conf.MAapproach = 0;   % 0 no cordination, -1 optimistic asumption, 1 leninet
+conf.boltzmann = 20;  % Boltzmann temperature (5 by default), if <= 0 e-greaddy
 
 %sync=1, synchronizes using tne same random number for the 3 D-RL agents, otherwise, uses independetn random numbers per agent
 conf.sync.nash      = 0;  
 conf.sync.nashExpl  = 0;
 conf.sync.TL        = 0;
+
+
+evolutionFile = 'boltzmann/Vx-5runs-Noise02-50exp10-NoSync-boltzmann20';
+performanceFile = 'boltzmann/Vx-5runs-Noise03-50exp30-NoSync-boltzmann1';
+
 
 conf.maxDistance =6000;    % maximum ball distance permited before to end the episode X FIELD DIMENSION
 conf.th_max = [250 15 15];      % maximum pho desired
@@ -164,11 +170,9 @@ results.std_rewY = std(reward(:,2),0,2);
 results.mean_rewRot = mean(reward(:,3),2);
 results.std_rewRot = std(reward(:,3),0,2);
 
-
-
 if conf.TRANSFER >= 0
     if conf.record >0
-        save ('NASh/DLR-3runs-Noise007-1000exp6-NoSync-OptimisticAs', 'results');
+        save (evolutionFile, 'results');
     end
     
     if conf.DRAWS==1
@@ -203,7 +207,7 @@ if conf.TRANSFER >= 0
     
 else
     if conf.record > 0
-        save ('RC-2015/performance_DRL-NASh-v3', 'results');
+        save (performanceFile, 'results');
     end
 end
 

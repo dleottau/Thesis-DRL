@@ -10,24 +10,74 @@ lineW=[3 2 2 2 3 2 2 2];
 legendN=[];
 
 K=10; % # points ploted for errobar
-span=0.07;
+span=0.000000001;
+%span=0.07;
 
 n=1;
 M=[];
 S=[];
 
 
-load NASh/NASh-10runs-Noise01-1200exp7-NoSync.mat
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'NASh-NoSync');
+load boltzmann/Vx-5runs-Noise02-50exp10-NoSync-boltzmann20.mat
+[M,S,n,legendN] = load_results(results,M,S,n,legendN,'temp20-50expl10');
 
-load NASh/NASh-10runs-Noise01-1200exp7-NAShExplSync.mat
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'NASh-nashExplSync');
 
-load NASh/NASh-10runs-Noise01-1200exp7-TLSync.mat
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'NASh-TLSync');
+load boltzmann/Vx-5runs-Noise02-50exp5-NoSync-boltzmann20.mat
+[M,S,n,legendN] = load_results(results,M,S,n,legendN,'temp20-50expl5');
 
-load NASh/NASh-10runs-Noise01-1200exp7-FullSync.mat
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'NASh-FullSync');
+load boltzmann/Vx-20runs-Noise02-50exp5-NoSync-boltzmann5.mat
+[M,S,n,legendN] = load_results(results,M,S,n,legendN,'temp5-50expl5');
+
+load boltzmann/Vx-20runs-Noise02-50exp10-NoSync-boltzmann5.mat
+[M,S,n,legendN] = load_results(results,M,S,n,legendN,'temp5-50expl10');
+
+load boltzmann/Vx-20runs-Noise02-50exp10-NoSync-egready.mat
+[M,S,n,legendN] = load_results(results,M,S,n,legendN,'egreedy-50expl10');
+
+load boltzmann/Vx-20runs-Noise02-50exp30-NoSync-egready.mat
+[M,S,n,legendN] = load_results(results,M,S,n,legendN,'egreedy-50expl30');
+
+
+% load boltzmann/Vx-3runs-Noise02-50exp5-NoSync-boltzmann5.mat
+% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'temp5-50expl5');
+% 
+% load boltzmann/Vx-3runs-Noise02-50exp10-NoSync-boltzmann5.mat
+% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'temp5-50expl10');
+% 
+% load boltzmann/Vx-3runs-Noise02-50exp5-NoSync-boltzmann10.mat
+% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'temp10-50expl5');
+% 
+% load boltzmann/Vx-3runs-Noise02-50exp10-NoSync-boltzmann10.mat
+% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'temp10-50expl10');
+
+
+% load boltzmann/Vx-3runs-Noise01-50exp30-NoSync-boltzmann5.mat
+% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'temp5-50expl30');
+% 
+% load boltzmann/Vx-3runs-Noise01-50exp50-NoSync-boltzmann5.mat
+% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'temp5-50expl50');
+% 
+% load boltzmann/Vx-3runs-Noise01-50exp10-NoSync-boltzmann10.mat
+% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'temp10-50expl10');
+% 
+% load boltzmann/Vx-3runs-Noise01-50exp30-NoSync-boltzmann10.mat
+% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'temp10-50expl30');
+% 
+% load boltzmann/Vx-3runs-Noise01-50exp50-NoSync-boltzmann10.mat
+% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'temp10-50expl50');
+
+
+% load NASh/NASh-10runs-Noise01-1200exp7-NoSync.mat
+% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'NASh-NoSync');
+% 
+% load NASh/NASh-10runs-Noise01-1200exp7-NAShExplSync.mat
+% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'NASh-nashExplSync');
+% 
+% load NASh/NASh-10runs-Noise01-1200exp7-TLSync.mat
+% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'NASh-TLSync');
+% 
+% load NASh/NASh-10runs-Noise01-1200exp7-FullSync.mat
+% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'NASh-FullSync');
 
 %load NASh/NASh-10runs-Noise01-1200exp6-NAShTLSync.mat
 %[M,S,n,legendN] = load_results(results,M,S,n,legendN,'NASh-nashTLSync');
@@ -72,8 +122,8 @@ load NASh/NASh-10runs-Noise01-1200exp7-FullSync.mat
 %load RC-2015/results/resultsFull_DRLpre.mat
 %[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRLpre');
 
-load RC-2015/results/resultsFull_NASh.mat
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-NASh');
+%load RC-2015/results/resultsFull_NASh.mat
+%[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-NASh');
  
 %load RC-2015/results/resultsFull_eRL-FLC.mat
 %[M,S,n,legendN] = load_results(results,M,S,n,legendN,'eRL-FLC');

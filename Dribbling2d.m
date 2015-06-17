@@ -61,7 +61,7 @@ RL.param.gamma       = 1;   % discount factor
 RL.param.lambda      = 0.9;   % the decaying elegibiliy trace parameter
 epsilon0             = 1;  % probability of a random action selection
 p0                   = 1;
-
+temp0                =  conf.boltzmann;
 
 if conf.TRANSFER<0 %Para pruebas de performance
     epsilon0             = 0;    
@@ -73,6 +73,7 @@ epsDec = -log(0.05) * 1/EXPLORATION;  %epsilon decrece a un 5% (0.005) en maxEpi
 
 RL.param.epsilon = epsilon0;
 RL.param.p=p0;
+RL.param.boltzmann = temp0;
 
 goals=0;
 for i=1:conf.episodes    
@@ -84,13 +85,12 @@ for i=1:conf.episodes
     [RL, Vr,ro,fi,gama,Pt,Pb,Pr,Vb,total_reward,steps,fitness_k,btd_k,Vavg_k,time,faults,goal_k] = Episode( wf, RL, States, Actions, conf);
     
     %disp(['Epsilon:',num2str(eps),'  Espisode: ',int2str(i),'  Steps:',int2str(steps),'  Reward:',num2str(total_reward),' epsilon: ',num2str(epsilon)])
-        
-    RL.param.epsilon = epsilon0 * exp(-i*epsDec);
-    RL.param.p = p0*exp(-i*epsDec*1);
-        
-     
-     
-
+    
+    dec=exp(-i*epsDec);
+    RL.param.epsilon = epsilon0*dec;
+    RL.param.p = p0*dec;
+    RL.param.boltzmann = temp0*dec;
+    
     xpoints(i)=i-1;
     reward(i,:)=total_reward/steps;
     e_time(i,1)=steps*Ts;
@@ -116,14 +116,16 @@ for i=1:conf.episodes
         %drawnow
         
         subplot(4,2,5); 
-        plot(xpoints,e_time)
-        title('Episode Time')
-        %drawnow
-        
-        subplot(4,2,7); 
         plot(xpoints,tp_faults)
         title('% Time Faults')
         %drawnow
+        
+        subplot(4,2,7); 
+        plot(xpoints, 0.5*(100-Vavg+tp_faults))
+        title('Global Fitness')
+        %drawnow
+        
+        
      
         subplot(4,2,2)
         plot(Pt(1,1),Pt(1,2),'*k')%posición del target 
