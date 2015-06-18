@@ -48,6 +48,15 @@ btd=0;
 
 Fr=150;
 
+rnd.nash=0;
+rnd.nashExpl=0;
+rnd.expl=0;
+rnd.TL=0;
+
+fa_x=1;
+fa_y=1;
+fa_rot=1;
+
 Vr(i,:)=[Vr_min(1) 0 0]; %velocidad del robot
 Vb(i,1)=0; %velocidad de la bola
 dirb(i,1)=atan2(Pb(i,2)-Pr(i,2),Pb(i,1)-Pr(i,1))*180/pi; %dirección bola
@@ -64,17 +73,14 @@ x = [Pr(i,1),Pb(i,1),Vb(i,1),Vr(i,1),ro(i,1),dV,gama(i,1),fi(i,1)];
 s  = DiscretizeStateDLF(x,cores,feature_step,div_disc);
 
 % selects an action using the epsilon greedy selection strategy
-a   = e_greedy_selection(RL.Q, s, RL.param.epsilon);
-a_y = e_greedy_selection(RL.Q_y,s, RL.param.epsilon);
-a_rot = e_greedy_selection(RL.Q_rot,s, RL.param.epsilon);
+a   = e_greedy_selection(RL.Q, s, RL.param.epsilon, rand());
+a_y = e_greedy_selection(RL.Q_y,s, RL.param.epsilon, rand());
+a_rot = e_greedy_selection(RL.Q_rot,s, RL.param.epsilon, rand());
 %action = ones(1,3);
 ap=a;
 ap_y=a_y;
 ap_rot=a_rot;
 
-rnd.nash=0;
-rnd.nashExpl=0;
-rnd.TL=0;
 
 while 1  
     steps=i;
@@ -150,22 +156,21 @@ while 1
     a_transf = 1 + round(V_FLC(1)/V_action_steps(1));  % from FLC
     a_transf_y = 1 + round(V_FLC(2)/V_action_steps(2)  + Vr_max(2)/V_action_steps(2) );
     a_transf_rot = 1 + round(V_FLC(3)/V_action_steps(3) + Vr_max(3)/V_action_steps(3) );
-
     
-    if conf.sync.nash>0, rnd.nash=randn(); end
-    if conf.sync.nashExpl>0, rnd.nashExpl=randn(); end
+    if conf.sync.nash>0, rnd.nash=randn(); rnd.nashExpl=randn(); end
+    if conf.sync.expl>0, rnd.expl=rand(); end
     if conf.sync.TL>0, rnd.TL=rand(); end
     
-    [ap] = p_source_selection_FLC(RL.Q,sp, RL.param, a_transf, conf.nash, conf.sync, rnd);
-    [ap_y] = p_source_selection_FLC(RL.Q_y,sp, RL.param, a_transf_y, conf.nash, conf.sync, rnd);
-    [ap_rot] = p_source_selection_FLC(RL.Q_rot,sp, RL.param, a_transf_rot, conf.nash, conf.sync, rnd);
+    [ap, fa_x] = p_source_selection_FLC(RL.Q,sp, RL.param, a_transf, conf.nash, conf.sync, rnd);
+    [ap_y, fa_y] = p_source_selection_FLC(RL.Q_y,sp, RL.param, a_transf_y, conf.nash, conf.sync, rnd);
+    [ap_rot, fa_rot] = p_source_selection_FLC(RL.Q_rot,sp, RL.param, a_transf_rot, conf.nash, conf.sync, rnd);
    
    
 	% Update the Qtable, that is,  learn from the experience
     if conf.TRANSFER >= 0 %Para aprendizaje, TRANSFER<0 para pruebas de performance
-        [RL.Q, RL.trace] = UpdateSARSAlambda( s, a, r(1), sp, ap, RL.Q, RL.param, RL.trace, conf.MAapproach);
-        [RL.Q_y, RL.trace_y] = UpdateSARSAlambda( s, a_y, r(2), sp, ap_y, RL.Q_y, RL.param, RL.trace_y, conf.MAapproach );
-        [RL.Q_rot, RL.trace_rot] = UpdateSARSAlambda( s, a_rot, r(3), sp, ap_rot, RL.Q_rot, RL.param, RL.trace_rot, conf.MAapproach );
+        [RL.Q, RL.trace] = UpdateSARSAlambda( s, a, r(1), sp, ap, RL.Q, RL.param, RL.trace, conf.MAapproach, fa_x);
+        [RL.Q_y, RL.trace_y] = UpdateSARSAlambda( s, a_y, r(2), sp, ap_y, RL.Q_y, RL.param, RL.trace_y, conf.MAapproach, fa_y );
+        [RL.Q_rot, RL.trace_rot] = UpdateSARSAlambda( s, a_rot, r(3), sp, ap_rot, RL.Q_rot, RL.param, RL.trace_rot, conf.MAapproach, fa_rot);
     end    
     %update the current variables
     s = sp;

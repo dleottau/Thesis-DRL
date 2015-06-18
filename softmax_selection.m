@@ -1,4 +1,4 @@
-function [ a ] = softmax_selection( Q , s, tempdec )
+function [ a, p ] = softmax_selection( Q , s, tempdec, rnd )
 % softmax_selection selects an action using the Gibs distribution and softmax strategy
 % Q: the Qtable
 % s: the current state
@@ -27,7 +27,8 @@ Ps = v_qa/sum_qa;
 if sum(Ps)==0
     Ps=Ps+1/actions;
 end
-a = find(rand <= cumsum(Ps),1);
+a = find(rnd <= cumsum(Ps),1);
+p = Ps(a);
 
 if ~isscalar(a)
     a

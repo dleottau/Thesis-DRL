@@ -5,7 +5,7 @@ close all
 tic
 
 conf.episodes = 2000; %500;   %2000  maximum number of  episode
-conf.EXPL_EPISODES_FACTOR = 8; % 8 exploration decay parameter
+conf.EXPL_EPISODES_FACTOR = 6; % 8 exploration decay parameter
 conf.Runs = 1;
 conf.NOISE = 0.05;
 
@@ -19,10 +19,9 @@ conf.MAapproach = 0;   % 0 no cordination, -1 optimistic asumption, 1 leninet
 conf.boltzmann = 20;  % Boltzmann temperature (5 by default), if <= 0 e-greaddy
 
 %sync=1, synchronizes using tne same random number for the 3 D-RL agents, otherwise, uses independetn random numbers per agent
-conf.sync.nash      = 0;  
-conf.sync.nashExpl  = 0;
-conf.sync.TL        = 0;
-
+conf.sync.nash      = 1;
+conf.sync.TL        = 1;
+conf.sync.expl      = 0;
 
 evolutionFile = 'boltzmann/Vx-5runs-Noise02-50exp10-NoSync-boltzmann20';
 performanceFile = 'boltzmann/Vx-5runs-Noise03-50exp30-NoSync-boltzmann1';

@@ -1,4 +1,4 @@
-function [ Q, trace] = UpdateSARSAlambda( s, a, r, sp, ap, Q, RLparam, trace, MAapproach)
+function [ Q, trace] = UpdateSARSAlambda( s, a, r, sp, ap, Q, RLparam, trace, MAapproach, fa)
 % UpdateQ update de Qtable and return it using SARSA
 % s1: previous state before taking action (a)
 % s2: current state after action (a)
@@ -11,7 +11,6 @@ function [ Q, trace] = UpdateSARSAlambda( s, a, r, sp, ap, Q, RLparam, trace, MA
 % lambda: eligibility trace decay factor
 % trace : eligibility trace vector
 
-
     delta  =   r + RLparam.gamma * Q(sp,ap)  - Q(s,a);
     
     % Replacing traces
@@ -23,13 +22,9 @@ function [ Q, trace] = UpdateSARSAlambda( s, a, r, sp, ap, Q, RLparam, trace, MA
     %trace(s,a) = 1 + trace(s,a);
     
     if MAapproach == 0 || (MAapproach == -1 && delta > 0) 
-        Q = Q + RLparam.alpha * delta * trace;
+        Q = Q + fa*RLparam.alpha * delta * trace;
     end
         
     trace = RLparam.gamma * RLparam.lambda * trace;
-    
-    
-    
-    
     
 end
