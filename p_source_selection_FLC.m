@@ -23,7 +23,8 @@ else
     if RLparam.boltzmann > 0
         [a_target, p] = softmax_selection(Q,s,RLparam.boltzmann, rnd.expl);
         %p = min(0.1/p,1);
-        p = (1 - RLparam.p);
+        p = RLparam.alpha2 + 0.05;
+        %p=1;
     else
         a_target = e_greedy_selection(Q,s,RLparam.epsilon, rnd.expl);
     end

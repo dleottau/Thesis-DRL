@@ -165,6 +165,8 @@ while 1
     [ap_y, fa_y] = p_source_selection_FLC(RL.Q_y,sp, RL.param, a_transf_y, conf.nash, conf.sync, rnd);
     [ap_rot, fa_rot] = p_source_selection_FLC(RL.Q_rot,sp, RL.param, a_transf_rot, conf.nash, conf.sync, rnd);
    
+    [fa_x, fa_y, fa_rot]  
+         
    
 	% Update the Qtable, that is,  learn from the experience
     if conf.TRANSFER >= 0 %Para aprendizaje, TRANSFER<0 para pruebas de performance
