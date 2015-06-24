@@ -86,7 +86,7 @@ for i=1:conf.episodes
     
     %disp(['Epsilon:',num2str(eps),'  Espisode: ',int2str(i),'  Steps:',int2str(steps),'  Reward:',num2str(total_reward),' epsilon: ',num2str(epsilon)])
     
-    dec=exp(-i*epsDec);
+    dec = exp(-i*epsDec);
     RL.param.epsilon = epsilon0*dec;
     RL.param.p = p0*dec;
     RL.param.boltzmann = temp0*dec;
