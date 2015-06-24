@@ -56,7 +56,7 @@ RL.trace    = QTable( nstates,nactions,0 );  % the elegibility trace for the vx 
 RL.trace_y  = RL.trace;  % the elegibility trace for the vy agent
 RL.trace_rot = RL.trace;  % the elegibility trace for the v_rot agent
 
-RL.param.alpha       = 0.3;   % 0.3-0.5 learning rate
+RL.param.alpha       = 0.5;   % 0.3-0.5 learning rate
 RL.param.gamma       = 1;   % discount factor
 RL.param.lambda      = 0.9;   % the decaying elegibiliy trace parameter
 epsilon0             = 1;  % probability of a random action selection
@@ -70,7 +70,7 @@ end
 
 EXPLORATION = conf.episodes/conf.EXPL_EPISODES_FACTOR;
 epsDec = -log(0.05) * 1/EXPLORATION;  %epsilon decrece a un 5% (0.005) en maxEpisodes cuartos (maxepisodes/4), de esta manera el decrecimiento de epsilon es independiente del numero de episodios
-epsDec2 = -log(0.25) * 1/EXPLORATION;  %epsilon decrece a un 50% (0.5) en maxEpisodes cuartos (maxepisodes/EXPL_EPISODES_FACTOR)
+epsDec2 = -log(0.10) * 1/EXPLORATION;  %epsilon decrece a un 50% (0.5) en maxEpisodes cuartos (maxepisodes/EXPL_EPISODES_FACTOR)
 
 RL.param.epsilon = epsilon0;
 RL.param.p = p0;
