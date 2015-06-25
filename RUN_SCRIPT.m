@@ -4,8 +4,8 @@ close all
 
 tic
 
-conf.episodes = 1000; %500;   %2000  maximum number of  episode
-conf.EXPL_EPISODES_FACTOR = 6; % 8 exploration decay parameter
+conf.episodes = 1200; %500;   %2000  maximum number of  episode
+conf.EXPL_EPISODES_FACTOR = 7; % 8 exploration decay parameter
 conf.Runs = 1;
 conf.NOISE = 0.05;
 
@@ -59,6 +59,11 @@ pf_max=-Inf;
 interval=0.7;
 if conf.TRANSFER < 0
     interval=0.1;
+end
+
+if conf.DRAWS==1
+    size=get(0,'ScreenSize');
+    figure('position',[0.05*size(3) 0.05*size(4) 0.6*size(3) 0.8*size(4)]);
 end
 
 
@@ -175,7 +180,9 @@ if conf.TRANSFER >= 0
     end
     
     if conf.DRAWS==1
-        figure
+                      
+        figure('position',[0.5*size(3) 0.1*size(4) 0.5*size(3) 0.7*size(4)]);
+        
         subplot(2,2,4)
         plot(mean(reward(:,1),2),'r')
         hold on

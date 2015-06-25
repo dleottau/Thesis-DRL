@@ -62,6 +62,7 @@ RL.param.lambda      = 0.9;   % the decaying elegibiliy trace parameter
 epsilon0             = 1;  % probability of a random action selection
 p0                   = 1;
 temp0                =  conf.boltzmann;
+alpha0              = RL.param.alpha;
 
 if conf.TRANSFER<0 %Para pruebas de performance
     epsilon0             = 0;    
@@ -75,7 +76,7 @@ epsDec2 = -log(0.10) * 1/EXPLORATION;  %epsilon decrece a un 50% (0.5) en maxEpi
 RL.param.epsilon = epsilon0;
 RL.param.p = p0;
 RL.param.boltzmann = temp0;
-RL.param.alpha2 = RL.param.alpha; 
+RL.param.alpha2 = alpha0; 
 
 goals=0;
 for i=1:conf.episodes    
@@ -93,7 +94,7 @@ for i=1:conf.episodes
     RL.param.epsilon = epsilon0*dec;
     RL.param.p = p0*dec;
     RL.param.boltzmann = temp0*dec;
-    RL.param.alpha2 = RL.param.alpha*(1-dec2); 
+    RL.param.alpha2 = alpha0*(1-dec2); 
     
     xpoints(i)=i-1;
     reward(i,:)=total_reward/steps;
@@ -102,10 +103,27 @@ for i=1:conf.episodes
     %btd(i,1)=btd_k;
     tp_faults(i,1)=faults/steps*100;
     goals=goal_k+goals;
+    softmax(i,:)=RL.cum_fa/steps;
     
     if conf.DRAWS==1
         
-        subplot(4,2,1);    
+        subplot(3,3,1)
+        plot(xpoints,Vavg)
+        title('% Max. Fw. Speed Avg.')
+        %drawnow
+        
+        subplot(3,3,4); 
+        plot(xpoints,tp_faults)
+        title('% Time Faults')
+        %drawnow
+        
+        subplot(3,3,7); 
+        plot(xpoints, 0.5*(100-Vavg+tp_faults))
+        title('Global Fitness')
+        %drawnow
+        
+        
+        subplot(3,3,2);    
         plot(xpoints,reward(:,1),'r')      
         hold on
         plot(xpoints,reward(:,2),'g')      
@@ -113,25 +131,18 @@ for i=1:conf.episodes
         %plot(xpoints,btd,'k')      
         title([ 'Mean Reward(rgb) Episode:',int2str(i), ' p=',sprintf('%.2f',RL.param.p) ' Run: ',int2str(nRun)])
         hold
-                
-        subplot(4,2,3)
-        plot(xpoints,Vavg)
-        title('% Max. Fw. Speed Avg.')
-        %drawnow
         
-        subplot(4,2,5); 
-        plot(xpoints,tp_faults)
-        title('% Time Faults')
-        %drawnow
-        
-        subplot(4,2,7); 
-        plot(xpoints, 0.5*(100-Vavg+tp_faults))
-        title('Global Fitness')
-        %drawnow
+        subplot(3,3,5);    
+        plot(xpoints,softmax(:,1),'r')      
+        hold on
+        plot(xpoints,softmax(:,2),'g')      
+        plot(xpoints,softmax(:,3),'b')      
+        title(['Mean Softmax_P(rgb) FA*alpha: ', sprintf('%.3f',RL.param.alpha2*RL.param.alpha)])
+        hold
+               
         
         
-     
-        subplot(4,2,2)
+        subplot(3,3,3)
         plot(Pt(1,1),Pt(1,2),'*k')%posición del target 
         hold on
         plot(Pb(:,1),Pb(:,2),'*r')%posición de la bola
@@ -139,56 +150,30 @@ for i=1:conf.episodes
         axis([-100 conf.maxDistance+100 -4000 4000])
         title('X-Y Plane');
         hold
-        %drawnow
         
-%         subplot(4,2,6);
-%         plot(time,ro,'g')
-%         hold on
-%         plot(time,Pr(:,1),'b')
-%         plot(time,Pb(:,1),'r*')
-%         plot(time,Pb(:,1)-Pr(:,1),'--k')
-%         title('Position and Pho')
-%         hold
-%         drawnow
-        
-        subplot(4,2,4);
-        %plot(time,Vb,'k')
-        
+       
+        subplot(3,3,6);
         plot(time,Vr(:,1),'r')
         hold on
         plot(time,Vr(:,2),'g')
         plot(time,Vr(:,3),'b')        
         title('Vb(k) Vr(rgb)')
         hold
-        %drawnow
-             
-        subplot(4,2,6),plot(time,ro)
-        %axis([time(1) time(steps) 0 1000])
-        title('pho(t)');
-        
-        subplot(4,2,8);
-        plot(time,fi,'r')
+         
+              
+        subplot(3,3,9);
+        plot(time,ro,'r')
         hold on
+        plot(time,fi,'g')
         plot(time,gama,'b')
-        title('phi(t)(r) & gamma(t)(b)');
+        title('pho(t)r; phi(t)g; gamma(t)b');
         %axis([time(1) time(steps) -50 50])
         hold
-        %drawnow
-        
-%         subplot(4,2,9);
-%         plot(time,xb,'b')
-%         hold on
-%         plot(time,yb,'r')
-%         plot(time,yfi,'k')
-%         title('xb(t)(blue) yb(t)(red) yfi(t)(black)');
-%         %axis([time(1) time(steps) -50 50])
-%         hold
-%         drawnow
 
         drawnow
-        
+    
+    end
      
-     end
      
      Qx=RL.Q;
      Qy=RL.Q_y;
