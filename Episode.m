@@ -170,7 +170,7 @@ while 1
    
     RL.cum_fa = RL.cum_fa + [fa_x, fa_y, fa_rot];  
          
-    fa = RL.param.alpha2 + 0.01
+    fa = RL.param.alpha2 + 0.01;
    
 	% Update the Qtable, that is,  learn from the experience
     if conf.TRANSFER >= 0 %Para aprendizaje, TRANSFER<0 para pruebas de performance

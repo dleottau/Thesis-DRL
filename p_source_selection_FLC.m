@@ -20,8 +20,9 @@ if nash==1 %if nearby action sharing
     a_target = clipDLF( round(GetBestAction(Q,s) + 1*rnd.nashExpl* RLparam.epsilon), 1,actions ); 
 else
     a_source = a_sh;
+    [a_target, p] = softmax_selection(Q,s,RLparam.boltzmann, rnd.expl);
     if RLparam.boltzmann > 0
-        [a_target, p] = softmax_selection(Q,s,RLparam.boltzmann, rnd.expl);
+        %[a_target, p] = softmax_selection(Q,s,RLparam.boltzmann, rnd.expl); 
         %p = min(0.1/p,1);
         %p = RLparam.alpha2 + 0.01;
         %p=1;
