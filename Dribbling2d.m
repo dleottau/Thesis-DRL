@@ -62,7 +62,7 @@ RL.param.lambda      = 0.9;   % the decaying elegibiliy trace parameter
 epsilon0             = 1;  % probability of a random action selection
 p0                   = 1;
 temp0                =  conf.boltzmann;
-alpha0              = RL.param.alpha;
+alpha0              = 1;%RL.param.alpha;
 
 if conf.TRANSFER<0 %Para pruebas de performance
     epsilon0             = 0;    
@@ -71,7 +71,8 @@ end
 
 EXPLORATION = conf.episodes/conf.EXPL_EPISODES_FACTOR;
 epsDec = -log(0.05) * 1/EXPLORATION;  %epsilon decrece a un 5% (0.005) en maxEpisodes cuartos (maxepisodes/4), de esta manera el decrecimiento de epsilon es independiente del numero de episodios
-epsDec2 = -log(0.10) * 1/EXPLORATION;  %epsilon decrece a un 50% (0.5) en maxEpisodes cuartos (maxepisodes/EXPL_EPISODES_FACTOR)
+%epsDec2 = -log(0.10) * 1/EXPLORATION;  %epsilon decrece a un 10% (0.1) en maxEpisodes cuartos (maxepisodes/EXPL_EPISODES_FACTOR)
+epsDec2 = -log(0.80) * 1/EXPLORATION;  %epsilon decrece a un 10% (0.1) en maxEpisodes cuartos (maxepisodes/EXPL_EPISODES_FACTOR)
 
 RL.param.epsilon = epsilon0;
 RL.param.p = p0;
@@ -94,7 +95,8 @@ for i=1:conf.episodes
     RL.param.epsilon = epsilon0*dec;
     RL.param.p = p0*dec;
     RL.param.boltzmann = temp0*dec;
-    RL.param.alpha2 = alpha0*(1-dec2); 
+    %RL.param.alpha2 = alpha0*(1-dec2); 
+    RL.param.alpha2 = alpha0*(dec2); 
     
     xpoints(i)=i-1;
     reward(i,:)=total_reward/steps;
