@@ -71,8 +71,8 @@ end
 
 EXPLORATION = conf.episodes/conf.EXPL_EPISODES_FACTOR;
 epsDec = -log(0.05) * 1/EXPLORATION;  %epsilon decrece a un 5% (0.005) en maxEpisodes cuartos (maxepisodes/4), de esta manera el decrecimiento de epsilon es independiente del numero de episodios
-epsDec2 = -log(0.10) * 1/EXPLORATION;  %epsilon decrece a un 10% (0.1) en maxEpisodes cuartos (maxepisodes/EXPL_EPISODES_FACTOR)
-%epsDec2 = -log(0.70) * 1/EXPLORATION;  %epsilon decrece a un 10% (0.1) en maxEpisodes cuartos (maxepisodes/EXPL_EPISODES_FACTOR)
+epsInc2 = -log(0.10) * 1/EXPLORATION;  %epsilon decrece a un 10% (0.1) en maxEpisodes cuartos (maxepisodes/EXPL_EPISODES_FACTOR)
+epsDec2 = -log(0.70) * 1/EXPLORATION;  %epsilon decrece a un 70% (0.7) en maxEpisodes cuartos (maxepisodes/EXPL_EPISODES_FACTOR)
 
 RL.param.epsilon = epsilon0;
 RL.param.p = p0;
@@ -93,11 +93,13 @@ for i=1:conf.episodes
     
     dec = exp(-i*epsDec);
     dec2 = exp(-i*epsDec2);
+    inc2 = 1-exp(-i*epsInc2);
     RL.param.epsilon = epsilon0*dec;
     RL.param.p = p0*dec;
     RL.param.boltzmann = temp0*dec;
-    RL.param.alpha2 = alpha0*(1-dec2); 
-    %RL.param.alpha2 = alpha0*(dec2); 
+    %RL.param.alpha2 = alpha0*inc2; 
+    RL.param.alpha2 = alpha0*dec2; 
+    %RL.param.alpha2 = alpha0*dec2*inc2; %trapmf(i,[1 300 600 1500]);
     
     xpoints(i)=i-1;
     reward(i,:)=total_reward/steps;
@@ -143,6 +145,21 @@ for i=1:conf.episodes
         title(['Mean Softmax_P(rgb) FA*alpha: ', sprintf('%.3f',RL.param.alpha2*RL.param.alpha)])
         hold
                
+        
+        FAalpha(i,1) = RL.param.alpha2*RL.param.alpha;
+        
+        subplot(3,3,8);    
+        plot(xpoints,FAalpha,'k')      
+        hold on
+        plot(xpoints,mean(softmax,2),'r')      
+        plot(xpoints,1-mean(softmax,2),'g')      
+        %plot(xpoints,min(softmax,2),'g')      
+        %plot(xpoints,max(softmax,2),'b')      
+        title('FA*alpha(k); P-softmax: mean(r),1/mean(g)')
+        hold
+        
+        
+        
         
         
         subplot(3,3,3)

@@ -56,6 +56,7 @@ rnd.TL=0;
 fa_x=1;
 fa_y=1;
 fa_rot=1;
+fa = 1;
 
 RL.cum_fa = [0 0 0];
 
@@ -170,8 +171,10 @@ while 1
    
     RL.cum_fa = RL.cum_fa + [fa_x, fa_y, fa_rot];  
          
-    fa = RL.param.alpha2 + 0.01;
-   
+    %fa = RL.param.alpha2 + 0.01;
+    fap = 1-mean([fa_x, fa_y, fa_rot]) + 0.05;
+    
+    
 	% Update the Qtable, that is,  learn from the experience
     if conf.TRANSFER >= 0 %Para aprendizaje, TRANSFER<0 para pruebas de performance
         [RL.Q, RL.trace] = UpdateSARSAlambda( s, a, r(1), sp, ap, RL.Q, RL.param, RL.trace, conf.MAapproach, fa);
@@ -183,6 +186,7 @@ while 1
     a = ap;
     a_y = ap_y;
     a_rot = ap_rot;
+    fa = fap;
             
     %Compute performance index
     Vrx = x(4);
