@@ -152,16 +152,12 @@ for i=1:conf.episodes
         plot(xpoints,FAalpha,'k')      
         hold on
         %plot(xpoints,mean(softmax,2),'r')      
-        plot(xpoints,1-mean(softmax,2),'r')      
-        plot(xpoints,1-min(softmax,[],2),'g')      
-        plot(xpoints,1-max(softmax,[],2),'b')      
+        %plot(xpoints,1-mean(softmax,2),'r')      
+        plot(xpoints,(1-min(softmax,[],2))*RL.param.alpha,'g')      
+        %plot(xpoints,1-max(softmax,[],2),'b')      
         title('FA*alpha(k); P-softmax: mean(r),min(g),max(b)')
         hold
-        
-        
-        
-        
-        
+           
         subplot(3,3,3)
         plot(Pt(1,1),Pt(1,2),'*k')%posición del target 
         hold on

@@ -4,7 +4,7 @@ close all
 
 tic
 
-conf.episodes = 2000; %500;   %2000  maximum number of  episode
+conf.episodes = 1250; %500;   %2000  maximum number of  episode
 conf.EXPL_EPISODES_FACTOR = 8; % 8 exploration decay parameter
 conf.Runs = 1;
 conf.NOISE = 0.05;
