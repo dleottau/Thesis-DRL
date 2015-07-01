@@ -172,7 +172,7 @@ while 1
     RL.cum_fa = RL.cum_fa + [fa_x, fa_y, fa_rot];  
          
     %fa = RL.param.alpha2 + 0.01;
-    fap = 1-mean([fa_x, fa_y, fa_rot]) + 0.05;
+    fap = 1-min([fa_x, fa_y, fa_rot]) + 0.05;
     
     
 	% Update the Qtable, that is,  learn from the experience

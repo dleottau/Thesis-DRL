@@ -151,11 +151,11 @@ for i=1:conf.episodes
         subplot(3,3,8);    
         plot(xpoints,FAalpha,'k')      
         hold on
-        plot(xpoints,mean(softmax,2),'r')      
-        plot(xpoints,1-mean(softmax,2),'g')      
-        %plot(xpoints,min(softmax,2),'g')      
-        %plot(xpoints,max(softmax,2),'b')      
-        title('FA*alpha(k); P-softmax: mean(r),1/mean(g)')
+        %plot(xpoints,mean(softmax,2),'r')      
+        plot(xpoints,1-mean(softmax,2),'r')      
+        plot(xpoints,1-min(softmax,[],2),'g')      
+        plot(xpoints,1-max(softmax,[],2),'b')      
+        title('FA*alpha(k); P-softmax: mean(r),min(g),max(b)')
         hold
         
         
