@@ -172,14 +172,15 @@ while 1
     RL.cum_fa = RL.cum_fa + [fa_x, fa_y, fa_rot];  
          
     %fa = RL.param.alpha2 + 0.01;
-    fap = 1-min([fa_x, fa_y, fa_rot]) + 0.05;
+    %fap = 1-min([fa_x, fa_y, fa_rot]) + 0.05;
+    fap = 1;
     
     
 	% Update the Qtable, that is,  learn from the experience
     if conf.TRANSFER >= 0 %Para aprendizaje, TRANSFER<0 para pruebas de performance
-        [RL.Q, RL.trace] = UpdateSARSAlambda( s, a, r(1), sp, ap, RL.Q, RL.param, RL.trace, conf.MAapproach, fa);
-        [RL.Q_y, RL.trace_y] = UpdateSARSAlambda( s, a_y, r(2), sp, ap_y, RL.Q_y, RL.param, RL.trace_y, conf.MAapproach, fa );
-        [RL.Q_rot, RL.trace_rot] = UpdateSARSAlambda( s, a_rot, r(3), sp, ap_rot, RL.Q_rot, RL.param, RL.trace_rot, conf.MAapproach, fa);
+        [RL.Q, RL.trace, RL.QM] = UpdateSARSAlambda( s, a, r(1), sp, ap, RL.Q, RL.param, RL.trace, conf.MAapproach, fa, RL.QM);
+        [RL.Q_y, RL.trace_y, RL.QM_y] = UpdateSARSAlambda( s, a_y, r(2), sp, ap_y, RL.Q_y, RL.param, RL.trace_y, conf.MAapproach, fa, RL.QM_y );
+        [RL.Q_rot, RL.trace_rot, RL.QM_rot] = UpdateSARSAlambda( s, a_rot, r(3), sp, ap_rot, RL.Q_rot, RL.param, RL.trace_rot, conf.MAapproach, fa, RL.QM_rot);
     end    
     %update the current variables
     s = sp;

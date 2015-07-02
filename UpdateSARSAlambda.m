@@ -1,4 +1,4 @@
-function [ Q, trace] = UpdateSARSAlambda( s, a, r, sp, ap, Q, RLparam, trace, MAapproach, fa)
+function [ Q, trace, QM] = UpdateSARSAlambda( s, a, r, sp, ap, Q, RLparam, trace, MAapproach, fa, QM)
 % UpdateQ update de Qtable and return it using SARSA
 % s1: previous state before taking action (a)
 % s2: current state after action (a)
@@ -11,7 +11,25 @@ function [ Q, trace] = UpdateSARSAlambda( s, a, r, sp, ap, Q, RLparam, trace, MA
 % lambda: eligibility trace decay factor
 % trace : eligibility trace vector
 
+% For leniency
+deco = 1000;
+M = floor(QM(s,a)/deco);
+rp = rem(QM(s,a),deco)-500;
+if r>rp
+  rp = r;
+end
+M=M+1;
+QM(s,a) = deco*(M)+500+ rp;
+
+% =======
+
+if M > RLparam.M        % For leniency 
+
+    r=rp
+    QM(s,a)=QM(s,a)-deco;
+    
     delta  =   r + RLparam.gamma * Q(sp,ap)  - Q(s,a);
+    
     
     % Replacing traces
     trace(s,a) = 1.0;   
@@ -26,5 +44,6 @@ function [ Q, trace] = UpdateSARSAlambda( s, a, r, sp, ap, Q, RLparam, trace, MA
     end
         
     trace = RLparam.gamma * RLparam.lambda * trace;
-    
+end
+
 end

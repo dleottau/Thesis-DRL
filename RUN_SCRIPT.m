@@ -4,7 +4,7 @@ close all
 
 tic
 
-conf.episodes = 1250; %500;   %2000  maximum number of  episode
+conf.episodes = 2000; %500;   %2000  maximum number of  episode
 conf.EXPL_EPISODES_FACTOR = 8; % 8 exploration decay parameter
 conf.Runs = 1;
 conf.NOISE = 0.05;
@@ -17,6 +17,7 @@ conf.Q_INIT = 0;
 conf.nash = 0;   % 0 COntrol sharing, 1 NASh
 conf.MAapproach = 0;   % 0 no cordination, -1 optimistic asumption, 1 leninet
 conf.boltzmann = 20;  % Boltzmann temperature (5 by default), if <= 0 e-greaddy
+conf.Mtimes =3; % state-action pair must be visited M times before Q being updated
 
 %sync=1, synchronizes using tne same random number for the 3 D-RL agents, otherwise, uses independetn random numbers per agent
 conf.sync.nash      = 1;

@@ -22,6 +22,10 @@ RL.Q        = QTable( nstates,nactions, conf.Q_INIT );  % the Qtable for the vx 
 RL.Q_y      = RL.Q;  % the Qtable for the vy agent
 RL.Q_rot    = RL.Q;  % the Qtable for the v_rot agent
 
+RL.QM     = QTable( nstates,nactions, 0 );
+RL.QM_y     = RL.QM;
+RL.QM_rot     = RL.QM;
+
 %Secuential learning
 %load RC-2015/Qok_x1;
 %load RC-2015/Qok_y2;
@@ -74,11 +78,11 @@ epsDec = -log(0.05) * 1/EXPLORATION;  %epsilon decrece a un 5% (0.005) en maxEpi
 epsInc2 = -log(0.10) * 1/EXPLORATION;  %epsilon decrece a un 10% (0.1) en maxEpisodes cuartos (maxepisodes/EXPL_EPISODES_FACTOR)
 epsDec2 = -log(0.70) * 1/EXPLORATION;  %epsilon decrece a un 70% (0.7) en maxEpisodes cuartos (maxepisodes/EXPL_EPISODES_FACTOR)
 
+RL.param.M = conf.Mtimes;
 RL.param.epsilon = epsilon0;
 RL.param.p = p0;
 RL.param.boltzmann = temp0;
 RL.param.alpha2 = alpha0; 
-
 
 goals=0;
 for i=1:conf.episodes    
