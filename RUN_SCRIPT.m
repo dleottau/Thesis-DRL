@@ -16,8 +16,8 @@ conf.TRANSFER = 0;  %=1 transfer, >1 acts gready from source policy, =0 learns f
 conf.Q_INIT = 0;
 conf.nash = 0;   % 0 COntrol sharing, 1 NASh
 conf.MAapproach = 0;   % 0 no cordination, -1 optimistic asumption, 1 leninet
-conf.boltzmann = 20;  % Boltzmann temperature (5 by default), if <= 0 e-greaddy
-conf.Mtimes =3; % state-action pair must be visited M times before Q being updated
+conf.boltzmann = 0;  % Boltzmann temperature (5 by default), if <= 0 e-greaddy
+conf.Mtimes = 3; % state-action pair must be visited M times before Q being updated
 
 %sync=1, synchronizes using tne same random number for the 3 D-RL agents, otherwise, uses independetn random numbers per agent
 conf.sync.nash      = 1;

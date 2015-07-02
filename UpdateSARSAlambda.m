@@ -25,7 +25,7 @@ QM(s,a) = deco*(M)+500+ rp;
 
 if M > RLparam.M        % For leniency 
 
-    r=rp
+    r=rp;
     QM(s,a)=QM(s,a)-deco;
     
     delta  =   r + RLparam.gamma * Q(sp,ap)  - Q(s,a);
