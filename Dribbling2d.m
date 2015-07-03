@@ -22,9 +22,14 @@ RL.Q        = QTable( nstates,nactions, conf.Q_INIT );  % the Qtable for the vx 
 RL.Q_y      = RL.Q;  % the Qtable for the vy agent
 RL.Q_rot    = RL.Q;  % the Qtable for the v_rot agent
 
-RL.QM     = QTable( nstates,nactions, 0 );
+RL.QM     = QTable( 1,1, 0 ); %QTable( nstates,nactions, 0 );
 RL.QM_y     = RL.QM;
 RL.QM_rot     = RL.QM;
+
+RL.T     = QTable( nstates,nactions, 1);
+RL.T_y     = RL.T;
+RL.T_rot     = RL.T;
+
 
 %Secuential learning
 %load RC-2015/Qok_x1;
@@ -59,6 +64,10 @@ end
 RL.trace    = QTable( nstates,nactions,0 );  % the elegibility trace for the vx agent
 RL.trace_y  = RL.trace;  % the elegibility trace for the vy agent
 RL.trace_rot = RL.trace;  % the elegibility trace for the v_rot agent
+
+RL.param.beta       = 0.7;   % lenience discount factor
+RL.param.k       = 2;   % lenience parameter
+
 
 RL.param.alpha       = 0.5;   % 0.3-0.5 learning rate
 RL.param.gamma       = 1;   % discount factor
