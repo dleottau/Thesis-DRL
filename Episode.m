@@ -165,9 +165,9 @@ while 1
     if conf.sync.expl>0, rnd.expl=rand(); end
     if conf.sync.TL>0, rnd.TL=rand(); end
     
-    [ap, fa_x] = p_source_selection_FLC(RL.Q,sp, RL.param, a_transf, conf.nash, conf.sync, rnd);
-    [ap_y, fa_y] = p_source_selection_FLC(RL.Q_y,sp, RL.param, a_transf_y, conf.nash, conf.sync, rnd);
-    [ap_rot, fa_rot] = p_source_selection_FLC(RL.Q_rot,sp, RL.param, a_transf_rot, conf.nash, conf.sync, rnd);
+    [ap, fa_x] = p_source_selection_FLC(RL.Q,RL.QM, sp, RL.param, a_transf, conf.nash, conf.sync, rnd);
+    [ap_y, fa_y] = p_source_selection_FLC(RL.Q_y,  RL.QM_y, sp, RL.param, a_transf_y, conf.nash, conf.sync, rnd);
+    [ap_rot, fa_rot] = p_source_selection_FLC(RL.Q_rot, RL.QM_rot, sp, RL.param, a_transf_rot, conf.nash, conf.sync, rnd);
    
     RL.cum_fa = RL.cum_fa + [fa_x, fa_y, fa_rot];  
          

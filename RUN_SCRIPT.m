@@ -1,6 +1,6 @@
-clear all
-clc
-close all
+% clear all
+% clc
+% close all
 
 tic
 
@@ -13,10 +13,10 @@ conf.record =0;
 conf.DRAWS = 1;
 
 conf.TRANSFER = 0;  %=1 transfer, >1 acts gready from source policy, =0 learns from scratch, =-1 just for test performance from stored policies
-conf.Q_INIT = 0;
+conf.Q_INIT = 0.001;
 conf.nash = 0;   % 0 COntrol sharing, 1 NASh
 conf.MAapproach = 0;   % 0 no cordination, -1 optimistic asumption, 1 leninet
-conf.boltzmann = 0;  % Boltzmann temperature (5 by default), if <= 0 e-greaddy
+conf.boltzmann = 500;  % Boltzmann temperature (5 by default), if <= 0 e-greaddy
 conf.Mtimes = 3; % state-action pair must be visited M times before Q being updated
 
 %sync=1, synchronizes using tne same random number for the 3 D-RL agents, otherwise, uses independetn random numbers per agent

@@ -18,11 +18,11 @@ Actions  = ActionTable( conf.Vr_min, conf.V_action_steps, conf.Vr_max, conf.Voff
 nstates     = size(States,1);
 nactions    = size(Actions,1);
 
-RL.Q        = QTable( nstates,nactions, conf.Q_INIT );  % the Qtable for the vx agent
-RL.Q_y      = RL.Q;  % the Qtable for the vy agent
-RL.Q_rot    = RL.Q;  % the Qtable for the v_rot agent
+RL.Q        = QTableRand( nstates,nactions, conf.Q_INIT );  % the Qtable for the vx agent
+RL.Q_y      = QTableRand( nstates,nactions, conf.Q_INIT );  % the Qtable for the vy agent
+RL.Q_rot    = QTableRand( nstates,nactions, conf.Q_INIT );  % the Qtable for the v_rot agent
 
-RL.QM     = QTable( nstates,nactions, 0 );
+RL.QM     = QTable( nstates,nactions, conf.boltzmann ); %temperature
 RL.QM_y     = RL.QM;
 RL.QM_rot     = RL.QM;
 
@@ -33,7 +33,6 @@ RL.QM_rot     = RL.QM;
 %RL.Q        = Qok_x1;
 %RL.Q_y      = Qok_y2;
 %RL.Q_rot    = Qok_rot3;
-
 
 
 %========TRANSFER=========
@@ -60,9 +59,13 @@ RL.trace    = QTable( nstates,nactions,0 );  % the elegibility trace for the vx 
 RL.trace_y  = RL.trace;  % the elegibility trace for the vy agent
 RL.trace_rot = RL.trace;  % the elegibility trace for the v_rot agent
 
-RL.param.alpha       = 0.5;   % 0.3-0.5 learning rate
+RL.param.alpha       = 2;   % temp. multiplication coeficient
+RL.param.beta       = 2.5;  % exponent coeficient
+RL.param.delta       = 0.995;  % temp. decay coeficient
+RL.param.lambda      = 0.95;   % learning rate
+
 RL.param.gamma       = 1;   % discount factor
-RL.param.lambda      = 0.9;   % the decaying elegibiliy trace parameter
+
 epsilon0             = 1;  % probability of a random action selection
 p0                   = 1;
 temp0                =  conf.boltzmann;
@@ -86,6 +89,10 @@ RL.param.alpha2 = alpha0;
 
 goals=0;
 for i=1:conf.episodes    
+    
+    if i>conf.episodes/2
+        i
+    end
             
     if conf.TRANSFER>1, RL.param.p=1; %acts greedy from source policy
     elseif conf.TRANSFER == 0, RL.param.p=0; %learns from scratch
