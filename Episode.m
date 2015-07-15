@@ -170,9 +170,9 @@ while 1
    
     RL.cum_fa = RL.cum_fa + [fa_x, fa_y, fa_rot];  
          
-    fap = 1;
+    %fap = 1;
     %fap = RL.param.alpha2 + 0.01;
-    %fap = 1-min([fa_x, fa_y, fa_rot]) + 0.05;
+    fap = 1-min([fa_x, fa_y, fa_rot]) + 0.05;
     
     
     
