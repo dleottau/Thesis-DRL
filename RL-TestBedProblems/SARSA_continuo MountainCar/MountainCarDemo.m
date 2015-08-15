@@ -1,4 +1,4 @@
-function f =  MountainCarDemo( maxepisodes, params )
+function [mR, f] =  MountainCarDemo( maxepisodes, param)
 %MountainCarDemo, the main function of the demo
 %maxepisodes: maximum number of episodes to run the demo
 
@@ -9,33 +9,34 @@ function f =  MountainCarDemo( maxepisodes, params )
 % 
 % See Sutton & Barto book: Reinforcement Learning p.214
 
-
-
-%clc
-%clf
 set(gcf,'BackingStore','off')  % for realtime inverse kinematics
 set(gcf,'name','Reinforcement Learning Mountain Car')  % for realtime inverse kinematics
 set(gco,'Units','data')
 
-
 cfg.maxsteps    = 1000;              % maximum number of steps per episode
-[cfg.cores, cfg.nstates]   = BuildStateList();  % the list of states
-cfg.actionlist  = BuildActionList(); % the list of actions
+cfg.feature_min = [-1.2 -0.07];
+cfg.feature_max = [ 0.6  0.07];
+cfg.init_condition = [-0.5 0];
+cfg.nCores = [10 5];
+cfg.stdDiv = [.5 .5];
+cfg.actionStep = [1];
+cfg.goalState = [0.5 0.5];
+cfg.q_init = 0;
+cfg.graphic = false;
+
+[cfg.cores, cfg.nstates]   = BuildStateList(cfg);  % the list of states
+cfg.actionlist  = BuildActionList(cfg); % the list of actions
 
 cfg.nactions    = size(cfg.actionlist,1);
-RL.Q           = BuildQTable( cfg.nstates, cfg.nactions );  % the Qtable
+RL.Q           = BuildQTable( cfg.nstates, cfg.nactions, cfg.q_init );  % the Qtable
 
-%RL.param.alpha       = 0.1;   % learning rate
-% RL.param.gamma       = 0.99;   % discount factor
-% RL.param.lambda      = 0.95;
-% RL.param.epsilon     = 0.01;  % probability of a random action selection
-% RL.param.exp_decay   = 0.99; % factor to decay exploration rate
+%param.alpha       = 0.1;   % learning rate
+%param.gamma       = 0.99;   % discount factor
+%param.lambda      = 0.95;
+%param.epsilon     = 0.01;  % probability of a random action selection
+%param.exp_decay   = 0.99; % factor to decay exploration rate
 
-RL.param.alpha       = params.alpha;   % learning rate 
-RL.param.gamma       = params.gamma;   % discount factor
-RL.param.lambda      = params.lambda;
-RL.param.epsilon     = params.epsilon;  % probability of a random action selection
-RL.param.exp_decay   = params.exp_decay; % factor to decay exploration rate
+RL.param=param;
 
 epsilon0 = RL.param.epsilon;
 if RL.param.exp_decay<1
@@ -54,7 +55,6 @@ for i=1:maxepisodes
     [total_reward, steps, RL ] = Episode( cfg, RL );    
 
     %disp(['Espisode: ',int2str(i),'  Steps:',int2str(steps),'  Reward:',num2str(total_reward),' epsilon: ',num2str(RL.param.epsilon)])
-
     
     if RL.param.exp_decay<1
         RL.param.epsilon = RL.param.epsilon * RL.param.exp_decay;
@@ -69,7 +69,7 @@ for i=1:maxepisodes
     
     %subplot(2,1,1);    
     plot(xpoints,ypoints)      
-    title(['Run: ',int2str(params.runs),'; epsilon: ',num2str(RL.param.epsilon),'; Episode: ',int2str(i) ])    
+    title(['Run: ',int2str(param.runs),'; epsilon: ',num2str(RL.param.epsilon),'; Episode: ',int2str(i) ])    
     drawnow
 
     if (i>00)
@@ -77,6 +77,5 @@ for i=1:maxepisodes
     end
 end
 
-%f = abs(mean(ypoints(round(maxepisodes*0.8):end)));
 f = itae/maxepisodes;
-
+mR = mean(ypoints(ceil(maxepisodes*0.9):end));

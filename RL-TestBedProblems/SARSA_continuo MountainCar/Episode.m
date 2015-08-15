@@ -18,34 +18,31 @@ function [total_reward,steps,RL] = Episode( cfg, RL)
 % See Sutton & Barto book: Reinforcement Learning p.214
 
 
-%nstates     = size(statelist,1);
-%nactions    = size(actionlist,1);
-e_trace     = BuildQTable( cfg.nstates, cfg.nactions ); %elegibility traces
-initial_position = -0.5;
-initial_speed    =  0.0;
+e_trace     = BuildQTable( cfg.nstates, cfg.nactions, 0); %elegibility traces
+initial_position = cfg.init_condition(1);
+initial_speed    = cfg.init_condition(2); 
 
 x            = [initial_position,initial_speed];
 steps        = 0;
 total_reward = 0;
 
 % convert the continous state variables to an index of the statelist
-%s   = DiscretizeState(x,statelist);
 % selects an action using the epsilon greedy selection strategy
 FV = getFeatureVector(x, cfg.cores);
 a   = e_greedy_selection(RL.Q, FV, RL.param.epsilon);
 
-%tic();
+
 for i=1: cfg.maxsteps    
         
     % convert the index of the action into an action value
     action = cfg.actionlist(a);    
     
     %do the selected action and get the next car state    
-    xp  = DoAction( action , x );    
+    xp  = DoAction( action, x, cfg);    
     FVp = getFeatureVector(xp, cfg.cores);
     
     % observe the reward at state xp and the final state flag
-    [r,f]   = GetReward(xp);
+    [r,f]   = GetReward(xp, cfg.goalState);
     total_reward = total_reward + r;
     
     
@@ -64,8 +61,8 @@ for i=1: cfg.maxsteps
     steps=steps+1;
     
     % Plot of the mountain car problem
-    if (cfg.grafica==true)        
-       %MountainCarPlot(x,action,steps);    
+    if (cfg.graphic==true)        
+       MountainCarPlot(x,action,steps);    
     end
     
     % if the car reachs the goal breaks the episode
