@@ -9,8 +9,8 @@ dbstop in UpdateSARSA.m at 28% if isnan(sum(sum(Q)))
 params.alpha = 0.15;  
 params.gamma = 0.99;   
 params.lambda = 0.95;
-params.epsilon = 0.4; 
-params.exp_decay = 9;
+params.epsilon = 0.01; 
+params.exp_decay = 0.99;
 
 RUNS=10;
 

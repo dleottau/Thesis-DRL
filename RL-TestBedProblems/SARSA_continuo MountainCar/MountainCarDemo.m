@@ -18,7 +18,7 @@ set(gcf,'name','Reinforcement Learning Mountain Car')  % for realtime inverse ki
 set(gco,'Units','data')
 
 
-cfg.maxsteps    = 500;              % maximum number of steps per episode
+cfg.maxsteps    = 1000;              % maximum number of steps per episode
 [cfg.cores, cfg.nstates]   = BuildStateList();  % the list of states
 cfg.actionlist  = BuildActionList(); % the list of actions
 
@@ -38,8 +38,10 @@ RL.param.epsilon     = params.epsilon;  % probability of a random action selecti
 RL.param.exp_decay   = params.exp_decay; % factor to decay exploration rate
 
 epsilon0 = RL.param.epsilon;
-EXPLORATION = maxepisodes/RL.param.exp_decay;
-epsDec = -log(0.05) * 1/EXPLORATION;  %epsilon decrece a un 5% (0.005) en maxEpisodes cuartos (maxepisodes/4), de esta manera el decrecimiento de epsilon es independiente del numero de episodios
+if RL.param.exp_decay<1
+    EXPLORATION = maxepisodes/RL.param.exp_decay;
+    epsDec = -log(0.05) * 1/EXPLORATION;  %epsilon decrece a un 5% (0.005) en maxEpisodes cuartos (maxepisodes/4), de esta manera el decrecimiento de epsilon es independiente del numero de episodios
+end
 
 cfg.grafica     = false; % indicates if display the graphical interface
    
@@ -53,9 +55,13 @@ for i=1:maxepisodes
 
     %disp(['Espisode: ',int2str(i),'  Steps:',int2str(steps),'  Reward:',num2str(total_reward),' epsilon: ',num2str(RL.param.epsilon)])
 
-    %RL.param.epsilon = RL.param.epsilon * RL.param.exp_decay;
-    RL.param.epsilon = epsilon0 * exp(-i*epsDec);
-
+    
+    if RL.param.exp_decay<1
+        RL.param.epsilon = RL.param.epsilon * RL.param.exp_decay;
+    else
+        RL.param.epsilon = epsilon0 * exp(-i*epsDec);
+    end
+    
     xpoints(i)=i;
     ypoints(i)=total_reward;
     
