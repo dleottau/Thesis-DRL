@@ -18,41 +18,83 @@ function [total_reward,steps,RL,x_] = Episode( cfg, RL)
 % See Sutton & Barto book: Reinforcement Learning p.214
 
 e_trace     = BuildQTable( cfg.nstates, cfg.nactions, 0); %elegibility traces
+if cfg.DRL
+    e_trace_y     = BuildQTable( cfg.nstates, cfg.nactions, 0); %elegibility traces
+end
+
 steps        = 0;
 total_reward = 0;
 
 % convert the continous state variables to an index of the statelist
 % selects an action using the epsilon greedy selection strategy
 x = cfg.init_condition;
-FV = getFeatureVector(x, cfg.cores);
-a = e_greedy_selection(RL.Q, FV, RL.param.epsilon);
+
+FV = getFeatureVector(x, cfg.cores, cfg.DRL);
+if cfg.DRL    
+    ax = e_greedy_selection(RL.Q, FV(:,1), RL.param.epsilon);
+    ay = e_greedy_selection(RL.Qy, FV(:,2), RL.param.epsilon);
+else
+    a = e_greedy_selection(RL.Q, FV, RL.param.epsilon);
+end
 
 for i=1: cfg.maxsteps    
         
     % convert the index of the action into an action value
-    action = cfg.actionlist(a,:);    
-    %action = [0 0];    
+    if cfg.DRL    
+        action = [cfg.actionlist(ax,:) cfg.actionlist(ay,:)];    
+    else
+        action = cfg.actionlist(a,:);    
+    end
+    
+    
+    %=======
+%     if x(2)>=0
+%         action(1)=1;
+%     else action(1)=-1;
+%     end
+%     
+%     if x(4)>=0
+%         action(2)=1;
+%     else action(2)=-1;
+%     end
+    %=======
+    
     
     %do the selected action and get the next car state    
-    xp  = DoAction( action, x, cfg);    
-    FVp = getFeatureVector(xp, cfg.cores);
+    xp  = DoAction( action, x, cfg);  
+    % extrat feature vectore and select action prime
+    FVp = getFeatureVector(xp, cfg.cores, cfg.DRL);
+    if cfg.DRL    
+        apx = e_greedy_selection(RL.Q, FVp(:,1), RL.param.epsilon);
+        apy = e_greedy_selection(RL.Qy, FVp(:,2), RL.param.epsilon);
+    else
+        ap = e_greedy_selection(RL.Q, FVp, RL.param.epsilon);
+    end
     
+
     % observe the reward at state xp and the final state flag
-    [r,f]   = GetReward(xp, cfg.goalState);
+    [r,f]   = GetReward(xp, cfg.goalState, cfg.DRL);
     total_reward = total_reward + r;
-        
-    % select action prime
-    ap = e_greedy_selection(RL.Q, FVp, RL.param.epsilon);
+    
     
     % Update the Qtable, that is,  learn from the experience
-    [ RL.Q, e_trace] = UpdateSARSA( FV, a, r, FVp, ap, RL.Q, e_trace, RL.param);
-        
+    if cfg.DRL    
+        [ RL.Q, e_trace] = UpdateSARSA( FV(:,1), ax, r(1), FVp(:,1), apx, RL.Q, e_trace, RL.param);
+        [ RL.Qy, e_trace_y] = UpdateSARSA( FV(:,2), ay, r(2), FVp(:,2), apy, RL.Qy, e_trace_y, RL.param);
+        %update the current variables
+        ax = apx;
+        ay = apy;
+    else
+        [ RL.Q, e_trace] = UpdateSARSA( FV, a, r, FVp, ap, RL.Q, e_trace, RL.param);
+        %update the current variables
+        a = ap;
+    end
+    
     %update the current variables
-    x_(i,:)=x;
-    a = ap;
-    x = xp;
     FV = FVp;
-        
+    x = xp;
+    x_(i,:)=x;
+    
     %increment the step counter.
     steps=steps+1;
     
