@@ -13,14 +13,16 @@ set(gcf,'BackingStore','off')  % for realtime inverse kinematics
 set(gcf,'name','Reinforcement Learning Mountain Car')  % for realtime inverse kinematics
 set(gco,'Units','data')
 
-cfg.maxsteps    = 1000;              % maximum number of steps per episode
-cfg.feature_min = [-1.2 -0.07];
-cfg.feature_max = [ 0.6  0.07];
-cfg.init_condition = [-0.5 0];
-cfg.nCores = [10 5];
-cfg.stdDiv = [.5 .5];
-cfg.actionStep = [1];
+cfg.maxsteps    = 5000;              % maximum number of steps per episode
+
+cfg.feature_min = [-1.2 -1.2 -0.07 -0.07];
+cfg.feature_max = [ 0.6  0.6  0.07  0.07];
+cfg.init_condition = [-pi()/6   -pi()/6 0.0 0.0];
+cfg.nCores = [9 9 6 6];
+cfg.stdDiv = [.5 .5 .5 .5];
+cfg.actionStep = [1 1];
 cfg.goalState = [0.5 0.5];
+
 cfg.q_init = 0;
 cfg.graphic = false;
 
@@ -39,7 +41,7 @@ RL.Q           = BuildQTable( cfg.nstates, cfg.nactions, cfg.q_init );  % the Qt
 RL.param=param;
 
 epsilon0 = RL.param.epsilon;
-if RL.param.exp_decay<1
+if RL.param.exp_decay>=1
     EXPLORATION = maxepisodes/RL.param.exp_decay;
     epsDec = -log(0.05) * 1/EXPLORATION;  %epsilon decrece a un 5% (0.005) en maxEpisodes cuartos (maxepisodes/4), de esta manera el decrecimiento de epsilon es independiente del numero de episodios
 end
@@ -52,7 +54,7 @@ cfg.grafica     = false; % indicates if display the graphical interface
     
 for i=1:maxepisodes    
 
-    [total_reward, steps, RL ] = Episode( cfg, RL );    
+    [total_reward, steps, RL, x_] = Episode( cfg, RL );    
 
     %disp(['Espisode: ',int2str(i),'  Steps:',int2str(steps),'  Reward:',num2str(total_reward),' epsilon: ',num2str(RL.param.epsilon)])
     
@@ -67,9 +69,14 @@ for i=1:maxepisodes
     
     itae = itae + i*abs(total_reward);
     
-    %subplot(2,1,1);    
+    subplot(2,1,1)
     plot(xpoints,ypoints)      
     title(['Run: ',int2str(param.runs),'; epsilon: ',num2str(RL.param.epsilon),'; Episode: ',int2str(i) ])    
+    
+    subplot(2,1,2)
+    plot(x_(:,1),x_(:,2),'>k')      
+    title('Top view (x-y)')    
+    
     drawnow
 
     if (i>00)

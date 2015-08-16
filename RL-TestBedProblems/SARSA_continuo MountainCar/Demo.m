@@ -1,21 +1,23 @@
 clc
 clf
 close all
-clear all
+%clear all
 
 dbstop in UpdateSARSA.m at 28% if isnan(sum(sum(Q)))
 
 params.alpha = 0.15;  
 params.gamma = 0.99;   
 params.lambda = 0.95;
-params.epsilon = 0.01; 
+params.epsilon = 0.1; 
 params.exp_decay = 0.99;
+%params.epsilon = 1; 
+%params.exp_decay = 10;
 
-RUNS=3;
+RUNS=1;
 
 for n=1:RUNS
     params.runs=n;
-    episodes=70;
+    episodes=2000;
     [mR(n) f(n)] = MountainCarDemo(episodes,params);
 end
 

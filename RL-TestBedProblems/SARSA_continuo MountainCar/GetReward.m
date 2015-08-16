@@ -4,14 +4,13 @@ function [ r,f ] = GetReward( x, goalState )
 % r: the returned reward.
 % f: true if the car reached the goal, otherwise f is false
     
-position = x(1);
-% bound for position; the goal is to reach position = 0.5
-bpright=goalState(1);
+positionx = x(1);
+positiony = x(2);
 
 r = -1;
 f = false;
 % 0 in case of success, -1 for all other moves
-if( position >= bpright) 
+if( positionx >= goalState(1) && positiony >= goalState(2)) 
 	r = 0;
     f = true;
 end
