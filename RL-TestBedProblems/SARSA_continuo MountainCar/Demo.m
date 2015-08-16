@@ -13,11 +13,11 @@ params.exp_decay = 0.99;
 %params.epsilon = 1; 
 %params.exp_decay = 10;
 
-RUNS=1;
+RUNS=5;
 
 for n=1:RUNS
     params.runs=n;
-    episodes=2000;
+    episodes=500;
     [mR(n) f(n)] = MountainCarDemo(episodes,params);
 end
 

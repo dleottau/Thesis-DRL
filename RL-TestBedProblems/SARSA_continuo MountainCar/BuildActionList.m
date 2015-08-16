@@ -5,5 +5,6 @@ function [ actions ] = BuildActionList(cfg)
 %actions = [-1.0 ; 0.0 ; 1.0];
 
 actions = [0 0; -1 0 ; 1 0; 0 -1; 0 1];
-
 %Neutral, West, East, South, North
+
+%actions = [-1 -1; -1 0; -1 1; 0 -1; 0 0; 0 1; 1 -1; 1 0; 1 1];
