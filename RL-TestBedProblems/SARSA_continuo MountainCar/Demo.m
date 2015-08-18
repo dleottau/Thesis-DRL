@@ -5,12 +5,12 @@ clear all
 
 dbstop in UpdateSARSA.m at 28% if isnan(sum(sum(Q)))
 
-cfg.DRL = true;
-RUNS = 3;
+cfg.DRL = 1;  % 0 for CRL, 1 for DRL, 2 for DRL with joint states
+RUNS = 5;
 cfg.episodes    = 300;
-cfg.DRAWS = true;
-cfg.record = true;
-evolutionFile = 'results1/DRLtest';
+cfg.DRAWS = 1;
+cfg.record = 1;
+
 
 cfg.feature_min = [-1.2 -0.07  -1.2 -0.07];
 cfg.feature_max = [ 0.6  0.07   0.6  0.07];
@@ -25,10 +25,14 @@ RL.q_init = 0;
 RL.param.alpha = 0.15;  
 RL.param.gamma = 0.99;   
 RL.param.lambda = 0.95;
-RL.param.epsilon = 0.03; %0.1 
+RL.param.epsilon = 0.01; %0.1 CRL, 0.03 DRL
 RL.param.exp_decay = 0.99;
-%RL.param.epsilon = 1; 
+%RL.param.epsilon = 0.7; 
 %RL.param.exp_decay = 10;
+
+folder = 'results2/';   
+fileName = ['DRL' int2str(cfg.DRL) '_' int2str(RUNS) 'RUNS'];
+evolutionFile = [folder fileName];
 
 if cfg.DRAWS
     size=get(0,'ScreenSize');
@@ -43,7 +47,7 @@ f_min=Inf;
 
 for n=1:RUNS
     cfg.runs=n;
-    [reward(:,n), f(n), x_, Qx, Qy] = MountainCarDemo(cfg, RL);
+    [reward(:,:,n), f(n), x_, Qx, Qy] = MountainCarDemo(cfg, RL);
     
     interval=0.8;
     fm(n) = -f(n);
@@ -54,7 +58,8 @@ for n=1:RUNS
         f_min=fm(n);
     end
     
-    cr(n) = mean(reward(ceil(interval*cfg.episodes):end,n));
+    mRew(:,n) =  mean(reward(:,:,n),2);
+    cr(n) = mean(mRew(ceil(interval*cfg.episodes):end,n));
     if cr(n) > cr_max
         cr_max=cr(n);
         fm_best=fm(n);
@@ -81,8 +86,8 @@ results.performance(1,2)=mean(fm);
 results.performance(2,2)=f_max;
 results.performance(4,2)=fm_best; %best
 
-results.mean_cumReward = mean(reward,2);
-results.std_cumReward = std(reward,0,2);
+results.mean_cumReward = mean(mRew,2);
+results.std_cumReward = std(mRew,0,2);
 
 if cfg.record
         save (evolutionFile, 'results');
@@ -90,8 +95,8 @@ end
 
 if cfg.DRAWS
                       
-        figure('position',[0.5*size(3) 0.1*size(4) 0.5*size(3) 0.7*size(4)]);
-        
+        figure('position',[0.5*size(3) 0.1*size(4) 0.5*size(3) 0.7*size(4)], 'Name',fileName,'NumberTitle','off');
+                
         subplot(2,1,1)
         plot(results.mean_cumReward,'k')
         title('Mean Cum.Reward')
@@ -99,11 +104,12 @@ if cfg.DRAWS
         subplot(2,1,2)
         plot(x_best(:,1),x_best(:,3),'ok')
         axis([1.1*cfg.feature_min(1) 1.1*cfg.feature_max(1) 1.1*cfg.feature_min(3) 1.1*cfg.feature_max(3)])
-        title('Top view (x-y) Best policy')    
+        title('Best policy - Top view (x-y) ')    
         
         drawnow
-        saveas(gcf,[evolutionFile '.fig'])
-        
+        if cfg.record
+            saveas(gcf,[evolutionFile '.fig'])
+        end
         
 end
 

@@ -10,6 +10,8 @@ speed_x    = x(2);
 position_y = x(3);
 speed_y    = x(4); 
 
+% for those cases where force(x,y)=[+/-1, +/-1],so force=[+/-0.7071, +/-0.7071]
+force=[norm(force(1))*cos((atan2(force(2),force(1)))) norm(force(2))*sin((atan2(force(2),force(1))))];
  
 speedt1x = speed_x + (0.001*force(1)) + (-0.0025 * cos( 3.0*position_x));	 
 speedt1x = speedt1x * 0.999; % thermodynamic law, for a more real system with friction.

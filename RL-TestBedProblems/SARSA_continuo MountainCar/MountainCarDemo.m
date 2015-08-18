@@ -1,4 +1,4 @@
-function [mR, f, x_, Qx, Qy] =  MountainCarDemo( cfg, RL)
+function [cR, f, x_best, Qx, Qy] =  MountainCarDemo( cfg, RL)
 %MountainCarDemo, the main function of the demo
 %maxepisodes: maximum number of episodes to run the demo
 
@@ -45,6 +45,7 @@ cfg.grafica     = false; % indicates if display the graphical interface
     xpoints=[];
     ypoints=[];
     itae=0;
+    r_best=-inf;
     
 for i=1:maxepisodes    
 
@@ -63,6 +64,10 @@ for i=1:maxepisodes
        
     itae = itae + i*abs(mean(total_reward));
     
+    if mean(total_reward)>r_best
+        x_best=x_;
+        r_best=mean(total_reward);
+    end
     subplot(2,1,1)
     plot(xpoints,ypoints)      
     title(['Run: ',int2str(cfg.runs),'; epsilon: ',num2str(RL.param.epsilon),'; Episode: ',int2str(i) ])    
@@ -74,13 +79,14 @@ for i=1:maxepisodes
     
     drawnow
 
-    if (i>00)
-        %cfg.grafica=true;
-    end
+    
 end
 
 Qx = RL.Q;
-Qy = RL.Qy;
+if cfg.DRL
+    Qy = RL.Qy;
+else Qy=0;
+end
 f = itae/maxepisodes;
-mR = mean(ypoints,2);
+cR = ypoints;
 %mR = mean(mean(ypoints(ceil(maxepisodes*0.9):end)));

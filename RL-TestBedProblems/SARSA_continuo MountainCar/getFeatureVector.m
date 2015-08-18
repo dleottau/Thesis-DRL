@@ -6,7 +6,7 @@ mf3 = exp((-0.5*(X(3)-cores.mean.y).^2)./(cores.std.y.^2));
 mf4 = exp((-0.5*(X(4)-cores.mean.yp).^2)./(cores.std.yp.^2));
 
 index=1;
-if DRL
+if DRL==1
     FV=zeros(length(mf1)*length(mf2),2);
     for d1=1:length(mf1)
     for d2=1:length(mf2)
@@ -29,7 +29,9 @@ else
     end
 end
 
-
+if DRL==2
+    FV(:,2) = FV(:,1);
+end
 
 
 
