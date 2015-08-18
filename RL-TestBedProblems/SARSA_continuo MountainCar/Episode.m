@@ -98,11 +98,7 @@ for i=1: cfg.maxsteps
     %increment the step counter.
     steps=steps+1;
     
-    % Plot of the mountain car problem
-    if (cfg.graphic==true)        
-       MountainCarPlot(x,action,steps);    
-    end
-    
+      
     % if the car reachs the goal breaks the episode
     if (f==true)
         break

@@ -1,4 +1,4 @@
-function [mR, f] =  MountainCarDemo( maxepisodes, param)
+function [mR, f, x_, Qx, Qy] =  MountainCarDemo( cfg, RL)
 %MountainCarDemo, the main function of the demo
 %maxepisodes: maximum number of episodes to run the demo
 
@@ -13,37 +13,26 @@ set(gcf,'BackingStore','off')  % for realtime inverse kinematics
 set(gcf,'name','Reinforcement Learning Mountain Car')  % for realtime inverse kinematics
 set(gco,'Units','data')
 
-cfg.DRL = true;
 
-cfg.maxsteps    = 5000;              % maximum number of steps per episode
-cfg.feature_min = [-1.2 -0.07  -1.2 -0.07];
-cfg.feature_max = [ 0.6  0.07   0.6  0.07];
-cfg.init_condition = [-pi()/6   0.0 -pi()/6 0.0];
-cfg.nCores = [9 6 9 6];
-cfg.stdDiv = [.5 .5 .5 .5];
-cfg.actionStep = [1 1];
-cfg.goalState = [0.5 0.5];
-
-cfg.q_init = 0;
-cfg.graphic = false;
+maxepisodes = cfg.episodes;
 
 [cfg.cores, cfg.nstates]   = BuildStateList(cfg);  % the list of states
 cfg.actionlist  = BuildActionList(cfg); % the list of actions
 
 cfg.nactions = size(cfg.actionlist,1);
-RL.Q = BuildQTable( cfg.nstates, cfg.nactions, cfg.q_init );  % the Qtable
+RL.Q = BuildQTable( cfg.nstates, cfg.nactions, RL.q_init );  % the Qtable
 if cfg.DRL
     % the Qytable for Decentralized approach
-    RL.Qy = BuildQTable( cfg.nstates, cfg.nactions, cfg.q_init );
+    RL.Qy = BuildQTable( cfg.nstates, cfg.nactions, RL.q_init );
 end
 
-%param.alpha       = 0.1;   % learning rate
-%param.gamma       = 0.99;   % discount factor
-%param.lambda      = 0.95;
-%param.epsilon     = 0.01;  % probability of a random action selection
-%param.exp_decay   = 0.99; % factor to decay exploration rate
+%RL.param.alpha       = 0.1;   % learning rate
+%RL.param.gamma       = 0.99;   % discount factor
+%RL.param.lambda      = 0.95;
+%RL.param.epsilon     = 0.01;  % probability of a random action selection
+%RL.param.exp_decay   = 0.99; % factor to decay exploration rate
 
-RL.param=param;
+
 
 epsilon0 = RL.param.epsilon;
 if RL.param.exp_decay>=1
@@ -71,15 +60,15 @@ for i=1:maxepisodes
     
     xpoints(i)=i;
     ypoints(i,:)=total_reward;
-    
-    itae = itae + i*abs(total_reward);
+       
+    itae = itae + i*abs(mean(total_reward));
     
     subplot(2,1,1)
     plot(xpoints,ypoints)      
-    title(['Run: ',int2str(param.runs),'; epsilon: ',num2str(RL.param.epsilon),'; Episode: ',int2str(i) ])    
+    title(['Run: ',int2str(cfg.runs),'; epsilon: ',num2str(RL.param.epsilon),'; Episode: ',int2str(i) ])    
     
     subplot(2,1,2)
-    plot(x_(:,1),x_(:,3),'>k')
+    plot(x_(:,1),x_(:,3),'ok')
     axis([1.1*cfg.feature_min(1) 1.1*cfg.feature_max(1) 1.1*cfg.feature_min(3) 1.1*cfg.feature_max(3)])
     title('Top view (x-y)')    
     
@@ -90,5 +79,8 @@ for i=1:maxepisodes
     end
 end
 
+Qx = RL.Q;
+Qy = RL.Qy;
 f = itae/maxepisodes;
-mR = mean(ypoints(ceil(maxepisodes*0.9):end));
+mR = mean(ypoints,2);
+%mR = mean(mean(ypoints(ceil(maxepisodes*0.9):end)));
