@@ -30,11 +30,11 @@ total_reward = 0;
 x = cfg.init_condition;
 
 FV = getFeatureVector(x, cfg.cores, cfg.DRL);
-if cfg.DRL    
-    ax = e_greedy_selection(RL.Q, FV(:,1), RL.param.epsilon);
-    ay = e_greedy_selection(RL.Qy, FV(:,2), RL.param.epsilon);
+if cfg.DRL
+    [ax, px] = action_selection(RL.Q, FV(:,1), RL.param);
+    [ay, py] = action_selection(RL.Qy, FV(:,2), RL.param);
 else
-    a = e_greedy_selection(RL.Q, FV, RL.param.epsilon);
+    [a, p] = action_selection(RL.Q, FV, RL.param);
 end
 
 for i=1: cfg.maxsteps    
@@ -64,13 +64,13 @@ for i=1: cfg.maxsteps
     xp  = DoAction( action, x, cfg);  
     % extrat feature vectore and select action prime
     FVp = getFeatureVector(xp, cfg.cores, cfg.DRL);
-    if cfg.DRL    
-        apx = e_greedy_selection(RL.Q, FVp(:,1), RL.param.epsilon);
-        apy = e_greedy_selection(RL.Qy, FVp(:,2), RL.param.epsilon);
+    if cfg.DRL
+        [apx, px] = action_selection(RL.Q, FVp(:,1), RL.param);
+        [apy, py] = action_selection(RL.Qy, FVp(:,2), RL.param);
     else
-        ap = e_greedy_selection(RL.Q, FVp, RL.param.epsilon);
+        [ap, p] = action_selection(RL.Q, FVp, RL.param);
     end
-    
+
 
     % observe the reward at state xp and the final state flag
     [r,f]   = GetReward(xp, cfg.goalState, cfg.DRL);

@@ -35,10 +35,11 @@ end
 
 
 epsilon0 = RL.param.epsilon;
-if RL.param.exp_decay>=1
-    EXPLORATION = maxepisodes/RL.param.exp_decay;
-    epsDec = -log(0.05) * 1/EXPLORATION;  %epsilon decrece a un 5% (0.005) en maxEpisodes cuartos (maxepisodes/4), de esta manera el decrecimiento de epsilon es independiente del numero de episodios
-end
+softmaxT0 = RL.param.softmax;
+
+EXPLORATION = maxepisodes/RL.param.exp_decay;
+epsDec = -log(0.05) * 1/EXPLORATION;  %epsilon decrece a un 5% (0.005) en maxEpisodes cuartos (maxepisodes/4), de esta manera el decrecimiento de epsilon es independiente del numero de episodios
+
 
 cfg.grafica     = false; % indicates if display the graphical interface
    
@@ -55,8 +56,10 @@ for i=1:maxepisodes
     
     if RL.param.exp_decay<1
         RL.param.epsilon = RL.param.epsilon * RL.param.exp_decay;
+        RL.param.softmax = RL.param.softmax * RL.param.exp_decay;
     else
         RL.param.epsilon = epsilon0 * exp(-i*epsDec);
+        RL.param.softmax = softmaxT0 * exp(-i*epsDec);
     end
     
     xpoints(i)=i;
@@ -69,8 +72,12 @@ for i=1:maxepisodes
         r_best=mean(total_reward);
     end
     subplot(2,1,1)
-    plot(xpoints,ypoints)      
-    title(['Run: ',int2str(cfg.runs),'; epsilon: ',num2str(RL.param.epsilon),'; Episode: ',int2str(i) ])    
+    plot(xpoints,ypoints)
+    if RL.param.softmax > 0
+        title(['Run: ',int2str(cfg.runs),'; Episode: ',int2str(i),'; temp: ', num2str(RL.param.softmax) ])    
+    else
+         title(['Run: ',int2str(cfg.runs),'; Episode: ',int2str(i), '; eps: ', num2str(RL.param.epsilon) ])    
+    end
     
     subplot(2,1,2)
     plot(x_(:,1),x_(:,3),'ok')

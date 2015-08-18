@@ -5,12 +5,10 @@ clear all
 
 dbstop in UpdateSARSA.m at 28% if isnan(sum(sum(Q)))
 
-cfg.DRL = 1;  % 0 for CRL, 1 for DRL, 2 for DRL with joint states
-RUNS = 5;
-cfg.episodes    = 300;
+cfg.DRL = 0;  % 0 for CRL, 1 for DRL, 2 for DRL with joint states
+RUNS = 1;
+cfg.episodes = 300;
 cfg.DRAWS = 1;
-cfg.record = 1;
-
 
 cfg.feature_min = [-1.2 -0.07  -1.2 -0.07];
 cfg.feature_max = [ 0.6  0.07   0.6  0.07];
@@ -22,16 +20,22 @@ cfg.goalState = [0.5 0.5];
 cfg.maxsteps    = 5000;              % maximum number of steps per episode
 
 RL.q_init = 0;
+RL.param.softmax = 10;  % >0 Boltzmann temperature, <= 0 e-greaddy
 RL.param.alpha = 0.15;  
 RL.param.gamma = 0.99;   
 RL.param.lambda = 0.95;
 RL.param.epsilon = 0.01; %0.1 CRL, 0.03 DRL
-RL.param.exp_decay = 0.99;
+%RL.param.exp_decay = 0.99;
+RL.param.exp_decay = 5;
 %RL.param.epsilon = 0.7; 
-%RL.param.exp_decay = 10;
 
-folder = 'results2/';   
-fileName = ['DRL' int2str(cfg.DRL) '_' int2str(RUNS) 'RUNS'];
+cfg.record = 0;
+folder = 'results1/';  
+if RL.param.softmax > 0
+    fileName = ['DRL' int2str(cfg.DRL) '_' int2str(RUNS) 'RUNS_softmax' int2str(RL.param.softmax) '_decay' num2str(RL.param.exp_decay)];
+else
+    fileName = ['DRL' int2str(cfg.DRL) '_' int2str(RUNS) 'RUNS_epsilon' int2str(RL.param.epsilon) '_decay' num2str(RL.param.exp_decay)]; 
+end
 evolutionFile = [folder fileName];
 
 if cfg.DRAWS
