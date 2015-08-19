@@ -12,7 +12,8 @@ for i=1:actions;
 end
 
 %temp = tempdec*abs(max(Q(s,:)))
-temp=1+tempdec;
+%temp=1+tempdec;
+temp=10E-6+tempdec;
 
 if temp<=0
     temp=realmin;
@@ -20,9 +21,12 @@ end
 
 v_qa = exp( (Qs-max(Qs))/temp );
 sum_qa = sum( exp( (Qs-max(Qs))/temp ));
+%v_qa = exp( (Qs)/temp );
+%sum_qa = sum( exp( (Qs)/temp ));
+
 
 if sum_qa==0
-    sum_qa=realmin;
+    sum_qa=10E-6;
 end
 Ps = v_qa/sum_qa;
 if sum(Ps)==0

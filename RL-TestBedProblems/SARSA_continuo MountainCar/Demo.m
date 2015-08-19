@@ -5,8 +5,9 @@ clear all
 
 dbstop in UpdateSARSA.m at 28% if isnan(sum(sum(Q)))
 
-cfg.DRL = 0;  % 0 for CRL, 1 for DRL, 2 for DRL with joint states
-RUNS = 1;
+cfg.DRL = 1;  % 0 for CRL, 1 for DRL, 2 for DRL with joint states
+cfg.MAapproach = 1;   % 0 no cordination, 1 frequency adjusted, 2 leninet
+RUNS = 3;
 cfg.episodes = 300;
 cfg.DRAWS = 1;
 
@@ -20,23 +21,24 @@ cfg.goalState = [0.5 0.5];
 cfg.maxsteps    = 5000;              % maximum number of steps per episode
 
 RL.q_init = 0;
-RL.param.softmax = 10;  % >0 Boltzmann temperature, <= 0 e-greaddy
+RL.param.softmax = 3;  % >0 Boltzmann temperature, <= 0 e-greaddy
 RL.param.alpha = 0.15;  
 RL.param.gamma = 0.99;   
 RL.param.lambda = 0.95;
 RL.param.epsilon = 0.01; %0.1 CRL, 0.03 DRL
-%RL.param.exp_decay = 0.99;
+RL.param.exp_decay = 0.99;
 RL.param.exp_decay = 5;
 %RL.param.epsilon = 0.7; 
 
-cfg.record = 0;
-folder = 'results1/';  
+cfg.record = 1;
+folder = 'results3/';  
 if RL.param.softmax > 0
-    fileName = ['DRL' int2str(cfg.DRL) '_' int2str(RUNS) 'RUNS_softmax' int2str(RL.param.softmax) '_decay' num2str(RL.param.exp_decay)];
+    fileName = ['DRL' int2str(cfg.DRL) '_' int2str(RUNS) 'RUNS_softmax' int2str(RL.param.softmax) '_decay' num2str(RL.param.exp_decay) '_MA' num2str(cfg.MAapproach)];
 else
-    fileName = ['DRL' int2str(cfg.DRL) '_' int2str(RUNS) 'RUNS_epsilon' int2str(RL.param.epsilon) '_decay' num2str(RL.param.exp_decay)]; 
+    fileName = ['DRL' int2str(cfg.DRL) '_' int2str(RUNS) 'RUNS_epsilon' int2str(RL.param.epsilon) '_decay' num2str(RL.param.exp_decay) '_MA' num2str(cfg.MAapproach)]; 
 end
 evolutionFile = [folder fileName];
+cfg.fileName=fileName;
 
 if cfg.DRAWS
     size=get(0,'ScreenSize');

@@ -22,7 +22,7 @@ rul(:,a) = FV;
 TD = r + param.gamma*Qap - Qa;
 e_trace = e_trace* param.gamma * param.lambda + rul;
 
-Q =  Q + param.alpha * ( e_trace*TD);
+Q =  Q + param.fa*param.alpha * ( e_trace*TD);
 
 if isnan(sum(sum(Q)))
     a;

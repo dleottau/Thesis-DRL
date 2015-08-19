@@ -58,6 +58,7 @@ fa_y=1;
 fa_rot=1;
 fa = 1;
 
+
 RL.cum_fa = [0 0 0];
 
 
@@ -84,7 +85,7 @@ a_rot = e_greedy_selection(RL.Q_rot,s, RL.param.epsilon, rand());
 ap=a;
 ap_y=a_y;
 ap_rot=a_rot;
-
+    
 
 while 1  
     steps=i;

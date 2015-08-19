@@ -24,6 +24,8 @@ end
 
 steps        = 0;
 total_reward = 0;
+RL.param.fa = 1;
+
 
 % convert the continous state variables to an index of the statelist
 % selects an action using the epsilon greedy selection strategy
@@ -65,13 +67,21 @@ for i=1: cfg.maxsteps
     % extrat feature vectore and select action prime
     FVp = getFeatureVector(xp, cfg.cores, cfg.DRL);
     if cfg.DRL
-        [apx, px] = action_selection(RL.Q, FVp(:,1), RL.param);
-        [apy, py] = action_selection(RL.Qy, FVp(:,2), RL.param);
+        [apx, fa_x] = action_selection(RL.Q, FVp(:,1), RL.param);
+        [apy, fa_y] = action_selection(RL.Qy, FVp(:,2), RL.param);
+        % Frequency adjusted param
+        fap = 1-min(fa_x, fa_y)+1E-6;
     else
-        [ap, p] = action_selection(RL.Q, FVp, RL.param);
+        [ap, fap] = action_selection(RL.Q, FVp, RL.param);
+        fap=1-fap;
     end
-
-
+    
+    % select MA approach
+    if cfg.MAapproach~=1
+        fap=1;
+    end
+    
+    
     % observe the reward at state xp and the final state flag
     [r,f]   = GetReward(xp, cfg.goalState, cfg.DRL);
     total_reward = total_reward + r;
@@ -85,7 +95,7 @@ for i=1: cfg.maxsteps
         ax = apx;
         ay = apy;
     else
-        [ RL.Q, e_trace] = UpdateSARSA( FV, a, r, FVp, ap, RL.Q, e_trace, RL.param);
+        [ RL.Q, e_trace] = UpdateSARSA( FV, a, r, FVp, ap, RL.Q, e_trace, RL.param, 1);
         %update the current variables
         a = ap;
     end
@@ -94,6 +104,7 @@ for i=1: cfg.maxsteps
     FV = FVp;
     x = xp;
     x_(i,:)=x;
+    RL.param.fa = fap;
     
     %increment the step counter.
     steps=steps+1;

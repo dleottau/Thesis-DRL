@@ -10,7 +10,7 @@ function [cR, f, x_best, Qx, Qy] =  MountainCarDemo( cfg, RL)
 % See Sutton & Barto book: Reinforcement Learning p.214
 
 set(gcf,'BackingStore','off')  % for realtime inverse kinematics
-set(gcf,'name','Reinforcement Learning Mountain Car')  % for realtime inverse kinematics
+set(gcf,'name',['RL 3D-Mountain Car ' cfg.fileName])  % for realtime inverse kinematics
 set(gco,'Units','data')
 
 
