@@ -9,9 +9,9 @@ function [cR, f, x_best, Qx, Qy] =  MountainCarDemo( cfg, RL)
 % 
 % See Sutton & Barto book: Reinforcement Learning p.214
 
-set(gcf,'BackingStore','off')  % for realtime inverse kinematics
+%set(gcf,'BackingStore','off')  % for realtime inverse kinematics
 set(gcf,'name',['RL 3D-Mountain Car ' cfg.fileName])  % for realtime inverse kinematics
-set(gco,'Units','data')
+%set(gco,'Units','data')
 
 
 maxepisodes = cfg.episodes;
@@ -21,9 +21,16 @@ cfg.actionlist  = BuildActionList(cfg); % the list of actions
 
 cfg.nactions = size(cfg.actionlist,1);
 RL.Q = BuildQTable( cfg.nstates, cfg.nactions, RL.q_init );  % the Qtable
+RL.Qy = 0;
+RL.Tx = 0;
+RL.Ty = 0;
 if cfg.DRL
     % the Qytable for Decentralized approach
-    RL.Qy = BuildQTable( cfg.nstates, cfg.nactions, RL.q_init );
+    RL.Qy  = BuildQTable( cfg.nstates, cfg.nactions, RL.q_init );
+    if cfg.MAapproach == 2
+        RL.Tx = BuildQTable( cfg.nstates, cfg.nactions, 1 ); %temperature for lenient approach
+        RL.Ty = BuildQTable( cfg.nstates, cfg.nactions, 1 ); %temperature for lenient approach
+    end
 end
 
 %RL.param.alpha       = 0.1;   % learning rate
@@ -31,8 +38,6 @@ end
 %RL.param.lambda      = 0.95;
 %RL.param.epsilon     = 0.01;  % probability of a random action selection
 %RL.param.exp_decay   = 0.99; % factor to decay exploration rate
-
-
 
 epsilon0 = RL.param.epsilon;
 softmaxT0 = RL.param.softmax;

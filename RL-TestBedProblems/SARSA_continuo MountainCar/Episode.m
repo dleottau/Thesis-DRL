@@ -33,10 +33,10 @@ x = cfg.init_condition;
 
 FV = getFeatureVector(x, cfg.cores, cfg.DRL);
 if cfg.DRL
-    [ax, px] = action_selection(RL.Q, FV(:,1), RL.param);
-    [ay, py] = action_selection(RL.Qy, FV(:,2), RL.param);
+    [ax, px] = action_selection(RL.Q, FV(:,1), RL.param, RL.Tx);
+    [ay, py] = action_selection(RL.Qy, FV(:,2), RL.param, RL.Ty);
 else
-    [a, p] = action_selection(RL.Q, FV, RL.param);
+    [a, p] = action_selection(RL.Q, FV, RL.param, 0);
 end
 
 for i=1: cfg.maxsteps    
@@ -67,12 +67,12 @@ for i=1: cfg.maxsteps
     % extrat feature vectore and select action prime
     FVp = getFeatureVector(xp, cfg.cores, cfg.DRL);
     if cfg.DRL
-        [apx, fa_x] = action_selection(RL.Q, FVp(:,1), RL.param);
-        [apy, fa_y] = action_selection(RL.Qy, FVp(:,2), RL.param);
+        [apx, fa_x] = action_selection(RL.Q, FVp(:,1), RL.param, RL.Tx);
+        [apy, fa_y] = action_selection(RL.Qy, FVp(:,2), RL.param, RL.Ty);
         % Frequency adjusted param
-        fap = 1-min(fa_x, fa_y)+1E-6;
+        fap = 1-min([fa_x, fa_y])+1E-6;
     else
-        [ap, fap] = action_selection(RL.Q, FVp, RL.param);
+        [ap, fap] = action_selection(RL.Q, FVp, RL.param, 0);
         fap=1-fap;
     end
     
@@ -89,13 +89,13 @@ for i=1: cfg.maxsteps
     
     % Update the Qtable, that is,  learn from the experience
     if cfg.DRL    
-        [ RL.Q, e_trace] = UpdateSARSA( FV(:,1), ax, r(1), FVp(:,1), apx, RL.Q, e_trace, RL.param);
-        [ RL.Qy, e_trace_y] = UpdateSARSA( FV(:,2), ay, r(2), FVp(:,2), apy, RL.Qy, e_trace_y, RL.param);
+        [ RL.Q, e_trace, RL.Tx] = UpdateSARSA( FV(:,1), ax, r(1), FVp(:,1), apx, RL.Q, e_trace, RL.param,RL.Tx, cfg.MAapproach);
+        [ RL.Qy, e_trace_y, RL.Ty] = UpdateSARSA( FV(:,2), ay, r(2), FVp(:,2), apy, RL.Qy, e_trace_y, RL.param,RL.Ty, cfg.MAapproach);
         %update the current variables
         ax = apx;
         ay = apy;
     else
-        [ RL.Q, e_trace] = UpdateSARSA( FV, a, r, FVp, ap, RL.Q, e_trace, RL.param, 1);
+        [ RL.Q, e_trace, RL.Tx] = UpdateSARSA( FV, a, r, FVp, ap, RL.Q, e_trace, RL.param, RL.Tx, cfg.MAapproach);
         %update the current variables
         a = ap;
     end

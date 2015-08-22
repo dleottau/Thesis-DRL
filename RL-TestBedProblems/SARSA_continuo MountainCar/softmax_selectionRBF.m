@@ -1,4 +1,4 @@
-function [ a, p ] = softmax_selectionRBF( Q , FV, tempdec )
+function [ a, p ] = softmax_selectionRBF( Q , FV, tempdec, T )
 % softmax_selection selects an action using the Gibs distribution and softmax strategy
 % Q: the Qtable
 % s: the current state
@@ -9,21 +9,26 @@ actions = size(Q,2);
 Qs=zeros(1,size(Q,2));
 for i=1:actions;
     Qs(1,i) = getQvalue(Q(:,i), FV);
+    if T ~= 0 % if lenient RL
+        Ts(1,i) = getQvalue(T(:,i), FV);
+    end
 end
 
-%temp = tempdec*abs(max(Q(s,:)))
-%temp=1+tempdec;
-temp=10E-6+tempdec;
 
-if temp<=0
-    temp=realmin;
+if T ~= 0
+    minTemp = 10E-6 + min(Ts);
+    v_qa = exp(Qs/minTemp);
+    sum_qa = sum( exp(Qs/minTemp));
+else
+    temp=10E-6+tempdec;
+    % if temp<=0
+    %     temp=realmin;
+    % end
+    v_qa = exp( (Qs-max(Qs))/temp );
+    sum_qa = sum( exp( (Qs-max(Qs))/temp ));
+    %v_qa = exp( (Qs)/temp );
+    %sum_qa = sum( exp( (Qs)/temp ));
 end
-
-v_qa = exp( (Qs-max(Qs))/temp );
-sum_qa = sum( exp( (Qs-max(Qs))/temp ));
-%v_qa = exp( (Qs)/temp );
-%sum_qa = sum( exp( (Qs)/temp ));
-
 
 if sum_qa==0
     sum_qa=10E-6;
@@ -34,6 +39,11 @@ if sum(Ps)==0
 end
 a = find(rand <= cumsum(Ps),1);
 p = Ps(a);
+
+if isempty(a)
+    Ps
+end
+    
 
 
 

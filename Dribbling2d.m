@@ -52,9 +52,6 @@ clear results;
 end
 %========================
 
-
-
-
 RL.trace    = QTable( nstates,nactions,0 );  % the elegibility trace for the vx agent
 RL.trace_y  = RL.trace;  % the elegibility trace for the vy agent
 RL.trace_rot = RL.trace;  % the elegibility trace for the v_rot agent

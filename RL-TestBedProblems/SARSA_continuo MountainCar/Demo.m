@@ -3,11 +3,11 @@ clf
 close all
 clear all
 
-dbstop in UpdateSARSA.m at 28% if isnan(sum(sum(Q)))
+dbstop in UpdateSARSA.m at 34% if isnan(sum(sum(Q)))
 
 cfg.DRL = 1;  % 0 for CRL, 1 for DRL, 2 for DRL with joint states
-cfg.MAapproach = 1;   % 0 no cordination, 1 frequency adjusted, 2 leninet
-RUNS = 3;
+cfg.MAapproach = 2;   % 0 no cordination, 1 frequency adjusted, 2 leninet
+RUNS = 1;
 cfg.episodes = 300;
 cfg.DRAWS = 1;
 
@@ -21,22 +21,30 @@ cfg.goalState = [0.5 0.5];
 cfg.maxsteps    = 5000;              % maximum number of steps per episode
 
 RL.q_init = 0;
-RL.param.softmax = 3;  % >0 Boltzmann temperature, <= 0 e-greaddy
-RL.param.alpha = 0.15;  
+RL.param.softmax = 0;  %3 >0 Boltzmann temperature, <= 0 e-greaddy
+RL.param.alpha = 0.20;  
 RL.param.gamma = 0.99;   
 RL.param.lambda = 0.95;
-RL.param.epsilon = 0.01; %0.1 CRL, 0.03 DRL
-RL.param.exp_decay = 0.99;
-RL.param.exp_decay = 5;
-%RL.param.epsilon = 0.7; 
+RL.param.k = 2;  % exponent coeficient for leniency
+RL.param.beta = 0.7;  % exponent coeficient for leniency
+%RL.param.epsilon = 0.05; %0.1 CRL, 0.03 DRL
+%RL.param.exp_decay = 0.99;
+RL.param.exp_decay = 10;
+RL.param.epsilon = 0.7; 
 
 cfg.record = 1;
-folder = 'results3/';  
+folder = 'egreedy/';  
+
 if RL.param.softmax > 0
-    fileName = ['DRL' int2str(cfg.DRL) '_' int2str(RUNS) 'RUNS_softmax' int2str(RL.param.softmax) '_decay' num2str(RL.param.exp_decay) '_MA' num2str(cfg.MAapproach)];
+    fileName = ['DRL' int2str(cfg.DRL) '_' int2str(RUNS) 'RUNS_softmax' int2str(RL.param.softmax) '_decay' num2str(RL.param.exp_decay) '_alpha' num2str(RL.param.alpha) '_MA' num2str(cfg.MAapproach)];
 else
-    fileName = ['DRL' int2str(cfg.DRL) '_' int2str(RUNS) 'RUNS_epsilon' int2str(RL.param.epsilon) '_decay' num2str(RL.param.exp_decay) '_MA' num2str(cfg.MAapproach)]; 
+    fileName = ['DRL' int2str(cfg.DRL) '_' int2str(RUNS) 'RUNS_epsilon' num2str(RL.param.epsilon) '_decay' num2str(RL.param.exp_decay) '_alpha' num2str(RL.param.alpha) '_MA' num2str(cfg.MAapproach)]; 
 end
+
+if cfg.MAapproach == 2
+    fileName = [fileName '_k' num2str(RL.param.k) '_beta' num2str(RL.param.beta) ];
+end
+
 evolutionFile = [folder fileName];
 cfg.fileName=fileName;
 
@@ -96,7 +104,7 @@ results.mean_cumReward = mean(mRew,2);
 results.std_cumReward = std(mRew,0,2);
 
 if cfg.record
-        save (evolutionFile, 'results');
+        save ([evolutionFile '.mat'], 'results');
 end
 
 if cfg.DRAWS
