@@ -13,15 +13,15 @@ conf.record =1;
 conf.DRAWS = 1;
 
 conf.TRANSFER = 0;  %=1 transfer, >1 acts gready from source policy, =0 learns from scratch, =-1 just for test performance from stored policies
-conf.Q_INIT = -5;
+conf.Q_INIT = 0;
 conf.nash = 0;   % 0 COntrol sharing, 1 NASh
-conf.MAapproach = 0;   % 0 no cordination, -1 optimistic asumption, 1 leninet
+conf.MAapproach = 1;   % 0 no cordination, -1 optimistic asumption, 1 leninet
 conf.boltzmann = 20;  % Boltzmann temperature (5 by default), if <= 0 e-greaddy
 conf.Mtimes = 0; % state-action pair must be visited M times before Q being updated
 
 %sync=1, synchronizes using tne same random number for the 3 D-RL agents, otherwise, uses independetn random numbers per agent
-conf.sync.nash      = 1;
-conf.sync.TL        = 1;
+conf.sync.nash      = 0;
+conf.sync.TL        = 0;
 conf.sync.expl      = 0;
 
 evolutionFile = 'MAS-coop/DRL-3runs-Noise005-2000exp8-NoSync-FAboltzman20';

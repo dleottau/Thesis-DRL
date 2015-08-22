@@ -1,4 +1,4 @@
-function [ Q, trace, QM] = UpdateSARSAlambda( s, a, r, sp, ap, Q, RLparam, trace, MAapproach, fa, QM)
+function [ Q, trace, T] = UpdateSARSAlambda( s, a, r, sp, ap, Q, RLparam, trace, MAapproach, fa, T)
 % UpdateQ update de Qtable and return it using SARSA
 % s1: previous state before taking action (a)
 % s2: current state after action (a)
@@ -46,6 +46,4 @@ function [ Q, trace, QM] = UpdateSARSAlambda( s, a, r, sp, ap, Q, RLparam, trace
         trace = RLparam.gamma * RLparam.lambda * trace;
     end
         
-end
-
 end
