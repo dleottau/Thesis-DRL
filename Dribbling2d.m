@@ -18,11 +18,11 @@ Actions  = ActionTable( conf.Vr_min, conf.V_action_steps, conf.Vr_max, conf.Voff
 nstates     = size(States,1);
 nactions    = size(Actions,1);
 
-RL.Q        = QTableRand( nstates,nactions, conf.Q_INIT );  % the Qtable for the vx agent
-RL.Q_y      = QTableRand( nstates,nactions, conf.Q_INIT );  % the Qtable for the vy agent
-RL.Q_rot    = QTableRand( nstates,nactions, conf.Q_INIT );  % the Qtable for the v_rot agent
+RL.Q        = QTable( nstates,nactions, conf.Q_INIT );  % the Qtable for the vx agent
+RL.Q_y      = RL.Q;  % the Qtable for the vy agent
+RL.Q_rot    = RL.Q;  % the Qtable for the v_rot agent
 
-RL.QM     = QTable( nstates,nactions, conf.boltzmann ); %temperature
+RL.QM     = QTable( 1,1, 0 ); %QTable( nstates,nactions, 0 );
 RL.QM_y     = RL.QM;
 RL.QM_rot     = RL.QM;
 

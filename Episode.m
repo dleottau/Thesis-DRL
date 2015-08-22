@@ -57,7 +57,6 @@ fa_y=1;
 fa_rot=1;
 fa = 1;
 
-
 RL.cum_fa = [0 0 0];
 
 
@@ -84,7 +83,7 @@ a_rot = e_greedy_selection(RL.Q_rot,s, RL.param.epsilon, rand());
 ap=a;
 ap_y=a_y;
 ap_rot=a_rot;
-    
+
 
 while 1  
     steps=i;
@@ -165,9 +164,9 @@ while 1
     if conf.sync.expl>0, rnd.expl=rand(); end
     if conf.sync.TL>0, rnd.TL=rand(); end
     
-    [ap, fa_x] = p_source_selection_FLC(RL.Q,RL.QM, sp, RL.param, a_transf, conf.nash, conf.sync, rnd);
-    [ap_y, fa_y] = p_source_selection_FLC(RL.Q_y,  RL.QM_y, sp, RL.param, a_transf_y, conf.nash, conf.sync, rnd);
-    [ap_rot, fa_rot] = p_source_selection_FLC(RL.Q_rot, RL.QM_rot, sp, RL.param, a_transf_rot, conf.nash, conf.sync, rnd);
+    [ap, fa_x] = p_source_selection_FLC(RL.Q,RL.T,sp, RL.param, a_transf, conf.nash, conf.sync, rnd);
+    [ap_y, fa_y] = p_source_selection_FLC(RL.Q_y,RL.T_y,sp, RL.param, a_transf_y, conf.nash, conf.sync, rnd);
+    [ap_rot, fa_rot] = p_source_selection_FLC(RL.Q_rot,RL.T_rot,sp, RL.param, a_transf_rot, conf.nash, conf.sync, rnd);
    
     RL.cum_fa = RL.cum_fa + [fa_x, fa_y, fa_rot];  
          

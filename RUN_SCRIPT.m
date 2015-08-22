@@ -1,6 +1,9 @@
 clear all
 clc
+clf
 close all
+
+dbstop in softmax_selection.m at 29
 
 tic
 

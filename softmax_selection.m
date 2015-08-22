@@ -25,7 +25,7 @@ end
 a = find(rnd <= cumsum(Ps),1);
 p = Ps(a);
 
-if ~isscalar(a)
+if isempty(a)
     a
 end
 

@@ -26,26 +26,14 @@ else
     end
 end
 
-if (rnd.TL > RLparam.p) 
+
+
+if (rnd.TL >= RLparam.p) 
     a = a_target; 
 else
     a = a_source;
 end
 
-% % Method 7
-% if (rand()> RLparam.p) 
-%     a = e_greedy_selection(Q,s,RLparam.epsilon);
-% else
-%     a=a_sh;
-% end
-
-
-% Method 2 DLF
-% if (rand() > RLparam.p) 
-%     a = clipDLF( round(ab + 1*randn()* RLparam.p), 1,actions ); 
-%     %a = e_greedy_selection(Q,s,RLparam.epsilon);
-% else
-%     a = clipDLF( round(a_sh + 2*randn()*(1 - RLparam.p)), 1,actions );
-%     a=a_sh;
-% end
-
+if isempty(a)
+    a
+end
