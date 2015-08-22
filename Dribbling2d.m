@@ -26,6 +26,11 @@ RL.QM     = QTable( nstates,nactions, conf.boltzmann ); %temperature
 RL.QM_y     = RL.QM;
 RL.QM_rot     = RL.QM;
 
+RL.T     = QTable( nstates,nactions, 1);
+RL.T_y     = RL.T;
+RL.T_rot     = RL.T;
+
+
 %Secuential learning
 %load RC-2015/Qok_x1;
 %load RC-2015/Qok_y2;
@@ -33,6 +38,7 @@ RL.QM_rot     = RL.QM;
 %RL.Q        = Qok_x1;
 %RL.Q_y      = Qok_y2;
 %RL.Q_rot    = Qok_rot3;
+
 
 
 %========TRANSFER=========
@@ -52,17 +58,20 @@ clear results;
 end
 %========================
 
+
+
+
 RL.trace    = QTable( nstates,nactions,0 );  % the elegibility trace for the vx agent
 RL.trace_y  = RL.trace;  % the elegibility trace for the vy agent
 RL.trace_rot = RL.trace;  % the elegibility trace for the v_rot agent
 
-RL.param.alpha       = 2;   % temp. multiplication coeficient
-RL.param.beta       = 2.5;  % exponent coeficient
-RL.param.delta       = 0.995;  % temp. decay coeficient
-RL.param.lambda      = 0.95;   % learning rate
+RL.param.beta       = 0.7;   % lenience discount factor
+RL.param.k       = 2;   % lenience parameter
 
+
+RL.param.alpha       = 0.5;   % 0.3-0.5 learning rate
 RL.param.gamma       = 1;   % discount factor
-
+RL.param.lambda      = 0.9;   % the decaying elegibiliy trace parameter
 epsilon0             = 1;  % probability of a random action selection
 p0                   = 1;
 temp0                =  conf.boltzmann;
@@ -86,10 +95,6 @@ RL.param.alpha2 = alpha0;
 
 goals=0;
 for i=1:conf.episodes    
-    
-    if i>conf.episodes/2
-        i
-    end
             
     if conf.TRANSFER>1, RL.param.p=1; %acts greedy from source policy
     elseif conf.TRANSFER == 0, RL.param.p=0; %learns from scratch
