@@ -10,10 +10,12 @@ actions = size(Q,2);
 Qs=Q(s,:);
 Ts=T(s,:);
 
-minTemp = 10E-6 + min(Ts);
+minTemp = 10E-6 + min(Ts)*100;
 
-v_qa = exp(Qs/minTemp);
-sum_qa = sum( exp(Qs/minTemp));
+%v_qa = exp(Qs/minTemp);
+%sum_qa = sum( exp(Qs/minTemp));
+v_qa = exp( (Qs-max(Qs))/minTemp );
+sum_qa = sum( exp((Qs-max(Qs))/minTemp) );
 
 if sum_qa==0
     sum_qa=realmin;
