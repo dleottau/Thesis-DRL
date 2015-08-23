@@ -1,4 +1,4 @@
-function [ a, p ] = softmax_selection( Q,T,s,rnd )
+function [ a, p ] = softmax_selection( Q,T,s,RLparam,rnd )
 % softmax_selection selects an action using the Gibs distribution and softmax strategy
 % Q: the Qtable
 % s: the current state
@@ -10,12 +10,12 @@ actions = size(Q,2);
 Qs=Q(s,:);
 Ts=T(s,:);
 
-minTemp = 10E-6 + min(Ts)*100;
+minTemp = (10E-6 + (1-min(Ts)))*RLparam.k;%/RLparam.softmax;
 
 %v_qa = exp(Qs/minTemp);
 %sum_qa = sum( exp(Qs/minTemp));
-v_qa = exp( (Qs-max(Qs))/minTemp );
-sum_qa = sum( exp((Qs-max(Qs))/minTemp) );
+v_qa = exp( (Qs-max(Qs))*minTemp);
+sum_qa = sum( exp((Qs-max(Qs))*minTemp) );
 
 if sum_qa==0
     sum_qa=realmin;

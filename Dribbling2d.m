@@ -66,12 +66,13 @@ RL.trace_y  = RL.trace;  % the elegibility trace for the vy agent
 RL.trace_rot = RL.trace;  % the elegibility trace for the v_rot agent
 
 RL.param.beta       = 0.7;   % lenience discount factor
-RL.param.k       = 2;   % lenience parameter
+RL.param.k       = 1.5;   % lenience parameter
 
 
 RL.param.alpha       = 0.5;   % 0.3-0.5 learning rate
 RL.param.gamma       = 1;   % discount factor
 RL.param.lambda      = 0.9;   % the decaying elegibiliy trace parameter
+RL.param.softmax     = conf.boltzmann;
 epsilon0             = 1;  % probability of a random action selection
 p0                   = 1;
 temp0                =  conf.boltzmann;
