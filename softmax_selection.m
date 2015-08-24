@@ -8,14 +8,21 @@ function [ a, p ] = softmax_selection( Q,T,s,RLparam,rnd )
 actions = size(Q,2);
 
 Qs=Q(s,:);
-Ts=T(s,:);
 
-minTemp = (10E-6 + (1-min(Ts)))*RLparam.k;%/RLparam.softmax;
-
-%v_qa = exp(Qs/minTemp);
-%sum_qa = sum( exp(Qs/minTemp));
-v_qa = exp( (Qs-max(Qs))*minTemp);
-sum_qa = sum( exp((Qs-max(Qs))*minTemp) );
+if T ~= 0 && RLparam.softmax > 0
+    Ts=T(s,:);
+    minTemp = (10E-6 + (1-min(Ts)))*RLparam.k;
+    v_qa = exp( (Qs-max(Qs))*minTemp);
+    sum_qa = sum( exp((Qs-max(Qs))*minTemp) );
+elseif RLparam.softmax > 0
+    temp = 10E-6 + RLparam.softmax;
+    v_qa = exp( (Qs-max(Qs))/temp );
+    sum_qa = sum( exp( (Qs-max(Qs))/temp ));
+else
+    temp = 1;
+    v_qa = exp( (Qs-max(Qs))/temp );
+    sum_qa = sum( exp( (Qs-max(Qs))/temp ));
+end
 
 if sum_qa==0
     sum_qa=realmin;

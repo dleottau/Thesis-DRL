@@ -28,8 +28,9 @@ function [ Q, trace, T] = UpdateSARSAlambda( s, a, r, sp, ap, Q, RLparam, trace,
 %    r=rp;
 %    QM(s,a)=QM(s,a)-deco;
     
-
+if MAapproach == 2
     T(s,a)=T(s,a)*RLparam.beta;
+end
 
     delta  =   r + RLparam.gamma * Q(sp,ap)  - Q(s,a);
         
@@ -41,9 +42,10 @@ function [ Q, trace, T] = UpdateSARSAlambda( s, a, r, sp, ap, Q, RLparam, trace,
     %Eligibility traces
     %trace(s,a) = 1 + trace(s,a);
     
-    if MAapproach == 0 || MAapproach == -1 && delta > 0 || MAapproach == 1 && ( delta>0 || rand()>1-exp(-RLparam.k*T(s,a)) ) 
+    if MAapproach == 0 || MAapproach == 1 || (MAapproach == 2 && ( delta>0 || rand()>1-exp(-RLparam.k*T(s,a)))) 
         Q = Q + fa*RLparam.alpha * delta * trace;
-        trace = RLparam.gamma * RLparam.lambda * trace;
     end
+    
+    trace = RLparam.gamma * RLparam.lambda * trace;
         
 end

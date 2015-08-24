@@ -1,4 +1,4 @@
-function [ RL, Vr,ro,fi,gama,Pt,Pb,Pr,Vb,total_reward,steps, fitness,btd,Vavg,time,faults,goal] = Episode( w, RL, statelist, actionlist, conf)
+function [ RL, Vr,ro,fi,gama,Pt,Pb,Pr,Vb,total_reward,steps, fitness,btd,Vavg,time,faults,goal] = Episode( w, RL, conf)
          
 
 %Dribbling1d do one episode  with sarsa learning              
@@ -12,6 +12,7 @@ function [ RL, Vr,ro,fi,gama,Pt,Pb,Pr,Vb,total_reward,steps, fitness,btd,Vavg,ti
 
 % Dribbling1d with SARSA 
 
+actionlist = conf.Actions;
 Vr_max = conf.Vr_max; %x,y,rot Max Speed achieved by the robot
 Vr_min = conf.Vr_min;
 maxDeltaV = conf.maxDeltaV; %mm/s/Ts
@@ -37,6 +38,11 @@ NoiseBall = [0.12; 0]+NOISE*0.8; %  0.8
 NoisePerception = NOISE*0.0025; % 
 
 % ------------- INIT PARAMETERS ---------------------
+RL.trace    = 0*RL.trace;
+RL.trace_y  = RL.trace;  % the elegibility trace for the vy agent
+RL.trace_rot = RL.trace;  % the elegibility trace for the v_rot agent
+
+
 total_reward = 0;
 time(1)=0;
 i=1;
@@ -170,11 +176,14 @@ while 1
    
     RL.cum_fa = RL.cum_fa + [fa_x, fa_y, fa_rot];  
          
-    fap = 1;
+    
+    % select MA approach
+    fap=1;
     %fap = RL.param.alpha2 + 0.01;
-    %fap = 1-min([fa_x, fa_y, fa_rot]) + 0.05;
-    
-    
+    if conf.MAapproach==1
+        fap = 1-min([fa_x, fa_y, fa_rot])+1E-6;
+    end
+        
     
 	% Update the Qtable, that is,  learn from the experience
     if conf.TRANSFER >= 0 %Para aprendizaje, TRANSFER<0 para pruebas de performance

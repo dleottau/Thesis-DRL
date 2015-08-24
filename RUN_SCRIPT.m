@@ -1,14 +1,13 @@
 clear all
 clc
 clf
-close all
+%close all
 
-dbstop in softmax_selection.m at 31
+%dbstop in softmax_selection.m at 38
 
 tic
 
 conf.episodes = 2000; %500;   %2000  maximum number of  episode
-conf.EXPL_EPISODES_FACTOR = 8; % 8 exploration decay parameter
 conf.Runs = 1;
 conf.NOISE = 0.05;
 
@@ -16,19 +15,28 @@ conf.record =1;
 conf.DRAWS = 1;
 
 conf.TRANSFER = 0;  %=1 transfer, >1 acts gready from source policy, =0 learns from scratch, =-1 just for test performance from stored policies
-conf.Q_INIT = 0;
 conf.nash = 0;   % 0 COntrol sharing, 1 NASh
-conf.MAapproach = 1;   % 0 no cordination, -1 optimistic asumption, 1 leninet
-conf.boltzmann = 20;  % Boltzmann temperature (5 by default), if <= 0 e-greaddy
+conf.MAapproach = 1;   % 0 no cordination, 1 frequency adjusted, 2 leninet
 conf.Mtimes = 0; % state-action pair must be visited M times before Q being updated
+conf.Q_INIT = 0;
 
 %sync=1, synchronizes using tne same random number for the 3 D-RL agents, otherwise, uses independetn random numbers per agent
 conf.sync.nash      = 0;
 conf.sync.TL        = 0;
 conf.sync.expl      = 0;
 
-evolutionFile = 'MAS-coop/DRL-3runs-Noise005-2000exp8-NoSync-FAboltzman20';
-performanceFile = 'boltzmann/Vx-5runs-Noise03-50exp30-NoSync-boltzmann1';
+RL.param.alpha      = 0.5;   % 0.3-0.5 learning rate
+RL.param.gamma      = 1;   % discount factor
+RL.param.lambda     = 0.9;   % the decaying elegibiliy trace parameter
+RL.param.epsilon    = 1;
+RL.param.exp_decay  = 8; % 8 exploration decay parameter
+RL.param.softmax    = 20;   % Boltzmann temperature (5 by default), if <= 0 e-greaddy
+RL.param.beta       = 0.7;   % lenience discount factor
+RL.param.k          = 1.5;   % lenience parameter
+
+
+%evolutionFile = 'MAS-coop/DRL-3runs-Noise005-2000exp8-NoSync-FAboltzman20';
+%performanceFile = 'boltzmann/Vx-5runs-Noise03-50exp30-NoSync-boltzmann1';
 
 
 conf.maxDistance =6000;    % maximum ball distance permited before to end the episode X FIELD DIMENSION
@@ -50,6 +58,28 @@ conf.Ts = 0.2; %Sample time of a RL step
 a_spot={'r' 'g' 'b' 'c' 'm' 'y' 'k' '--r' '--g' '--b' '--c' };
 
 
+folder = 'MAS-coop/';  
+loadFile = 'resultsFull_NASh-v2-20runs-Noise01-exp8.mat';
+
+
+fileNameP = ['DRL_Noise' num2str(conf.NOISE) '_MA' int2str(conf.MAapproach)];
+if RL.param.softmax > 0
+    fileName = ['_softmax' int2str(RL.param.softmax) '_decay' num2str(RL.param.exp_decay) '_alpha' num2str(RL.param.alpha)];
+else
+    fileName = ['_epsilon' num2str(RL.param.epsilon) '_decay' num2str(RL.param.exp_decay) '_alpha' num2str(RL.param.alpha)]; 
+end
+
+if conf.MAapproach == 2
+    fileName = [fileNameP '_k' num2str(RL.param.k) '_beta' num2str(RL.param.beta) fileName ];
+else
+    fileName = [fileNameP fileName];
+end
+
+loadFile = [folder loadFile];
+evolutionFile = [folder fileName];
+performanceFile = loadFile; 
+conf.fileName = fileName;
+
 et_min=Inf;
 cr_max=-Inf;
 v_max=-Inf;
@@ -65,15 +95,30 @@ if conf.TRANSFER < 0
     interval=0.1;
 end
 
+
 if conf.DRAWS==1
     size=get(0,'ScreenSize');
     figure('position',[0.05*size(3) 0.05*size(4) 0.6*size(3) 0.8*size(4)]);
 end
 
 
+if conf.TRANSFER<0 %Para pruebas de performance
+    load loadFile;
+end
+
+%========TRANSFER=========
+if conf.TRANSFER<0 %Para pruebas de performance
+RL.Q        = results.Qok_x;%Qx_DRL;
+RL.Q_y      = results.Qok_y;%Qy_DRL;
+RL.Q_rot    = results.Qok_rot;%Qrot_DRL;
+clear results;
+end
+%========================
+
 for i=1:conf.Runs
+    conf.nRun=i;
 %    disp(['Test= ', num2str(a), '.', num2str(i), ' lambda= ', num2str(lambda(a))])
-    [reward(:,:,i), e_time(:,i), Vavg(:,i), tp_faults(:,i), goals(i),  Qx,Qy,Qrot] = Dribbling2d( i, conf);
+    [reward(:,:,i), e_time(:,i), Vavg(:,i), tp_faults(:,i), goals(i),  Qx,Qy,Qrot] = Dribbling2d(conf, RL);
                               
     et(i) = mean(e_time(ceil(interval*conf.episodes):conf.episodes,i))/1.5;
     et_sd(i) = std(e_time(ceil(interval*conf.episodes):conf.episodes,i))/1.5;
@@ -180,7 +225,7 @@ results.std_rewRot = std(reward(:,3),0,2);
 
 if conf.TRANSFER >= 0
     if conf.record >0
-        save (evolutionFile, 'results');
+        save ([evolutionFile  '.mat'], 'results');
     end
     
     if conf.DRAWS==1
@@ -213,11 +258,16 @@ if conf.TRANSFER >= 0
     %     figure,plot(mean(fitness,2))
     %     figure,plot(mean(Vavg,2))
     %     figure,plot(mean(tp_faults,2))
+        
+        if conf.record > 0
+            saveas(gcf,[evolutionFile '.fig'])
+        end
+    
     end
     
 else
     if conf.record > 0
-        save (performanceFile, 'results');
+        save ([performanceFile '.mat'], 'results');
     end
 end
 
