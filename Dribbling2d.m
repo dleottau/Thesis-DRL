@@ -56,8 +56,10 @@ RL.param.alpha2 = alpha0;
 goals=0;
 for i=1:conf.episodes    
             
-    if conf.TRANSFER>1, RL.param.p=1; %acts greedy from source policy
-    elseif conf.TRANSFER == 0, RL.param.p=0; %learns from scratch
+    if conf.TRANSFER>1, 
+        RL.param.p=1; %acts greedy from source policy
+    elseif conf.TRANSFER == 0, 
+        RL.param.p=0; %learns from scratch
     end %else Transfer from source decaying as p
     
     [RL, Vr,ro,fi,gama,Pt,Pb,Pr,Vb,total_reward,steps,fitness_k,btd_k,Vavg_k,time,faults,goal_k] = Episode( wf, RL, conf);
@@ -69,9 +71,9 @@ for i=1:conf.episodes
     inc2 = 1-exp(-i*epsInc2);
     RL.param.epsilon = epsilon0*dec;
     RL.param.p = p0*dec;
-    RL.param.sotmax = temp0*dec;
+    RL.param.softmax = temp0*dec;
     %RL.param.alpha2 = alpha0*inc2; 
-    RL.param.alpha2 = alpha0*dec2; 
+    RL.param.alpha2 = alpha0*dec2;
     %RL.param.alpha2 = alpha0*dec2*inc2; %trapmf(i,[1 300 600 1500]);
     
     xpoints(i)=i-1;
@@ -106,8 +108,12 @@ for i=1:conf.episodes
         hold on
         plot(xpoints,reward(:,2),'g')      
         plot(xpoints,reward(:,3),'b')      
-        %plot(xpoints,btd,'k')      
-        title([ 'Mean Reward(rgb) Episode:',int2str(i), ' p=',sprintf('%.2f',RL.param.p) ' Run: ',int2str(conf.nRun)])
+        %plot(xpoints,btd,'k')
+        if RL.param.softmax
+            title([ 'Mean Reward(rgb) Episode:',int2str(i), ' z=',sprintf('%.2f',RL.param.softmax) ' Run: ',int2str(conf.nRun)])
+        else
+            title([ 'Mean Reward(rgb) Episode:',int2str(i), ' p=',sprintf('%.2f',RL.param.p) ' Run: ',int2str(conf.nRun)])
+        end
         hold
         
         subplot(3,3,5);    

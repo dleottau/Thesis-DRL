@@ -1,7 +1,7 @@
-clear all
+%clear all
 clc
 clf
-%close all
+close all
 
 %dbstop in softmax_selection.m at 38
 
@@ -16,22 +16,23 @@ conf.DRAWS = 1;
 
 conf.TRANSFER = 0;  %=1 transfer, >1 acts gready from source policy, =0 learns from scratch, =-1 just for test performance from stored policies
 conf.nash = 0;   % 0 COntrol sharing, 1 NASh
-conf.MAapproach = 1;   % 0 no cordination, 1 frequency adjusted, 2 leninet
+conf.MAapproach = 0;   % 0 no cordination, 1 frequency adjusted, 2 leninet
 conf.Mtimes = 0; % state-action pair must be visited M times before Q being updated
 conf.Q_INIT = 0;
 
 %sync=1, synchronizes using tne same random number for the 3 D-RL agents, otherwise, uses independetn random numbers per agent
-conf.sync.nash      = 0;
-conf.sync.TL        = 0;
+conf.sync.nash      = 1;
+conf.sync.TL        = 1;
 conf.sync.expl      = 0;
+if conf.TRANSFER, conf.sync.expl=1; end
 
 RL.param.alpha      = 0.5;   % 0.3-0.5 learning rate
 RL.param.gamma      = 1;   % discount factor
 RL.param.lambda     = 0.9;   % the decaying elegibiliy trace parameter
 RL.param.epsilon    = 1;
 RL.param.exp_decay  = 8; % 8 exploration decay parameter
-RL.param.softmax    = 20;   % Boltzmann temperature (5 by default), if <= 0 e-greaddy
-RL.param.beta       = 0.7;   % lenience discount factor
+RL.param.softmax    = 40;   % Boltzmann temperature (20 by default), if <= 0 e-greaddy
+RL.param.beta       = 0.8;   % lenience discount factor
 RL.param.k          = 1.5;   % lenience parameter
 
 
@@ -62,11 +63,11 @@ folder = 'MAS-coop/';
 loadFile = 'resultsFull_NASh-v2-20runs-Noise01-exp8.mat';
 
 
-fileNameP = ['DRL_Noise' num2str(conf.NOISE) '_MA' int2str(conf.MAapproach)];
+fileNameP = ['DRL_' int2str(conf.Runs) 'Runs_Noise' num2str(conf.NOISE) '_MA' int2str(conf.MAapproach)];
 if RL.param.softmax > 0
-    fileName = ['_softmax' int2str(RL.param.softmax) '_decay' num2str(RL.param.exp_decay) '_alpha' num2str(RL.param.alpha)];
+    fileName = ['_softmax' int2str(RL.param.softmax) '_decay' num2str(RL.param.exp_decay)];
 else
-    fileName = ['_epsilon' num2str(RL.param.epsilon) '_decay' num2str(RL.param.exp_decay) '_alpha' num2str(RL.param.alpha)]; 
+    fileName = ['_epsilon' num2str(RL.param.epsilon) '_decay' num2str(RL.param.exp_decay)]; 
 end
 
 if conf.MAapproach == 2
@@ -74,6 +75,13 @@ if conf.MAapproach == 2
 else
     fileName = [fileNameP fileName];
 end
+
+if conf.nash==1 && conf.TRANSFER
+    fileName = [fileName '_NASSh'];
+elseif conf.nash==0 && conf.TRANSFER
+    fileName = [fileName '_CoSh'];
+end
+    
 
 loadFile = [folder loadFile];
 evolutionFile = [folder fileName];
@@ -222,6 +230,9 @@ results.mean_rewY = mean(reward(:,2),2);
 results.std_rewY = std(reward(:,2),0,2);
 results.mean_rewRot = mean(reward(:,3),2);
 results.std_rewRot = std(reward(:,3),0,2);
+
+results.conf = conf;
+results.RLparam = RL.param;
 
 if conf.TRANSFER >= 0
     if conf.record >0

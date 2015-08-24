@@ -179,9 +179,9 @@ while 1
     
     % select MA approach
     fap=1;
-    %fap = RL.param.alpha2 + 0.01;
     if conf.MAapproach==1
-        fap = 1-min([fa_x, fa_y, fa_rot])+1E-6;
+        %fap = 1-min([fa_x, fa_y, fa_rot])+1E-6;
+        fap = RL.param.alpha2 + 0.001;
     end
         
     
