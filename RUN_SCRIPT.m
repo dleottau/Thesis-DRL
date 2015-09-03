@@ -8,15 +8,14 @@ close all
 tic
 
 conf.episodes = 2000; %500;   %2000  maximum number of  episode
-conf.Runs = 1;
-conf.NOISE = 0.05;
-
+conf.Runs = 5;
 conf.record =1;
 conf.DRAWS = 1;
+conf.NOISE = 0.05;
 
 conf.TRANSFER = 0;  %=1 transfer, >1 acts gready from source policy, =0 learns from scratch, =-1 just for test performance from stored policies
 conf.nash = 0;   % 0 COntrol sharing, 1 NASh
-conf.MAapproach = 0;   % 0 no cordination, 1 frequency adjusted, 2 leninet
+conf.MAapproach = 2;   % 0 no cordination, 1 frequency adjusted, 2 leninet
 conf.Mtimes = 0; % state-action pair must be visited M times before Q being updated
 conf.Q_INIT = 0;
 
@@ -31,8 +30,8 @@ RL.param.gamma      = 1;   % discount factor
 RL.param.lambda     = 0.9;   % the decaying elegibiliy trace parameter
 RL.param.epsilon    = 1;
 RL.param.exp_decay  = 8; % 8 exploration decay parameter
-RL.param.softmax    = 40;   % Boltzmann temperature (20 by default), if <= 0 e-greaddy
-RL.param.beta       = 0.8;   % lenience discount factor
+RL.param.softmax    = 50;   % Boltzmann temperature (20 by default), if <= 0 e-greaddy
+RL.param.beta       = 0.9;   % lenience discount factor
 RL.param.k          = 1.5;   % lenience parameter
 
 
@@ -242,6 +241,7 @@ if conf.TRANSFER >= 0
     if conf.DRAWS==1
                       
         figure('position',[0.5*size(3) 0.1*size(4) 0.5*size(3) 0.7*size(4)]);
+        set(gcf,'name',['DRL Dribbling ' conf.fileName])
         
         subplot(2,2,4)
         plot(mean(reward(:,1),2),'r')

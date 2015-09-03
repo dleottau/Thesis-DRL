@@ -17,10 +17,12 @@ Qa = getQvalue(Q(:,a), FV);
 Qap = getQvalue(Q(:,ap), FVp);
 FVT(:,a) = FV;
 
-Ta = getQvalue(T(:,a), FV);
-T(:,a) = T(:,a) + (Ta*param.beta - Ta)*FV;
-T(:,a) = clipDLF(T(:,a),0,1);
+if MAapproach == 2
+    Ta = getQvalue(T(:,a), FV);
+    T(:,a) = T(:,a) + (Ta*param.beta - Ta)*FV;
+    T(:,a) = clipDLF(T(:,a),0,1);
 % OJO: quizas necesario vover a calcular Ta o multiplicarlo por beta 
+end
 
 TD = r + param.gamma*Qap - Qa;
 e_trace = e_trace* param.gamma * param.lambda + FVT;

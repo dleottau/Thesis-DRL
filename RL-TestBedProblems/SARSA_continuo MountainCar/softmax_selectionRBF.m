@@ -19,6 +19,9 @@ if T ~= 0
     minTemp = 10E-3 + min(Ts);
     v_qa = exp(Qs/minTemp);
     sum_qa = sum( exp(Qs/minTemp));
+%     minTemp = (10E-6 + (1-min(Ts)))*2;
+%     v_qa = exp( (Qs-max(Qs))*minTemp);
+%     sum_qa = sum( exp((Qs-max(Qs))*minTemp) );
 else
     temp=10E-6+tempdec;
     % if temp<=0

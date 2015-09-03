@@ -1,15 +1,17 @@
+function f = 3DMC_run (x)
 clc
 clf
 close all
 clear all
 
-dbstop in UpdateSARSA.m at 34% if isnan(sum(sum(Q)))
+dbstop in UpdateSARSA.m at 36% if isnan(sum(sum(Q)))
 
-cfg.DRL = 1;  % 0 for CRL, 1 for DRL, 2 for DRL with joint states
-cfg.MAapproach = 2;   % 0 no cordination, 1 frequency adjusted, 2 leninet
+cfg.DRL = 0;  % 0 for CRL, 1 for DRL, 2 for DRL with joint states
+cfg.MAapproach = 0;   % 0 no cordination, 1 frequency adjusted, 2 leninet
 RUNS = 1;
 cfg.episodes = 300;
 cfg.DRAWS = 1;
+cfg.record = 1;
 
 cfg.feature_min = [-1.2 -0.07  -1.2 -0.07];
 cfg.feature_max = [ 0.6  0.07   0.6  0.07];
@@ -22,17 +24,29 @@ cfg.maxsteps    = 5000;              % maximum number of steps per episode
 
 RL.q_init = 0;
 RL.param.softmax = 0;  %3 >0 Boltzmann temperature, <= 0 e-greaddy
-RL.param.alpha = 0.20;  
+RL.param.alpha = 0.25;  
 RL.param.gamma = 0.99;   
 RL.param.lambda = 0.95;
 RL.param.k = 2;  % exponent coeficient for leniency
-RL.param.beta = 0.7;  % exponent coeficient for leniency
-%RL.param.epsilon = 0.05; %0.1 CRL, 0.03 DRL
-%RL.param.exp_decay = 0.99;
-RL.param.exp_decay = 10;
-RL.param.epsilon = 0.7; 
+RL.param.beta = 0.8;  % exponent coeficient for leniency
+RL.param.epsilon = 0.02; %0.1 CRL, 0.03 DRL
+RL.param.exp_decay = 0.99;
+%RL.param.exp_decay = 5;
+% RL.param.epsilon = 0.7; 
 
-cfg.record = 1;
+
+
+% set x
+
+
+
+
+
+
+
+
+
+
 folder = 'egreedy/';  
 
 if RL.param.softmax > 0
@@ -129,3 +143,4 @@ end
 
 %disp(['Fitness: ',num2str(fitness),'  alpha:',num2str(params.alpha),'  gamma:',num2str(params.gamma),'  lambda:',num2str(params.lambda)])
 disp(['  MeanCumRew:',num2str(mean(cr)), ';  Fitness: ',num2str(mean(fm))])
+f=mean(cr);
