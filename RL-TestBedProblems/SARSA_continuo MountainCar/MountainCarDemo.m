@@ -1,4 +1,4 @@
-function [cR, f, x_best, Qx, Qy] =  MountainCarDemo( cfg, RL)
+function [cR, f, x_best, Qx, Qy] =  MountainCarDemo( cfg, RL, run)
 %MountainCarDemo, the main function of the demo
 %maxepisodes: maximum number of episodes to run the demo
 
@@ -76,21 +76,23 @@ for i=1:maxepisodes
         x_best=x_;
         r_best=mean(total_reward);
     end
-    subplot(2,1,1)
-    plot(xpoints,ypoints)
-    if RL.param.softmax > 0
-        title(['Run: ',int2str(cfg.runs),'; Episode: ',int2str(i),'; temp: ', num2str(RL.param.softmax) ])    
-    else
-         title(['Run: ',int2str(cfg.runs),'; Episode: ',int2str(i), '; eps: ', num2str(RL.param.epsilon) ])    
-    end
     
-    subplot(2,1,2)
-    plot(x_(:,1),x_(:,3),'ok')
-    axis([1.1*cfg.feature_min(1) 1.1*cfg.feature_max(1) 1.1*cfg.feature_min(3) 1.1*cfg.feature_max(3)])
-    title('Top view (x-y)')    
-    
-    drawnow
+    if cfg.DRAWS
+        subplot(2,1,1)
+        plot(xpoints,ypoints)
+        if RL.param.softmax > 0
+            title(['Run: ',int2str(run),'; Episode: ',int2str(i),'; temp: ', num2str(RL.param.softmax) ])    
+        else
+             title(['Run: ',int2str(run),'; Episode: ',int2str(i), '; eps: ', num2str(RL.param.epsilon) ])    
+        end
 
+        subplot(2,1,2)
+        plot(x_(:,1),x_(:,3),'ok')
+        axis([1.1*cfg.feature_min(1) 1.1*cfg.feature_max(1) 1.1*cfg.feature_min(3) 1.1*cfg.feature_max(3)])
+        title('Top view (x-y)')    
+
+        drawnow
+    end
     
 end
 

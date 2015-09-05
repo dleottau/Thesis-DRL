@@ -1,21 +1,27 @@
-clc
-clf
-close all
-clear all
+function fitness = MC3D_run (x,RUNS)
 
-dbstop in UpdateSARSA.m at 36% if isnan(sum(sum(Q)))
+% dbstop in UpdateSARSA.m at 36% if isnan(sum(sum(Q)))
 
 
+cfg.DRL = 2;  % 0 for CRL, 1 for DRL, 2 for DRL with joint states
+cfg.MAapproach = 0;   % 0 no cordination, 1 frequency adjusted, 2 leninet
+%RUNS = 1;
+cfg.DRAWS = 0;
+cfg.record = 0;
 
+RL.q_init = 0;
+RL.param.softmax = 0;  %3 >0 Boltzmann temperature, <= 0 e-greaddy
+RL.param.alpha = x(1);%0.15;  
+RL.param.gamma = 0.99;   
+RL.param.lambda = 0.8;
+RL.param.k = 2;  % exponent coeficient for leniency
+RL.param.beta = 0.8;  % exponent coeficient for leniency
+RL.param.epsilon = x(2); %0.1 CRL, 0.03 DRL
+RL.param.exp_decay = 0.99;
+%RL.param.exp_decay = 5;
+% RL.param.epsilon = 0.7; 
 
-
-cfg.DRL = 1;  % 0 for CRL, 1 for DRL, 2 for DRL with joint states
-cfg.MAapproach = 1;   % 0 no cordination, 1 frequency adjusted, 2 leninet
-RUNS = 1;
-cfg.episodes = 300;
-cfg.DRAWS = 1;
-cfg.record = 1;
-
+cfg.episodes = 250;
 cfg.feature_min = [-1.2 -0.07  -1.2 -0.07];
 cfg.feature_max = [ 0.6  0.07   0.6  0.07];
 cfg.init_condition = [-pi()/6   0.0 -pi()/6 0.0];
@@ -24,29 +30,6 @@ cfg.stdDiv = [.5 .5 .5 .5];
 cfg.actionStep = [1 1];
 cfg.goalState = [0.5 0.5];
 cfg.maxsteps    = 5000;              % maximum number of steps per episode
-
-RL.q_init = 0;
-RL.param.softmax = 0;  %3 >0 Boltzmann temperature, <= 0 e-greaddy
-RL.param.alpha = 0.15;  
-RL.param.gamma = 0.99;   
-RL.param.lambda = 0.8;
-RL.param.k = 2;  % exponent coeficient for leniency
-RL.param.beta = 0.8;  % exponent coeficient for leniency
-RL.param.epsilon = 1; %0.1 CRL, 0.03 DRL
-RL.param.exp_decay = 8;
-%RL.param.exp_decay = 5;
-% RL.param.epsilon = 0.7; 
-
-
-
-% set x
-
-
-
-
-
-
-
 
 
 
@@ -70,16 +53,18 @@ if cfg.DRAWS
     figure('position',[0.05*size(3) 0.05*size(4) 0.6*size(3) 0.8*size(4)]);
 end
 
+parfor n=1:RUNS
+%for n=1:RUNS
+    %cfg.runs=n;
+    [reward{n}, f(n), x_{n}, Qx{n}, Qy{n}] = MountainCarDemo(cfg, RL, n);
+end
+
 cr_max=-Inf;
 cr_min=Inf;
 f_max=-Inf;
 f_min=Inf;
 
-
 for n=1:RUNS
-    cfg.runs=n;
-    [reward(:,:,n), f(n), x_, Qx, Qy] = MountainCarDemo(cfg, RL);
-    
     interval=0.8;
     fm(n) = -f(n);
     if fm(n) > f_max
@@ -89,14 +74,14 @@ for n=1:RUNS
         f_min=fm(n);
     end
     
-    mRew(:,n) =  mean(reward(:,:,n),2);
+    mRew(:,n) =  mean(reward{n}(:,:),2);
     cr(n) = mean(mRew(ceil(interval*cfg.episodes):end,n));
     if cr(n) > cr_max
         cr_max=cr(n);
         fm_best=fm(n);
-        x_best=x_;
-        results.Qx_best = Qx;
-        results.Qy_best = Qy;
+        x_best=x_{n};
+        results.Qx_best = Qx{n};
+        results.Qy_best = Qy{n};
     end
     if cr(n) < cr_min
         cr_min=cr(n);
@@ -144,6 +129,7 @@ if cfg.DRAWS
         
 end
 
-%disp(['Fitness: ',num2str(fitness),'  alpha:',num2str(params.alpha),'  gamma:',num2str(params.gamma),'  lambda:',num2str(params.lambda)])
-disp(['  MeanCumRew:',num2str(mean(cr)), ';  Fitness: ',num2str(mean(fm))])
-f=mean(cr);
+clear Qx Qy reward x_ mRew;
+
+fitness=mean(cr);
+%disp(['  MeanCumRew:',num2str(mean(cr)), ';  Fitness: ',num2str(mean(fm))])

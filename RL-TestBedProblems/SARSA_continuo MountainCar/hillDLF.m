@@ -1,4 +1,4 @@
-function [x,fval,gfx,output]=hillDLF(fitnessfun,x0,options,varargin)
+function [x,fval]=hillDLF(fitnessfun,x0,options,varargin)
 %Syntax: [x,fval,gfx,output]=hill(fitnessfun,x0,options,varargin)
 %________________________________________________________________
 %
@@ -61,7 +61,8 @@ Display = options.Display;
 TimeLimit = options.TimeLimit;
 Goal = options.Goal;
 step =  options.step;
-%peaks = options.peaks;
+peaks = options.peaks;
+oneDimPerTry = options.oneDimPerTry;
 %peakStep = options.peakStep;
 
 
@@ -84,118 +85,161 @@ output.reason = 'Optimization terminated: maximum number of climbs reached.';
 % Define the precision of each parameter
 %h=10^(-prec)*(space(:,2)-space(:,1));
 
-gfx(1,:)=[feval(fitnessfun,x0,varargin{:}) x0(:)'];
-
+y0_initial=feval(fitnessfun,x0,varargin{:});
+[ states, V ] = BuildStateList(space,step);
+s=DiscretizeState(x0,states);
+V(s)=y0_initial;
+s0=s;
 ymin=-inf;
+fval=inf;
+iter=1;
 
-%for n=1:peaks
-    for i=1:MaxIter
-    
-        % Evaluate the fitness function
-        y0=gfx(i,1);
-
-        % Try a step on each dimension...
-        for j=1:length(x0)
-
+while sum(isinf(V))>0.1*size(V,1) || iter<MaxIter
+    % Try a step on each dimension...
+    for j=1:length(x0)
+        ymin=-inf;
+        while V(s0)>ymin
+            s0=s;
+            x0=states(s0,:)';
             x=x0;
 
             % ... towards -inf
-            x(j)=max(space(j,1),x0(j)-step(j));
-            ybefore(j)=feval(fitnessfun,x,varargin{:});
-
-            % ... towards inf
-            x(j)=min(x0(j)+step(j),space(j,2));
-            yafter(j)=feval(fitnessfun,x,varargin{:});
-
-        end
-
-        % Choose the steepest step
-        ybefore=ybefore-y0;
-        yafter=yafter-y0;
-        if length(x0)==1
-            I1=[1 1];
-            [ymin,I2]=min([ybefore;yafter]);
-        else
-            [ymin,I1]=min([ybefore;yafter]');
-            [ymin,I2]=min(ymin);
-        end
-
-        if ymin<0
-            % If such step is found ... 
-            I=I1(I2);
-            x0=x;
-
-            if line==0
-                % ... stop if line == 0
-                x0(I)=x0(I)+sign(I2-1.5)*step(I);
-            else
-                % ... proceed with additional steps, if line > 0
-                for j=1:line
-                    x0line=x0;
-                    x0line(I)=x0(I)+sign(I2-1.5)*(j+1)*step(I);
-                    if x0line(I)<space(I,2) | x0line(I)>space(I,1)
-                        yminnew=feval(fitnessfun,x0line,varargin{:})-y0;
-                        if yminnew<ymin
-                            ymin=yminnew;
-                        else break;
-                        end
-                    else break;
-                    end
-                end
-                if j==line
-                    x0=x0line;
-                else
-                    x0(I)=x0(I)+sign(I2-1.5)*(j-1)*step(I);
+            for p=1:peaks
+                x(j)=max(space(j,1),x0(j)-p*step(j));
+                s=DiscretizeState(x,states);
+                x=states(s,:)';
+                if V(s)==inf
+                    V(s)=feval(fitnessfun,x,varargin{:}); %
                 end
             end
-            gfx(i+1,:)=[ymin+y0 x0(:)'];
-        else
-            % ... or terminate the minimization
-            output.reason = 'Optimization terminated: a peak is reached.';
-            break;        
+            
+            % ... towards inf
+            for p=1:peaks
+                x(j)=min(x0(j)+p*step(j),space(j,2));
+                s=DiscretizeState(x,states);
+                x=states(s,:)';
+                if V(s)==inf
+                    V(s)=feval(fitnessfun,x,varargin{:});
+                end
+            end
+            
+            [ymin s]=min(V);            
+            if ~oneDimPerTry % If option to explore every dimension untill find the best is not enabled
+                % It breaks while loop
+                s0=s;
+            end
         end
-
-        % Show the progress
-        if Display>0 & rem(i,Display)==0
-            fprintf('     %4.0f           %8.4f  \n',i,gfx(i+1,1));
-        end
-
-        % Termination conditions
-        Time=Time+toc;
-        tic;
-        if Time>TimeLimit
-            output.reason = 'Optimization terminated: Time Limit exceeded.';
-            break;
-        end
-        if gfx(i,1)<=Goal
-            output.reason = 'Optimization terminated: Goal reached or exceeded.';
-            break;
-        end
-        
     end
+    if fval<=ymin
+        break;
+    end
+    fval=ymin;
     
-%     r = rand(length(x0),1)-0.5;
-%     r = r./abs(r);
-%     x0 = x0 + r.*step*peakStep;
-%     x0=max(space(:,1),x0);
-%     x0=min(x0,space(:,2))
-%     
-% end
+end
+%end
 
-output.climbs = i-1;
-output.time = Time;
+fval=ymin;
+x=states(s,:)';
 
-if Display>0 & strcmp(Display,'Final')==0
-    fprintf('   __________      ___________\n');
-    fprintf('                              \n');
-    disp('output:');
-    disp(output);
-elseif strcmp(Display,'Final')==1
-    fprintf('Global minimum reached: %8.4f\n',gfx(end,1));
 end
 
-% Get the point that correspond to the minimum of the function
-x=gfx(end,2:end);
 
-% Get the minimum of the function
-fval=gfx(end,1);
+
+% while sum(isinf(V))>0.1*size(V,1)
+%     % Try a step on each dimension...
+%     for j=1:length(x0)
+%         ymin=-inf;
+%         while V(s0)>ymin
+%             s0=s;
+%             x0=states(s0,:)';
+%             x=x0;
+% 
+%             % ... towards -inf
+%             for p=1:peaks
+%                 x(j)=max(space(j,1),x0(j)-p*step(j));
+%                 s=DiscretizeState(x,states);
+%                 x=states(s,:)';
+%                 if V(s)==inf
+%                     V(s)=feval(fitnessfun,x,varargin{:}); %
+%                 end
+%             end
+%             
+%             % ... towards inf
+%             for p=1:peaks
+%                 x(j)=min(x0(j)+p*step(j),space(j,2));
+%                 s=DiscretizeState(x,states);
+%                 x=states(s,:)';
+%                 if V(s)==inf
+%                     V(s)=feval(fitnessfun,x,varargin{:});
+%                 end
+%             end
+%             
+%             % Choose the steepest step
+%             [ymin s]=min(V);            
+%         end
+%     end
+%     if fval<=ymin
+%         break;
+%     end
+%     fval=ymin;
+%     
+% end
+% %end
+% 
+% fval=ymin;
+% x=states(s,:)';
+% 
+% end
+
+
+function [ states, V ] = BuildStateList(space,step)
+%BuildStateList builds a state list from a state matrix
+
+    Ndim=size(step,1);
+    nstates=1;
+    for n=1:Ndim
+        x{n}=space(n,1):step(n):space(n,2);
+        N(n)=length(x{n});
+        nstates=nstates*N(n);
+    end
+    
+    states=zeros(nstates,Ndim);
+    vi=ones(1,Ndim);
+    dim=1;
+    index=1;
+    [ states, index, vi ] = forNested(x,N,dim,index,states,vi);    
+    V=inf*ones(nstates,1);
+end
+
+
+function [ states, index, vi ] = forNested(x,N,dim,index,states,vi)
+
+for d=1:N(dim)
+
+    if dim==length(N)
+        for n=1:length(N)
+            states(index,n)=x{n}(vi(n)); 
+        end
+        index=index+1;
+    else
+        [ states, index, vi ] = forNested(x,N,dim+1,index,states,vi);
+    end
+    vi(dim)=vi(dim)+1;      
+end
+vi(dim)=1;  
+end
+
+function [ s ] = DiscretizeState( x, statelist  )
+%DiscretizeState check which entry in the state list is more close to x and
+%return the index of that entry.
+
+%[d  s] = min(dist(statelist,x'));
+
+xr = repmat(x',size(statelist,1),1);
+[d  s] = min(edist(statelist,xr));
+end
+
+function V=updateV(x,y,states,V)
+s=DiscretizeState(x,states);
+V(s)=y;
+end

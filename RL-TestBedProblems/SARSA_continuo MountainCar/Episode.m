@@ -39,7 +39,7 @@ else
     [a, p] = action_selection(RL.Q, FV, RL.param, 0);
 end
 
-for i=1: cfg.maxsteps    
+for i = 1: cfg.maxsteps    
         
     % convert the index of the action into an action value
     if cfg.DRL    
