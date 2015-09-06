@@ -11,12 +11,12 @@ cfg.record = 0;
 
 RL.q_init = 0;
 RL.param.softmax = 0;  %3 >0 Boltzmann temperature, <= 0 e-greaddy
-RL.param.alpha = 0.15;  
+RL.param.alpha = x(1);  
 RL.param.gamma = 0.99;   
-RL.param.lambda = 0.8;
+RL.param.lambda = x(2);
 RL.param.k = 2;  % exponent coeficient for leniency
 RL.param.beta = 0.8;  % exponent coeficient for leniency
-RL.param.epsilon = 0.08;
+RL.param.epsilon = x(3);
 RL.param.exp_decay = 0.99;
 %RL.param.exp_decay = 5;
 % RL.param.epsilon = 0.7; 

@@ -25,14 +25,18 @@ else
 end
 
 x0 = [];
+xname{1}='alpha';
 x0(1) = 0.15;   % learning rate
-x0(2)  = 0.1;   % epsilon
+xname{2}='lambda';
+x0(2) = 0.95;   % lambda
+xname{3}='epsilon';
+x0(3)  = 0.05;  % epsilon
 
 %----------  
 
 options = hilloptions('TimeLimit', 600);
-options.step = [0.05; 0.02];
-options.space = [[0.05; 0], [0.6; 0.3]];
+options.step = [0.05; 0.05; 0.02];
+options.space = [[0.05; 0.5; 0], [0.6; 0.99; 0.3]];
 options.peaks = 2;
 options.oneDimPerTry = 1;
 
@@ -43,3 +47,23 @@ fval
 
 matlabpool close;
 toc
+
+% 
+% 
+% clc
+% clf
+% clear all
+% close all
+% xname{1}='alpha';
+% x(1) = 0.15;   % learning rate
+% xname{2}='lambda';
+% x(2) = 0.8;   % lambda
+% xname{3}='epsilon';
+% x(3)  = 0.08;  % epsilon
+% RUNS=1;
+% 
+% fitness = MC3D_run(x,RUNS);
+% f=-fitness;
+% 
+% 
+% for i=1:length(x)
