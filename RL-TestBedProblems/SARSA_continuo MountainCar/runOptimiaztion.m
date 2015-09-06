@@ -6,7 +6,7 @@ close all
 %dbstop in GetBestAction.m at 19;
 %dbstop in Episode.m if isnan(sum(sum(RL.Q)))
 %dbstop in Episode.m at 53 if isnan(sum(sum(RL.Q)))
-dbstop if error
+%dbstop if error
 dbstop in UpdateSARSA.m at 36
 %dbstop if naninf;
 
@@ -26,12 +26,12 @@ end
 
 x0 = [];
 x0(1) = 0.15;   % learning rate
-x0(2)  = 0.05;   % epsilon
+x0(2)  = 0.1;   % epsilon
 
 %----------  
 
 options = hilloptions('TimeLimit', 600);
-options.step = [0.05; 0.025];
+options.step = [0.05; 0.02];
 options.space = [[0.05; 0], [0.6; 0.3]];
 options.peaks = 2;
 options.oneDimPerTry = 1;

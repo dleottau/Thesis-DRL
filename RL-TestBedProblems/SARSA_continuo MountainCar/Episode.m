@@ -111,7 +111,12 @@ for i = 1: cfg.maxsteps
     
       
     % if the car reachs the goal breaks the episode
-    if (f==true)
+    if f==true
+        break
+    elseif RL.stepsCum>cfg.maxsteps*cfg.episodes/2
+        % if definitivelly doesn't converge just finishing training to accelerate procedure
+        steps = cfg.maxsteps;
+        total_reward = -cfg.maxsteps;
         break
     end
     

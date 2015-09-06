@@ -1,6 +1,14 @@
-function f = optimizationFunction(x)
+% function f = optimizationFunction(x)
+% 
+% global RUNS;
 
-global RUNS;
+clc
+clf
+clear all
+close all
+x(1) = 0.15;   % learning rate
+x(2)  = 0.1;  % epsilon
+RUNS=1;
 
 fitness = MC3D_run(x,RUNS);
 f=-fitness;

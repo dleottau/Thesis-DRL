@@ -52,10 +52,12 @@ cfg.grafica     = false; % indicates if display the graphical interface
     ypoints=[];
     itae=0;
     r_best=-inf;
+    RL.stepsCum=0;
     
 for i=1:maxepisodes    
 
-    [total_reward, steps, RL, x_] = Episode( cfg, RL );    
+    [total_reward, steps, RL, x_] = Episode( cfg, RL );  
+    RL.stepsCum = RL.stepsCum+steps;
 
     %disp(['Espisode: ',int2str(i),'  Steps:',int2str(steps),'  Reward:',num2str(total_reward),' epsilon: ',num2str(RL.param.epsilon)])
     

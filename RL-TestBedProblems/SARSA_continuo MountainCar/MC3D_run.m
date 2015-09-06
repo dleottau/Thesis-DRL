@@ -3,29 +3,29 @@ function fitness = MC3D_run (x,RUNS)
 % dbstop in UpdateSARSA.m at 36% if isnan(sum(sum(Q)))
 
 
-cfg.DRL = 2;  % 0 for CRL, 1 for DRL, 2 for DRL with joint states
+cfg.DRL = 0;  % 0 for CRL, 1 for DRL, 2 for DRL with joint states
 cfg.MAapproach = 0;   % 0 no cordination, 1 frequency adjusted, 2 leninet
 %RUNS = 1;
-cfg.DRAWS = 0;
+cfg.DRAWS = 1;
 cfg.record = 0;
 
 RL.q_init = 0;
 RL.param.softmax = 0;  %3 >0 Boltzmann temperature, <= 0 e-greaddy
-RL.param.alpha = x(1);%0.15;  
+RL.param.alpha = 0.15;  
 RL.param.gamma = 0.99;   
 RL.param.lambda = 0.8;
 RL.param.k = 2;  % exponent coeficient for leniency
 RL.param.beta = 0.8;  % exponent coeficient for leniency
-RL.param.epsilon = x(2); %0.1 CRL, 0.03 DRL
+RL.param.epsilon = 0.08;
 RL.param.exp_decay = 0.99;
 %RL.param.exp_decay = 5;
 % RL.param.epsilon = 0.7; 
 
-cfg.episodes = 250;
+cfg.episodes = 300;
 cfg.feature_min = [-1.2 -0.07  -1.2 -0.07];
 cfg.feature_max = [ 0.6  0.07   0.6  0.07];
 cfg.init_condition = [-pi()/6   0.0 -pi()/6 0.0];
-cfg.nCores = [9 6 9 6];
+cfg.nCores = [5 3 5 3];
 cfg.stdDiv = [.5 .5 .5 .5];
 cfg.actionStep = [1 1];
 cfg.goalState = [0.5 0.5];
