@@ -2,23 +2,23 @@ function [cumR, itaeM] = MC3D_run (x,RUNS)
 
 global flagFirst;
 
-cfg.DRL = 2;  % 0 for CRL, 1 for DRL, 2 for DRL with joint states
-cfg.MAapproach = 2;   % 0 no cordination, 1 frequency adjusted, 2 leninet
+cfg.DRL = x(6);  % 0 for CRL, 1 for DRL, 2 for DRL with joint states
+cfg.MAapproach = x(7);   % 0 no cordination, 1 frequency adjusted, 2 leninet
 %RUNS = 1;
-cfg.DRAWS = 0;
-cfg.record = 0;
+cfg.DRAWS = 1;
+cfg.record = 1;
 
 RL.q_init = 0;
 RL.param.softmax = 0;  %3 >0 Boltzmann temperature, <= 0 e-greaddy
-RL.param.alpha = x(3);  
+RL.param.alpha = x(1);  
 RL.param.gamma = 0.99;   
-RL.param.lambda = x(4);
-RL.param.k = x(1);%2;  % exponent coeficient for leniency
-RL.param.beta = x(2);%0.8;  % exponent coeficient for leniency
-RL.param.epsilon = x(5);
+RL.param.lambda = x(2);
+RL.param.epsilon = x(3);
 RL.param.exp_decay = 0.99;
 %RL.param.exp_decay = 5;
 % RL.param.epsilon = 0.7; 
+RL.param.k = x(4);%2;  % exponent coeficient for leniency
+RL.param.beta = x(5);%0.8;  % exponent coeficient for leniency
 
 cfg.episodes = 300;
 cfg.feature_min = [-1.2 -0.07  -1.2 -0.07];
@@ -54,9 +54,9 @@ end
 
 if flagFirst
     flagFirst=false;
-    disp( );
+    disp('-');
     disp(evolutionFile);
-    disp( );
+    disp('-');
 end
 
 parfor n=1:RUNS
