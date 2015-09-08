@@ -1,12 +1,12 @@
-%clear all
+clear all
 clc
 clf
 close all
 
-th=-210;
+th=-300;
 m=10;
 
-folder='egreedy/';
+folder='egreedy_opti/';
 files = dir(fullfile([folder '*.mat']));
 
 j=1;

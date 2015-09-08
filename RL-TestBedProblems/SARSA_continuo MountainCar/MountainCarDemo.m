@@ -1,4 +1,4 @@
-function [cR, f, x_best, Qx, Qy] =  MountainCarDemo( cfg, RL, run)
+function [cR, itae, x_best, Qx, Qy] =  MountainCarDemo( cfg, RL, run)
 %MountainCarDemo, the main function of the demo
 %maxepisodes: maximum number of episodes to run the demo
 
@@ -32,12 +32,6 @@ if cfg.DRL
         RL.Ty = BuildQTable( cfg.nstates, cfg.nactions, 1 ); %temperature for lenient approach
     end
 end
-
-%RL.param.alpha       = 0.1;   % learning rate
-%RL.param.gamma       = 0.99;   % discount factor
-%RL.param.lambda      = 0.95;
-%RL.param.epsilon     = 0.01;  % probability of a random action selection
-%RL.param.exp_decay   = 0.99; % factor to decay exploration rate
 
 epsilon0 = RL.param.epsilon;
 softmaxT0 = RL.param.softmax;
@@ -103,6 +97,6 @@ if cfg.DRL
     Qy = RL.Qy;
 else Qy=0;
 end
-f = itae/maxepisodes;
+itae = itae/maxepisodes;
 cR = ypoints;
 %mR = mean(mean(ypoints(ceil(maxepisodes*0.9):end)));
