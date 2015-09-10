@@ -12,7 +12,7 @@ dbstop in UpdateSARSA.m at 36
 
 tic
 global RUNS;
-RUNS=2;
+RUNS=4;
 
 global flagFirst;
 flagFirst=true;
@@ -38,8 +38,8 @@ x0(3)  = 0.1;  % epsilon
 %----------  
 
 options = hilloptions('TimeLimit', 600);
-options.step = [0.05; 0.05; 0.02];
-options.space = [[0.05; 0.5; 0], [0.5; 0.99; 0.2]];
+options.step = [0.05; 0.05; 0.025];
+options.space = [[0.05; 0.5; 0], [0.5; 0.99; 0.3]];
 %options.step = [0.5; 0.05; 0.05; 0.05; 0.02];
 %options.space = [[0.5; 0.5; 0.05; 0.5; 0], [4; 0.99; 0.5; 0.99; 0.2]];
 options.peaks = 2;

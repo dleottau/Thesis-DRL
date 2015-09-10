@@ -1,35 +1,35 @@
-% function f = optimizationFunction(x0)
+function f = optimizationFunction(x0)
+
+global RUNS;
+
+% clc
+% clf
+% clear all
+% close all
+% RUNS=4;
+% if matlabpool('size') == 0 % checking to see if my pool is already open
+%     matlabpool(RUNS)
+% else
+%     matlabpool close
+%     matlabpool(RUNS)
+% end
 % 
-% global RUNS;
-
-clc
-clf
-clear all
-close all
-RUNS=4;
-if matlabpool('size') == 0 % checking to see if my pool is already open
-    matlabpool(RUNS)
-else
-    matlabpool close
-    matlabpool(RUNS)
-end
-
-x0 = [];
-xname{1}='alpha';
-x0(1) = 0.3;
-xname{2}='lambda';
-x0(2) = 0.94;
-xname{3}='epsilon';
-x0(3) = 0.04;  
-xname{4}='k-lenient';
-x0(4) = 3;  
-xname{5}='beta';
-x0(5) = 0.75; 
-xname{6}='DRL'; 
-x0(6)= 0;  % 0 for CRL, 1 for DRL, 2 for DRL with joint states
-xname{7}='MAapproach';
-x0(7) = 0;   % 0 no cordination, 1 frequency adjusted, 2 leninet
-
+% x0 = [];
+% xname{1}='alpha';
+% x0(1) = 0.3;
+% xname{2}='lambda';
+% x0(2) = 0.94;
+% xname{3}='epsilon';
+% x0(3) = 0.04;  
+% xname{4}='k-lenient';
+% x0(4) = 3;  
+% xname{5}='beta';
+% x0(5) = 0.75; 
+% xname{6}='DRL'; 
+% x0(6)= 0;  % 0 for CRL, 1 for DRL, 2 for DRL with joint states
+% xname{7}='MAapproach';
+% x0(7) = 0;   % 0 no cordination, 1 frequency adjusted, 2 leninet
+% 
 
 
 

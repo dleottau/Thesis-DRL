@@ -60,6 +60,32 @@ fval =
 
 
 
+-
+egreedy_opti/DRL1_4RUNS_epsilon0.05_decay0.99_alpha0.15_lambda0.9_MA1
+-
+cumRew:-186.1619; ITAE:23290.6981; alpha:0.15; lambda:0.9; epsilon:0.05
+cumRew:-205.2172; ITAE:21505.6656; alpha:0.1; lambda:0.9; epsilon:0.05
+cumRew:-205.0307; ITAE:20720.665; alpha:0.05; lambda:0.9; epsilon:0.05
+cumRew:-658.3279; ITAE:45711.1862; alpha:0.2; lambda:0.9; epsilon:0.05
+cumRew:-580.1311; ITAE:64537.4; alpha:0.25; lambda:0.9; epsilon:0.05
+cumRew:-372.0738; ITAE:31888.4956; alpha:0.15; lambda:0.85; epsilon:0.05
+cumRew:-255.25; ITAE:23593.9781; alpha:0.15; lambda:0.8; epsilon:0.05
+cumRew:-1390.709; ITAE:124960.6063; alpha:0.15; lambda:0.95; epsilon:0.05
+cumRew:-699.7725; ITAE:62255.0256; alpha:0.15; lambda:0.9; epsilon:0.025
+cumRew:-194.5102; ITAE:19987.425; alpha:0.15; lambda:0.9; epsilon:0
+cumRew:-423.3033; ITAE:39585.9844; alpha:0.15; lambda:0.9; epsilon:0.075
+cumRew:-344.9918; ITAE:34275.5325; alpha:0.15; lambda:0.9; epsilon:0.1
+
+x =
+
+    0.1500
+    0.9000
+    0.0500
+
+
+fval =
+
+  186.1619
 
 testDRL1_1RUNS_epsilon0.05_decay0.99_alpha0.25_lambda0.85_MA1
 
@@ -135,11 +161,6 @@ fval =
 
   207.5687
 
-Sending a stop signal to all the workers ... stopped.
-Elapsed time is 8500.064822 seconds.
-
-
-
 
 -
 egreedy_opti/DRL2_2RUNS_epsilon0.1_decay0.99_alpha0.15_lambda0.95_MA2_k2.5_beta0.8
@@ -191,6 +212,33 @@ Elapsed time is 6784.358884 seconds.
 -
 egreedy_opti/DRL2_2RUNS_epsilon0.1_decay0.99_alpha0.15_lambda0.95_MA1
 -
+
+cumRew:-230.6004; ITAE:27976.1475; alpha:0.15; lambda:0.9; epsilon:0.05
+cumRew:-219.9037; ITAE:30339.7337; alpha:0.1; lambda:0.9; epsilon:0.06
+cumRew:-270.873; ITAE:44011.0656; alpha:0.05; lambda:0.9; epsilon:0.06
+cumRew:-223.3381; ITAE:26143.1581; alpha:0.2; lambda:0.9; epsilon:0.06
+cumRew:-207.3176; ITAE:23995.1756; alpha:0.25; lambda:0.9; epsilon:0.06
+cumRew:-232.5246; ITAE:25127.2556; alpha:0.3; lambda:0.9; epsilon:0.06
+cumRew:-305.5902; ITAE:33013.0175; alpha:0.35; lambda:0.9; epsilon:0.06
+cumRew:-221.127; ITAE:25579.9544; alpha:0.25; lambda:0.85; epsilon:0.06
+cumRew:-227.3484; ITAE:27287.9081; alpha:0.25; lambda:0.8; epsilon:0.06
+cumRew:-217.3893; ITAE:25710.7706; alpha:0.25; lambda:0.95; epsilon:0.06
+cumRew:-218.0984; ITAE:26170.4025; alpha:0.25; lambda:0.9; epsilon:0.04
+cumRew:-348.9959; ITAE:31251.8794; alpha:0.25; lambda:0.9; epsilon:0.02
+cumRew:-236.4201; ITAE:25914.1156; alpha:0.25; lambda:0.9; epsilon:0.08
+cumRew:-215.3012; ITAE:24682.8731; alpha:0.25; lambda:0.9; epsilon:0.1
+
+x =
+
+    0.2500
+    0.9000
+    0.0600
+
+
+fval =
+
+  207.3176
+
 cumRew:-214.6648; ITAE:41974.9908; alpha:0.15; lambda:0.95; epsilon:0.1
 cumRew:-211.0687; ITAE:35041.9858; alpha:0.1; lambda:0.94; epsilon:0.1
 cumRew:-247.1648; ITAE:43185.6583; alpha:0.05; lambda:0.94; epsilon:0.1

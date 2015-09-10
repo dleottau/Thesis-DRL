@@ -2,11 +2,11 @@ function [cumR, itaeM] = MC3D_run (x,RUNS)
 
 global flagFirst;
 
-cfg.DRL = x(6);  % 0 for CRL, 1 for DRL, 2 for DRL with joint states
-cfg.MAapproach = x(7);   % 0 no cordination, 1 frequency adjusted, 2 leninet
+cfg.DRL = 2;%x(6);  % 0 for CRL, 1 for DRL, 2 for DRL with joint states
+cfg.MAapproach = 0;%x(7);   % 0 no cordination, 1 frequency adjusted, 2 leninet
 %RUNS = 1;
-cfg.DRAWS = 1;
-cfg.record = 1;
+cfg.DRAWS = 0;
+cfg.record = 0;
 
 RL.q_init = 0;
 RL.param.softmax = 0;  %3 >0 Boltzmann temperature, <= 0 e-greaddy
@@ -17,10 +17,10 @@ RL.param.epsilon = x(3);
 RL.param.exp_decay = 0.99;
 %RL.param.exp_decay = 5;
 % RL.param.epsilon = 0.7; 
-RL.param.k = x(4);%2;  % exponent coeficient for leniency
-RL.param.beta = x(5);%0.8;  % exponent coeficient for leniency
+RL.param.k = 3; %x(4);  % exponent coeficient for leniency
+RL.param.beta = 0.7;% x(5);  % exponent coeficient for leniency
 
-cfg.episodes = 300;
+cfg.episodes = 200;
 cfg.feature_min = [-1.2 -0.07  -1.2 -0.07];
 cfg.feature_max = [ 0.6  0.07   0.6  0.07];
 cfg.init_condition = [-pi()/6   0.0 -pi()/6 0.0];
