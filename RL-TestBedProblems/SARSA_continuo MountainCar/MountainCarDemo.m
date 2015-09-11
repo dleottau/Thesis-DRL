@@ -18,7 +18,6 @@ maxepisodes = cfg.episodes;
 
 [cfg.cores, cfg.nstates]   = BuildStateList(cfg);  % the list of states
 cfg.actionlist  = BuildActionList(cfg); % the list of actions
-
 cfg.nactions = size(cfg.actionlist,1);
 RL.Q = BuildQTable( cfg.nstates, cfg.nactions, RL.q_init );  % the Qtable
 RL.Qy = 0;
@@ -100,3 +99,5 @@ end
 itae = itae/maxepisodes;
 cR = ypoints;
 %mR = mean(mean(ypoints(ceil(maxepisodes*0.9):end)));
+
+disp(['RUN: ',int2str(run), '; MeanCumRew: ',num2str(mean(cR(ceil(maxepisodes*0.7):end))), ';  ITAE: ',num2str(itae)])

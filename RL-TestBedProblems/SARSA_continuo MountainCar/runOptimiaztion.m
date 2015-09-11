@@ -17,11 +17,12 @@ RUNS=4;
 global flagFirst;
 flagFirst=true;
 
+myCluster = parcluster('local');
 if matlabpool('size') == 0 % checking to see if my pool is already open
-    matlabpool(RUNS)
+    matlabpool(myCluster.NumWorkers)
 else
     matlabpool close
-    matlabpool(RUNS)
+    matlabpool(myCluster.NumWorkers)
 % myCluster = parcluster('local');
 % myCluster.NumWorkers = 4;  % 'Modified' property now TRUE
 % saveProfile(myCluster);    % 'local' profile now updated, 'Modified' property now FALSE 
@@ -33,12 +34,12 @@ x0(1) = 0.15;   % learning rate
 xname{2}='lambda';
 x0(2) = 0.95;   % lambda
 xname{3}='epsilon';
-x0(3)  = 0.1;  % epsilon
+x0(3)  = 0.02;  % epsilon
 
 %----------  
 
 options = hilloptions('TimeLimit', 600);
-options.step = [0.05; 0.05; 0.025];
+options.step = [0.05; 0.05; 0.02];
 options.space = [[0.05; 0.5; 0], [0.5; 0.99; 0.3]];
 %options.step = [0.5; 0.05; 0.05; 0.05; 0.02];
 %options.space = [[0.5; 0.5; 0.05; 0.5; 0], [4; 0.99; 0.5; 0.99; 0.2]];

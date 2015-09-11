@@ -1,0 +1,157 @@
+function  [reward, e_time, Vavg, accuracy, RL] =Dribbling2d( nRun, conf)
+%Dribbling1d SARSA, the main function of the trainning
+
+RL.param.alpha       = 0.5;   % learning rate
+RL.param.gamma       = 0.95;   % discount factor
+RL.param.lambda      = 0.9;   % the decaying elegibiliy trace parameter
+epsilon0     = 1;  % probability of a random action selection
+
+Ts = conf.Ts; %Sample time of a RL step
+[conf.cores, conf.nstates]   = StateTable( conf.feature_min, conf.feature_step, conf.feature_max );  % the table of states
+[conf.Actions, conf.Ac]  = ActionTable( conf ); % the table of actions
+
+if conf.DRL
+    conf.nactions    = size(conf.Actions,1);
+else
+    conf.nactions    = size(conf.Ac,2);
+end
+
+RL.Q        = QTable( conf );  % the Qtable for the vx agent
+if conf.DRL
+    RL.Q_rot    = RL.Q;  % the Qtable for the v_rot agent
+end
+
+
+EXPLORATION = conf.episodes/conf.EXPL_EPISODES_FACTOR;
+epsDec = -log(0.05) * 1/EXPLORATION;  %epsilon decrece a un 5% (0.005) en maxEpisodes cuartos (maxepisodes/4), de esta manera el decrecimiento de epsilon es independiente del numero de episodios
+
+RL.param.epsilon = epsilon0;
+
+conf.goalSize = 150;
+conf.PgoalPostR = [conf.Pt(1)+conf.goalSize/2 conf.Pt(2)];
+conf.PgoalPostL = [conf.Pt(1)-conf.goalSize/2 conf.Pt(2)];
+
+
+for i=1:conf.episodes    
+    
+    [RL, Vr,ro,fi,gama,Pt,Pb,Pbi,Pr,Vb,total_reward,steps,Vavg_k,time,accuracy_] = Episode( RL, conf);
+    
+    %disp(['Epsilon:',num2str(eps),'  Espisode: ',int2str(i),'  Steps:',int2str(steps),'  Reward:',num2str(total_reward),' epsilon: ',num2str(epsilon)])
+        
+    RL.param.epsilon = epsilon0 * exp(-i*epsDec);
+    
+         
+     if conf.DRAWS==1
+
+        xpoints(i)=i-1;
+        reward(i,:)=total_reward/steps;
+        e_time(i,1)=steps*Ts;
+        Vavg(i,1)=Vavg_k;
+        %btd(i,1)=btd_k;
+        accuracy(i,1)=accuracy_;
+             
+        subplot(4,2,1);    
+        plot(xpoints,reward(:,1),'r')      
+         hold on
+         plot(xpoints,reward(:,2),'g')      
+%         plot(xpoints,reward(:,3),'b')      
+        %plot(xpoints,btd,'k')      
+        title([ 'Mean Reward(rgb) Episode:',int2str(i), ' Run: ',int2str(nRun)])
+        hold
+                
+        subplot(4,2,3)
+        plot(xpoints,Vavg)
+        title('Speed Average')
+        %drawnow
+        
+        subplot(4,2,5); 
+        plot(xpoints,e_time)
+        title('Episode Time')
+        %drawnow
+        
+        subplot(4,2,7); 
+        plot(xpoints,accuracy)
+        title('% Accuracy')
+        %drawnow
+     
+        subplot(4,2,2)
+        %plot(Pt(1),Pt(2),'*k')%posición del target 
+        %hold on
+        plot(conf.PgoalPostR(1),conf.PgoalPostR(2),'ok') %goal post right
+        hold on
+        plot(conf.PgoalPostL(1),conf.PgoalPostL(2),'ok') %goal post Left
+        plot(Pb(:,1),Pb(:,2),'*r')%posición de la bola
+        plot(Pr(:,1),Pr(:,2),'gx')% posición del robot
+        plot(Pbi(1),Pbi(2),'*r') % where ball intersects goal line
+        axis([0 conf.maxDistance 0 conf.maxDistance])
+        title('X-Y Plane');
+        hold
+        drawnow
+        
+        subplot(4,2,6);
+        plot(time,ro,'r')
+        hold on
+        %plot(time,Pr(:,1),'b')
+        %plot(time,Pb(:,1),'r*')
+        %plot(time,Pb(:,1)-Pr(:,1),'--k')
+        title('Position and Pho')
+        hold
+        drawnow
+        
+        subplot(4,2,4);
+        %plot(time,Vb,'k')
+        
+        plot(time,Vr(:,1),'r')
+        hold on
+        plot(time,Vr(:,2),'g')
+%         plot(time,Vr(:,3),'b')        
+        title('Vr(rgb)')
+        hold
+        %drawnow
+             
+%         subplot(4,2,6),plot(time,ro)
+%         %axis([time(1) time(steps) 0 1000])
+%         title('pho(t)');
+        
+        subplot(4,2,8);
+        plot(time,fi,'g')
+        hold on
+        plot(time,gama,'b')
+        title('phi(t)(g) & gamma(t)(b)');
+        %axis([time(1) time(steps) -50 50])
+        hold
+        drawnow
+%         
+%         subplot(4,2,9);
+%         plot(time,xb,'b')
+%         hold on
+%         plot(time,yb,'r')
+%         plot(time,yfi,'k')
+%         title('xb(t)(blue) yb(t)(red) yfi(t)(black)');
+%         %axis([time(1) time(steps) -50 50])
+%         hold
+%         drawnow
+
+
+
+
+
+
+%   plot(Pt(1,1),Pt(1,2),'*k')%posición del target 
+%         hold on
+%         plot(Pb(:,1),Pb(:,2),'*r')%posición de la bola
+%         plot(Pr(:,1),Pr(:,2),'g')% posición del robot
+%         axis([-100 conf.maxDistance+100 -4000 4000])
+%         title('X-Y Plane');
+%         hold
+
+%         drawnow
+        
+     
+     end
+     
+     
+
+end
+
+

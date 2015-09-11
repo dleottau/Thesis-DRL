@@ -322,6 +322,48 @@ fval =
 
   180.5192
 
+
+-
+egreedy_opti/DRL2_4RUNS_epsilon0.1_decay0.99_alpha0.15_lambda0.95_MA0
+-
+cumRew:-264.6865; ITAE:29009.6325; alpha:0.15; lambda:0.95; epsilon:0.1
+cumRew:-253.7889; ITAE:29015.8819; alpha:0.1; lambda:0.95; epsilon:0.1
+cumRew:-282.127; ITAE:31765.7262; alpha:0.05; lambda:0.95; epsilon:0.1
+cumRew:-242.8934; ITAE:27621.1294; alpha:0.2; lambda:0.95; epsilon:0.1
+cumRew:-236.25; ITAE:25478.3906; alpha:0.25; lambda:0.95; epsilon:0.1
+cumRew:-245.1783; ITAE:29777.0806; alpha:0.3; lambda:0.95; epsilon:0.1
+cumRew:-243.2131; ITAE:37854.4131; alpha:0.35; lambda:0.95; epsilon:0.1
+cumRew:-233.5164; ITAE:29855.4375; alpha:0.25; lambda:0.9; epsilon:0.1
+cumRew:-224.7234; ITAE:25365.1881; alpha:0.25; lambda:0.85; epsilon:0.1
+cumRew:-222.707; ITAE:25154.0656; alpha:0.25; lambda:0.8; epsilon:0.1
+cumRew:-229.459; ITAE:25921.6806; alpha:0.25; lambda:0.75; epsilon:0.1
+cumRew:-256.2275; ITAE:28356.055; alpha:0.25; lambda:0.7; epsilon:0.1
+cumRew:-212.5553; ITAE:24789.0763; alpha:0.25; lambda:0.8; epsilon:0.075
+cumRew:-224.4467; ITAE:25546.1512; alpha:0.25; lambda:0.8; epsilon:0.05
+cumRew:-214.8996; ITAE:24593.3525; alpha:0.25; lambda:0.8; epsilon:0.125
+cumRew:-212.0553; ITAE:24717.0725; alpha:0.25; lambda:0.8; epsilon:0.15
+cumRew:-225.5984; ITAE:26060.8162; alpha:0.25; lambda:0.8; epsilon:0.175
+cumRew:-218.3893; ITAE:25705.51; alpha:0.25; lambda:0.8; epsilon:0.2
+cumRew:-214.1967; ITAE:25570.0013; alpha:0.2; lambda:0.8; epsilon:0.15
+cumRew:-233.1373; ITAE:28704.7256; alpha:0.15; lambda:0.8; epsilon:0.15
+cumRew:-226.7664; ITAE:24942.8663; alpha:0.3; lambda:0.8; epsilon:0.15
+cumRew:-225.5861; ITAE:25117.6113; alpha:0.35; lambda:0.8; epsilon:0.15
+cumRew:-220.541; ITAE:26277.5662; alpha:0.25; lambda:0.75; epsilon:0.15
+cumRew:-230.6373; ITAE:26989.1831; alpha:0.25; lambda:0.7; epsilon:0.15
+cumRew:-234.5164; ITAE:25693.5625; alpha:0.25; lambda:0.85; epsilon:0.15
+cumRew:-231.2029; ITAE:26151.1531; alpha:0.25; lambda:0.9; epsilon:0.15
+
+x =
+
+    0.2500
+    0.8000
+    0.1500
+
+
+fval =
+
+  212.0553
+
 -
 testDRL2_1RUNS_epsilon0.05_decay0.99_alpha0.15_lambda0.95_MA0
 -

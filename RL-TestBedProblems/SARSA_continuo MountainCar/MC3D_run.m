@@ -1,9 +1,10 @@
-function [cumR, itaeM] = MC3D_run (x,RUNS)
+function [cumR, itaeM] = MC3D_run (x,RUNS,stringName)
 
 global flagFirst;
 
-cfg.DRL = 2;%x(6);  % 0 for CRL, 1 for DRL, 2 for DRL with joint states
-cfg.MAapproach = 0;%x(7);   % 0 no cordination, 1 frequency adjusted, 2 leninet
+cfg.DRL = x(6);  % 0 for CRL, 1 for DRL, 2 for DRL with joint states
+cfg.MAapproach = x(7);   % 0 no cordination, 1 frequency adjusted, 2 leninet
+cfg.ac5= x(8);%1;  % enable original proposal which uses 5 actions instead of 9
 %RUNS = 1;
 cfg.DRAWS = 0;
 cfg.record = 0;
@@ -17,10 +18,10 @@ RL.param.epsilon = x(3);
 RL.param.exp_decay = 0.99;
 %RL.param.exp_decay = 5;
 % RL.param.epsilon = 0.7; 
-RL.param.k = 3; %x(4);  % exponent coeficient for leniency
-RL.param.beta = 0.7;% x(5);  % exponent coeficient for leniency
+RL.param.k = x(4);  % exponent coeficient for leniency
+RL.param.beta = x(5);  % exponent coeficient for leniency
 
-cfg.episodes = 200;
+cfg.episodes = 300;
 cfg.feature_min = [-1.2 -0.07  -1.2 -0.07];
 cfg.feature_max = [ 0.6  0.07   0.6  0.07];
 cfg.init_condition = [-pi()/6   0.0 -pi()/6 0.0];
@@ -32,12 +33,16 @@ cfg.maxsteps    = 5000;              % maximum number of steps per episode
 
 
 
-folder = 'egreedy_opti/';  
+folder = 'experimentsFull/';  
 
 if RL.param.softmax > 0
     fileName = ['DRL' int2str(cfg.DRL) '_' int2str(RUNS) 'RUNS_softmax' int2str(RL.param.softmax) '_decay' num2str(RL.param.exp_decay) '_alpha' num2str(RL.param.alpha) '_lambda' num2str(RL.param.lambda) '_MA' num2str(cfg.MAapproach)];
 else
     fileName = ['DRL' int2str(cfg.DRL) '_' int2str(RUNS) 'RUNS_epsilon' num2str(RL.param.epsilon) '_decay' num2str(RL.param.exp_decay) '_alpha' num2str(RL.param.alpha) '_lambda' num2str(RL.param.lambda) '_MA' num2str(cfg.MAapproach)]; 
+end
+
+if cfg.ac5
+    fileName = ['ac5-' fileName];
 end
 
 if cfg.MAapproach == 2
@@ -95,6 +100,7 @@ for n=1:RUNS
     
 end
 
+results.stringName = stringName;
 results.reward = reward;
 results.x_best = x_best;
 
