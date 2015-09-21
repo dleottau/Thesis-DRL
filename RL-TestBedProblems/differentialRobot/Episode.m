@@ -33,19 +33,9 @@ trace    = 0*RL.Q;  % the elegibility trace for the vx agent
 if conf.DRL
     trace_rot = 0*RL.Q_rot;  % the elegibility trace for the v_rot agent
 end
-Pr = conf.posr(randi(size(conf.posr,1)),:);
-Pb = conf.posb(randi(size(conf.posb,1)),:);
-% Don't modify next line, it's for setting robot turned to ball
-%Pr(3) = moduloPiDLF(atan2(conf.posb(2)-conf.posr(2),conf.posb(1)-conf.posr(1)),'r2d'); 
-Pr(3) = moduloPiDLF(atan2(Pb(2)-Pr(2),Pb(1)-Pr(1)),'r2d'); 
-
-%Pr=[0 0 0];
-%Pb=[th_max(1) 0];
-% Pr=[maxDistance/2 maxDistance/4 -90];
-% Pr=[100 450 0];
-% Pb=[300 300];
-
-Pt=conf.Pt;
+Pr = conf.Pr; 
+Pb = conf.Pb; 
+Pt = conf.Pt;
 
 
 NoiseRobotVel = [NOISE*0.15 NOISE*0.03]; %
@@ -80,11 +70,13 @@ FV = getFeatureVector(X, conf.cores);
 
 ballState=0;
 
-% selects an action using the epsilon greedy selection strategy
-a   = e_greedy_selection(RL.Q,       FV, RL.param.epsilon);
+% selects an action 
+[a, p] = action_selection(RL.Q, FV, RL.param);
 if conf.DRL
-    a_rot = e_greedy_selection(RL.Q_rot, FV, RL.param.epsilon);
+    [a_rot, p_rot] = action_selection(RL.Q_rot, FV, RL.param);
 end
+
+
 
 while 1  
     steps=i;
@@ -169,7 +161,7 @@ while 1
     goalline=[conf.PgoalPostR; conf.PgoalPostL];
     [checkGoal, Pbi]=goal1(goalline,balline);
 
-    [r,f, f_ok]  = GetReward(Xp, Vr_max, conf.feature_max, Pr(i,:), Pb(i,:), Pt, conf.goalSize, maxDistance,checkGoal,Pbi,ballState,Vr(i,:));
+    [r,f]  = GetReward(Xp, Vr_max, conf.feature_max, Pr(i,:), Pb(i,:), Pt, conf.goalSize, maxDistance,checkGoal,Pbi,ballState,Vr(i,:));
     total_reward = total_reward + r;
    
    
@@ -178,7 +170,12 @@ while 1
     if conf.DRL
         ap_rot = e_greedy_selection(RL.Q_rot, FVp, RL.param.epsilon);
     end
-    %[ap, px] = softmax_selection(RL.Q,FVp,T);
+    
+    [ap, p] = action_selection(RL.Q, FV, RL.param);
+    if conf.DRL
+        [ap_rot, p_rot] = action_selection(RL.Q_rot, FV, RL.param);
+    end
+  
                      
 	% Update the Qtable, that is,  learn from the experience
     if ballState==0 || ballState==3
@@ -232,8 +229,8 @@ while 1
 %       Pt(1)=maxDistance;
         %Pbi
         %Pb(i,:)
-        %checkGoal
-        if f_ok
+        if checkGoal
+        %if f_ok
             accuracy = 100*(1-abs(Pbi(1)-Pt(1))/(conf.goalSize/2));
         end
         break

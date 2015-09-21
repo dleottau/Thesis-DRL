@@ -16,6 +16,8 @@ RUNS=4;
 
 global flagFirst;
 flagFirst=true;
+global opti;
+opti=1;
 
 myCluster = parcluster('local');
 if matlabpool('size') == 0 % checking to see if my pool is already open

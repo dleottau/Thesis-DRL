@@ -1,4 +1,4 @@
-function [r,f,f_ok] = GetReward(X, Vr_max, feature_max, Pr, Pb, Pt, goalSize,maxDistance,checkGoal,Pbi,ballState,Vr)
+function [r,f] = GetReward(X, Vr_max, feature_max, Pr, Pb, Pt, goalSize,maxDistance,checkGoal,Pbi,ballState,Vr)
 % Dribbling1d returns the reward at the current state
 % x: a vector of Pr Pb and Pt
 % r: the returned reward.
@@ -40,17 +40,17 @@ if sum(thres)~=0 || Vr(1) < Vxrmax
 else
     %r(1) = ( (1-Vr(1)/Vxrmax) + sum(thres .* [0*ro abs(gama) abs(fi)] .*1/th_max) ); 
     r(1) = 1 + Vr(1)/Vxrmax;
+%r(1) = 0.1 + Vr(1)/Vr_max(1);
 end
 r(2)=r(1);
-
 
 %r(1) = -0.1*(1+sum([1*ro  1.0*abs(gama) 1*abs(fi)]./feature_max));
 % r(2) = -0.1*(sum([0*ro  0.3*abs(gama) 1*abs(fi)]./feature_max));
 % 
-if Pb(2)<Pt(2) && abs(Pb(1)-Pt(1))<goalSize/2
-% %if checkGoal
+
+%if Pb(2)<Pt(2) && abs(Pb(1)-Pt(1))<goalSize/2
+if checkGoal
      f=true;
-     f_ok=true;
      r(1) = 100*(1.1 - abs(Pbi(1)-Pt(1))/(goalSize/2));
      r(2) = r(1);
 %     %r(1) = 10*( 1 + gaussmf(Pbi(1),[goalSize/4 Pt(1)]) );

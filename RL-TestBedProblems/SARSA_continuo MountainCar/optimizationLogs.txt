@@ -59,6 +59,36 @@ fval =
   178.9945
 
 
+-----------------------------------
+
+Starting matlabpool using the 'local' profile ... connected to 2 workers.
+-
+experimentsFull/DRL1_4RUNS_epsilon0.02_decay0.99_alpha0.15_lambda0.95_MA1
+-
+cumRew:-185.1992; ITAE:29500.6237; alpha:0.15; lambda:0.95; epsilon:0.02
+cumRew:-191.5288; ITAE:29819.1196; alpha:0.1; lambda:0.95; epsilon:0.02
+cumRew:-191.4437; ITAE:28935.335; alpha:0.05; lambda:0.95; epsilon:0.02
+cumRew:-957.6786; ITAE:89762.5354; alpha:0.2; lambda:0.95; epsilon:0.02
+cumRew:-2654.2418; ITAE:334700.7112; alpha:0.25; lambda:0.95; epsilon:0.02
+cumRew:-489.1497; ITAE:69148.0612; alpha:0.15; lambda:0.9; epsilon:0.02
+cumRew:-1074.6758; ITAE:112740.2792; alpha:0.15; lambda:0.85; epsilon:0.02
+cumRew:-1395.967; ITAE:196001.0737; alpha:0.15; lambda:0.95; epsilon:0
+cumRew:-556.0027; ITAE:59738.1487; alpha:0.15; lambda:0.95; epsilon:0.04
+cumRew:-1377.4423; ITAE:135960.36; alpha:0.15; lambda:0.95; epsilon:0.06
+
+x =
+
+    0.1500
+    0.9500
+    0.0200
+
+
+fval =
+
+  185.1992
+
+Sending a stop signal to all the workers ... stopped.
+Elapsed time is 4953.223087 seconds.
 
 -
 egreedy_opti/DRL1_4RUNS_epsilon0.05_decay0.99_alpha0.15_lambda0.9_MA1

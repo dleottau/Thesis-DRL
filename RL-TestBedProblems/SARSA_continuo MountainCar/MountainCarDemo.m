@@ -100,4 +100,6 @@ itae = itae/maxepisodes;
 cR = ypoints;
 %mR = mean(mean(ypoints(ceil(maxepisodes*0.9):end)));
 
-disp(['RUN: ',int2str(run), '; MeanCumRew: ',num2str(mean(cR(ceil(maxepisodes*0.7):end))), ';  ITAE: ',num2str(itae)])
+if ~cfg.opti
+    disp(['RUN: ',int2str(run), '; MeanCumRew: ',num2str(mean(cR(ceil(maxepisodes*0.7):end))), ';  ITAE: ',num2str(itae)])
+end

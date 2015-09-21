@@ -1,13 +1,19 @@
 function [cumR, itaeM] = MC3D_run (x,RUNS,stringName)
 
 global flagFirst;
+global opti;
+cfg.opti=opti;
 
 cfg.DRL = x(6);  % 0 for CRL, 1 for DRL, 2 for DRL with joint states
 cfg.MAapproach = x(7);   % 0 no cordination, 1 frequency adjusted, 2 leninet
 cfg.ac5= x(8);%1;  % enable original proposal which uses 5 actions instead of 9
 %RUNS = 1;
-cfg.DRAWS = 0;
-cfg.record = 0;
+cfg.DRAWS = 1;
+cfg.record = 1;
+if opti
+    cfg.DRAWS = 0;
+    cfg.record = 0;
+end;
 
 RL.q_init = 0;
 RL.param.softmax = 0;  %3 >0 Boltzmann temperature, <= 0 e-greaddy
@@ -30,8 +36,6 @@ cfg.stdDiv = 0.5;
 cfg.actionStep = [1 1];
 cfg.goalState = [0.5 0.5];
 cfg.maxsteps    = 5000;              % maximum number of steps per episode
-
-
 
 folder = 'experimentsFull/';  
 

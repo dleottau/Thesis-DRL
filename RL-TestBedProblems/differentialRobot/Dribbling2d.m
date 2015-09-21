@@ -1,11 +1,11 @@
-function  [reward, e_time, Vavg, accuracy, RL] =Dribbling2d( nRun, conf)
+function  [reward, e_time, Vavg, accuracy, RL] =Dribbling2d( nRun, conf, RL)
 %Dribbling1d SARSA, the main function of the trainning
 
-RL.param.alpha       = 0.5;   % learning rate
-RL.param.gamma       = 0.95;   % discount factor
-RL.param.lambda      = 0.9;   % the decaying elegibiliy trace parameter
-epsilon0     = 1;  % probability of a random action selection
+RL.param.DRL=conf.DRL;
 
+epsilon0     = RL.param.epsilon;  % probability of a random action selection
+softmax0     = RL.param.softmax;
+ 
 Ts = conf.Ts; %Sample time of a RL step
 [conf.cores, conf.nstates]   = StateTable( conf.feature_min, conf.feature_step, conf.feature_max );  % the table of states
 [conf.Actions, conf.Ac]  = ActionTable( conf ); % the table of actions
@@ -16,39 +16,55 @@ else
     conf.nactions    = size(conf.Ac,2);
 end
 
-RL.Q        = QTable( conf );  % the Qtable for the vx agent
+RL.Q = QTable( conf );  % the Qtable for the vx agent
 if conf.DRL
-    RL.Q_rot    = RL.Q;  % the Qtable for the v_rot agent
+    RL.Q_rot = RL.Q;  % the Qtable for the v_rot agent
 end
 
 
 EXPLORATION = conf.episodes/conf.EXPL_EPISODES_FACTOR;
 epsDec = -log(0.05) * 1/EXPLORATION;  %epsilon decrece a un 5% (0.005) en maxEpisodes cuartos (maxepisodes/4), de esta manera el decrecimiento de epsilon es independiente del numero de episodios
 
-RL.param.epsilon = epsilon0;
+
 
 conf.goalSize = 150;
 conf.PgoalPostR = [conf.Pt(1)+conf.goalSize/2 conf.Pt(2)];
 conf.PgoalPostL = [conf.Pt(1)-conf.goalSize/2 conf.Pt(2)];
-
+conf.Pr = conf.posr;
+conf.Pb = conf.posb;
+conf.Pr(3) = moduloPiDLF(atan2(conf.Pb(2)-conf.Pr(2),conf.Pb(1)-conf.Pr(1)),'r2d'); 
 
 for i=1:conf.episodes    
+    conf.episodeN=i;
     
     [RL, Vr,ro,fi,gama,Pt,Pb,Pbi,Pr,Vb,total_reward,steps,Vavg_k,time,accuracy_] = Episode( RL, conf);
     
     %disp(['Epsilon:',num2str(eps),'  Espisode: ',int2str(i),'  Steps:',int2str(steps),'  Reward:',num2str(total_reward),' epsilon: ',num2str(epsilon)])
         
     RL.param.epsilon = epsilon0 * exp(-i*epsDec);
+    RL.param.softmax = softmax0 * exp(-i*epsDec);
     
-         
-     if conf.DRAWS==1
-
-        xpoints(i)=i-1;
-        reward(i,:)=total_reward/steps;
-        e_time(i,1)=steps*Ts;
-        Vavg(i,1)=Vavg_k;
-        %btd(i,1)=btd_k;
-        accuracy(i,1)=accuracy_;
+    xpoints(i)=i-1;
+    reward(i,:)=total_reward/steps;
+    e_time(i,1)=steps*Ts;
+    Vavg(i,1)=Vavg_k;
+    %btd(i,1)=btd_k;
+    accuracy(i,1)=accuracy_;
+    
+%     buff=0;
+%     if i>buff && prod(accuracy(i-buff:i,1) > 0)
+%         RL.param.epsilon = RL.param.epsilon * 0.99;
+%         RL.param.softmax = RL.param.softmax * 0.99;
+% 
+%         %conf.Pr = conf.posr .* clipDLF( ((1+abs( randn(1,3)*(conf.episodeN/conf.episodes)*.1))), 1, ones(1,3)+(conf.episodeN/conf.episodes)*.1);
+%         conf.Pr =  clipDLF( conf.posr .* ((1+abs( randn(1,3)*(conf.episodeN/conf.episodes)*1.0))), [conf.maxDistance/2 conf.maxDistance/2 0], [conf.maxDistance conf.maxDistance 180]);
+%         conf.Pb = conf.posb; %(randi(size(conf.posb,1)),:);
+%         conf.Pr(3) = moduloPiDLF(atan2(conf.Pb(2)-conf.Pr(2),conf.Pb(1)-conf.Pr(1)),'r2d'); 
+%     end
+    
+    
+    if conf.DRAWS==1
+      
              
         subplot(4,2,1);    
         plot(xpoints,reward(:,1),'r')      
@@ -56,7 +72,7 @@ for i=1:conf.episodes
          plot(xpoints,reward(:,2),'g')      
 %         plot(xpoints,reward(:,3),'b')      
         %plot(xpoints,btd,'k')      
-        title([ 'Mean Reward(rgb) Episode:',int2str(i), ' Run: ',int2str(nRun)])
+        title([ 'Mean Reward(rgb) Episode:',int2str(i), ' Run: ',int2str(nRun), ' Temp: ', num2str(RL.param.softmax)])
         hold
                 
         subplot(4,2,3)

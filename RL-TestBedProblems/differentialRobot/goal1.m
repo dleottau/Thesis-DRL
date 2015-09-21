@@ -9,18 +9,30 @@ function [ goal, bi ] = goal1( line1,line2 )
 
 goal=false;
 bi=line2(1,:);
-mn = line1(1,:);
-line2 = line2-[line1(1,:);line1(1,:)];
-line1 = line1-[line1(1,:);line1(1,:)];
+y=0; % (line1(1,2)-line1(2,1))/2;
+x = (line2(1,1)-line2(2,1))*(y-line2(2,2))/(line2(1,2)-line2(2,2)) + line2(2,1);
 
-if line2(1,2)<0 || line2(2,2)<0
-    bi(1) = -line2(1,2)*(line2(2,1) - line2(1,1))/(line2(2,2) - line2(1,2)) + line2(1,1);
-    bi(2) = 0;
-    if bi(1)>line1(1,1) && bi(1)<line1(2,1)
-        goal=true;
-    end
-    bi=bi+mn;
+if line2(1,2) < line1(1,2) && (x>line1(2,1) && x<line1(1,1))
+    goal=true;
+    bi = [x,y];
 end
+    
+%if line2(1,2)
+
+
+
+
+
+%line2 = line2-[line1(1,:);line1(1,:)];
+%line1 = line1-[line1(1,:);line1(1,:)];
+% if line2(1,2)<0 || line2(2,2)<0
+%     bi(1) = -line2(1,2)*(line2(2,1) - line2(1,1))/(line2(2,2) - line2(1,2)) + line2(1,1);
+%     bi(2) = 0;
+%     if bi(1)>line1(1,1) && bi(1)<line1(2,1)
+%         goal=true;
+%     end
+%     bi=bi+mn;
+% end
 
 
 % 

@@ -1,23 +1,38 @@
+
 clear all
 clc
 clf
 close all
-%dbstop in Episode.m at 133
+dbstop in Episode at 235 if accuracy<0
 %dbstop in UpdateSARSA at 26
 %dbstop in GetBestAction at 9
 %dbstop in GetBestAction at 21
 %dbstop getFeatureVector at 40
-dbstop movDiffRobot at 82
+%dbstop movDiffRobot at 82
+%dbstop goal1 at 16
 
 
 tic
 conf.episodes = 300;   % maximum number of  episode
 conf.Ts = 0.2; %Sample time of a RL step
 conf.maxDistance = 800;    % maximum ball distance permited before to end the episode X FIELD DIMENSION
-conf.Runs = 5;
+conf.Runs = 1;
 conf.NOISE = 0.01;
-conf.DRL = 1; %Decentralized RL(1) or Centralized RL(0)
+conf.DRL = 0; %Decentralized RL(1) or Centralized RL(0)
 conf.DRAWS = 1;
+
+
+conf.Q_INIT = 0;
+conf.EXPL_EPISODES_FACTOR = 5;
+%if ~conf.DRL 
+%    conf.EXPL_EPISODES_FACTOR = conf.EXPL_EPISODES_FACTOR*2/3;
+%end
+RL.param.alpha       = 0.5;   % learning rate
+RL.param.gamma       = 0.95;   % discount factor
+RL.param.lambda      = 0.9;   % the decaying elegibiliy trace parameter
+RL.param.epsilon = 1;
+RL.param.softmax = 5;
+
 
 conf.Pt=[conf.maxDistance/2 0];
 %conf.posr=[0.4*conf.maxDistance 0.7*conf.maxDistance 0; 0.5*conf.maxDistance 0.7*conf.maxDistance 0; 0.6*conf.maxDistance 0.7*conf.maxDistance 0];
@@ -25,13 +40,8 @@ conf.Pt=[conf.maxDistance/2 0];
 conf.posr=[0.5*conf.maxDistance 0.5*conf.maxDistance 0];
 conf.posb=[0.5*conf.maxDistance 0.3*conf.maxDistance];
 
-conf.Q_INIT = 0;
-conf.EXPL_EPISODES_FACTOR = 5;
-%if ~conf.DRL 
-%    conf.EXPL_EPISODES_FACTOR = conf.EXPL_EPISODES_FACTOR*2/3;
-%end
     
-conf.Vr_max = [300 10]; %x,y,rot Max Speed achieved by the robot
+conf.Vr_max = [300 20]; %x,y,rot Max Speed achieved by the robot
 conf.Vr_min = -conf.Vr_max;
 conf.Vr_min(1) = 1;
 
@@ -39,7 +49,7 @@ conf.feature_step = [200, 30, 30]; %[50, 10, 10]  %states
 conf.feature_min = [0, -90, -90];
 conf.feature_max = [800, 90, 90];
 conf.maxDeltaV = conf.Vr_max.*[1/3 1/3]; %mm/s/Ts
-conf.Nactios = [5,5];
+conf.Nactios = [7,7];
 conf.V_action_steps = (conf.Vr_max-conf.Vr_min)./(conf.Nactios-[1 1]);
 conf.Vr_min(1) = 0;
 
@@ -62,7 +72,7 @@ interval=0.7;
 for i=1:conf.Runs
 %    disp(['Test= ', num2str(a), '.', num2str(i), ' lambda= ', num2str(lambda(a))])
     
-    [reward(:,:,i), e_time(:,i), Vavg(:,i), accuracy(:,i),  RL] = Dribbling2d( i, conf);
+    [reward(:,:,i), e_time(:,i), Vavg(:,i), accuracy(:,i),  RL] = Dribbling2d( i, conf, RL);
         
                                       
     et(i) = mean(e_time(ceil(interval*conf.episodes):end,i));
