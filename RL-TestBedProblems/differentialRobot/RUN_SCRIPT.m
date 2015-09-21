@@ -23,7 +23,7 @@ conf.DRAWS = 1;
 
 
 conf.Q_INIT = 0;
-conf.EXPL_EPISODES_FACTOR = 5;
+conf.EXPL_EPISODES_FACTOR = 7;
 %if ~conf.DRL 
 %    conf.EXPL_EPISODES_FACTOR = conf.EXPL_EPISODES_FACTOR*2/3;
 %end
@@ -31,13 +31,13 @@ RL.param.alpha       = 0.5;   % learning rate
 RL.param.gamma       = 0.95;   % discount factor
 RL.param.lambda      = 0.9;   % the decaying elegibiliy trace parameter
 RL.param.epsilon = 1;
-RL.param.softmax = 5;
+RL.param.softmax = 2;
 
 
 conf.Pt=[conf.maxDistance/2 0];
 %conf.posr=[0.4*conf.maxDistance 0.7*conf.maxDistance 0; 0.5*conf.maxDistance 0.7*conf.maxDistance 0; 0.6*conf.maxDistance 0.7*conf.maxDistance 0];
 %conf.posb=[0.4*conf.maxDistance 0.2*conf.maxDistance; 0.5*conf.maxDistance 0.2*conf.maxDistance; 0.6*conf.maxDistance 0.2*conf.maxDistance;];
-conf.posr=[0.5*conf.maxDistance 0.5*conf.maxDistance 0];
+conf.posr=[0.6*conf.maxDistance 0.8*conf.maxDistance 0];
 conf.posb=[0.5*conf.maxDistance 0.3*conf.maxDistance];
 
     

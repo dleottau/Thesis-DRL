@@ -64,7 +64,7 @@ collision=false;inscope=0;
 
 % Here you should include robot-ball collition    
     if collision, %for now, just a cilindrical robot shape with radious 60mm
-        Vb = ( abs(Vr(2))+abs(Vr(1))+78.24*noiseBall(2) ) * cos( dirb*pi()/180-(atan2(Vr(2),Vr(1))+Pr(3)*pi()/180) ); 
+        Vb = ( abs(Vr(2))+1.5*abs(Vr(1))+78.24*noiseBall(2) ) * cos( dirb*pi()/180-(atan2(0,Vr(1))+Pr(3)*pi()/180) ); 
         %Vb = ( 10*(Vr(2)^2+Vr(1)^2)^0.5 + 78.24*noiseBall(2) ) * cos( dirb*pi()/180-(atan2(Vr(2),Vr(1))+Pr(3)*pi()/180) ) * ((Vr(1)^2+Vr(2)^2)^0.5)/100;
 %        dirb = 20*noiseBall(1) + atan2((Pb(2)-Pr(2)),(Pb(1)-Pr(1)))*180/pi();
          %Vb =   cos( dirb*pi()/180-(atan2(Vr(2),Vr(1))+Pr(3)*pi()/180) ) * ((Vr(1)^2+Vr(2)^2)^0.5)/100;
