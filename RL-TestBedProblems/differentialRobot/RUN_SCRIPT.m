@@ -25,7 +25,7 @@ conf.DRAWS = 1;
 
 
 conf.Q_INIT = 0;
-conf.EXPL_EPISODES_FACTOR = 7;
+conf.EXPL_EPISODES_FACTOR = 8;
 %if ~conf.DRL 
 %    conf.EXPL_EPISODES_FACTOR = conf.EXPL_EPISODES_FACTOR*2/3;
 %end

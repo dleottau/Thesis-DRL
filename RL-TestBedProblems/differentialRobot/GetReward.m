@@ -41,6 +41,7 @@ else
     %r(1) = ( (1-Vr(1)/Vxrmax) + sum(thres .* [0*ro abs(gama) abs(fi)] .*1/th_max) ); 
     r(1) = 0.99*Vr(1)/Vr_max(1);
 end
+%r(1)=-.1*( sum(thres .* [0*ro abs(gama) abs(fi)] .*1/th_max) );
 r(2)=r(1);
 
 %r(1) = -0.1*(1+sum([1*ro  1.0*abs(gama) 1*abs(fi)]./feature_max));
