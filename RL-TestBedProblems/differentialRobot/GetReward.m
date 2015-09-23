@@ -26,7 +26,7 @@ end
 
 if checkGoal
      f=true;
-     r(1) = 100*(1.1 - abs(Pbi(1)-Pt(1))/(goalSize/2));
+     r(1) = 1000*(1.1 - abs(Pbi(1)-Pt(1))/(goalSize/2));
 %     %r(1) = 10*( 1 + gaussmf(Pbi(1),[goalSize/4 Pt(1)]) );
 %     %r(1) = 10*(1.1 - abs(Pb(1)-Pt(1))/(goalSize/2));
 end

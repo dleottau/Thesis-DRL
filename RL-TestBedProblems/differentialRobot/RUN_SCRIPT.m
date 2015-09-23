@@ -15,7 +15,7 @@ close all
 
 
 tic
-conf.episodes = 700;   % maximum number of  episode
+conf.episodes = 500;   % maximum number of  episode
 conf.Ts = 0.2; %Sample time of a RL step
 conf.maxDistance = 800;    % maximum ball distance permited before to end the episode X FIELD DIMENSION
 conf.Runs = 1;
@@ -42,7 +42,7 @@ conf.Pt=[conf.maxDistance/2 0];
 conf.posr=[0.8*conf.maxDistance 0.8*conf.maxDistance 0];
 conf.posb=[0.5*conf.maxDistance 0.3*conf.maxDistance];
 
-conf.deltaVw = 10;    
+conf.deltaVw = 20;    
 conf.Vr_max = [300 40]; %x,y,rot Max Speed achieved by the robot
 conf.Vr_min = -conf.Vr_max;
 conf.Vr_min(1) = 0;
