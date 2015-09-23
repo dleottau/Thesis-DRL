@@ -15,7 +15,7 @@ close all
 
 
 tic
-conf.episodes = 500;   % maximum number of  episode
+conf.episodes = 700;   % maximum number of  episode
 conf.Ts = 0.2; %Sample time of a RL step
 conf.maxDistance = 800;    % maximum ball distance permited before to end the episode X FIELD DIMENSION
 conf.Runs = 1;
@@ -25,7 +25,7 @@ conf.DRAWS = 1;
 
 
 conf.Q_INIT = 0;
-conf.EXPL_EPISODES_FACTOR = 8;
+conf.EXPL_EPISODES_FACTOR = 10;
 %if ~conf.DRL 
 %    conf.EXPL_EPISODES_FACTOR = conf.EXPL_EPISODES_FACTOR*2/3;
 %end
@@ -39,15 +39,15 @@ RL.param.softmax = 2;
 conf.Pt=[conf.maxDistance/2 0];
 %conf.posr=[0.4*conf.maxDistance 0.7*conf.maxDistance 0; 0.5*conf.maxDistance 0.7*conf.maxDistance 0; 0.6*conf.maxDistance 0.7*conf.maxDistance 0];
 %conf.posb=[0.4*conf.maxDistance 0.2*conf.maxDistance; 0.5*conf.maxDistance 0.2*conf.maxDistance; 0.6*conf.maxDistance 0.2*conf.maxDistance;];
-conf.posr=[0.7*conf.maxDistance 0.8*conf.maxDistance 0];
+conf.posr=[0.8*conf.maxDistance 0.8*conf.maxDistance 0];
 conf.posb=[0.5*conf.maxDistance 0.3*conf.maxDistance];
 
-    
-conf.Vr_max = [300 30]; %x,y,rot Max Speed achieved by the robot
+conf.deltaVw = 10;    
+conf.Vr_max = [300 40]; %x,y,rot Max Speed achieved by the robot
 conf.Vr_min = -conf.Vr_max;
 conf.Vr_min(1) = 0;
 conf.maxDeltaV = conf.Vr_max.*[1/3 1/3]; %mm/s/Ts
-conf.Nactios = [7,7];
+conf.Nactios = [5,5];
 conf.V_action_steps = (conf.Vr_max-conf.Vr_min)./(conf.Nactios-[1 1]);
 conf.Vr_min(1) = 0;
 conf.feature_step = [200, 30, 30 conf.V_action_steps(2)]; %[50, 10, 10]  %states

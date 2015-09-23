@@ -9,7 +9,7 @@ Ax = conf.Vr_min(1) : conf.V_action_steps(1) : conf.Vr_max(1);
 % Just enable next line if want nonlinear discretization
 %Arot = Arot.*(1-gaussmf(Arot,[conf.Vr_max(2)/4, abs(conf.Vr_max(2)+conf.Vr_min(2))/2]));
 
-Arot = [-conf.maxDeltaV(2) 0 conf.maxDeltaV(2)];
+Arot = [-conf.deltaVw 0 conf.deltaVw];
 
 Actions.x = Ax';
 % Actions(:,2) = Ay';
