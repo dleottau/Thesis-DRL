@@ -8,17 +8,20 @@ softmax0     = RL.param.softmax;
  
 Ts = conf.Ts; %Sample time of a RL step
 [conf.cores, conf.nstates]   = StateTable( conf.feature_min, conf.feature_step, conf.feature_max );  % the table of states
-[conf.Actions, conf.Ac]  = ActionTable( conf ); % the table of actions
+[conf.Actions]  = ActionTable( conf ); % the table of actions
 
 if conf.DRL
-    conf.nactions    = size(conf.Actions,1);
+    conf.nactions_x    = length(conf.Actions.x);
+    conf.nactions_w    = length(conf.Actions.w);
 else
-    conf.nactions    = size(conf.Ac,2);
+    conf.nactions    = size(conf.Actions.cent,1);
 end
 
-RL.Q = QTable( conf );  % the Qtable for the vx agent
 if conf.DRL
-    RL.Q_rot = RL.Q;  % the Qtable for the v_rot agent
+    RL.Q = QTable( conf.nstates, conf.nactions_x, conf );  % the Qtable for the vx agent
+    RL.Q_rot = QTable( conf.nstates, conf.nactions_w, conf );  % the Qtable for the v_rot agent
+else
+    RL.Q = QTable( conf.nstates, conf.nactions, conf ); 
 end
 
 

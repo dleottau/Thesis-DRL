@@ -1,22 +1,24 @@
-function [ Actions, Ac] = ActionTable ( conf )
+function [ Actions] = ActionTable ( conf )
 
 %ActionTable
 
 %actions for the Dribbling
 Ax = conf.Vr_min(1) : conf.V_action_steps(1) : conf.Vr_max(1);
 
-Arot = conf.Vr_min(2) : conf.V_action_steps(2) : conf.Vr_max(2);
+%Arot = conf.Vr_min(2) : conf.V_action_steps(2) : conf.Vr_max(2);
 % Just enable next line if want nonlinear discretization
-Arot = Arot.*(1-gaussmf(Arot,[conf.Vr_max(2)/4, abs(conf.Vr_max(2)+conf.Vr_min(2))/2]));
+%Arot = Arot.*(1-gaussmf(Arot,[conf.Vr_max(2)/4, abs(conf.Vr_max(2)+conf.Vr_min(2))/2]));
 
-Actions(:,1) = Ax';
+Arot = [-conf.maxDeltaV(2) 0 conf.maxDeltaV(2)];
+
+Actions.x = Ax';
 % Actions(:,2) = Ay';
-Actions(:,2) = Arot';
+Actions.w = Arot';
 
 ct=1;
 for i=1:length(Ax)
     for j=1:length(Arot)
-        Ac{1,ct}=[Ax(i) Arot(j)];
+        Actions.cent(ct,:)=[Ax(i) Arot(j)];
         ct=ct+1;
     end
 end

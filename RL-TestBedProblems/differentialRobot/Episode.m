@@ -14,19 +14,16 @@ function [ RL, Vr,ro,fi,gama,Pt,Pb,Pbi,Pr,Vb,total_reward,steps,Vavg,time,accura
 Vr_max = conf.Vr_max; %x,y,rot Max Speed achieved by the robot
 Vr_min = conf.Vr_min;
 maxDeltaV = conf.maxDeltaV; %mm/s/Ts
-feature_step = conf.feature_step;
-V_action_steps = conf.V_action_steps;
-cores = conf.cores;
 %th_max = conf.th_max;
 Ts = conf.Ts;
 NOISE=conf.NOISE;
-Q_INIT=conf.Q_INIT;
 maxDistance=conf.maxDistance;
 
 if conf.DRL
-    actionlist=conf.Actions;
+    actionlist_x=conf.Actions.x;
+    actionlist_w=conf.Actions.w;
 else
-    actionlist=conf.Ac;
+    actionlist=conf.Actions.cent;
 end
 
 trace    = 0*RL.Q;  % the elegibility trace for the vx agent
@@ -57,9 +54,9 @@ dirb(i,1)=atan2(Pb(i,2)-Pr(i,2),Pb(i,1)-Pr(i,1))*180/pi; %dirección bola
 [Pr(i,:), Pb(i,:), Vb(i,1), dirb(i,1), ro(i,1), gama(i,1), fi(i,1)]=movDiffRobot(Ts,Pr,Pt,Pb,Vr(i,:),Vb,dirb,Fr, clipDLF(randn(2,1).*NoiseBall,-2,2));
 dVb=0;
 
-xG = [Pr(i,1),Pb(i,2),Vb(i,1),Vr(i,1),ro(i,1),dVb,gama(i,1),fi(i,1),Pt(1,1),Pr(i,2),Pb(i,1),Pr(i,3)];
+xG = [Pr(i,1),Pb(i,2),Vb(i,1),Vr(i,1),ro(i,1),dVb,gama(i,1),fi(i,1),Pt(1,1),Pr(i,2),Pb(i,1),Pr(i,3),Vr(i,2)];
 x_obs = xG;
-X = [x_obs(5), x_obs(7), x_obs(8)];
+X = [x_obs(5), x_obs(7), x_obs(8) x_obs(13)];
 X = clipDLF(X, conf.feature_min, conf.feature_max);
 
 
@@ -85,10 +82,11 @@ while 1
          
     % convert the index of the action into an action value
     if conf.DRL
-        action = actionlist(a,1);    
-        action_rot = actionlist(a_rot,2);    
+        action = actionlist_x(a);    
+        action_rot = actionlist_w(a_rot);    
     else    
-        action = actionlist{1,a};   
+        action = actionlist(a,1);   
+        action_rot = actionlist(a,2);   % actionlist(a,2);   
     end
     
     %-------DO ACTION -----------------
@@ -96,11 +94,9 @@ while 1
         
     % ADDING SATURATONS AND NOISE
     
-    if conf.DRL
-        Vr_req=[action, action_rot]; 
-    else
-        Vr_req=action;                                                  %%%HERE!!!!
-    end
+    Vr_req(1)=action; 
+    Vr_req(2)=Vr(i-1,2)+action_rot;
+    
     
     if ballState~=0
     %if ballState==3
@@ -137,7 +133,7 @@ while 1
     
     
     % Ground thruth state vector
-    xG = [Pr(i,1),Pb(i,2),Vb(i,1),Vr(i,1),ro(i,1),dVb,gama(i,1),fi(i,1),Pt(1,1),Pr(i,2),Pb(i,1),Pr(i,3)];
+    xG = [Pr(i,1),Pb(i,2),Vb(i,1),Vr(i,1),ro(i,1),dVb,gama(i,1),fi(i,1),Pt(1,1),Pr(i,2),Pb(i,1),Pr(i,3),Vr(i,2)];
     
     %Adding noise to the ball and target perceptions
     np = (rand()*2*NoisePerception - NoisePerception) + 1;
@@ -146,7 +142,7 @@ while 1
     x_obs(1) = xG(1); % x position of the robot , not influenced by noise in perceptions
     x_obs(4) = Vr_req(1); % x speed of the robot , not influenced by noise in perceptions
     
-    Xp = [x_obs(5), x_obs(7), x_obs(8)];
+    Xp = [x_obs(5), x_obs(7), x_obs(8), x_obs(13)];
     Xp = clipDLF(Xp, conf.feature_min, conf.feature_max);
     
     FVp = getFeatureVector(Xp, conf.cores);
@@ -166,14 +162,9 @@ while 1
    
    
     % select action prime
-    ap   = e_greedy_selection(RL.Q, FVp, RL.param.epsilon);
+    [ap, p] = action_selection(RL.Q, FVp, RL.param);
     if conf.DRL
-        ap_rot = e_greedy_selection(RL.Q_rot, FVp, RL.param.epsilon);
-    end
-    
-    [ap, p] = action_selection(RL.Q, FV, RL.param);
-    if conf.DRL
-        [ap_rot, p_rot] = action_selection(RL.Q_rot, FV, RL.param);
+        [ap_rot, p_rot] = action_selection(RL.Q_rot, FVp, RL.param);
     end
   
                      

@@ -3,7 +3,9 @@ clear all
 clc
 clf
 close all
-dbstop in Episode at 235 if accuracy<0
+%dbstop in Episode at 235 if accuracy<0
+%dbstop in GetReward at 61
+%dbstop in Episode at 88
 %dbstop in UpdateSARSA at 26
 %dbstop in GetBestAction at 9
 %dbstop in GetBestAction at 21
@@ -13,7 +15,7 @@ dbstop in Episode at 235 if accuracy<0
 
 
 tic
-conf.episodes = 300;   % maximum number of  episode
+conf.episodes = 500;   % maximum number of  episode
 conf.Ts = 0.2; %Sample time of a RL step
 conf.maxDistance = 800;    % maximum ball distance permited before to end the episode X FIELD DIMENSION
 conf.Runs = 1;
@@ -37,21 +39,21 @@ RL.param.softmax = 2;
 conf.Pt=[conf.maxDistance/2 0];
 %conf.posr=[0.4*conf.maxDistance 0.7*conf.maxDistance 0; 0.5*conf.maxDistance 0.7*conf.maxDistance 0; 0.6*conf.maxDistance 0.7*conf.maxDistance 0];
 %conf.posb=[0.4*conf.maxDistance 0.2*conf.maxDistance; 0.5*conf.maxDistance 0.2*conf.maxDistance; 0.6*conf.maxDistance 0.2*conf.maxDistance;];
-conf.posr=[0.6*conf.maxDistance 0.8*conf.maxDistance 0];
+conf.posr=[0.7*conf.maxDistance 0.8*conf.maxDistance 0];
 conf.posb=[0.5*conf.maxDistance 0.3*conf.maxDistance];
 
     
-conf.Vr_max = [300 20]; %x,y,rot Max Speed achieved by the robot
+conf.Vr_max = [300 30]; %x,y,rot Max Speed achieved by the robot
 conf.Vr_min = -conf.Vr_max;
-conf.Vr_min(1) = 1;
-
-conf.feature_step = [200, 30, 30]; %[50, 10, 10]  %states
-conf.feature_min = [0, -90, -90];
-conf.feature_max = [800, 90, 90];
+conf.Vr_min(1) = 0;
 conf.maxDeltaV = conf.Vr_max.*[1/3 1/3]; %mm/s/Ts
 conf.Nactios = [7,7];
 conf.V_action_steps = (conf.Vr_max-conf.Vr_min)./(conf.Nactios-[1 1]);
 conf.Vr_min(1) = 0;
+conf.feature_step = [200, 30, 30 conf.V_action_steps(2)]; %[50, 10, 10]  %states
+conf.feature_min = [0, -90, -90 conf.Vr_min(2)];
+conf.feature_max = [800, 90, 90 conf.Vr_max(2)];
+
 
 
 a_spot={'r' 'g' 'b' 'c' 'm' 'y' 'k' '--r' '--g' '--b' '--c' };
