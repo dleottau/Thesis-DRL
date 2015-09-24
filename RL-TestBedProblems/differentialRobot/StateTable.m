@@ -10,8 +10,8 @@ ro_std = ro*0 + feature_step(1)*0.5;
 % fi_std = fi*0 + feature_step(3)*1;
 
 %ro = [25 100 350 feature_max(1)];
-gama = [feature_min(2) -30 0 30 feature_max(2)];
-fi = [feature_min(3) -30 0 30 feature_max(3)];
+gama = [feature_min(2) -15 0 15 feature_max(2)];
+fi = [feature_min(3) -15 0 15 feature_max(3)];
 % % 
 %ro_std = [13 25 125 250];
 gama_std = [30 15 8 15 30];

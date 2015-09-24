@@ -216,13 +216,13 @@ while 1
 %     end
     
     % terminal state?
-    if (f==true || time(i)>60)
+    if (f==true || time(i)>100)
 %       Pt(1)=maxDistance;
         %Pbi
         %Pb(i,:)
         if checkGoal
         %if f_ok
-            accuracy = 100*(1-abs(Pbi(1)-Pt(1))/(conf.goalSize/2));
+            accuracy = 1;% 100*(1-abs(Pbi(1)-Pt(1))/(conf.goalSize/2));
         end
         break
     end

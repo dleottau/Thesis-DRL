@@ -11,14 +11,14 @@ f=false;
 f_ok=false;
 
 Vxrmax = Vr_max(1)*0.2;
-th_max=[10E4 10 10];
+th_max=[10E4 20 20];
 thres = [ro  abs(gama) abs(fi)] > th_max;
 angleFactor = 1;
 
 
 if sum(thres)~=0 || Vr(1) < Vxrmax
     %r(1) = - ( (1-Vr(1)/Vxrmax) + sum(thres .* [0*ro abs(gama) abs(fi)] .*1/th_max) );
-    r(1) = 0;%-1*( sum(thres .* [0*ro abs(gama) abs(fi)] .*1/th_max) );
+    r(1) = -0.000001;%-1*( sum(thres .* [0*ro abs(gama) abs(fi)] .*1/th_max) );
 else
     %r(1) = ( (1-Vr(1)/Vxrmax) + sum(thres .* [0*ro abs(gama) abs(fi)] .*1/th_max) ); 
     r(1) = 0.99*Vr(1)/Vr_max(1);
