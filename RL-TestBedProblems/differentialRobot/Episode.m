@@ -125,9 +125,9 @@ while 1
     dVb=(Vb(i)-Vb(i-1));
     
     
-    if dVb>10, ballState = 1; %accelerating
-    elseif dVb<-10, ballState = 2; %deaccelerating
-    elseif ballState==2 && Vb(i,1)<10
+    if dVb>2, ballState = 1; %accelerating
+    elseif dVb<-2, ballState = 2; %deaccelerating
+    elseif ballState==2 && Vb(i,1)<2
         ballState = 3; % ball stops after it moves
     end
     
@@ -156,6 +156,7 @@ while 1
     balline=[Pb(i,:);Pb(i-1,:)];
     goalline=[conf.PgoalPostR; conf.PgoalPostL];
     [checkGoal, Pbi]=goal1(goalline,balline);
+    if checkGoal, ballState=3; end
 
     [r,f]  = GetReward(Xp, Vr_max, conf.feature_max, Pr(i,:), Pb(i,:), Pt, conf.goalSize, maxDistance,checkGoal,Pbi,ballState,Vr(i,:));
     total_reward = total_reward + r;
@@ -216,7 +217,7 @@ while 1
 %     end
     
     % terminal state?
-    if (f==true || time(i)>100)
+    if (f==true || time(i)>60)
 %       Pt(1)=maxDistance;
         %Pbi
         %Pb(i,:)

@@ -54,13 +54,10 @@ for i=1:conf.episodes
     %btd(i,1)=btd_k;
     accuracy(i,1)=accuracy_;
     
-%     buff=0;
+%     buff=5;
 %     if i>buff && prod(accuracy(i-buff:i,1) > 0)
-%         RL.param.epsilon = RL.param.epsilon * 0.99;
-%         RL.param.softmax = RL.param.softmax * 0.99;
-% 
 %         %conf.Pr = conf.posr .* clipDLF( ((1+abs( randn(1,3)*(conf.episodeN/conf.episodes)*.1))), 1, ones(1,3)+(conf.episodeN/conf.episodes)*.1);
-%         conf.Pr =  clipDLF( conf.posr .* ((1+abs( randn(1,3)*(conf.episodeN/conf.episodes)*1.0))), [conf.maxDistance/2 conf.maxDistance/2 0], [conf.maxDistance conf.maxDistance 180]);
+%         conf.Pr =  clipDLF( conf.posr .* ((1-abs( randn(1,3)*(conf.episodeN/conf.episodes)*1.0))), [conf.maxDistance/2 conf.maxDistance/2 0], [conf.maxDistance conf.maxDistance 180]);
 %         conf.Pb = conf.posb; %(randi(size(conf.posb,1)),:);
 %         conf.Pr(3) = moduloPiDLF(atan2(conf.Pb(2)-conf.Pr(2),conf.Pb(1)-conf.Pr(1)),'r2d'); 
 %     end

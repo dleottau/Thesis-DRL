@@ -15,7 +15,7 @@ close all
 
 
 tic
-conf.episodes = 500;   % maximum number of  episode
+conf.episodes = 200;   % maximum number of  episode
 conf.Ts = 0.2; %Sample time of a RL step
 conf.maxDistance = 800;    % maximum ball distance permited before to end the episode X FIELD DIMENSION
 conf.Runs = 1;
@@ -25,13 +25,13 @@ conf.DRAWS = 1;
 
 
 conf.Q_INIT = 0;
-conf.EXPL_EPISODES_FACTOR = 5;
+conf.EXPL_EPISODES_FACTOR = 10;
 %if ~conf.DRL 
 %    conf.EXPL_EPISODES_FACTOR = conf.EXPL_EPISODES_FACTOR*2/3;
 %end
 RL.param.alpha       = 0.5;   % learning rate
-RL.param.gamma       = 0.95;   % discount factor
-RL.param.lambda      = 0.9;   % the decaying elegibiliy trace parameter
+RL.param.gamma       = 0.99;   % discount factor
+RL.param.lambda      = 0.95;   % the decaying elegibiliy trace parameter
 RL.param.epsilon = 1;
 RL.param.softmax = 2;
 
@@ -39,7 +39,7 @@ RL.param.softmax = 2;
 conf.Pt=[conf.maxDistance/2 0];
 %conf.posr=[0.4*conf.maxDistance 0.7*conf.maxDistance 0; 0.5*conf.maxDistance 0.7*conf.maxDistance 0; 0.6*conf.maxDistance 0.7*conf.maxDistance 0];
 %conf.posb=[0.4*conf.maxDistance 0.2*conf.maxDistance; 0.5*conf.maxDistance 0.2*conf.maxDistance; 0.6*conf.maxDistance 0.2*conf.maxDistance;];
-conf.posr=[0.8*conf.maxDistance 0.7*conf.maxDistance 0];
+conf.posr=[0.9*conf.maxDistance 0.8*conf.maxDistance 0];
 conf.posb=[0.5*conf.maxDistance 0.3*conf.maxDistance];
 
 conf.deltaVw = 20;    

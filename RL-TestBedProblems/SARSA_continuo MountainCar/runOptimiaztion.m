@@ -3,13 +3,6 @@ clf
 clear all
 close all
 
-%dbstop in GetBestAction.m at 19;
-%dbstop in Episode.m if isnan(sum(sum(RL.Q)))
-%dbstop in Episode.m at 53 if isnan(sum(sum(RL.Q)))
-%dbstop if error
-dbstop in UpdateSARSA.m at 36
-%dbstop if naninf;
-
 tic
 global RUNS;
 RUNS=4;

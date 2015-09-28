@@ -10,7 +10,7 @@ fi = X(3);
 f=false;
 f_ok=false;
 
-Vxrmax = Vr_max(1)*0.2;
+Vxrmax = Vr_max(1)*0.5;
 th_max=[10E4 20 20];
 thres = [ro  abs(gama) abs(fi)] > th_max;
 angleFactor = 1;
@@ -33,7 +33,7 @@ end
 
 r(2) = r(1);
 
-if(ballState==3 || (ballState==0 && (Pr(1)>maxDistance || Pr(1)<0 || Pr(2)>maxDistance || Pr(2)<0 ||  Pb(1)>maxDistance || Pb(1)<0 || Pb(2)>maxDistance || Pb(2)<0 ||  abs(gama) > 150   ||  abs(fi) > 170)))
+if(ballState==3 || (ballState==0 && (Pr(1)>maxDistance || Pr(1)<0 || Pr(2)>maxDistance || Pr(2)<0 ||  Pb(1)>maxDistance || Pb(1)<0 || Pb(2)>maxDistance || Pb(2)<0 ||  abs(gama) > 90   ||  abs(fi) > 150)))
     f=true;
 end
 
