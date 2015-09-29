@@ -98,10 +98,10 @@ while 1
     Vr_req(2)=Vr(i-1,2)+action_rot;
     
     
-    if ballState~=0
+    %if ballState~=0
     %if ballState==3
-        Vr_req=[0,0];
-    end
+    %    Vr_req=[0,0];
+    %end
       %     Vr_req(1)=V_FLC(1);
 %      Vr_req(2)=0;%V_FLC(2);
 %     Vr_req(3)=V_FLC(3);
@@ -170,7 +170,7 @@ while 1
   
                      
 	% Update the Qtable, that is,  learn from the experience
-    if ballState==0 || ballState==3
+    %if ballState==0 || ballState==3
     
         [RL.Q, trace] = UpdateSARSA(FV, a, r(1), FVp, ap, RL.Q,     trace,     RL.param);
         if conf.DRL
@@ -184,7 +184,7 @@ while 1
             % just for debugging
         end
         
-    end
+    %end
         
           
     %update the current variables
@@ -217,7 +217,7 @@ while 1
 %     end
     
     % terminal state?
-    if (f==true || time(i)>60)
+    if (f==true || time(i)>100 ||  abs(gamma_) > 170   ||  abs(phi_) > 170)
 %       Pt(1)=maxDistance;
         %Pbi
         %Pb(i,:)

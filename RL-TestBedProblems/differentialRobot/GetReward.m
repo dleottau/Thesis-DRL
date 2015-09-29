@@ -10,30 +10,35 @@ fi = X(3);
 f=false;
 f_ok=false;
 
-Vxrmax = Vr_max(1)*0.5;
-th_max=[10E4 20 20];
+Vxrmax = Vr_max(1)*0.3;
+th_max=[800 45 45];
 thres = [ro  abs(gama) abs(fi)] > th_max;
 angleFactor = 1;
 
 
-if sum(thres)~=0 || Vr(1) < Vxrmax
-    %r(1) = - ( (1-Vr(1)/Vxrmax) + sum(thres .* [0*ro abs(gama) abs(fi)] .*1/th_max) );
-    r(1) = -0.000001; %-1*( sum(thres .* [0*ro abs(gama) abs(fi)] .*1/th_max) );
-else
-    %r(1) = ( (1-Vr(1)/Vxrmax) + sum(thres .* [0*ro abs(gama) abs(fi)] .*1/th_max) ); 
-    r(1) = 0.1; % 0.99*Vr(1)/Vr_max(1);
-end
+% if sum(thres)~=0 || Vr(1) < Vxrmax
+%     %r(1) = - ( (1-Vr(1)/Vxrmax) + sum(thres .* [0*ro abs(gama) abs(fi)] .*1/th_max) );
+%     r(1) = -0.1; %-1*( sum(thres .* [0*ro abs(gama) abs(fi)] .*1/th_max) );
+% else
+%     %r(1) = ( (1-Vr(1)/Vxrmax) + sum(thres .* [0*ro abs(gama) abs(fi)] .*1/th_max) ); 
+%     r(1) = 0.0; % 0.99*Vr(1)/Vr_max(1);
+% end
+
+r(1) = - 1*( sum([ro abs(gama) abs(fi)].*1/th_max) );
+
 
 if checkGoal
      f=true;
-     r(1) = 1000*(1.1 - abs(Pbi(1)-Pt(1))/(goalSize/2));
+     %r(1) = 10/(1 + (abs(Pbi(1)-Pt(1))/goalSize/2)^2);
+     r(1) = 100*(1.1 - abs(Pbi(1)-Pt(1))/(goalSize/2));
 %     %r(1) = 10*( 1 + gaussmf(Pbi(1),[goalSize/4 Pt(1)]) );
 %     %r(1) = 10*(1.1 - abs(Pb(1)-Pt(1))/(goalSize/2));
 end
 
 r(2) = r(1);
 
-if(ballState==3 || (ballState==0 && (Pr(1)>maxDistance || Pr(1)<0 || Pr(2)>maxDistance || Pr(2)<0 ||  Pb(1)>maxDistance || Pb(1)<0 || Pb(2)>maxDistance || Pb(2)<0 ||  abs(gama) > 90   ||  abs(fi) > 150)))
+%if(ballState==3 || (ballState==0 && (Pr(1)>maxDistance || Pr(1)<0 || Pr(2)>maxDistance || Pr(2)<0 ||  Pb(1)>maxDistance || Pb(1)<0 || Pb(2)>maxDistance || Pb(2)<0 ||  abs(gama) > 90   ||  abs(fi) > 150)))
+if(Pr(1)>maxDistance || Pr(1)<0 || Pr(2)>maxDistance || Pr(2)<0 ||  Pb(1)>maxDistance || Pb(1)<0 || Pb(2)>maxDistance || Pb(2)<0 )
     f=true;
 end
 

@@ -1,4 +1,4 @@
-function  [reward, e_time, Vavg, accuracy, RL] =Dribbling2d( nRun, conf, RL)
+function  [accuracy] =Dribbling2d( nRun, conf, RL)
 %Dribbling1d SARSA, the main function of the trainning
 
 RL.param.DRL=conf.DRL;
@@ -169,5 +169,6 @@ for i=1:conf.episodes
      
 
 end
+
 
 
