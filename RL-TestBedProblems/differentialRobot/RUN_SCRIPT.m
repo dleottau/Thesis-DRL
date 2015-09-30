@@ -41,16 +41,16 @@ RL.param.softmax = x(2);
 
 
 conf.Pt=[conf.maxDistance/2 0];
-%conf.posr=[0.4*conf.maxDistance 0.7*conf.maxDistance 0; 0.5*conf.maxDistance 0.7*conf.maxDistance 0; 0.6*conf.maxDistance 0.7*conf.maxDistance 0];
+conf.posr=[0.9*conf.maxDistance 0.7*conf.maxDistance 0; 0.7*conf.maxDistance 0.8*conf.maxDistance 0; 0.6*conf.maxDistance 0.6*conf.maxDistance 0];
 %conf.posb=[0.4*conf.maxDistance 0.2*conf.maxDistance; 0.5*conf.maxDistance 0.2*conf.maxDistance; 0.6*conf.maxDistance 0.2*conf.maxDistance;];
-conf.posr=[0.9*conf.maxDistance 0.7*conf.maxDistance 0];
-conf.posb=[0.5*conf.maxDistance 0.3*conf.maxDistance];
+%conf.posr=[0.9*conf.maxDistance 0.7*conf.maxDistance 0];
+conf.posb=[0.5*conf.maxDistance 200];
 
-conf.deltaVw = 20;    
-conf.Vr_max = [300 50]; %x,y,rot Max Speed achieved by the robot
+conf.deltaVw = 2;    
+conf.Vr_max = [60 5]; %x,y,rot Max Speed achieved by the robot
 conf.Vr_min = -conf.Vr_max;
 conf.Vr_min(1) = 0;
-conf.maxDeltaV = conf.Vr_max.*[1/3 1/3]; %mm/s/Ts
+conf.maxDeltaV = conf.Vr_max.*[1/2 1/2]; %mm/s/Ts
 conf.Nactios = [5,5];
 conf.V_action_steps = (conf.Vr_max-conf.Vr_min)./(conf.Nactios-[1 1]);
 conf.Vr_min(1) = 0;

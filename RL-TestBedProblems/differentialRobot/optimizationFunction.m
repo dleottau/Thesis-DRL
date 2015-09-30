@@ -11,7 +11,7 @@ global opti;
 opti=0;
 % 
 % if ~opti
-     RUNS=2;
+     RUNS=1;
 
 %     myCluster = parcluster('local');
 %     if matlabpool('size') == 0 % checking to see if my pool is already open

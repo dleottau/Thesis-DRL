@@ -33,11 +33,18 @@ epsDec = -log(0.05) * 1/EXPLORATION;  %epsilon decrece a un 5% (0.005) en maxEpi
 conf.goalSize = 150;
 conf.PgoalPostR = [conf.Pt(1)+conf.goalSize/2 conf.Pt(2)];
 conf.PgoalPostL = [conf.Pt(1)-conf.goalSize/2 conf.Pt(2)];
-conf.Pr = conf.posr;
+conf.Pr = conf.posr(1,:);
 conf.Pb = conf.posb;
 conf.Pr(3) = moduloPiDLF(atan2(conf.Pb(2)-conf.Pr(2),conf.Pb(1)-conf.Pr(1)),'r2d'); 
 
+cont=20;
+c=0;
+points=1;
+Npoints=3;
+    
 for i=1:conf.episodes    
+%while points<Npoints
+    
     conf.episodeN=i;
     
     [RL, Vr,ro,fi,gama,Pt,Pb,Pbi,Pr,Vb,total_reward,steps,Vavg_k,time,accuracy_] = Episode( RL, conf);
@@ -54,13 +61,22 @@ for i=1:conf.episodes
     %btd(i,1)=btd_k;
     accuracy(i,1)=accuracy_;
     
-%     buff=5;
-%     if i>buff && prod(accuracy(i-buff:i,1) > 0)
-%         %conf.Pr = conf.posr .* clipDLF( ((1+abs( randn(1,3)*(conf.episodeN/conf.episodes)*.1))), 1, ones(1,3)+(conf.episodeN/conf.episodes)*.1);
-%         conf.Pr =  clipDLF( conf.posr .* ((1-abs( randn(1,3)*(conf.episodeN/conf.episodes)*1.0))), [conf.maxDistance/2 conf.maxDistance/2 0], [conf.maxDistance conf.maxDistance 180]);
-%         conf.Pb = conf.posb; %(randi(size(conf.posb,1)),:);
-%         conf.Pr(3) = moduloPiDLF(atan2(conf.Pb(2)-conf.Pr(2),conf.Pb(1)-conf.Pr(1)),'r2d'); 
-%     end
+    
+    if accuracy_
+        c=c+1;
+    end
+    %buff=5;
+    
+    %if i>buff && prod(accuracy(i-buff:i,1) > 0)
+    if c>cont
+        %conf.Pr = conf.posr .* clipDLF( ((1+abs( randn(1,3)*(conf.episodeN/conf.episodes)*.1))), 1, ones(1,3)+(conf.episodeN/conf.episodes)*.1);
+        %conf.Pr =  clipDLF( conf.posr .* ((1+abs( randn(1,3)*(conf.episodeN/conf.episodes)*1.0))), [conf.maxDistance/2 conf.maxDistance/2 0], [conf.maxDistance conf.maxDistance 180]);
+        conf.Pr = conf.posr(randi(size(conf.posr,1)),:);
+        conf.Pb = conf.posb; %(randi(size(conf.posb,1)),:);
+        conf.Pr(3) = moduloPiDLF(atan2(conf.Pb(2)-conf.Pr(2),conf.Pb(1)-conf.Pr(1)),'r2d'); 
+        c=0;
+        points=points+1;
+    end
     
     
     if conf.DRAWS==1
