@@ -33,11 +33,11 @@ conf.EXPL_EPISODES_FACTOR = x(1);
 %if ~conf.DRL 
 %    conf.EXPL_EPISODES_FACTOR = conf.EXPL_EPISODES_FACTOR*2/3;
 %end
-RL.param.alpha       = x(2);   % learning rate
+RL.param.alpha       = x(3);   % learning rate
 RL.param.gamma       = 0.99;   % discount factor
-RL.param.lambda      = x(3);   % the decaying elegibiliy trace parameter
+RL.param.lambda      = x(4);   % the decaying elegibiliy trace parameter
 RL.param.epsilon = 1;
-RL.param.softmax = x(4);
+RL.param.softmax = x(2);
 
 
 conf.Pt=[conf.maxDistance/2 0];

@@ -9,9 +9,9 @@ close all
 tic
 global opti;
 opti=0;
-
-if ~opti
-    RUNS=2;
+% 
+% if ~opti
+     RUNS=2;
 
 %     myCluster = parcluster('local');
 %     if matlabpool('size') == 0 % checking to see if my pool is already open
@@ -20,7 +20,7 @@ if ~opti
 %         matlabpool close
 %         matlabpool(myCluster.NumWorkers)
 %     end
-end
+% end
     
 x0 = [];
 
@@ -28,14 +28,14 @@ x0 = [];
 xname{1}='decay';
 x0(1) = 5;   % exploration decay
 
-xname{2}='alpha';
-x0(2) = 0.3;   % learning rate
+xname{2}='softmax';
+x0(2)  = 1;  % epsilon
 
-xname{3}='lambda';
-x0(3) = 0.9;   % lambda
+xname{3}='alpha';
+x0(3) = 0.3;   % learning rate
 
-xname{4}='softmax';
-x0(4)  = 2;  % epsilon
+xname{4}='lambda';
+x0(4) = 0.9;   % lambda
 
 xname{5}='DRL'; 
 x0(5)= 0;  % 0 for CRL, 1 for DRL
@@ -71,5 +71,5 @@ if ~opti
     matlabpool close;
     toc
 else
-    disp(['cumGoals:',num2str(cumGoals), '; Decay:',num2str(x0(1)),'; alpha:',num2str(x0(2)),'; lambda:',num2str(x0(3)),'; SoftmaxT:',num2str(x0(4))]);
+    disp(['cumGoals:',num2str(cumGoals), '; Decay:',num2str(x0(1)),'; alpha:',num2str(x0(3)),'; lambda:',num2str(x0(4)),'; SoftmaxT:',num2str(x0(2))]);
 end
