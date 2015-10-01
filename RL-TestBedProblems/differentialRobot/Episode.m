@@ -1,4 +1,4 @@
-function [ RL, Vr,ro,fi,gama,Pt,Pb,Pbi,Pr,Vb,total_reward,steps,Vavg,time,accuracy] = Episode(RL, conf)
+function [ RL, Vr,ro,fi,gama,Pt,Pb,Pbi,Pr,Vb,total_reward,steps,Vavg,time,scored] = Episode(RL, conf)
          
 %Dribbling1d do one episode  with sarsa learning              
 % maxDistance: the maximum number of steps per episode
@@ -44,7 +44,7 @@ total_reward = 0;
 time(1)=0;
 i=1;
 Vavg=0;
-accuracy=0;
+scored=0;
 
 Fr=15;
 
@@ -171,20 +171,12 @@ while 1
                      
 	% Update the Qtable, that is,  learn from the experience
     %if ballState==0 || ballState==3
-    
+    if ~conf.Test
         [RL.Q, trace] = UpdateSARSA(FV, a, r(1), FVp, ap, RL.Q,     trace,     RL.param);
         if conf.DRL
-            [RL.Q_rot, trace_rot] = UpdateSARSA(FV, a, r(2), FVp, ap, RL.Q_rot, trace_rot, RL.param);
-
-            % just for debugging
-            if sum(sum(RL.Q))==sum(sum(RL.Q_rot))
-                ap;
-                ap_rot;
-            end
-            % just for debugging
+            [RL.Q_rot, trace_rot] = UpdateSARSA(FV, a_rot, r(2), FVp, ap_rot, RL.Q_rot, trace_rot, RL.param);
         end
-        
-    %end
+    end
         
           
     %update the current variables
@@ -223,7 +215,7 @@ while 1
         %Pb(i,:)
         if checkGoal
         %if f_ok
-            accuracy = 1;% 100*(1-abs(Pbi(1)-Pt(1))/(conf.goalSize/2));
+            scored = 100;% 100*(1-abs(Pbi(1)-Pt(1))/(conf.goalSize/2));
         end
         break
     end

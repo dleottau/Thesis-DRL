@@ -21,7 +21,7 @@ r(2) = r(1);
 
 if checkGoal
      f=true;
-     r(1) = 0;%100*(1.1 - abs(Pbi(1)-Pt(1))/(goalSize/2));
+     r(1) = 10*(1.1 - abs(Pbi(1)-Pt(1))/(goalSize/2));
      r(2) = r(1);
 end
 

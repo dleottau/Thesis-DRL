@@ -4,13 +4,13 @@
 
 clc
 clf
-clear all
+%clear all
 close all
 tic
 global opti;
 opti=0;
-% 
-% if ~opti
+
+if ~opti
      RUNS=1;
 
 %     myCluster = parcluster('local');
@@ -20,13 +20,13 @@ opti=0;
 %         matlabpool close
 %         matlabpool(myCluster.NumWorkers)
 %     end
-% end
+end
     
 x0 = [];
 
 
 xname{1}='decay';
-x0(1) = 5;   % exploration decay
+x0(1) = 6;   % exploration decay
 
 xname{2}='softmax';
 x0(2)  = 1;  % epsilon
@@ -38,13 +38,13 @@ xname{4}='lambda';
 x0(4) = 0.9;   % lambda
 
 xname{5}='DRL'; 
-x0(5)= 0;  % 0 for CRL, 1 for DRL
+x0(5)= 1;  % 0 for CRL, 1 for DRL
 
 if opti
     x0(1) = x(1);
     x0(2) = x(2);
     x0(3) = x(3);
-    x0(4) = x(4);
+    %x0(4) = x(4);
 end
 
 stringName=[];
@@ -59,7 +59,6 @@ if ~opti
     disp(stringName);
     disp('-');
 end
-
 
 [cumGoals] = RUN_SCRIPT(x0,RUNS,stringName);
 f=-cumGoals;

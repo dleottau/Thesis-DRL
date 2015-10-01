@@ -1,11 +1,11 @@
-function  [accuracy] =Dribbling2d( nRun, conf, RL)
+function  [pscored scored RL] =Dribbling2d( nRun, conf, RL)
 %Dribbling1d SARSA, the main function of the trainning
 
 RL.param.DRL=conf.DRL;
 
 epsilon0     = RL.param.epsilon;  % probability of a random action selection
 softmax0     = RL.param.softmax;
- 
+
 Ts = conf.Ts; %Sample time of a RL step
 [conf.cores, conf.nstates]   = StateTable( conf.feature_min, conf.feature_step, conf.feature_max );  % the table of states
 [conf.Actions]  = ActionTable( conf ); % the table of actions
@@ -17,13 +17,14 @@ else
     conf.nactions    = size(conf.Actions.cent,1);
 end
 
-if conf.DRL
-    RL.Q = QTable( conf.nstates, conf.nactions_x, conf );  % the Qtable for the vx agent
-    RL.Q_rot = QTable( conf.nstates, conf.nactions_w, conf );  % the Qtable for the v_rot agent
-else
-    RL.Q = QTable( conf.nstates, conf.nactions, conf ); 
+if ~conf.Test
+    if conf.DRL
+        RL.Q = QTable( conf.nstates, conf.nactions_x, conf );  % the Qtable for the vx agent
+        RL.Q_rot = QTable( conf.nstates, conf.nactions_w, conf );  % the Qtable for the v_rot agent
+    else
+        RL.Q = QTable( conf.nstates, conf.nactions, conf ); 
+    end
 end
-
 
 EXPLORATION = conf.episodes/conf.EXPL_EPISODES_FACTOR;
 epsDec = -log(0.05) * 1/EXPLORATION;  %epsilon decrece a un 5% (0.005) en maxEpisodes cuartos (maxepisodes/4), de esta manera el decrecimiento de epsilon es independiente del numero de episodios
@@ -33,24 +34,31 @@ epsDec = -log(0.05) * 1/EXPLORATION;  %epsilon decrece a un 5% (0.005) en maxEpi
 conf.goalSize = 150;
 conf.PgoalPostR = [conf.Pt(1)+conf.goalSize/2 conf.Pt(2)];
 conf.PgoalPostL = [conf.Pt(1)-conf.goalSize/2 conf.Pt(2)];
-conf.Pr = conf.posr(1,:);
-conf.Pb = conf.posb;
-conf.Pr(3) = moduloPiDLF(atan2(conf.Pb(2)-conf.Pr(2),conf.Pb(1)-conf.Pr(1)),'r2d'); 
 
-cont=20;
-c=0;
-points=1;
-Npoints=3;
-    
+   
 for i=1:conf.episodes    
-%while points<Npoints
+
     
     conf.episodeN=i;
     
-    [RL, Vr,ro,fi,gama,Pt,Pb,Pbi,Pr,Vb,total_reward,steps,Vavg_k,time,accuracy_] = Episode( RL, conf);
     
-    %disp(['Epsilon:',num2str(eps),'  Espisode: ',int2str(i),'  Steps:',int2str(steps),'  Reward:',num2str(total_reward),' epsilon: ',num2str(epsilon)])
-        
+    while 1
+        pg=0.5;
+        uB=[conf.maxDistance conf.maxDistance 180];
+        lB=[0 0.5*conf.maxDistance -180];
+        conf.Pr = rand(1,3).*(uB-lB) + lB;
+        conf.Pb = conf.posb;
+        %conf.Pr(3) = moduloPiDLF(atan2(conf.Pb(2)-conf.Pr(2),conf.Pb(1)-conf.Pr(1)),'r2d'); 
+        [~,~,~,~, pho, gamma, phi]=movDiffRobot(Ts, conf.Pr, conf.Pt, conf.Pb, [0 0],0,0,0,zeros(2,1));
+        if ~sum([pho abs(gamma) abs(phi)]>1.1*conf.feature_max(1:3))
+            break
+        end
+    end
+    
+    
+    [RL, Vr,ro,fi,gama,Pt,Pb,Pbi,Pr,Vb,total_reward,steps,Vavg_k,time,scored_] = Episode( RL, conf);
+    
+      
     RL.param.epsilon = epsilon0 * exp(-i*epsDec);
     RL.param.softmax = softmax0 * exp(-i*epsDec);
     
@@ -59,28 +67,11 @@ for i=1:conf.episodes
     e_time(i,1)=steps*Ts;
     Vavg(i,1)=Vavg_k;
     %btd(i,1)=btd_k;
-    accuracy(i,1)=accuracy_;
+    scored(i)=scored_;
+    pscored(i,1)=mean(scored);
     
-    
-    if accuracy_
-        c=c+1;
-    end
-    %buff=5;
-    
-    %if i>buff && prod(accuracy(i-buff:i,1) > 0)
-    if c>cont
-        %conf.Pr = conf.posr .* clipDLF( ((1+abs( randn(1,3)*(conf.episodeN/conf.episodes)*.1))), 1, ones(1,3)+(conf.episodeN/conf.episodes)*.1);
-        %conf.Pr =  clipDLF( conf.posr .* ((1+abs( randn(1,3)*(conf.episodeN/conf.episodes)*1.0))), [conf.maxDistance/2 conf.maxDistance/2 0], [conf.maxDistance conf.maxDistance 180]);
-        conf.Pr = conf.posr(randi(size(conf.posr,1)),:);
-        conf.Pb = conf.posb; %(randi(size(conf.posb,1)),:);
-        conf.Pr(3) = moduloPiDLF(atan2(conf.Pb(2)-conf.Pr(2),conf.Pb(1)-conf.Pr(1)),'r2d'); 
-        c=0;
-        points=points+1;
-    end
-    
-    
+        
     if conf.DRAWS==1
-      
              
         subplot(4,2,1);    
         plot(xpoints,reward(:,1),'r')      
@@ -102,8 +93,8 @@ for i=1:conf.episodes
         %drawnow
         
         subplot(4,2,7); 
-        plot(xpoints,accuracy)
-        title('% Accuracy')
+        plot(xpoints,pscored)
+        title('% goals scored')
         %drawnow
      
         subplot(4,2,2)
@@ -126,7 +117,7 @@ for i=1:conf.episodes
         %plot(time,Pr(:,1),'b')
         %plot(time,Pb(:,1),'r*')
         %plot(time,Pb(:,1)-Pr(:,1),'--k')
-        title('Position and Pho')
+        title('Pho')
         hold
         drawnow
         
@@ -137,14 +128,11 @@ for i=1:conf.episodes
         hold on
         plot(time,Vr(:,2),'g')
 %         plot(time,Vr(:,3),'b')        
-        title('Vr(rgb)')
+        title('Vr(rg)')
         hold
         %drawnow
              
-%         subplot(4,2,6),plot(time,ro)
-%         %axis([time(1) time(steps) 0 1000])
-%         title('pho(t)');
-        
+       
         subplot(4,2,8);
         plot(time,fi,'g')
         hold on
@@ -153,32 +141,6 @@ for i=1:conf.episodes
         %axis([time(1) time(steps) -50 50])
         hold
         drawnow
-%         
-%         subplot(4,2,9);
-%         plot(time,xb,'b')
-%         hold on
-%         plot(time,yb,'r')
-%         plot(time,yfi,'k')
-%         title('xb(t)(blue) yb(t)(red) yfi(t)(black)');
-%         %axis([time(1) time(steps) -50 50])
-%         hold
-%         drawnow
-
-
-
-
-
-
-%   plot(Pt(1,1),Pt(1,2),'*k')%posición del target 
-%         hold on
-%         plot(Pb(:,1),Pb(:,2),'*r')%posición de la bola
-%         plot(Pr(:,1),Pr(:,2),'g')% posición del robot
-%         axis([-100 conf.maxDistance+100 -4000 4000])
-%         title('X-Y Plane');
-%         hold
-
-%         drawnow
-        
      
      end
      

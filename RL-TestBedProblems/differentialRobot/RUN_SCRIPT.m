@@ -1,38 +1,57 @@
 function f = RUN_SCRIPT(x,RUNS,stringName)
+conf.Test=0;
 
+%=========TESTS=============
 % clear all
 % clc
 % clf
 % close all
+% 
+% conf.Test=1;
+% folder = ''; 
+% stringName= 'DRL1; lambda0.9; alpha0.3; softmax1; decay8.mat';  % Here file name.mat
+% loadFile = [folder stringName];
+% RUNS=1;
+% if conf.Test % Performance tests
+%     %load loadFile;
+%     results=importdata(loadFile);
+%     RL.Q        = results.Qok_x;%Qx_DRL;
+%     RL.Q_rot    = results.Qok_rot;%Qrot_DRL;
+%     clear results;
+% end
+% x(1) = 6;   % exploration decay
+% x(2) = 0.1;  % epsilon
+% x(3) = 0.3;   % learning rate
+% x(4) = 0.9;   % lambda
+% x(5) = 1;  % 0 for CRL, 1 for DRL
+% 
+% % myCluster = parcluster('local');
+% % if matlabpool('size') == 0 % checking to see if my pool is already open
+% %     matlabpool(myCluster.NumWorkers)
+% % else
+% %     matlabpool close
+% %     matlabpool(myCluster.NumWorkers)
+% % end
+%======================
+
 
 global flagFirst;
 global opti;
 conf.opti=opti;
 
-%dbstop in Episode at 235 if accuracy<0
-%dbstop in GetReward at 61
-%dbstop in Episode at 88
-%dbstop in UpdateSARSA at 26
-%dbstop in GetBestAction at 9
-%dbstop in GetBestAction at 21
-%dbstop getFeatureVector at 40
-%dbstop movDiffRobot at 82
-%dbstop goal1 at 16
 
-conf.episodes = 500;   % maximum number of  episode
+conf.episodes = 1000;   % maximum number of  episode
 conf.Ts = 0.2; %Sample time of a RL step
 conf.maxDistance = 800;    % maximum ball distance permited before to end the episode X FIELD DIMENSION
 conf.Runs = RUNS;
 conf.NOISE = 0.01;
-conf.DRL = 0; %Decentralized RL(1) or Centralized RL(0)
+conf.DRL = x(5); %Decentralized RL(1) or Centralized RL(0)
 conf.DRAWS = 1;
+conf.record = 0;
 
 
 conf.Q_INIT = 0;
 conf.EXPL_EPISODES_FACTOR = x(1);
-%if ~conf.DRL 
-%    conf.EXPL_EPISODES_FACTOR = conf.EXPL_EPISODES_FACTOR*2/3;
-%end
 RL.param.alpha       = x(3);   % learning rate
 RL.param.gamma       = 0.99;   % discount factor
 RL.param.lambda      = x(4);   % the decaying elegibiliy trace parameter
@@ -40,11 +59,15 @@ RL.param.epsilon = 1;
 RL.param.softmax = x(2);
 
 
+if conf.Test %Para pruebas de performance
+    RL.param.epsilon = 0;
+    RL.param.softmax = 0;
+end 
+
+
 conf.Pt=[conf.maxDistance/2 0];
-conf.posr=[0.9*conf.maxDistance 0.7*conf.maxDistance 0; 0.7*conf.maxDistance 0.8*conf.maxDistance 0; 0.6*conf.maxDistance 0.6*conf.maxDistance 0];
-%conf.posb=[0.4*conf.maxDistance 0.2*conf.maxDistance; 0.5*conf.maxDistance 0.2*conf.maxDistance; 0.6*conf.maxDistance 0.2*conf.maxDistance;];
-%conf.posr=[0.9*conf.maxDistance 0.7*conf.maxDistance 0];
 conf.posb=[0.5*conf.maxDistance 200];
+     
 
 conf.deltaVw = 2;    
 conf.Vr_max = [60 5]; %x,y,rot Max Speed achieved by the robot
@@ -62,137 +85,56 @@ conf.feature_max = [800, 45, 45 conf.Vr_max(2)];
 
 a_spot={'r' 'g' 'b' 'c' 'm' 'y' 'k' '--r' '--g' '--b' '--c' };
 
-parfor n=1:RUNS
-%for i=1:conf.Runs
-   
-    %[reward(:,:,i), e_time(:,i), Vavg(:,i), accuracy(:,i),  RL] = Dribbling2d( i, conf, RL);
-    accuracy(:,n) = Dribbling2d( n, conf, RL);
-    goals(n)=100*sum(accuracy(:,n))/conf.episodes;       
+%parfor n=1:RUNS
+for n=1:RUNS
+    %[reward(:,:,i), e_time(:,i), Vavg(:,i), scored(:,i),  RL] = Dribbling2d( i, conf, RL);
+    [pscored(:,n) scored(:, n) RL] = Dribbling2d( n, conf, RL);
 end
 
-f=mean(goals);
+pf_min=Inf;
+pf_max=-Inf;
+interval=0.01;
 
-% et_min=Inf;
-% cr_max=-Inf;
-% v_max=-Inf;
-% pf_min=Inf;
-% 
-% et_max=-Inf;
-% cr_min=Inf;
-% v_min=Inf;
-% pf_max=-Inf;
-% interval=0.7;
-
-% for i=1:conf.Runs
-
-%     et(i) = mean(e_time(ceil(interval*conf.episodes):end,i));
-%     if et(i) < et_min
-%         et_min=et(i);
-%     end
-%     if et(i) > et_max
-%         et_max=et(i);
-%     end
-%        
-%     vm(i) = mean(Vavg(ceil(interval*conf.episodes):end,i));
-%     if vm(i) > v_max
-%         v_max=vm(i);
-%     end
-%     if vm(i) < v_min
-%         v_min=vm(i);
-%     end
+for i=1:RUNS
         
-%     pf(i) = mean(accuracy(ceil(interval*conf.episodes):end,i));
-%     if pf(i) < pf_min
-%         pf_min=pf(i);
-%     end
-%     if pf(i) > pf_max
-%         pf_max=pf(i);
-%     end
-%     
-%     cr(i) = mean(reward(ceil(interval*conf.episodes):end,1,i)) + mean(reward(ceil(interval*conf.episodes):conf.episodes,2,i));
-%     if cr(i) > cr_max
-%         cr_max=cr(i);
-%         et_xxx=et(i);
-%         v_xxx=vm(i);
-%         pf_xxx=pf(i);
-%         results.Qok_x = RL.Q;
-%         if conf.DRL
-%             results.Qok_rot = RL.Q_rot;
-%         end
-%     end
-%     if cr(i) < cr_min
-%         cr_min=cr(i);
-%     end
-%     
-% end
-% 
-% results.performance(3,1)=v_min;
-% results.performance(1,1)=mean(vm);
-% results.performance(2,1)=v_max;
-% 
-% results.performance(2,2)=et_min;
-% results.performance(1,2)=mean(et);
-% results.performance(3,2)=et_max;
-% 
-% results.performance(2,3)=pf_min;
-% results.performance(1,3)=mean(pf);
-% results.performance(3,3)=pf_max;
-% 
-% results.performance(3,4)=cr_min;
-% results.performance(1,4)=mean(cr);
-% results.performance(2,4)=cr_max;
-% 
-% results.performance(4,4)=cr_max;
-% results.performance(4,3)=pf_xxx;
-% results.performance(4,2)=et_xxx;
-% results.performance(4,1)=v_xxx;
-% 
-% results.mean_Vavg = mean(Vavg,2);
-% results.std_Vavg = std(Vavg,0,2);
-% results.mean_faults = mean(accuracy,2);
-% results.std_faults = std(accuracy,0,2);
-% results.mean_eTime = mean(e_time,2);
-% results.std_eTime = std(e_time,0,2);
-% 
-% results.mean_rewX = mean(reward(:,1),2);
-% results.std_rewX = std(reward(:,1),0,2);
-% %results.mean_rewY = mean(reward(:,2),2);
-% %results.std_rewY = std(reward(:,2),0,2);
-% results.mean_rewRot = mean(reward(:,2),2);
-% results.std_rewRot = std(reward(:,2),0,2);
-% 
-% save results;
-% 
-% if conf.DRAWS==1
-%     figure
-%     subplot(2,2,1)
-%     plot(mean(reward(:,1),2),'r')
-%     hold on
-%     plot(mean(reward(:,2),2),'g')
-%     %plot(mean(reward(:,3),2),'b')
-%     hold
-%     title('Mean Reward')
-%     
-%     subplot(2,2,2)
-%     plot(results.mean_eTime)
-%     title('Mean Episode Time')
-%         
-%     subplot(2,2,3)
-%     plot(results.mean_Vavg)
-%     title('Mean Vavg')
-%         
-%     subplot(2,2,4)
-%     plot(results.mean_faults)
-%     title('Mean %Accuracy')
-%     drawnow
-%     
-%     
-%%     figure,plot(mean(reward,2))
-% %     figure,plot(mean(fitness,2))
-% %     figure,plot(mean(Vavg,2))
-if conf.DRAWS==1
-     figure,plot(mean(accuracy,2))
+    pf(i) = mean(scored(ceil(interval*conf.episodes):end,i));
+    pf_sd(i) = std(scored(ceil(interval*conf.episodes):end,i));
+    if pf(i) < pf_min
+        pf_min=pf(i);
+    end
+    if pf(i) > pf_max
+        pf_max=pf(i);
+        results.Qok_x = RL.Q;
+        if conf.DRL
+            results.Qok_rot = RL.Q_rot;
+        end
+    end
 end
+
+results.performance(2,3)=pf_min;
+results.performance(1,3)=mean(pf);
+results.performance(3,3)=pf_max;
+results.performance(4,3)=mean(pf_sd);
+
+f=mean(pf); % Fitness function: percentage of goals scored 
+
+results.mean_goals = mean(pscored,2);
+results.std_goals = std(pscored,0,2);
+
+if conf.DRAWS==1
+     figure,plot(mean(pscored,2))
+     if conf.record > 0
+            saveas(gcf,[stringName '.fig'])
+     end
+end
+
+if conf.Test
+   stringName=[loadFile '-Test']; 
+end    
+if conf.record > 0
+   save ([stringName '.mat'], 'results');
+end
+    
 % end
 % 
 % toc
