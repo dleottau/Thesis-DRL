@@ -5,7 +5,7 @@ close all
 
 tic
 global RUNS;
-RUNS=10;
+RUNS=6;
 
 global flagFirst;
 flagFirst=true;
@@ -25,11 +25,11 @@ end
 
 x0 = [];
 xname{1}='decay';
-x0(1) = 6;   % exploration decay
+x0(1) = 7;   % exploration decay
 xname{2}='softmax';
 x0(2)  = 2;  % epsilon
-xname{3}='alpha';
-x0(3) = 0.3;   % learning rate
+%xname{3}='alpha';
+%x0(3) = 0.3;   % learning rate
 %xname{4}='lambda';
 %x0(4) = 0.9;   % lambda
 
@@ -37,8 +37,8 @@ x0(3) = 0.3;   % learning rate
 %----------  
 
 options = hilloptions('TimeLimit', 600);
-options.step = [1; 0.5; 0.1];
-options.space = [[3; 0.1; 0.1], [15; 5; 0.7]];
+options.step = [1; 0.5];
+options.space = [[3; 0.1], [15; 5]];
 %options.step = [0.5; 0.05; 0.05; 0.05; 0.02];
 %options.space = [[0.5; 0.5; 0.05; 0.5; 0], [4; 0.99; 0.5; 0.99; 0.2]];
 options.peaks = 2;

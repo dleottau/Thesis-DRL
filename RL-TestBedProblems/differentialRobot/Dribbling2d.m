@@ -1,4 +1,4 @@
-function  [pscored scored RL] =Dribbling2d( nRun, conf, RL)
+function  [pscored, scored, Qx, Qw] = Dribbling2d( nRun, conf, RL)
 %Dribbling1d SARSA, the main function of the trainning
 
 RL.param.DRL=conf.DRL;
@@ -23,6 +23,7 @@ if ~conf.Test
         RL.Q_rot = QTable( conf.nstates, conf.nactions_w, conf );  % the Qtable for the v_rot agent
     else
         RL.Q = QTable( conf.nstates, conf.nactions, conf ); 
+        RL.Q_rot = 0;
     end
 end
 
@@ -42,16 +43,25 @@ for i=1:conf.episodes
     conf.episodeN=i;
     
     
-    while 1
-        pg=0.5;
-        uB=[conf.maxDistance conf.maxDistance 180];
-        lB=[0 0.5*conf.maxDistance -180];
-        conf.Pr = rand(1,3).*(uB-lB) + lB;
+   while 1
         conf.Pb = conf.posb;
-        %conf.Pr(3) = moduloPiDLF(atan2(conf.Pb(2)-conf.Pr(2),conf.Pb(1)-conf.Pr(1)),'r2d'); 
-        [~,~,~,~, pho, gamma, phi]=movDiffRobot(Ts, conf.Pr, conf.Pt, conf.Pb, [0 0],0,0,0,zeros(2,1));
-        if ~sum([pho abs(gamma) abs(phi)]>1.1*conf.feature_max(1:3))
-            break
+        if ~conf.Test
+            uB=[conf.maxDistance conf.maxDistance 180];
+            lB=[0 0.5*conf.maxDistance -180];
+            conf.Pr = rand(1,3).*(uB-lB) + lB;
+            %conf.Pr(3) = moduloPiDLF(atan2(conf.Pb(2)-conf.Pr(2),conf.Pb(1)-conf.Pr(1)),'r2d'); 
+            [~,~,~,~, pho, gamma, phi]=movDiffRobot(Ts, conf.Pr, conf.Pt, conf.Pb, [0 0],0,0,0,zeros(2,1));
+            if ~sum([pho abs(gamma) abs(phi)]>1.1*conf.feature_max(1:3))
+                break
+            end
+        else
+            uB=[0.9*conf.maxDistance 1*conf.maxDistance 180];
+            lB=[0.1*conf.maxDistance 0.7*conf.maxDistance -180];
+            conf.Pr = rand(1,3).*(uB-lB) + lB;
+            [~,~,~,~, pho, gamma, phi]=movDiffRobot(Ts, conf.Pr, conf.Pt, conf.Pb, [0 0],0,0,0,zeros(2,1));
+            if ~sum([pho abs(gamma) abs(phi)]>conf.feature_max(1:3).*[1 0.25 0.9])
+                break
+            end
         end
     end
     
@@ -146,6 +156,13 @@ for i=1:conf.episodes
      
      
 
+end
+
+Qx=RL.Q;
+Qw=RL.Q_rot;
+
+if ~conf.opti
+    disp(['RUN: ' int2str(nRun) '; cumGoals: ',num2str(pscored(end))]);
 end
 
 

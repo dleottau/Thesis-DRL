@@ -1,41 +1,49 @@
-function f = RUN_SCRIPT(x,RUNS,stringName)
-conf.Test=0;
-
-folder = 'final/';
-
-%  %=========TESTS=============
-% clear all
-% clc
-% clf
-% close all
+% function f = RUN_SCRIPT(x,RUNS,stringName)
+% conf.Test=0;
 % 
-% conf.Test=1;
-% folder = ''; 
-% stringName= 'DRL0; lambda0.9; alpha0.5; softmax2.1; decay5; 6RUNS.mat';  % Here file name.mat
-% loadFile = [folder stringName];
-% RUNS=1;% conf.Test=1;
+% folder = 'opti/';
 
-% if conf.Test % Performance tests
-%     %load loadFile;
-%     results=importdata(loadFile);
-%     RL.Q        = results.Qok_x;%Qx_DRL;
-%     RL.Q_rot    = results.Qok_rot;%Qrot_DRL;
-%     clear results;
+ %=========TESTS=============
+clear all
+clc
+clf
+close all
+
+conf.Test=1;
+folder = 'final/'; 
+%stringName = 'DRL0; lambda0.9; alpha0.5; softmax2; decay7; 6RUNS.mat';  % Here file name.mat   f =  60.8871
+%stringName = 'DRL1; lambda0.9; alpha0.3; softmax1.1; decay10; 6RUNS.mat';  % Here file name.mat f =  50.4032
+%stringName = 'DRL0; lambda0.9; alpha0.5; softmax2; decay7; 25RUNS.mat';
+stringName = 'DRL1; lambda0.9; alpha0.3; softmax1.1; decay10; 25RUNS.mat';
+
+RUNS=1;% conf.Test=1;
+
+x(1) = 5;   % exploration decay
+x(2) = 2.1;  % epsilon
+x(3) = 0.5;   % learning rate
+x(4) = 0.9;   % lambdaUntitled Folder
+x(5) = 1;  % 0 for CRL, 1 for DRL
+
+if conf.Test % Performance tests
+    %load loadFile;
+    results=importdata([folder stringName]);
+    RL.Q_rot    = 0;
+    if x(5)
+        RL.Q_rot    = results.Qok_rot;
+    end
+    RL.Q        = results.Qok_x;
+    clear results;
+end
+
+
+% myCluster = parcluster('local');
+% if matlabpool('size') == 0 % checking to see if my pool is already open
+%     matlabpool(myCluster.NumWorkers)
+% else
+%     matlabpool close
+%     matlabpool(myCluster.NumWorkers)
 % end
-% x(1) = 6;   % exploration decay
-% x(2) = 0.1;  % epsilon
-% x(3) = 0.3;   % learning rate
-% x(4) = 0.9;   % lambdaUntitled Folder
-% x(5) = 1;  % 0 for CRL, 1 for DRL
-% 
-% % myCluster = parcluster('local');
-% % if matlabpool('size') == 0 % checking to see if my pool is already open
-% %     matlabpool(myCluster.NumWorkers)
-% % else
-% %     matlabpool close
-% %     matlabpool(myCluster.NumWorkers)
-% % end
-% %======================
+%======================
 
 
 global flagFirst;
@@ -49,7 +57,7 @@ conf.maxDistance = 800;    % maximum ball distance permited before to end the ep
 conf.Runs = RUNS;
 conf.NOISE = 0.01;
 conf.DRL = x(5); %Decentralized RL(1) or Centralized RL(0)
-conf.DRAWS = 0;
+conf.DRAWS = 1;
 conf.record = 1;
 
 
@@ -88,8 +96,8 @@ conf.feature_max = [800, 45, 45 conf.Vr_max(2)];
 
 a_spot={'r' 'g' 'b' 'c' 'm' 'y' 'k' '--r' '--g' '--b' '--c' };
 
-parfor n=1:RUNS
-%for n=1:RUNS
+%parfor n=1:RUNS
+for n=1:RUNS
     %[reward(:,:,i), e_time(:,i), Vavg(:,i), scored(:,i),  RL] = Dribbling2d( i, conf, RL);
     [pscored(:,n) scored(:, n) Q{n} Qw{n}] = Dribbling2d( n, conf, RL);
 end
@@ -108,9 +116,9 @@ for i=1:RUNS
     if pf(i) > pf_max
         pf_max=pf(i);
         results.Qok_x = Q{i};
-        %if conf.DRL
+        if conf.DRL
             results.Qok_rot = Qw{i};
-        %end
+        end
     end
 end
 
@@ -119,7 +127,7 @@ results.performance(1,3)=mean(pf);
 results.performance(3,3)=pf_max;
 results.performance(4,3)=mean(pf_sd);
 
-f=mean(pf); % Fitness function: percentage of goals scored 
+f=mean(pf) % Fitness function: percentage of goals scored 
 
 results.mean_goals = mean(pscored,2);
 results.std_goals = std(pscored,0,2);
@@ -132,16 +140,13 @@ if conf.DRAWS==1
 end
 
 if conf.Test
-   stringName=['Test-' loadFile]; 
+   stringName=['Test-' stringName]; 
 end    
 if conf.record > 0
-   save ([folder stringName '.mat'], 'results');
+   save ([folder stringName], 'results');
 end
     
 % end
 % 
 % toc
-
-
-
 

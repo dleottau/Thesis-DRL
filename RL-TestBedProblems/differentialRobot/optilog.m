@@ -1,5 +1,155 @@
 DRL
 
+Starting matlabpool using the 'local' profile ... connected to 2 workers.
+cumGoals:40.4978; Decay:7; SoftmaxT:1; alpha:0.3
+cumGoals:40.8342; Decay:6; SoftmaxT:1.1; alpha:0.3
+cumGoals:43.0373; Decay:5; SoftmaxT:1.1; alpha:0.3
+cumGoals:42.886; Decay:8; SoftmaxT:1.1; alpha:0.3
+cumGoals:43.7605; Decay:9; SoftmaxT:1.1; alpha:0.3
+cumGoals:44.0801; Decay:10; SoftmaxT:1.1; alpha:0.3
+cumGoals:41.2714; Decay:11; SoftmaxT:1.1; alpha:0.3
+cumGoals:42.1123; Decay:12; SoftmaxT:1.1; alpha:0.3
+cumGoals:42.3983; Decay:10; SoftmaxT:0.6; alpha:0.3
+cumGoals:40.5819; Decay:10; SoftmaxT:0.1; alpha:0.3
+cumGoals:42.1292; Decay:10; SoftmaxT:1.6; alpha:0.3
+cumGoals:41.2546; Decay:10; SoftmaxT:2.1; alpha:0.3
+
+x =
+
+   10.0000
+    1.1000
+
+
+fval =
+
+  -44.0801
+
+Sending a stop signal to all the workers ... stopped.
+Elapsed time is 4270.589982 seconds.
+
+
+CRL
+
+Starting matlabpool using the 'local' profile ... connected to 2 workers.
+cumGoals:40.7333; Decay:7; SoftmaxT:2; alpha:0.5
+cumGoals:39.4719; Decay:6; SoftmaxT:2.1; alpha:0.5
+cumGoals:38.6478; Decay:5; SoftmaxT:2.1; alpha:0.5
+cumGoals:38.9337; Decay:8; SoftmaxT:2.1; alpha:0.5
+cumGoals:36.226; Decay:9; SoftmaxT:2.1; alpha:0.5
+cumGoals:37.9415; Decay:7; SoftmaxT:1.6; alpha:0.5
+cumGoals:38.3956; Decay:7; SoftmaxT:1.1; alpha:0.5
+cumGoals:38.5806; Decay:7; SoftmaxT:2.6; alpha:0.5
+cumGoals:38.816; Decay:7; SoftmaxT:3.1; alpha:0.5
+
+x =
+
+    7.0000
+    2.1000
+
+
+fval =
+
+  -40.7333
+
+Sending a stop signal to all the workers ... stopped.
+Elapsed time is 2881.135628 seconds.
+
+
+
+%----------------------------------------
+
+
+
+DRL
+
+Sending a stop signal to all the workers ... stopped.
+Starting matlabpool using the 'local' profile ... connected to 2 workers.
+cumGoals:40.793; Decay:6; SoftmaxT:1; alpha:0.3
+cumGoals:37.8696; Decay:5; SoftmaxT:1.1; alpha:0.3
+cumGoals:37.5336; Decay:4; SoftmaxT:1.1; alpha:0.3
+cumGoals:41.7339; Decay:7; SoftmaxT:1.1; alpha:0.3
+cumGoals:38.3401; Decay:8; SoftmaxT:1.1; alpha:0.3
+cumGoals:36.996; Decay:9; SoftmaxT:1.1; alpha:0.3
+cumGoals:34.5094; Decay:7; SoftmaxT:0.6; alpha:0.3
+cumGoals:35.1142; Decay:7; SoftmaxT:0.1; alpha:0.3
+cumGoals:39.953; Decay:7; SoftmaxT:1.6; alpha:0.3
+cumGoals:37.9032; Decay:7; SoftmaxT:2.1; alpha:0.3
+cumGoals:35.3831; Decay:7; SoftmaxT:1.1; alpha:0.2
+cumGoals:31.4516; Decay:7; SoftmaxT:1.1; alpha:0.1
+cumGoals:39.4825; Decay:7; SoftmaxT:1.1; alpha:0.4
+cumGoals:36.2567; Decay:7; SoftmaxT:1.1; alpha:0.5
+
+x =
+
+    7.0000
+    1.1000
+    0.3000
+
+
+fval =
+
+  -41.7339
+
+Sending a stop signal to all the workers ... stopped.
+Elapsed time is 2918.582838 seconds.
+
+
+CRL
+
+Starting matlabpool using the 'local' profile ... connected to 2 workers.
+cumGoals:32.5269; Decay:6; SoftmaxT:2; alpha:0.3
+cumGoals:31.5188; Decay:5; SoftmaxT:2.1; alpha:0.3
+cumGoals:31.082; Decay:4; SoftmaxT:2.1; alpha:0.3
+cumGoals:30.578; Decay:7; SoftmaxT:2.1; alpha:0.3
+cumGoals:31.586; Decay:8; SoftmaxT:2.1; alpha:0.3
+cumGoals:31.922; Decay:6; SoftmaxT:1.6; alpha:0.3
+cumGoals:31.2164; Decay:6; SoftmaxT:1.1; alpha:0.3
+cumGoals:31.4516; Decay:6; SoftmaxT:2.6; alpha:0.3
+cumGoals:30.578; Decay:6; SoftmaxT:3.1; alpha:0.3
+cumGoals:25.8065; Decay:6; SoftmaxT:2.1; alpha:0.2
+cumGoals:19.7245; Decay:6; SoftmaxT:2.1; alpha:0.1
+cumGoals:33.9046; Decay:6; SoftmaxT:2.1; alpha:0.4
+cumGoals:33.4677; Decay:6; SoftmaxT:2.1; alpha:0.5
+cumGoals:35.2151; Decay:6; SoftmaxT:2.1; alpha:0.6
+cumGoals:33.3333; Decay:6; SoftmaxT:2.1; alpha:0.7
+cumGoals:36.5927; Decay:5; SoftmaxT:2.1; alpha:0.6
+cumGoals:33.5685; Decay:4; SoftmaxT:2.1; alpha:0.6
+cumGoals:31.4852; Decay:7; SoftmaxT:2.1; alpha:0.6
+cumGoals:34.3414; Decay:8; SoftmaxT:2.1; alpha:0.6
+cumGoals:33.3333; Decay:3; SoftmaxT:2.1; alpha:0.6
+cumGoals:33.7366; Decay:5; SoftmaxT:1.6; alpha:0.6
+cumGoals:33.9718; Decay:5; SoftmaxT:1.1; alpha:0.6
+cumGoals:34.9126; Decay:5; SoftmaxT:2.6; alpha:0.6
+cumGoals:33.2325; Decay:5; SoftmaxT:3.1; alpha:0.6
+cumGoals:37.668; Decay:5; SoftmaxT:2.1; alpha:0.5
+cumGoals:32.9637; Decay:5; SoftmaxT:2.1; alpha:0.4
+cumGoals:32.3253; Decay:5; SoftmaxT:2.1; alpha:0.7
+cumGoals:33.0309; Decay:4; SoftmaxT:2.1; alpha:0.5
+cumGoals:34.4086; Decay:3; SoftmaxT:2.1; alpha:0.5
+cumGoals:34.3414; Decay:7; SoftmaxT:2.1; alpha:0.5
+cumGoals:34.3078; Decay:5; SoftmaxT:1.6; alpha:0.5
+cumGoals:35.8199; Decay:5; SoftmaxT:1.1; alpha:0.5
+cumGoals:34.9798; Decay:5; SoftmaxT:2.6; alpha:0.5
+cumGoals:34.375; Decay:5; SoftmaxT:3.1; alpha:0.5
+
+x =
+
+    5.0000
+    2.1000
+    0.5000
+
+
+fval =
+
+  -37.6680
+
+Sending a stop signal to all the workers ... stopped.
+Elapsed time is 5941.840658 seconds.
+
+%------------------------
+
+DRL
+
 Starting matlabpool using the 'local' profile ... Warning: Found 1 pre-existing communicating job(s) created by matlabpool
 that are running. You can use 'matlabpool close force local' to remove
 all jobs created by matlabpool. 
