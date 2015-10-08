@@ -73,7 +73,8 @@ if conf.DRL
     [a_rot, p_rot] = action_selection(RL.Q_rot, FV, RL.param);
 end
 
-
+U=1;
+Qv=0;
 
 while 1  
     steps=i;
@@ -83,11 +84,20 @@ while 1
     % convert the index of the action into an action value
     if conf.DRL
         action = actionlist_x(a);    
-        action_rot = actionlist_w(a_rot);    
+        action_rot = actionlist_w(a_rot); 
+        if conf.fuzzQ
+            if conf.Test
+                MF=FV/sum(FV);
+                [qv, av] = max(RL.Q,[],2);
+                U = sum( MF .* av);
+            end
+            action = (U-1)*conf.V_action_steps(1);
+        end
     else    
         action = actionlist(a,1);   
         action_rot = actionlist(a,2);   % actionlist(a,2);   
     end
+
     
     %-------DO ACTION -----------------
     % do the selected action and get the next  state  
@@ -178,9 +188,15 @@ while 1
 	% Update the Qtable, that is,  learn from the experience
     %if ballState==0 || ballState==3
     if ~conf.Test
-        [RL.Q, trace] = UpdateSARSA(FV, a, r(1), FVp, ap, RL.Q,     trace,     RL.param);
-        if conf.DRL
+        if conf.DRL % Decentralized
             [RL.Q_rot, trace_rot] = UpdateSARSA(FV, a_rot, r(2), FVp, ap_rot, RL.Q_rot, trace_rot, RL.param);
+            if conf.fuzzQ %Fuzzy Q learning
+                [ RL.Q, trace, U, Qv] = UpdateQfuzzy(FV, r(1), RL.Q, trace, RL.param, Qv);
+            else % SARSA
+                [RL.Q, trace] = UpdateSARSA(FV, a, r(1), FVp, ap, RL.Q,     trace,     RL.param);
+            end
+        else % Centralized
+            [RL.Q, trace] = UpdateSARSA(FV, a, r(1), FVp, ap, RL.Q,     trace,     RL.param);
         end
     end
         

@@ -48,19 +48,19 @@ conf.Ts = 0.2; %Sample time of a RL step
 conf.maxDistance = 800;    % maximum ball distance permited before to end the episode X FIELD DIMENSION
 conf.Runs = RUNS;
 conf.NOISE = 0.01;
-conf.DRL = x(5); %Decentralized RL(1) or Centralized RL(0)
+conf.DRL = x(6); %Decentralized RL(1) or Centralized RL(0)
 conf.DRAWS = 0;
 conf.record = 1;
+conf.fuzzQ = 1;
 
 
 conf.Q_INIT = 0;
-conf.EXPL_EPISODES_FACTOR = x(1);
-RL.param.alpha       = x(3);   % learning rate
+conf.EXPL_EPISODES_FACTOR = x(3);
+RL.param.alpha       = x(2);   % learning rate
 RL.param.gamma       = 0.99;   % discount factor
-RL.param.lambda      = x(4);   % the decaying elegibiliy trace parameter
+RL.param.lambda      = x(5);   % the decaying elegibiliy trace parameter
 RL.param.epsilon = 1;
-RL.param.softmax = x(2);
-
+RL.param.softmax = x(4);
 
 if conf.Test %Para pruebas de performance
     RL.param.epsilon = 0;
@@ -78,6 +78,9 @@ conf.Vr_min = -conf.Vr_max;
 conf.Vr_min(1) = 0;
 conf.maxDeltaV = conf.Vr_max.*[1/2 1/2]; %mm/s/Ts
 conf.Nactios = [5,5];
+if conf.fuzzQ && conf.DRL
+    conf.Nactios = [x(1),5];
+end
 conf.V_action_steps = (conf.Vr_max-conf.Vr_min)./(conf.Nactios-[1 1]);
 conf.Vr_min(1) = 0;
 conf.feature_step = [200, 30, 30 conf.V_action_steps(2)]; %[50, 10, 10]  %states
@@ -123,6 +126,10 @@ f=mean(pf); % Fitness function: percentage of goals scored
 
 results.mean_goals = mean(pscored,2);
 results.std_goals = std(pscored,0,2);
+
+if conf.fuzzQ
+    stringName=['fuz-' stringName];
+end
 
 if conf.DRAWS==1
      figure,plot(mean(pscored,2))

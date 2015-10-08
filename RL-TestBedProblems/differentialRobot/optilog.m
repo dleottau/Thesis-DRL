@@ -269,3 +269,145 @@ x =
 fval =
 
   -54.8667
+  
+  
+  
+  Fuzzy DRL
+
+  Starting matlabpool using the 'local' profile ... connected to 2 workers.
+cumGoals:37.4706; Nactions:7; AlphaW:0.5
+cumGoals:38.9506; Nactions:6; AlphaW:0.5
+cumGoals:40.2792; Nactions:5; AlphaW:0.5
+cumGoals:39.1187; Nactions:8; AlphaW:0.5
+cumGoals:36.7474; Nactions:9; AlphaW:0.5
+cumGoals:38.0087; Nactions:4; AlphaW:0.5
+cumGoals:38.1265; Nactions:3; AlphaW:0.5
+cumGoals:39.6401; Nactions:5; AlphaW:0.4
+cumGoals:40.4474; Nactions:5; AlphaW:0.3
+cumGoals:39.0346; Nactions:5; AlphaW:0.6
+cumGoals:38.3787; Nactions:5; AlphaW:0.2
+cumGoals:38.0592; Nactions:5; AlphaW:0.1
+cumGoals:37.5715; Nactions:4; AlphaW:0.3
+cumGoals:39.6065; Nactions:3; AlphaW:0.3
+cumGoals:39.9428; Nactions:6; AlphaW:0.3
+cumGoals:38.7824; Nactions:7; AlphaW:0.3
+
+x =
+
+    5.0000
+    0.3000
+
+
+fval =
+
+  -40.4474
+
+Sending a stop signal to all the workers ... stopped.
+Elapsed time is 6352.629604 seconds.
+
+  
+
+Starting matlabpool using the 'local' profile ... connected to 2 workers.
+cumGoals:37.706; Nactions:9; AlphaW:0.3
+cumGoals:38.5974; Nactions:8; AlphaW:0.3
+cumGoals:38.3787; Nactions:7; AlphaW:0.3
+cumGoals:38.4292; Nactions:10; AlphaW:0.3
+cumGoals:39.6569; Nactions:11; AlphaW:0.3
+cumGoals:39.001; Nactions:12; AlphaW:0.3
+cumGoals:37.6892; Nactions:13; AlphaW:0.3
+cumGoals:37.6387; Nactions:11; AlphaW:0.2
+cumGoals:38.631; Nactions:11; AlphaW:0.1
+cumGoals:38.9842; Nactions:11; AlphaW:0.4
+cumGoals:39.8419; Nactions:11; AlphaW:0.5
+cumGoals:38.7824; Nactions:11; AlphaW:0.6
+cumGoals:38.6983; Nactions:10; AlphaW:0.5
+cumGoals:39.2869; Nactions:9; AlphaW:0.5
+cumGoals:37.4706; Nactions:12; AlphaW:0.5
+cumGoals:38.8328; Nactions:13; AlphaW:0.5
+
+x =
+
+   11.0000
+    0.5000
+
+
+fval =
+
+  -39.8419
+
+Sending a stop signal to all the workers ... stopped.
+Elapsed time is 7061.982038 seconds.
+
+
+Starting matlabpool using the 'local' profile ... connected to 2 workers.
+cumGoals:40.1783; Nactions:2; AlphaW:0.3
+cumGoals:40.666; Nactions:3; AlphaW:0.3
+cumGoals:38.8328; Nactions:4; AlphaW:0.3
+cumGoals:39.2701; Nactions:5; AlphaW:0.3
+cumGoals:39.8755; Nactions:3; AlphaW:0.2
+cumGoals:38.7824; Nactions:3; AlphaW:0.1
+cumGoals:38.3619; Nactions:3; AlphaW:0.4
+cumGoals:39.5224; Nactions:3; AlphaW:0.5
+
+x =
+
+    3.0000
+    0.3000
+
+
+fval =
+
+  -40.6660
+
+Sending a stop signal to all the workers ... stopped.
+Elapsed time is 2942.944220 seconds.
+
+cumGoals:36.1419; AlphaX:0.4; AlphaW:0.3
+cumGoals:39.2196; AlphaX:0.3; AlphaW:0.3
+cumGoals:37.3865; AlphaX:0.2; AlphaW:0.3
+cumGoals:37.3192; AlphaX:0.5; AlphaW:0.3
+cumGoals:36.8483; AlphaX:0.6; AlphaW:0.3
+cumGoals:34.7797; AlphaX:0.1; AlphaW:0.3
+cumGoals:37.9078; AlphaX:0.3; AlphaW:0.2
+cumGoals:31.8197; AlphaX:0.3; AlphaW:0.1
+cumGoals:35.9906; AlphaX:0.3; AlphaW:0.4
+cumGoals:34.9479; AlphaX:0.3; AlphaW:0.5
+
+x =
+
+    0.3000
+    0.3000
+
+
+fval =
+
+  -39.2196
+
+Starting matlabpool using the 'local' profile ... connected to 2 workers.
+cumGoals:37.3192; Decay:10; SoftmaxT:1; alpha:0.3
+cumGoals:38.4628; Decay:9; SoftmaxT:1.1; alpha:0.3
+cumGoals:35.9906; Decay:8; SoftmaxT:1.1; alpha:0.3
+cumGoals:37.4874; Decay:11; SoftmaxT:1.1; alpha:0.3
+cumGoals:35.9569; Decay:12; SoftmaxT:1.1; alpha:0.3
+cumGoals:34.9479; Decay:7; SoftmaxT:1.1; alpha:0.3
+cumGoals:35.2674; Decay:9; SoftmaxT:0.6; alpha:0.3
+cumGoals:35.4692; Decay:9; SoftmaxT:0.1; alpha:0.3
+cumGoals:36.041; Decay:9; SoftmaxT:1.6; alpha:0.3
+cumGoals:33.7033; Decay:9; SoftmaxT:2.1; alpha:0.3
+cumGoals:35.9065; Decay:9; SoftmaxT:1.1; alpha:0.2
+cumGoals:34.1574; Decay:9; SoftmaxT:1.1; alpha:0.1
+cumGoals:38.5806; Decay:9; SoftmaxT:1.1; alpha:0.4
+cumGoals:38.446; Decay:9; SoftmaxT:1.1; alpha:0.5
+cumGoals:35.6038; Decay:9; SoftmaxT:1.1; alpha:0.6
+cumGoals:36.781; Decay:8; SoftmaxT:1.1; alpha:0.4
+
+x =
+
+    9.0000
+    1.1000
+    0.4000
+
+
+fval =
+
+  -38.5806

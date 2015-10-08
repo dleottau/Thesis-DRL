@@ -9,26 +9,33 @@ clc
 clf
 close all
 
+%dbstop in getQvalue.m
+
+
 conf.Test=1;
-folder = 'final/'; 
-%stringName = 'DRL0; lambda0.9; alpha0.5; softmax2; decay7; 6RUNS.mat';  % Here file name.mat   f =  60.8871
-%stringName = 'DRL1; lambda0.9; alpha0.3; softmax1.1; decay10; 6RUNS.mat';  % Here file name.mat f =  50.4032
-%stringName = 'DRL0; lambda0.9; alpha0.5; softmax2; decay7; 25RUNS.mat';
-stringName = 'DRL1; lambda0.9; alpha0.3; softmax1.1; decay10; 25RUNS.mat';
+sfolder = 'final/'; % Source folder
+folder = 'tests/'; % To record the test result
 
-RUNS=1;% conf.Test=1;
+% Just uncomment file (policy) to use
 
-x(1) = 5;   % exploration decay
-x(2) = 2.1;  % epsilon
-x(3) = 0.5;   % learning rate
-x(4) = 0.9;   % lambdaUntitled Folder
-x(5) = 1;  % 0 for CRL, 1 for DRL
+%stringName = 'DRL0; lambda0.9; alpha0.5; softmax2; decay7; 25RUNS.mat'; 
+%conf.DRL = 0; conf.fuzzQ = 0; 
+
+%stringName = 'DRL1; lambda0.9; alpha0.3; softmax1.1; decay10; 25RUNS.mat';
+%conf.DRL = 1; conf.fuzzQ = 0; 
+
+stringName = 'fuz-DRL1; lambda0.95; softmax1.1; decay9; alpha0.3; Nactions3; 25RUNS.mat';
+conf.DRL = 1; conf.fuzzQ = 1; 
+
+conf.DRAWS = 1;
+conf.record = 1;
+RUNS=1;
 
 if conf.Test % Performance tests
     %load loadFile;
-    results=importdata([folder stringName]);
+    results=importdata([sfolder stringName]);
     RL.Q_rot    = 0;
-    if x(5)
+    if conf.DRL
         RL.Q_rot    = results.Qok_rot;
     end
     RL.Q        = results.Qok_x;
@@ -36,49 +43,32 @@ if conf.Test % Performance tests
 end
 
 
-% myCluster = parcluster('local');
-% if matlabpool('size') == 0 % checking to see if my pool is already open
-%     matlabpool(myCluster.NumWorkers)
-% else
-%     matlabpool close
-%     matlabpool(myCluster.NumWorkers)
-% end
-%======================
-
-
-global flagFirst;
 global opti;
+opti=0;
 conf.opti=opti;
-
 
 conf.episodes = 1000;   % maximum number of  episode
 conf.Ts = 0.2; %Sample time of a RL step
 conf.maxDistance = 800;    % maximum ball distance permited before to end the episode X FIELD DIMENSION
 conf.Runs = RUNS;
 conf.NOISE = 0.01;
-conf.DRL = x(5); %Decentralized RL(1) or Centralized RL(0)
-conf.DRAWS = 1;
-conf.record = 1;
-
 
 conf.Q_INIT = 0;
-conf.EXPL_EPISODES_FACTOR = x(1);
-RL.param.alpha       = x(3);   % learning rate
+conf.EXPL_EPISODES_FACTOR = 10;
+RL.param.alpha       = 0.3;   % learning rate
 RL.param.gamma       = 0.99;   % discount factor
-RL.param.lambda      = x(4);   % the decaying elegibiliy trace parameter
+RL.param.lambda      = 0.9;   % the decaying elegibiliy trace parameter
 RL.param.epsilon = 1;
-RL.param.softmax = x(2);
+RL.param.softmax = 1;
 
 
 if conf.Test %Para pruebas de performance
     RL.param.epsilon = 0;
     RL.param.softmax = 0;
-end 
-
+end
 
 conf.Pt=[conf.maxDistance/2 0];
 conf.posb=[0.5*conf.maxDistance 200];
-     
 
 conf.deltaVw = 2;    
 conf.Vr_max = [60 5]; %x,y,rot Max Speed achieved by the robot
@@ -86,13 +76,14 @@ conf.Vr_min = -conf.Vr_max;
 conf.Vr_min(1) = 0;
 conf.maxDeltaV = conf.Vr_max.*[1/2 1/2]; %mm/s/Ts
 conf.Nactios = [5,5];
+if conf.fuzzQ && conf.DRL
+    conf.Nactios = [3,3];
+end
 conf.V_action_steps = (conf.Vr_max-conf.Vr_min)./(conf.Nactios-[1 1]);
 conf.Vr_min(1) = 0;
 conf.feature_step = [200, 30, 30 conf.V_action_steps(2)]; %[50, 10, 10]  %states
 conf.feature_min = [0, -45, -45 conf.Vr_min(2)];
 conf.feature_max = [800, 45, 45 conf.Vr_max(2)];
-
-
 
 a_spot={'r' 'g' 'b' 'c' 'm' 'y' 'k' '--r' '--g' '--b' '--c' };
 

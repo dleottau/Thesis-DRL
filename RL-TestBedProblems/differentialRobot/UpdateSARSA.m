@@ -20,9 +20,8 @@ rul(:,a) = FV;
 
 TD = r + RLparam.gamma*Qap - Qa;
 e_trace = e_trace* RLparam.gamma * RLparam.lambda + rul;
+
 Q =  Q + RLparam.alpha * ( e_trace*TD);
-
-
 
 %
 %[Qa2,b,FV2] = efbd(x,Q(:,a),cores);

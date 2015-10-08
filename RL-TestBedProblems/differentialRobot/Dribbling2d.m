@@ -30,7 +30,7 @@ end
 EXPLORATION = conf.episodes/conf.EXPL_EPISODES_FACTOR;
 epsDec = -log(0.05) * 1/EXPLORATION;  %epsilon decrece a un 5% (0.005) en maxEpisodes cuartos (maxepisodes/4), de esta manera el decrecimiento de epsilon es independiente del numero de episodios
 
-
+RL.param.fuzzQ = conf.fuzzQ;
 
 conf.goalSize = 150;
 conf.PgoalPostR = [conf.Pt(1)+conf.goalSize/2 conf.Pt(2)];
