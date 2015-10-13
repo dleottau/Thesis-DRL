@@ -10,7 +10,7 @@ global opti;
 opti=0;
 
 if ~opti
-    RUNS=24;
+    RUNS=5;
 
     myCluster = parcluster('local');
     if matlabpool('size') == 0 % checking to see if my pool is already open
@@ -24,22 +24,22 @@ end
 x0 = [];
 
 xname{1}='alpha';
-x0(1) = 0.15;
+x0(1) = 0.1;
 
 xname{2}='lambda';
 x0(2) = 0.95;
 
 xname{3}='epsilon';
-x0(3) = 0.1;  
+x0(3) = 0.04;  
 
 xname{4}='k-lenient';
-x0(4) = 3.0;  
+x0(4) = 3.5;  
 
 xname{5}='beta';
-x0(5) = 0.75; 
+x0(5) = 0.8; 
 
 xname{6}='DRL'; 
-x0(6)= 2;  % 0 for CRL, 1 for DRL, 2 for DRL with joint states
+x0(6)= 1;  % 0 for CRL, 1 for DRL, 2 for DRL with joint states
 
 xname{7}='MAapproach';
 x0(7) = 2;   % 0 no cordination, 1 frequency adjusted, 2 leninet
