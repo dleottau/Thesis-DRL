@@ -25,28 +25,28 @@ end
 
 x0 = [];
 
-xname{1}='NactionsVx';
-x0(1) = 3;   % # actions
+xname{1}='decay';
+x0(1) = 10;   % exploration decay
 
-xname{2}='alpha';
-x0(2) = 0.3;   % learning rate
+xname{2}='softmax';
+x0(2)  = 1.1;  % epsilon
 
-xname{3}='decay';
-x0(3) = 9;   % exploration decay
+xname{3}='alpha';
+x0(3) = 0.4;   % learning rate
 
-xname{4}='softmax';
-x0(4)  = 1.1;  % epsilon
+xname{4}='lambda';
+x0(4) = 0.95;   % lambda
 
-xname{5}='lambda';
-x0(5) = 0.95;   % lambda
+xname{5}='DRL'; 
+x0(5) = 1;  % 0 for CRL, 1 for DRL
 
-xname{6}='DRL'; 
-x0(6)= 1;  % 0 for CRL, 1 for DRL
+xname{6}='MAapproach'; 
+x0(6) = 1; % MAapproach, 0 DRL, 1 FA, 2 Lenient ;
 
 if opti
     x0(1) = x(1);
     x0(2) = x(2);
-    %x0(3) = x(3);
+    x0(3) = x(3);
     %x0(4) = x(4);
 end
 
@@ -73,6 +73,6 @@ if ~opti
     matlabpool close;
     toc
 else
-    %disp(['cumGoals:',num2str(cumGoals), '; Decay:',num2str(x0(1)),'; SoftmaxT:',num2str(x0(2)),'; alpha:',num2str(x0(3))]);
-    disp(['cumGoals:',num2str(cumGoals), '; Nactions:',num2str(x0(1)),'; AlphaW:',num2str(x0(2)) ]);
+    disp(['cumGoals:',num2str(cumGoals), '; Decay:',num2str(x0(1)),'; SoftmaxT:',num2str(x0(2)),'; alpha:',num2str(x0(3))]);
+    %disp(['cumGoals:',num2str(cumGoals), '; Nactions:',num2str(x0(1)),'; AlphaW:',num2str(x0(2)) ]);
 end

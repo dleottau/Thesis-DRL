@@ -75,6 +75,7 @@ end
 
 U=1;
 Qv=0;
+RL.param.fa = 0;
 
 while 1  
     steps=i;
@@ -179,24 +180,29 @@ while 1
    
    
     % select action prime
-    [ap, p] = action_selection(RL.Q, FVp, RL.param);
+    [ap, fa] = action_selection(RL.Q, FVp, RL.param);
     if conf.DRL
-        [ap_rot, p_rot] = action_selection(RL.Q_rot, FVp, RL.param);
+        [ap_rot, fa_rot] = action_selection(RL.Q_rot, FVp, RL.param);
+        fap = 1-min([(fa-1/conf.nactions_x), (fa_rot-1/conf.nactions_w)])+1E-6;
+        fap = clipDLF(fap, 0, 1);
     end
-  
+    
+    if conf.MAapproach~=1
+        fap=1;
+    end
                      
 	% Update the Qtable, that is,  learn from the experience
     %if ballState==0 || ballState==3
     if ~conf.Test
         if conf.DRL % Decentralized
-            [RL.Q_rot, trace_rot] = UpdateSARSA(FV, a_rot, r(2), FVp, ap_rot, RL.Q_rot, trace_rot, RL.param);
+            [RL.Q_rot, trace_rot] = UpdateSARSA(FV, a_rot, r(2), FVp, ap_rot, RL.Q_rot, trace_rot, RL.param, conf.MAapproach);
             if conf.fuzzQ %Fuzzy Q learning
                 [ RL.Q, trace, U, Qv] = UpdateQfuzzy(FV, r(1), RL.Q, trace, RL.param, Qv);
             else % SARSA
-                [RL.Q, trace] = UpdateSARSA(FV, a, r(1), FVp, ap, RL.Q,     trace,     RL.param);
+                [RL.Q, trace] = UpdateSARSA(FV, a, r(1), FVp, ap, RL.Q,     trace,     RL.param, conf.MAapproach);
             end
         else % Centralized
-            [RL.Q, trace] = UpdateSARSA(FV, a, r(1), FVp, ap, RL.Q,     trace,     RL.param);
+            [RL.Q, trace] = UpdateSARSA(FV, a, r(1), FVp, ap, RL.Q,     trace,     RL.param, conf.MAapproach);
         end
     end
         
@@ -208,6 +214,7 @@ while 1
         a_rot = ap_rot;
     end
     FV = FVp;
+    RL.param.fa = fap;
                 
     %Compute performance index
     Vrx = xG(4);
