@@ -1,19 +1,15 @@
-function [ States ] = StateTable
+function [ States,cores,div_disc ] = StateTable(feature_min, feature_step, feature_max )
 %BuildStateList builds a state list from a state matrix
 
-ro=0:50:600;
+ro = feature_min(1) : feature_step(1) : feature_max(1);
+gama = feature_min(2) : feature_step(2) : feature_max(2);
+fi = feature_min(3) : feature_step(3) : feature_max(3);
 
-%gama=[-45 -10 0 10 45];
-%fi=[-60 -15 0 15 60];
-gama=-30:10:30;
-fi= -30:10:30;
-
-%dV=[-50 -25 0 50 100 200];  %OK con esta converge en 200 s y Vavg 70
-%Vr=[20 40 60 80 100];
  
 N=size(ro,2);
 M=size(gama,2);
 O=size(fi,2);
+
 
 States=[];
 index=1;
@@ -21,6 +17,7 @@ index=1;
 for i=1:N   
 for j=1:M
 for k=1:O
+
     States(index,1)=ro(i);
     States(index,2)=gama(j);
     States(index,3)=fi(k);
@@ -28,3 +25,15 @@ for k=1:O
 end
 end
 end
+
+cores.ro=ro;
+cores.gama=gama;
+cores.fi=fi;
+
+div_disc_=[size(cores.ro,2) size(cores.gama,2) size(cores.fi,2)];
+%div_disc_=size(cores.ro,2);
+
+for i=1:size(div_disc_,2)-1
+    div_disc(i)=prod(div_disc_(i+1:size(div_disc_,2)));
+end
+div_disc(size(div_disc_,2))=1;

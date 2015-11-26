@@ -5,3 +5,6 @@ function [ a ] = GetBestAction( Q, s )
 % Q has structure  Q(states,actions)
 
 [v a] = max(Q(s,:));
+%[qw] = find(Q(s,:)==v);
+%a = qw( randi(size(qw,2)));
+

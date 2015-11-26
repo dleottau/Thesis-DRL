@@ -1,139 +1,187 @@
-function  [reward, fitness, Vavg, tp_faults, Q] =Dribbling2d( nRun, DRAWS, maxepisodes, maxDistance, th_max, NOISE, Q_INIT, TRANSFER, EXPL_EPISODES_FACTOR)
+function  [reward, e_time, Vavg, tp_faults, Qx,Qy,Qrot] =Dribbling2d( conf, RL, run)
 %Dribbling1d SARSA, the main function of the trainning
-%maxepisodes: maximum number of episodes to run the demo
 
-%  SARSA 
 
-load W-FLC;
-load Qnoise0;
-Qs=Qnoise0;
+load W-FLC-RC2014;
+set(gcf,'name',['DRL Dribbling ' conf.fileName])  % for realtime inverse kinematics
 
-% load QPho;
-% Qs=QPho;
+Ts = conf.Ts; %Sample time of a RL step
+[conf.States, conf.cores, conf.div_disc]   = StateTable( conf.feature_min, conf.feature_step, conf.feature_max );  % the table of states
+conf.Actions  = ActionTable( conf.Vr_min, conf.V_action_steps, conf.Vr_max, conf.Voffset ); % the table of actions
+conf.nstates     = size(conf.States,1);
+conf.nactions    = size(conf.Actions,1);
 
-Ts = 0.2; %Sample time of a RL step
-States   = StateTable();  % the table of states
-Actions  = ActionTable(); % the table of actions
-nstates     = size(States,1);
-nactions    = size(Actions,1);
-Q           = QTable( nstates,nactions,Q_INIT );  % the Qtable
-trace       = QTable( nstates,nactions,0 );  % the elegibility trace
+RL.Q        = QTable( conf.nstates,conf.nactions, conf.Q_INIT );  % the Qtable for the vx agent
+RL.Q_y      = RL.Q;  % the Qtable for the vy agent
+RL.Q_rot    = RL.Q;  % the Qtable for the v_rot agent
 
-alpha       = 0.1;   % learning rate
-gamma       = 1;   % discount factor
-epsilon0     = 1;  % probability of a random action selection
-lambda      = 0.6;   % the decaying elegibiliy trace parameter
-p0=1;
+RL.trace    = QTable( conf.nstates,conf.nactions,0 );  % the elegibility trace for the vx agent
+RL.trace_y  = RL.trace;  % the elegibility trace for the vy agent
+RL.trace_rot = RL.trace;  % the elegibility trace for the v_rot agent
 
-EXPLORATION = maxepisodes/EXPL_EPISODES_FACTOR;
+RL.QM       = QTable( 1,1, 0 ); %QTable( conf.nstates,conf.nactions, 0 );
+RL.QM_y     = RL.QM;
+RL.QM_rot   = RL.QM;
+
+RL.T        = 0;
+RL.T_y      = 0;
+RL.T_rot    = 0;
+if conf.MAapproach == 2
+    RL.T        = QTable( conf.nstates,conf.nactions, 1);
+    RL.T_y      = RL.T;
+    RL.T_rot    = RL.T;
+end
+
+%epsilon0             = 1;  % probability of a random action selection
+%p0                   = 1;
+epsilon0 = RL.param.epsilon;
+p0       = 1;
+temp0    =  RL.param.softmax;
+alpha0   = 1;%RL.param.alpha;
+
+if conf.TRANSFER<0 %Para pruebas de performance
+    epsilon0             = 0;    
+    p0                   = 0;
+end    
+
+EXPLORATION = conf.episodes/RL.param.exp_decay;
 epsDec = -log(0.05) * 1/EXPLORATION;  %epsilon decrece a un 5% (0.005) en maxEpisodes cuartos (maxepisodes/4), de esta manera el decrecimiento de epsilon es independiente del numero de episodios
-epsilon = epsilon0;
-p=p0;
+epsInc2 = -log(0.10) * 1/EXPLORATION;  %epsilon decrece a un 10% (0.1) en maxEpisodes cuartos (maxepisodes/EXPL_EPISODES_FACTOR)
+epsDec2 = -log(0.70) * 1/EXPLORATION;  %epsilon decrece a un 70% (0.7) en maxEpisodes cuartos (maxepisodes/EXPL_EPISODES_FACTOR)
 
-for i=1:maxepisodes    
+RL.param.M = conf.Mtimes;
+RL.param.epsilon = epsilon0;
+RL.param.p = p0;
+RL.param.alpha2 = alpha0; 
+
+goals=0;
+for i=1:conf.episodes    
             
-    if TRANSFER>1, p=1; %acts greedy from source policy
-    elseif TRANSFER==0, p=0; %learns from scratch
+    if conf.TRANSFER>1, 
+        RL.param.p=1; %acts greedy from source policy
+    elseif conf.TRANSFER == 0, 
+        RL.param.p=0; %learns from scratch
     end %else Transfer from source decaying as p
     
-    [Vr,ro,fi,gama,Pt,Pb,Pr,Vb,total_reward,steps,Q,trace,fitness_k,btd_k,Vavg_k,time,faults] = Episode( wf,maxDistance, Q,Qs, alpha, gamma, epsilon, p, States, Actions, Ts, th_max, lambda, trace, NOISE, Q_INIT);
+    [RL, Vr,ro,fi,gama,Pt,Pb,Pr,Vb,total_reward,steps,fitness_k,btd_k,Vavg_k,time,faults,goal_k] = Episode( wf, RL, conf);
     
     %disp(['Epsilon:',num2str(eps),'  Espisode: ',int2str(i),'  Steps:',int2str(steps),'  Reward:',num2str(total_reward),' epsilon: ',num2str(epsilon)])
+    
+    dec = exp(-i*epsDec);
+    dec2 = exp(-i*epsDec2);
+    inc2 = 1-exp(-i*epsInc2);
+    RL.param.epsilon = epsilon0*dec;
+    RL.param.p = p0*dec;
+    RL.param.softmax = temp0*dec;
+    %RL.param.alpha2 = alpha0*inc2; 
+    RL.param.alpha2 = alpha0*dec2;
+    %RL.param.alpha2 = alpha0*dec2*inc2; %trapmf(i,[1 300 600 1500]);
+    
+    xpoints(i)=i-1;
+    reward(i,:)=total_reward/steps;
+    e_time(i,1)=steps*Ts;
+    Vavg(i,1)=Vavg_k/conf.Vr_max(1)*100;
+    %btd(i,1)=btd_k;
+    tp_faults(i,1)=faults/steps*100;
+    goals=goal_k+goals;
+    softmax(i,:)=RL.cum_fa/steps;
+    
+    fitness=0.5*(100-Vavg+tp_faults);
+    
+    if conf.DRAWS==1
         
-    epsilon = epsilon0 * exp(-i*epsDec);
-    p = p0*exp(-i*epsDec*1);
-        
-     
-     if DRAWS==1
-
-        xpoints(i)=i-1;
-        reward(i,1)=total_reward/steps;
-        fitness(i,1)=fitness_k;
-        Vavg(i,1)=Vavg_k;
-        btd(i,1)=btd_k;
-        tp_faults(i,1)=faults/steps*100;
-             
-        subplot(4,2,1);    
-        plot(xpoints,reward,'b')      
-        hold on
-        plot(xpoints,btd,'r')      
-        title([ 'Mean Reward(blue) Episode:',int2str(i), ' Run: ',int2str(nRun)])
-        hold
-                
-        subplot(4,2,3)
+        subplot(3,3,1)
         plot(xpoints,Vavg)
-        title('Speed Average')
+        title('% Max. Fw. Speed Avg.')
         %drawnow
         
-        subplot(4,2,5); 
-        plot(xpoints,fitness)
-        title('Fitness')
-        %drawnow
-        
-        subplot(4,2,7); 
+        subplot(3,3,4); 
         plot(xpoints,tp_faults)
         title('% Time Faults')
         %drawnow
-     
-        subplot(4,2,2)
+        
+        
+        subplot(3,3,7); 
+        plot(xpoints, fitness)
+        title('Global Fitness')
+        %drawnow
+        
+        
+        subplot(3,3,2);    
+        plot(xpoints,reward(:,1),'r')      
+        hold on
+        plot(xpoints,reward(:,2),'g')      
+        plot(xpoints,reward(:,3),'b')      
+        %plot(xpoints,btd,'k')
+        if RL.param.softmax
+            title([ 'Mean Reward(rgb) Episode:',int2str(i), ' z=',sprintf('%.2f',RL.param.softmax) ' Run: ',int2str(run)])
+        else
+            title([ 'Mean Reward(rgb) Episode:',int2str(i), ' p=',sprintf('%.2f',RL.param.p) ' Run: ',int2str(run)])
+        end
+        hold
+        
+        subplot(3,3,5);    
+        plot(xpoints,softmax(:,1),'r')      
+        hold on
+        plot(xpoints,softmax(:,2),'g')      
+        plot(xpoints,softmax(:,3),'b')      
+        title(['Mean Softmax_P(rgb) FA*alpha: ', sprintf('%.3f',RL.param.alpha2*RL.param.alpha)])
+        hold
+               
+        
+        FAalpha(i,1) = RL.param.alpha2*RL.param.alpha;
+        
+        subplot(3,3,8);    
+        plot(xpoints,FAalpha,'k')      
+        hold on
+        %plot(xpoints,mean(softmax,2),'r')      
+        %plot(xpoints,1-mean(softmax,2),'r')      
+        plot(xpoints,(1-min(softmax,[],2))*RL.param.alpha,'g')      
+        %plot(xpoints,1-max(softmax,[],2),'b')      
+        title('FA*alpha(k); P-softmax: mean(r),min(g),max(b)')
+        hold
+           
+        subplot(3,3,3)
         plot(Pt(1,1),Pt(1,2),'*k')%posición del target 
         hold on
         plot(Pb(:,1),Pb(:,2),'*r')%posición de la bola
         plot(Pr(:,1),Pr(:,2),'g')% posición del robot
-        axis([-100 maxDistance+100 -3000 3000])
+        axis([-100 conf.maxDistance+100 -4000 4000])
         title('X-Y Plane');
         hold
-        %drawnow
         
-%         subplot(4,2,6);
-%         plot(time,ro,'g')
-%         hold on
-%         plot(time,Pr(:,1),'b')
-%         plot(time,Pb(:,1),'r*')
-%         plot(time,Pb(:,1)-Pr(:,1),'--k')
-%         title('Position and Pho')
-%         hold
-%         drawnow
-        
-        subplot(4,2,4);
-        plot(time,Vb,'r')
+       
+        subplot(3,3,6);
+        plot(time,Vr(:,1),'r')
         hold on
-        plot(time,Vr(:,1),'b')
         plot(time,Vr(:,2),'g')
-        plot(time,Vr(:,3),'k')        
-        title('Vb(red) Vr(bgk)')
+        plot(time,Vr(:,3),'b')        
+        title('Vb(k) Vr(rgb)')
         hold
-        %drawnow
-             
-        subplot(4,2,6),plot(time,ro)
-        %axis([time(1) time(steps) 0 1000])
-        title('pho(t)');
-        
-        subplot(4,2,8);
-        plot(time,fi,'r')
+         
+              
+        subplot(3,3,9);
+        plot(time,ro,'r')
         hold on
+        plot(time,fi,'g')
         plot(time,gama,'b')
-        title('phi(t)(red) & gamma(t)(blue)');
+        title('pho(t)r; phi(t)g; gamma(t)b');
         %axis([time(1) time(steps) -50 50])
         hold
-        %drawnow
-        
-%         subplot(4,2,9);
-%         plot(time,xb,'b')
-%         hold on
-%         plot(time,yb,'r')
-%         plot(time,yfi,'k')
-%         title('xb(t)(blue) yb(t)(red) yfi(t)(black)');
-%         %axis([time(1) time(steps) -50 50])
-%         hold
-%         drawnow
 
         drawnow
-        
+    
+    end
      
-     end
+     
+     Qx=RL.Q;
+     Qy=RL.Q_y;
+     Qrot=RL.Q_rot;
 
+end
 
+if ~conf.opti
+    disp(['RUN: ',int2str(run), '; Fitness: ', num2str(mean(fitness(ceil(conf.episodes*0.7):end)))])
 end
 
 

@@ -1,10 +1,10 @@
-function [r,f] = GetReward( x,maxDistance, th_max, Vr_max )
+function [r,f] = GetReward( x,maxDistance, th_max, Vr_max, faults )
 % Dribbling1d returns the reward at the current state
 % x: a vector of Pr Pb and Pt
 % r: the returned reward.
 % f: true if the ball is far, otherwise f is false
 
-Vxrmax=Vr_max(1);
+Vxrmax=Vr_max(1) * 0.9;
 
 Pr = x(1);
 Pb = x(2); 
@@ -17,43 +17,46 @@ fi = x(8);
 
 f=false;
 
-xb = abs(ro*cosd(gama));
-yb = abs(ro*sind(gama));
-yfi = abs(ro*sind(fi));
+angleFactor=0.3;
 
+thres = [ro  abs(gama) abs(fi)] > th_max;
 
-if ro>th_max(1) || abs(gama)>th_max(2) || abs(fi)>th_max(3) || Vr < 0.81*Vxrmax
-    r=-1;
+if sum(thres)~=0 || Vr < Vxrmax
+    r(1) = - ( (1-Vr/Vxrmax) + sum(thres .* [ro abs(gama) abs(fi)] .*1/th_max) );
 else
-    r=1;
+    r(1) = Vr/Vxrmax;
 end
 
-% if ro>th_max(1) || abs(gama)>th_max(2) || abs(fi)>th_max(3) || Vr < 0.9*Vxrmax
-%     r=-1;
-% else
-%     r=1;
-% end
+
+if abs(fi) > angleFactor*th_max(3)
+    r(2) = -1;
+else
+    r(2) = 1 + ( 1 - abs(fi)/(angleFactor*th_max(3)) );
+end
+
+if abs(gama) > angleFactor*th_max(2) || abs(fi) > angleFactor*th_max(3)
+    r(3) = -1;
+else
+    r(3) = 1 + ( 1 - abs(gama)/(angleFactor*th_max(2)) ) + ( 1 - abs(fi)/(angleFactor*th_max(3)) );
+end
 
 
-% if ro>th_max(1) || abs(gama)>th_max(2) || abs(fi)>th_max(3)
-%     r=-2;
-% elseif Vr > Vth
-%     r=1;
-% else 
-%     r=-1;
-% end
 
 
-% if ro>ro_max 
-%     r=-2;
-% elseif Vr > Vth
-%     r=1;
-% else 
-%     r=-1;
-% end
+
+% 1D RL-FLC
+% if ro>th_max(1) || Vr < Vxrmax  
+% % 2D RL-FLC
+% % if sum(thres)~=0 || Vr < Vxrmax
+%      r(1) = -1;
+%  else
+%      r(1) = 1;
+%  end
 
 
-if Pr > maxDistance
+if Pb  > maxDistance %|| Pb > maxDistance
     f = true;
+%elseif abs(gama) > 90   ||  abs(fi) > 150 
+%    f = true;
 end
    

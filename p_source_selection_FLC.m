@@ -1,4 +1,4 @@
-function [ a ] = p_source_selection_FLC( Q, s, epsilon, at, p, Q_INIT)
+function [a, p] = p_source_selection_FLC( Q,T, s, RLparam, a_sh, nash, sync, rnd)
 % source_action_selection selects an action using p probability
 % Q: the Qtable
 % s: the current state
@@ -6,46 +6,30 @@ function [ a ] = p_source_selection_FLC( Q, s, epsilon, at, p, Q_INIT)
 % at transferred action
 % p probability for choosing transferred action
 
+p=1;
+
+if sync.nash<=0, rnd.nash=randn(); rnd.nashExpl=randn(); end
+if sync.expl<=0, rnd.expl=rand(); end
+if sync.TL<=0, rnd.TL=rand(); end
+
 actions = size(Q,2);
-ab = GetBestAction(Q,s);
+%a_best = GetBestAction(Q,s);
 
-%Method 1 DLF
-% if (rand()>p) 
-%     a = ab;
-% else
-%     a = at;
-% end
-
-
-% Method 2 DLF
-if (rand()>p) 
-    a = clipDLF( round(ab + randn()*p), 1,actions ); %e_greedy_selection(Q,s,epsilon);
+if nash==1 %if nearby action sharing
+    a_source = clipDLF( round(a_sh + 2*rnd.nash*(1 - RLparam.p)), 1,actions );
+    a_target = clipDLF( round(GetBestAction(Q,s) + 1*rnd.nashExpl* RLparam.epsilon), 1,actions ); 
 else
-    a = clipDLF( round(at + randn()*(1-p)), 1,actions );
+    a_source = a_sh;
+    [a_target, p] = softmax_selection(Q, T, s, RLparam, rnd.expl);
+    if RLparam.softmax <= 0
+        a_target = e_greedy_selection(Q, s, RLparam.epsilon, rnd.expl);
+    end
 end
 
-% Method 3 DLF
-% a = clipDLF( round(at + randn()*(1-p)), 1,actions );
-% if (rand()>p)  && Q(s,ab)~=Q_INIT
-%     a=ab;
-% end
 
-%a = round((ab*(1-p) + at*p));
+if (rnd.TL >= RLparam.p) 
+    a = a_target; 
+else
+    a = a_source;
+end
 
-%if a>6 || a<1 
-%    at=a; 
-%end
-
-
-% % Method 7
-% if (rand()>p) 
-%     a = e_greedy_selection(Q,s,epsilon);
-% else
-%     a=at;
-% end
-
-
-% Method 6
-%p=0; % 1 for gready from source policy, 0 to learn from scratch
-% w = 0.01*p;
-% a = GetBestAction(Q+w*Qs, s);  
