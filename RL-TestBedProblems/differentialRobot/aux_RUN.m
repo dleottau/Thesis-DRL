@@ -19,13 +19,19 @@ folder = 'tests/'; % To record the test result
 % Just uncomment file (policy) to use
 
 %stringName = 'DRL0; lambda0.9; alpha0.5; softmax2; decay7; 25RUNS.mat'; 
-%conf.DRL = 0; conf.fuzzQ = 0; 
+%conf.DRL = 0; conf.fuzzQ = 0; conf.MAapproach = 0;
 
 %stringName = 'DRL1; lambda0.9; alpha0.3; softmax1.1; decay10; 25RUNS.mat';
-%conf.DRL = 1; conf.fuzzQ = 0; 
+%conf.DRL = 1; conf.fuzzQ = 0; conf.MAapproach = 0;
 
-stringName = 'fuz-DRL1; lambda0.95; softmax1.1; decay9; alpha0.3; Nactions3; 25RUNS.mat';
-conf.DRL = 1; conf.fuzzQ = 1; 
+%stringName = 'fuz-DRL1; lambda0.95; softmax1.1; decay9; alpha0.3; Nactions3; 25RUNS.mat';
+%conf.DRL = 1; conf.fuzzQ = 1; conf.MAapproach = 0;
+
+stringName = 'MAapproach1; DRL1; lambda0.95; alpha0.4; softmax1.1; decay10; 25RUNS.mat';
+conf.DRL = 1; conf.fuzzQ = 0; conf.MAapproach = 1; 
+
+
+
 
 conf.DRAWS = 1;
 conf.record = 1;
@@ -55,7 +61,7 @@ conf.NOISE = 0.01;
 
 conf.Q_INIT = 0;
 conf.EXPL_EPISODES_FACTOR = 10;
-RL.param.alpha       = 0.3;   % learning rate
+RL.param.alpha       = 0.4;   % learning rate
 RL.param.gamma       = 0.99;   % discount factor
 RL.param.lambda      = 0.9;   % the decaying elegibiliy trace parameter
 RL.param.epsilon = 1;

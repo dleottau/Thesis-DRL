@@ -14,8 +14,8 @@ conf.maxDistance = 800;    % maximum ball distance permited before to end the ep
 conf.Runs = RUNS;
 conf.NOISE = 0.01;
 conf.DRL = x(5); %Decentralized RL(1) or Centralized RL(0)
-conf.DRAWS = 0;
-conf.record = 1;
+conf.DRAWS = 1;
+conf.record = 0;
 conf.fuzzQ = 0;
 conf.MAapproach = x(6);
 
@@ -59,9 +59,11 @@ conf.feature_step = [200, 30, 30 conf.V_action_steps(2)]; %[50, 10, 10]  %states
 conf.feature_min = [0, -45, -45 conf.Vr_min(2)];
 conf.feature_max = [800, 45, 45 conf.Vr_max(2)];
 
+if conf.DRAWS
+    size=get(0,'ScreenSize');
+    figure('position',[0.1*size(3) 0.05*size(4) 0.85*size(3) 0.7*size(4)]);
+end
 
-
-a_spot={'r' 'g' 'b' 'c' 'm' 'y' 'k' '--r' '--g' '--b' '--c' };
 
 parfor n=1:RUNS
 %for n=1:RUNS

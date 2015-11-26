@@ -4,7 +4,7 @@ clear all
 close all
 clc
 
-folder = 'experimentsFull/'; 
+folder = 'experimentsFull/Pablo/'; 
 files = dir(fullfile([folder '*.mat']));
 
 
@@ -74,7 +74,7 @@ grid on
 ylabel('Averaged Cumulative Reward');
 xlabel('Episodes');
 legend(pt,legendN);
-saveas(gcf,[folder 'CRLvsDRL.fig'])
+saveas(gcf,[folder 'fig3.fig'])
 end
 
 function [M, S, n, legendN] = load_results(results, M, S, n, legendN, leg)

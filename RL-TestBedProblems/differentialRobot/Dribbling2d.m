@@ -83,31 +83,86 @@ for i=1:conf.episodes
         
     if conf.DRAWS==1
              
-        subplot(4,2,1);    
-        plot(xpoints,reward(:,1),'r')      
-         hold on
-         plot(xpoints,reward(:,2),'g')      
-%         plot(xpoints,reward(:,3),'b')      
-        %plot(xpoints,btd,'k')      
-        title([ 'Mean Reward(rgb) Episode:',int2str(i), ' Run: ',int2str(nRun), ' Temp: ', num2str(RL.param.softmax)])
-        hold
-                
-        subplot(4,2,3)
-        plot(xpoints,Vavg)
-        title('Speed Average')
-        %drawnow
+%         subplot(4,2,1);    
+%         plot(xpoints,reward(:,1),'r')      
+%          hold on
+%          plot(xpoints,reward(:,2),'g')      
+% %         plot(xpoints,reward(:,3),'b')      
+%         %plot(xpoints,btd,'k')      
+%         title([ 'Mean Reward(rgb) Episode:',int2str(i), ' Run: ',int2str(nRun), ' Temp: ', num2str(RL.param.softmax)])
+%         hold
+%                 
+%         subplot(4,2,3)
+%         plot(xpoints,Vavg)
+%         title('Speed Average')
+%         %drawnow
+%         
+%         subplot(4,2,5); 
+%         plot(xpoints,e_time)
+%         title('Episode Time')
+%         %drawnow
+%         
+%         subplot(4,2,7); 
+%         plot(xpoints,pscored)
+%         title('% goals scored')
+%         %drawnow
+%      
+%         subplot(4,2,2)
+%         %plot(Pt(1),Pt(2),'*k')%posición del target 
+%         %hold on
+%         plot(conf.PgoalPostR(1),conf.PgoalPostR(2),'ok') %goal post right
+%         hold on
+%         plot(conf.PgoalPostL(1),conf.PgoalPostL(2),'ok') %goal post Left
+%         plot(Pb(:,1),Pb(:,2),'*r')%posición de la bola
+%         plot(Pr(:,1),Pr(:,2),'gx')% posición del robot
+%         plot(Pbi(1),Pbi(2),'*r') % where ball intersects goal line
+%         axis([0 conf.maxDistance 0 conf.maxDistance])
+%         title('X-Y Plane');
+%         hold
+%         drawnow
+%         
+%         subplot(4,2,6);
+%         plot(time,ro,'r')
+%         hold on
+%         %plot(time,Pr(:,1),'b')
+%         %plot(time,Pb(:,1),'r*')
+%         %plot(time,Pb(:,1)-Pr(:,1),'--k')
+%         title('Pho')
+%         hold
+%         drawnow
+%         
+%         subplot(4,2,4);
+%         %plot(time,Vb,'k')
+%         
+%         plot(time,Vr(:,1),'r')
+%         hold on
+%         plot(time,Vr(:,2),'g')
+% %         plot(time,Vr(:,3),'b')        
+%         title('Vr(rg)')
+%         hold
+%         %drawnow
+%              
+%        
+%         subplot(4,2,8);
+%         plot(time,fi,'g')
+%         hold on
+%         plot(time,gama,'b')
+%         title('phi(t)(g) & gamma(t)(b)');
+%         %axis([time(1) time(steps) -50 50])
+%         hold
+%         drawnow
+
+
+
+
+                    
         
-        subplot(4,2,5); 
-        plot(xpoints,e_time)
-        title('Episode Time')
-        %drawnow
-        
-        subplot(4,2,7); 
+        subplot(1,2,2); 
         plot(xpoints,pscored)
         title('% goals scored')
         %drawnow
      
-        subplot(4,2,2)
+        subplot(1,2,1)
         %plot(Pt(1),Pt(2),'*k')%posición del target 
         %hold on
         plot(conf.PgoalPostR(1),conf.PgoalPostR(2),'ok') %goal post right
@@ -121,36 +176,8 @@ for i=1:conf.episodes
         hold
         drawnow
         
-        subplot(4,2,6);
-        plot(time,ro,'r')
-        hold on
-        %plot(time,Pr(:,1),'b')
-        %plot(time,Pb(:,1),'r*')
-        %plot(time,Pb(:,1)-Pr(:,1),'--k')
-        title('Pho')
-        hold
-        drawnow
         
-        subplot(4,2,4);
-        %plot(time,Vb,'k')
         
-        plot(time,Vr(:,1),'r')
-        hold on
-        plot(time,Vr(:,2),'g')
-%         plot(time,Vr(:,3),'b')        
-        title('Vr(rg)')
-        hold
-        %drawnow
-             
-       
-        subplot(4,2,8);
-        plot(time,fi,'g')
-        hold on
-        plot(time,gama,'b')
-        title('phi(t)(g) & gamma(t)(b)');
-        %axis([time(1) time(steps) -50 50])
-        hold
-        drawnow
      
      end
      

@@ -10,7 +10,7 @@ conf.opti = opti;
 %% Par�metros.--------------------------------------------------------------
 conf.episodes    = 1000;    % Maximum number of episodes
 conf.Ts          = 0.2;     % Sample time of a RL step
-conf.maxDistance = 1000;    % Maximum ball distance permited before to end the episode X FIELD DIMENSION
+conf.maxDistance = 4000;    % Maximum ball distance permited before to end the episode X FIELD DIMENSION
 conf.Runs        = RUNS;    % # of runs
 conf.NOISE       = 0.01;    % Noise 0-1
 conf.DRL         = x(7);    % Decentralized RL(1) or Centralized RL(0)
@@ -40,16 +40,15 @@ end
 
 conf.Rgain = x(4);
 conf.Rvar  = x(5);
-conf.Pt    = [conf.maxDistance/2 200];       % Target Position
-conf.posb  = [0.5 * conf.maxDistance 400];   % Initial ball poition
+
+conf.Pt    = [conf.maxDistance/2 0];       % Target Position
+conf.Pb    = [0.5*conf.maxDistance 1000];   % Initial ball poition
 
 conf.deltaVw   = 2;
-
-%% ------------------------------------------------------------------------
-% conf.Vr_max    = [60 60 5];     % x,y,rot Max Speed achieved by the robot.-
-conf.Vr_max    = [60 30 5];     % x,y,rot Max Speed achieved by the robot.-
+conf.Vr_max    = [100 40 5];     % x,y,rot Max Speed achieved by the robot.-
 conf.Vr_min    = -conf.Vr_max;
 conf.Vr_min(1) = 0;
+conf.Fr = 150; % Friction coefficient
 % -------------------------------------------------------------------------
 
 %% ------------------------------------------------------------------------
@@ -58,7 +57,7 @@ conf.Nactios   = [11,7,5];
 % -------------------------------------------------------------------------
 
 if conf.fuzzQ && conf.DRL
-    conf.Nactios = [3,3];
+    conf.Nactios = [11,7,3];
 end
 
 %% ------------------------------------------------------------------------
@@ -76,7 +75,7 @@ conf.tx1 = 0;
 conf.ty1 = 0;
 conf.a3  = 1;                                    % (2/5);
 conf.b3  = 1;
-conf.r3  = 0.3 * (conf.posb(2) - conf.Pt(2));
+conf.r3  = 0.3 * (conf.Pb(2) - conf.Pt(2));
 conf.tx3 = 0;
 conf.ty3 = 0;
 

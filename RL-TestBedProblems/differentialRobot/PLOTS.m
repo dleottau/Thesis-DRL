@@ -28,9 +28,13 @@ stringName = 'DRL1; lambda0.9; alpha0.3; softmax1.1; decay10; 25RUNS.mat';
 results=importdata([folder stringName]);
 [M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL');
 
-stringName = 'fuz-DRL1; lambda0.95; softmax1.1; decay9; alpha0.3; Nactions3; 25RUNS.mat';
-results=importdata([folder stringName]);
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-FQL');
+% stringName = 'fuz-DRL1; lambda0.95; softmax1.1; decay9; alpha0.3; Nactions3; 25RUNS.mat';
+% results=importdata([folder stringName]);
+% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-FQL');
+% 
+% stringName = 'MAapproach1; DRL1; lambda0.95; alpha0.4; softmax1.1; decay10; 25RUNS.mat';
+% results=importdata([folder stringName]);
+% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-CFA');
 
 
 

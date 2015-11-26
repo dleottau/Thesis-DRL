@@ -1,4 +1,4 @@
-% %% Algoritmo que ejecuta todo el código.-
+% %% Algoritmo que ejecuta todo el cï¿½digo.-
 % function f = optimizationFunction(x)
 % global RUNS;
 % global opti;
@@ -24,10 +24,10 @@ end
 
 x0 = [];
 
-%% Parámetros Algoritmo.-
+%% Parï¿½metros Algoritmo.-
 xname{1} = 'decay';
 % x0(1)    = 8;          % Exploration decay
-x0(1)  = 10;          % Exploration decay
+x0(1)  = 15;    % Exploration decay
 
 xname{2} = 'softmax';
 x0(2)    = 1.1;         % Epsilon
@@ -39,7 +39,7 @@ xname{4}='gain';
 x0(4) = 200000;   % reward function gain
 
 xname{5}='var';
-x0(5) = 30;   % reward function variance
+x0(5) = 50;   % reward function variance
 
 xname{6} = 'lambda';
 x0(6)    = 0.9;         % Lambda

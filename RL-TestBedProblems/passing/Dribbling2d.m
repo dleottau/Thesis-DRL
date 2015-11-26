@@ -53,22 +53,23 @@ conf.PgoalPostL = [conf.Pt(1)-conf.goalSize/2 conf.Pt(2)]; % Left Goal Post posi
 for i = 1:conf.episodes
     conf.episodeN = i;
     while 1
-        conf.Pb = conf.posb;
+        
         if ~conf.Test
             uB      = [conf.maxDistance conf.maxDistance 180];
-            lB      = [0 0.6 * conf.maxDistance -180];
+            lB      = [0 conf.Pb(2) -180];
             conf.Pr = rand(1,3).*(uB-lB) + lB;
             
-            % conf.Pr    = [conf.maxDistance/2 0.7 * conf.maxDistance 180];
-            % conf.Pr(3) = moduloPiDLF(atan2(conf.Pb(2)-conf.Pr(2),conf.Pb(1)-conf.Pr(1)),'r2d');
+            conf.Pr    = [conf.Pb(1) conf.Pb(2)+500 180];
+            conf.Pr(3) = moduloPiDLF(atan2(conf.Pb(2)-conf.Pr(2),conf.Pb(1)-conf.Pr(1)),'r2d');
             
             %% Movimiento Robot.-
             % -------------------------------------------------------------
-            [~,~,~,~, pho, gamma, phi] = movDiffRobot(Ts, conf.Pr, conf.Pt, conf.Pb, [0 0 0],0,0,0,zeros(2,1));
+            %[~,~,~,~, pho, gamma, phi] = movDiffRobot(Ts, conf.Pr, conf.Pt, conf.Pb, [0 0 0],0,0,0,w);
+            [~, ~, ~, ~, phi, gamma, pho, ~, ~, ~]=mov(Ts,conf.Pr,conf.Pt,conf.Pb,0,0,0,100,100,100,0,0,conf.Fr,zeros(2,1));
             % -------------------------------------------------------------
                         
-            % Revisar esta parte (inicializaci髇 Robot)
-            if ~sum([pho abs(gamma) abs(phi)] > 1.1*conf.feature_max(1:3))
+            % Revisar esta parte (inicializaci贸n Robot)
+            if ~sum([pho abs(gamma) abs(phi)] > [conf.maxDistance 45 45])% && pho < 1000
                 break
             end
         else
@@ -105,30 +106,30 @@ for i = 1:conf.episodes
     
     % keyboard
     %% Plot del entrenamiento.-
-    % Se agrega el plot del c韗culo.-
+    % Se agrega el plot del c铆rculo.-
     if conf.DRAWS == 1
         subplot(1,3,3)
         plot(reward)
         grid
         
-        % Gr醘ico score.---------------------------------------------------
+        % Gr谩fico score.---------------------------------------------------
         subplot(1,3,2);
         plot(xpoints,pscored)
         grid
         title('% goals scored')
         % -----------------------------------------------------------------
         
-        % Gr醘ico movimiento robot.----------------------------------------
+        % Gr谩fico movimiento robot.----------------------------------------
         subplot(1,3,1)
-        plot(Pt(1),Pt(2),'.k','LineWidth',2)                % Posici髇 del target
+        plot(Pt(1),Pt(2),'.k','LineWidth',2)                % Posici贸n del target
         hold on
-        plot(Pb(:,1),Pb(:,2),'*r')                          % Posici髇 de la bola
-        plot(Pr(:,1),Pr(:,2),'gx')                          % Posici髇 del robot
-        axis([0 conf.maxDistance 0 conf.maxDistance])
+        plot(Pb(:,1),Pb(:,2),'*r')                          % Posici贸n de la bola
+        plot(Pr(:,1),Pr(:,2),'gx')                          % Posici贸n del robot
+        axis([0 conf.maxDistance -1500 conf.maxDistance])
         grid
         % -----------------------------------------------------------------
         
-        % Gr醘ico elipses.-------------------------------------------------
+        % Gr谩fico elipses.-------------------------------------------------
         h_figur = gcf;
         
         circle_plot(conf.Pt(1), conf.Pt(2), conf.a1, conf.b1, conf.r1, conf.tx1, conf.ty1, h_figur, 'b')

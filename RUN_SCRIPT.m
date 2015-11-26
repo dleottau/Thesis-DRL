@@ -1,38 +1,51 @@
-%clear all
-clc
-clf
-close all
+function f = RUN_SCRIPT(x,RUNS)
+
+%conf.Test=0;
+% clc
+% clf
+% clear all
+% close all
+
+folder = 'opti/';
+
+global flagFirst;
+global opti;
+conf.opti=opti;
 
 %dbstop in softmax_selection.m at 38
 
-tic
-
 conf.episodes = 2000; %500;   %2000  maximum number of  episode
-conf.Runs = 5;
-conf.record =1;
+conf.Runs = RUNS;
+conf.record = 0;
 conf.DRAWS = 1;
-conf.NOISE = 0.05;
+conf.NOISE = 0.1;
 
 conf.TRANSFER = 0;  %=1 transfer, >1 acts gready from source policy, =0 learns from scratch, =-1 just for test performance from stored policies
 conf.nash = 0;   % 0 COntrol sharing, 1 NASh
-conf.MAapproach = 2;   % 0 no cordination, 1 frequency adjusted, 2 leninet
+conf.MAapproach = x(6);   % 0 no cordination, 1 frequency adjusted, 2 leninet
 conf.Mtimes = 0; % state-action pair must be visited M times before Q being updated
 conf.Q_INIT = 0;
 
 %sync=1, synchronizes using tne same random number for the 3 D-RL agents, otherwise, uses independetn random numbers per agent
-conf.sync.nash      = 1;
-conf.sync.TL        = 1;
+conf.sync.nash      = 0;
+conf.sync.TL        = 0;
 conf.sync.expl      = 0;
 if conf.TRANSFER, conf.sync.expl=1; end
 
-RL.param.alpha      = 0.5;   % 0.3-0.5 learning rate
-RL.param.gamma      = 1;   % discount factor
+if conf.opti
+    conf.DRAWS = 0;
+    conf.record = 1;
+end
+
+RL.param.alpha      = x(1);%0.5;   % 0.3-0.5 learning rate
+RL.param.gamma      = 0.99;   % discount factor
 RL.param.lambda     = 0.9;   % the decaying elegibiliy trace parameter
 RL.param.epsilon    = 1;
-RL.param.exp_decay  = 8; % 8 exploration decay parameter
-RL.param.softmax    = 50;   % Boltzmann temperature (20 by default), if <= 0 e-greaddy
-RL.param.beta       = 0.9;   % lenience discount factor
-RL.param.k          = 1.5;   % lenience parameter
+RL.param.softmax    = x(2);   % Boltzmann temperature (50 by default), if <= 0 e-greaddy
+RL.param.exp_decay  = x(3); % 8 exploration decay parameter
+RL.param.k          = x(4);    %1.5 lenience parameter
+RL.param.beta       = x(5);   %0.9 lenience discount factor
+
 
 
 %evolutionFile = 'MAS-coop/DRL-3runs-Noise005-2000exp8-NoSync-FAboltzman20';
@@ -49,30 +62,30 @@ conf.Vr_max = [100 40 40]; %x,y,rot Max Speed achieved by the robot
 conf.Vr_min = -conf.Vr_max;
 conf.Vr_min(1) = conf.Voffset;
 conf.feature_step = [50, 10, 10];
-conf.feature_min = [0, -30, -30]; %-30, -30
-conf.feature_max = [600, 30, 30]; %30, 30
+conf.feature_min = [0, -40, -40]; %-30, -30
+conf.feature_max = [600, 40, 40]; %30, 30
 conf.maxDeltaV = conf.Vr_max.*[1/3 1/3 1/2]; %mm/s/Ts
 conf.Ts = 0.2; %Sample time of a RL step
 
 
-a_spot={'r' 'g' 'b' 'c' 'm' 'y' 'k' '--r' '--g' '--b' '--c' };
+%a_spot={'r' 'g' 'b' 'c' 'm' 'y' 'k' '--r' '--g' '--b' '--c' };
 
 
-folder = 'MAS-coop/';  
+%folder = 'MAS-coop/';  
 loadFile = 'resultsFull_NASh-v2-20runs-Noise01-exp8.mat';
 
 
-fileNameP = ['DRL_' int2str(conf.Runs) 'Runs_Noise' num2str(conf.NOISE) '_MA' int2str(conf.MAapproach)];
+fileNameP = ['DRL_' int2str(conf.Runs) 'Runs_Noise' num2str(conf.NOISE) '_MA' int2str(conf.MAapproach) '_alpha' num2str(RL.param.alpha) '_lambda' num2str(RL.param.lambda)];
 if RL.param.softmax > 0
-    fileName = ['_softmax' int2str(RL.param.softmax) '_decay' num2str(RL.param.exp_decay)];
+   fileName = ['_softmax' int2str(RL.param.softmax) '_decay' num2str(RL.param.exp_decay)];
 else
-    fileName = ['_epsilon' num2str(RL.param.epsilon) '_decay' num2str(RL.param.exp_decay)]; 
+   fileName = ['_epsilon' num2str(RL.param.epsilon) '_decay' num2str(RL.param.exp_decay)]; 
 end
 
 if conf.MAapproach == 2
-    fileName = [fileNameP '_k' num2str(RL.param.k) '_beta' num2str(RL.param.beta) fileName ];
+   fileName = [fileNameP '_k' num2str(RL.param.k) '_beta' num2str(RL.param.beta) fileName ];
 else
-    fileName = [fileNameP fileName];
+   fileName = [fileNameP fileName];
 end
 
 if conf.nash==1 && conf.TRANSFER
@@ -82,26 +95,10 @@ elseif conf.nash==0 && conf.TRANSFER
 end
     
 
-loadFile = [folder loadFile];
-evolutionFile = [folder fileName];
+%loadFile = [folder loadFile];
+evolutionFile = [folder fileName ];
 performanceFile = loadFile; 
 conf.fileName = fileName;
-
-et_min=Inf;
-cr_max=-Inf;
-v_max=-Inf;
-pf_min=Inf;
-
-et_max=-Inf;
-cr_min=Inf;
-v_min=Inf;
-pf_max=-Inf;
-
-interval=0.7;
-if conf.TRANSFER < 0
-    interval=0.1;
-end
-
 
 if conf.DRAWS==1
     size=get(0,'ScreenSize');
@@ -122,13 +119,41 @@ clear results;
 end
 %========================
 
-for i=1:conf.Runs
-    conf.nRun=i;
+if flagFirst
+    flagFirst=false;
+    disp('-');
+    disp(evolutionFile);
+    disp('-');
+end
+
+
+parfor i=1:RUNS
+    %for i=1:conf.Runs
+    %conf.nRun=i;
 %    disp(['Test= ', num2str(a), '.', num2str(i), ' lambda= ', num2str(lambda(a))])
-    [reward(:,:,i), e_time(:,i), Vavg(:,i), tp_faults(:,i), goals(i),  Qx,Qy,Qrot] = Dribbling2d(conf, RL);
-                              
-    et(i) = mean(e_time(ceil(interval*conf.episodes):conf.episodes,i))/1.5;
-    et_sd(i) = std(e_time(ceil(interval*conf.episodes):conf.episodes,i))/1.5;
+    %[reward(:,:,i), e_time(:,i), Vavg(:,i), tp_faults(:,i), goals(i),  Qx,Qy,Qrot] = Dribbling2d(conf, RL, i);
+    [reward(:,:,i), e_time(:,i), Vavg(:,i), tp_faults(:,i),  Qx{i},Qy{i},Qrot{i}] = Dribbling2d(conf, RL, i);
+end      
+
+et_min=Inf;
+cr_max=-Inf;
+v_max=-Inf;
+pf_min=Inf;
+
+et_max=-Inf;
+cr_min=Inf;
+v_min=Inf;
+pf_max=-Inf;
+
+interval=0.7;
+if conf.TRANSFER < 0
+    interval=0.1;
+end
+
+for i=1:RUNS
+
+    et(i) = mean(e_time(ceil(interval*conf.episodes):end,i))/1.5;
+    et_sd(i) = std(e_time(ceil(interval*conf.episodes):end,i))/1.5;
     if et(i) < et_min
         et_min=et(i);
     end
@@ -136,17 +161,18 @@ for i=1:conf.Runs
         et_max=et(i);
     end
        
-    vm(i) = mean(Vavg(ceil(interval*conf.episodes):conf.episodes,i));
-    vm_sd(i) = std(Vavg(ceil(interval*conf.episodes):conf.episodes,i));
+    vm(i) = mean(Vavg(ceil(interval*conf.episodes):end,i));
+    vm_sd(i) = std(Vavg(ceil(interval*conf.episodes):end,i));
     if vm(i) > v_max
         v_max=vm(i);
     end
     if vm(i) < v_min
         v_min=vm(i);
     end
-        
-    pf(i) = mean(tp_faults(ceil(interval*conf.episodes):conf.episodes,i));
-    pf_sd(i) = std(tp_faults(ceil(interval*conf.episodes):conf.episodes,i));
+    
+       
+    pf(i) = mean(tp_faults(ceil(interval*conf.episodes):end,i));
+    pf_sd(i) = std(tp_faults(ceil(interval*conf.episodes):end,i));
     if pf(i) < pf_min
         pf_min=pf(i);
     end
@@ -154,19 +180,16 @@ for i=1:conf.Runs
         pf_max=pf(i);
     end
     
-    goals(i)=100*goals(i)/conf.episodes;
-    goals_avg = mean(goals);
-    goals_sd = std(goals);
-        
-    cr(i) = mean(reward(ceil(interval*conf.episodes):conf.episodes,1,i)) + mean(reward(ceil(interval*conf.episodes):conf.episodes,2,i)) + mean(reward(ceil(interval*conf.episodes):conf.episodes,3,i));
+         
+    cr(i) = mean(reward(ceil(interval*conf.episodes):end,1,i)) + mean(reward(ceil(interval*conf.episodes):end,2,i)) + mean(reward(ceil(interval*conf.episodes):end,3,i));
     if cr(i) > cr_max
         cr_max=cr(i);
         et_xxx=et(i);
         v_xxx=vm(i);
         pf_xxx=pf(i);
-        results.Qok_x=Qx;
-        results.Qok_y=Qy;
-        results.Qok_rot=Qrot;
+        results.Qx_best=Qx{i};
+        results.Qy_best=Qy{i};
+        results.Qw_best=Qrot{i};
     end
     if cr(i) < cr_min
         cr_min=cr(i);
@@ -196,23 +219,20 @@ results.performance(5,2)=mean(pf_sd);
 results.performance(6,2)=results.performance(5,2)/tested_episodes;
 results.performance(4,2)=pf_xxx; %best
 
-results.performance(1,3)=(100-mean(vm)+mean(pf))/2;
+f=(100-mean(vm)+mean(pf))/2;  % Fitness function
+results.performance(1,3)=f;
 
-results.performance(1,4)=goals_avg;
-results.performance(5,4)=goals_sd;
-results.performance(6,4)=results.performance(5,4)/conf.Runs;
+results.performance(3,4)=cr_min;
+results.performance(1,4)=mean(cr);
+results.performance(2,4)=cr_max;
+results.performance(4,4)=cr_max;%best
 
-results.performance(3,5)=cr_min;
-results.performance(1,5)=mean(cr);
-results.performance(2,5)=cr_max;
-results.performance(4,5)=cr_max;%best
-
-results.performance(2,6)=et_min;
-results.performance(1,6)=mean(et);
-results.performance(3,6)=et_max;
-results.performance(5,6)=mean(et_sd);
-results.performance(6,6)=results.performance(5,4)/tested_episodes;
-results.performance(4,6)=et_xxx; %best
+results.performance(2,5)=et_min;
+results.performance(1,5)=mean(et);
+results.performance(3,5)=et_max;
+results.performance(5,5)=mean(et_sd);
+results.performance(6,5)=results.performance(5,4)/tested_episodes;
+results.performance(4,5)=et_xxx; %best
 
 
 
@@ -281,10 +301,5 @@ else
         save ([performanceFile '.mat'], 'results');
     end
 end
-
-toc
-
-% smoot
-% errorvar
 
 

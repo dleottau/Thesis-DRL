@@ -43,6 +43,6 @@ end
 
 % if(ballState==3 || (ballState==0 && (Pr(1)>maxDistance || Pr(1)<0 || Pr(2)>maxDistance || Pr(2)<0 ||  Pb(1)>maxDistance || Pb(1)<0 || Pb(2)>maxDistance || Pb(2)<0 ||  abs(gama) > 90   ||  abs(fi) > 150)))
 % if( Pr(1) > maxDistance || Pr(1) < Pt(2) || Pr(2) > maxDistance || Pr(2) < Pt(2) ||  Pb(1) > maxDistance || Pb(1) < Pt(2) || Pb(2) > maxDistance || Pb(2) < Pt(2) || ballState == 3)
-if( Pr(1) > maxDistance || Pr(2) > maxDistance || Pr(2) < 0 ||  Pb(1) > maxDistance || Pb(1) < 0 || Pb(2) > maxDistance || ballState == 3)
+if( Pr(1) > maxDistance || Pr(1) < 0 || Pr(2) > maxDistance || Pr(2) < -1000 ||  Pb(1) > maxDistance || Pb(1) < 0 || Pb(2) > maxDistance || Pb(2) < -1000 || ballState == 3)
     f = true;
 end

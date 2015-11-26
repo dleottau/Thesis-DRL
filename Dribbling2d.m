@@ -1,5 +1,6 @@
-function  [reward, e_time, Vavg, tp_faults, goals, Qx,Qy,Qrot] =Dribbling2d( conf, RL)
+function  [reward, e_time, Vavg, tp_faults, Qx,Qy,Qrot] =Dribbling2d( conf, RL, run)
 %Dribbling1d SARSA, the main function of the trainning
+
 
 load W-FLC-RC2014;
 set(gcf,'name',['DRL Dribbling ' conf.fileName])  % for realtime inverse kinematics
@@ -85,6 +86,8 @@ for i=1:conf.episodes
     goals=goal_k+goals;
     softmax(i,:)=RL.cum_fa/steps;
     
+    fitness=0.5*(100-Vavg+tp_faults);
+    
     if conf.DRAWS==1
         
         subplot(3,3,1)
@@ -97,8 +100,9 @@ for i=1:conf.episodes
         title('% Time Faults')
         %drawnow
         
+        
         subplot(3,3,7); 
-        plot(xpoints, 0.5*(100-Vavg+tp_faults))
+        plot(xpoints, fitness)
         title('Global Fitness')
         %drawnow
         
@@ -110,9 +114,9 @@ for i=1:conf.episodes
         plot(xpoints,reward(:,3),'b')      
         %plot(xpoints,btd,'k')
         if RL.param.softmax
-            title([ 'Mean Reward(rgb) Episode:',int2str(i), ' z=',sprintf('%.2f',RL.param.softmax) ' Run: ',int2str(conf.nRun)])
+            title([ 'Mean Reward(rgb) Episode:',int2str(i), ' z=',sprintf('%.2f',RL.param.softmax) ' Run: ',int2str(run)])
         else
-            title([ 'Mean Reward(rgb) Episode:',int2str(i), ' p=',sprintf('%.2f',RL.param.p) ' Run: ',int2str(conf.nRun)])
+            title([ 'Mean Reward(rgb) Episode:',int2str(i), ' p=',sprintf('%.2f',RL.param.p) ' Run: ',int2str(run)])
         end
         hold
         
@@ -174,6 +178,10 @@ for i=1:conf.episodes
      Qy=RL.Q_y;
      Qrot=RL.Q_rot;
 
+end
+
+if ~conf.opti
+    disp(['RUN: ',int2str(run), '; Fitness: ', num2str(mean(fitness(ceil(conf.episodes*0.7):end)))])
 end
 
 

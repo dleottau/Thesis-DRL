@@ -53,7 +53,7 @@ time(1)      = 0;
 i            = 1;
 Vavg         = 0;
 scored       = 0;
-Fr           = 15;
+Fr           = conf.Fr;
 
 % Vr(i,:)   = [0 0];                                          % Velocidad del robot
 % ---------------------------------------------------------------------
@@ -61,10 +61,11 @@ Vr(i,:)   = [0 0 0];                                          % Velocidad del ro
 % ---------------------------------------------------------------------
 
 Vb(i,1)   = 0;                                              % Velocidad de la bola
-dirb(i,1) = atan2(Pb(i,2)-Pr(i,2),Pb(i,1)-Pr(i,1))*180/pi;  % DirecciÛn bola
+dirb(i,1) = atan2(Pb(i,2)-Pr(i,2),Pb(i,1)-Pr(i,1))*180/pi;  % Direcci√≥n bola
 
 %% Movimiento Robot.-
-[Pr(i,:), Pb(i,:), Vb(i,1), dirb(i,1), ro(i,1), gama(i,1), fi(i,1)] = movDiffRobot(Ts,Pr,Pt,Pb,Vr(i,:),Vb,dirb,Fr, clipDLF(randn(2,1).*NoiseBall,-2,2));
+%[Pr(i,:), Pb(i,:), Vb(i,1), dirb(i,1), ro(i,1), gama(i,1), fi(i,1)] = movDiffRobot(Ts,Pr,Pt,Pb,Vr(i,:),Vb,dirb,Fr, clipDLF(randn(2,1).*NoiseBall,-2,2));
+[Pr(i,:), Ptr(i,:), Pbr(i,:), alfa, fi(i,1), gama(i,1), ro(i,1), Vb(i,1), dirb(i,1), Pb(i,:)]=mov(Ts,Pr,Pt,Pb,Vr(i,1),Vr(i,2),Vr(i,3),100,100,100,Vb,dirb,Fr, clipDLF(randn(2,1).*NoiseBall,-2,2));
 
 dVb   = 0;
 xG    = [Pr(i,1),Pb(i,2),Vb(i,1),Vr(i,1),ro(i,1),dVb,gama(i,1),fi(i,1),Pt(1,1),Pr(i,2),Pb(i,1),Pr(i,3),Vr(i,2)];
@@ -166,7 +167,9 @@ while 1
     % =====================================================================
     
     %% Updating kinematincs model
-    [Pr(i,:), Pb(i,:), Vb(i,1), dirb(i,1), ro(i,1), gama(i,1), fi(i,1)] = movDiffRobot(Ts,Pr(i-1,:),Pt,Pb(i-1,:),Vr(i,:),Vb(i-1,1),dirb(i-1,1),Fr,clipDLF(randn(2,1).*NoiseBall,-2,2));
+    %[Pr(i,:), Pb(i,:), Vb(i,1), dirb(i,1), ro(i,1), gama(i,1), fi(i,1)] = movDiffRobot(Ts,Pr(i-1,:),Pt,Pb(i-1,:),Vr(i,:),Vb(i-1,1),dirb(i-1,1),Fr,clipDLF(randn(2,1).*NoiseBall,-2,2));
+    [Pr(i,:), Ptr(i,:), Pbr(i,:), alfa, fi(i,1), gama(i,1), ro(i,1), Vb(i,1), dirb(i,1), Pb(i,:)]=mov(Ts,Pr(i-1,:),Pt,Pb(i-1,:),Vr(i,1),Vr(i,2),Vr(i,3),100,100,100,Vb(i-1,1),dirb(i-1,1),Fr, clipDLF(randn(2,1).*NoiseBall,-2,2));
+    
     
     dVb = (Vb(i)-Vb(i-1));
     
@@ -200,13 +203,13 @@ while 1
     [V_FLC] = controller_dribbling (Xp,Vr_min,Vr_max);
     % ---------------------------------------
     
-    %% Ac· se genera la informaciÛn de cuando se tiene un gol.-------------
+    %% Ac√° se genera la informaci√≥n de cuando se tiene un gol.-------------
     % Check if it is a Goal
     balline          = Pb(i,:);
     [checkGoal, Pbi, area_fin] = goal1( conf , balline , conf.tx3 , conf.ty3 , ballState );
     
     %% Observe the reward at state xp and the final state flag.------------
-    [r,f]        = GetReward(Xp, conf.feature_max, Pr(i,:), Pb(i,:), Pt, maxDistance, checkGoal, Pbi,ballState, area_fin, time(i), conf.f_gmm, conf.posb(1), conf.posb(2),conf);
+    [r,f]        = GetReward(Xp, conf.feature_max, Pr(i,:), Pb(i,:), Pt, maxDistance, checkGoal, Pbi,ballState, area_fin, time(i), conf.f_gmm, conf.Pb(1), conf.Pb(2),conf);
     total_reward = total_reward + r;
     
     % Select action prime
