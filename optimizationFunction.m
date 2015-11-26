@@ -1,5 +1,9 @@
 function f = optimizationFunction(x)
 global RUNS;
+<<<<<<< HEAD
+=======
+global opti;
+>>>>>>> origin/thesis
 
 % clc
 % clf
