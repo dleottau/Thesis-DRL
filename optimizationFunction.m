@@ -29,10 +29,10 @@ xname{1}='alpha';
 x0(1) = 0.5;
 
 xname{2}='softmax';
-x0(2) = 50;
+x0(2) = 70;
 
 xname{3}='decay';
-x0(3) = 8;  
+x0(3) = 6;  
 % ------
 
 xname{4}='k-lenient';
@@ -42,7 +42,7 @@ xname{5}='beta';
 x0(5) = 0.9; 
 
 xname{6}='MAapproach';
-x0(6) = 0;   % 0 no cordination, 1 frequency adjusted, 2 leninet
+x0(6) = 2;   % 0 no cordination, 1 frequency adjusted, 2 leninet
 
 
 
@@ -50,6 +50,8 @@ if opti
     x0(1) = x(1);
     x0(2) = x(2);
     x0(3) = x(3);
+    x0(4) = x(4);
+    x0(5) = x(5);
 end
 
 stringName=[];
@@ -75,5 +77,6 @@ if ~opti
     matlabpool close;
     toc
 else
-    disp(['Fitness:',num2str(f),'; alpha:',num2str(x0(1)),'; softmax:',num2str(x0(2)),'; decay:',num2str(x0(3))]);
+    disp(['Fitness:',num2str(f),'; alpha:',num2str(x0(1)),'; softmax:',num2str(x0(2)),'; decay:',num2str(x0(3)),'; k-lenient:',num2str(x0(4)),'; beta:',num2str(x0(5))]);
 end
+
