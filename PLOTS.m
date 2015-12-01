@@ -18,11 +18,18 @@ M=[];
 S=[];
 
 
-load MAS-coop/DRL-3runs-Noise005-2000exp8-NoSync-boltzman20.mat
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'softmax-Temp20');
+load finalTests/DRL_25Runs_Noise0.1_MA0_alpha0.5_lambda0.9_softmax70_decay6.mat
+[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL');
 
-load MAS-coop/DRL-3runs-Noise005-2000exp8-NoSync-egreedy.mat
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'e-greedy');
+load finalTests/DRL_25Runs_Noise0.1_MA2_alpha0.1_lambda0.9_k1.5_beta0.9_softmax70_decay6.mat
+[M,S,n,legendN] = load_results(results,M,S,n,legendN,'L-RL');
+
+
+% load MAS-coop/DRL-3runs-Noise005-2000exp8-NoSync-boltzman20.mat
+% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'softmax-Temp20');
+% 
+% load MAS-coop/DRL-3runs-Noise005-2000exp8-NoSync-egreedy.mat
+% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'e-greedy');
 
 
  

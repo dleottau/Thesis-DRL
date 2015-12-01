@@ -6,7 +6,7 @@ function f = RUN_SCRIPT(x,RUNS)
 % clear all
 % close all
 
-folder = 'opti/';
+folder = 'finalTests/';
 
 global flagFirst;
 global opti;
@@ -16,8 +16,8 @@ conf.opti=opti;
 
 conf.episodes = 2000; %500;   %2000  maximum number of  episode
 conf.Runs = RUNS;
-conf.record = 0;
-conf.DRAWS = 1;
+conf.record = 1;
+conf.DRAWS = 0;
 conf.NOISE = 0.1;
 
 conf.TRANSFER = 0;  %=1 transfer, >1 acts gready from source policy, =0 learns from scratch, =-1 just for test performance from stored policies
@@ -127,8 +127,8 @@ if flagFirst
 end
 
 
-parfor i=1:RUNS
-    %for i=1:conf.Runs
+%parfor i=1:RUNS
+for i=1:conf.Runs
     %conf.nRun=i;
 %    disp(['Test= ', num2str(a), '.', num2str(i), ' lambda= ', num2str(lambda(a))])
     %[reward(:,:,i), e_time(:,i), Vavg(:,i), tp_faults(:,i), goals(i),  Qx,Qy,Qrot] = Dribbling2d(conf, RL, i);

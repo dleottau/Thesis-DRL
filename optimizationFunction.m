@@ -1,35 +1,33 @@
-function f = optimizationFunction(x)
-global RUNS;
-<<<<<<< HEAD
-=======
-global opti;
->>>>>>> origin/thesis
-
-% clc
-% clf
-% clear all
-% close all
-% tic
+% function f = optimizationFunction(x)
+% global RUNS;
 % global opti;
-% opti=0;
-% 
-% if ~opti
-%     RUNS=2;
-% 
-%     myCluster = parcluster('local');
-%     if matlabpool('size') == 0 % checking to see if my pool is already open
-%         matlabpool(myCluster.NumWorkers)
-%     else
-%         matlabpool close
-%         matlabpool(myCluster.NumWorkers)
-%     end
-% end
+
+
+clc
+clf
+clear all
+close all
+tic
+global opti;
+opti=0;
+
+if ~opti
+    RUNS=25;
+
+    myCluster = parcluster('local');
+    if matlabpool('size') == 0 % checking to see if my pool is already open
+        matlabpool(myCluster.NumWorkers)
+    else
+        matlabpool close
+        matlabpool(myCluster.NumWorkers)
+    end
+end
     
 
 x0 = [];
 
 xname{1}='alpha';
-x0(1) = 0.5;
+x0(1) = 0.1;
 
 xname{2}='softmax';
 x0(2) = 70;
