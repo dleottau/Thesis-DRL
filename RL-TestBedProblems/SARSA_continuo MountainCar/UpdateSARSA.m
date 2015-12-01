@@ -27,7 +27,7 @@ end
 %TD = r + param.gamma*Qap - Qa;
 e_trace = e_trace* param.gamma * param.lambda + FVT;
 
-if MAapproach == 0 || MAapproach == 1  || MAapproach == 2 && ( TD>0 || rand()>1-exp(-param.k*Ta) || (TDT(1)<0 && TDT(2)<0)) 
+if MAapproach == 0 || MAapproach == 1  || MAapproach == 2 && ( TD>0 || rand()>1-exp(-param.k*Ta)) 
     e_trace = e_trace* param.gamma * param.lambda + FVT;
     Q = Q + param.fa*param.alpha * ( e_trace*TD);
 end

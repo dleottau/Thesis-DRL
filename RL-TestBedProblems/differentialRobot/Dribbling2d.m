@@ -1,6 +1,7 @@
 function  [pscored, scored, Qx, Qw] = Dribbling2d( nRun, conf, RL)
 %Dribbling1d SARSA, the main function of the trainning
 
+set(gcf,'name',['Differential Robot ' conf.fileName])
 RL.param.DRL=conf.DRL;
 
 epsilon0     = RL.param.epsilon;  % probability of a random action selection
@@ -19,12 +20,19 @@ end
 
 if ~conf.Test
     if conf.DRL
-        RL.Q = QTable( conf.nstates, conf.nactions_x, conf );  % the Qtable for the vx agent
-        RL.Q_rot = QTable( conf.nstates, conf.nactions_w, conf );  % the Qtable for the v_rot agent
+        RL.Q = QTable( conf.nstates, conf.nactions_x, conf.Q_INIT );  % the Qtable for the vx agent
+        RL.Q_rot = QTable( conf.nstates, conf.nactions_w, conf.Q_INIT );  % the Qtable for the v_rot agent
     else
-        RL.Q = QTable( conf.nstates, conf.nactions, conf ); 
+        RL.Q = QTable( conf.nstates, conf.nactions, conf.Q_INIT ); 
         RL.Q_rot = 0;
     end
+end
+
+RL.T        = 0;
+RL.T_rot    = 0;
+if conf.MAapproach == 2 && conf.DRL
+    RL.T        = QTable( conf.nstates,conf.nactions_x, 1);
+    RL.T_rot    = QTable( conf.nstates, conf.nactions_w, 1 );
 end
 
 EXPLORATION = conf.episodes/conf.EXPL_EPISODES_FACTOR;

@@ -6,7 +6,7 @@ function f = RUN_SCRIPT(x,RUNS)
 % clear all
 % close all
 
-folder = 'opti/';
+folder = 'finalTests/';
 
 global flagFirst;
 global opti;
@@ -16,8 +16,8 @@ conf.opti=opti;
 
 conf.episodes = 2000; %500;   %2000  maximum number of  episode
 conf.Runs = RUNS;
-conf.record = 0;
-conf.DRAWS = 1;
+conf.record = 1;
+conf.DRAWS = 0;
 conf.NOISE = 0.1;
 
 conf.TRANSFER = 0;  %=1 transfer, >1 acts gready from source policy, =0 learns from scratch, =-1 just for test performance from stored policies
@@ -46,15 +46,11 @@ RL.param.exp_decay  = x(3); % 8 exploration decay parameter
 RL.param.k          = x(4);    %1.5 lenience parameter
 RL.param.beta       = x(5);   %0.9 lenience discount factor
 
-
-
 %evolutionFile = 'MAS-coop/DRL-3runs-Noise005-2000exp8-NoSync-FAboltzman20';
 %performanceFile = 'boltzmann/Vx-5runs-Noise03-50exp30-NoSync-boltzmann1';
 
-
 conf.maxDistance =6000;    % maximum ball distance permited before to end the episode X FIELD DIMENSION
 conf.th_max = [250 15 15];      % maximum pho desired
-
 
 conf.Voffset = 1; %Offset Speed in mm/s
 conf.V_action_steps = [25, 20, 20]/4; % /4 works good
@@ -128,7 +124,7 @@ end
 
 
 parfor i=1:RUNS
-    %for i=1:conf.Runs
+%for i=1:conf.Runs
     %conf.nRun=i;
 %    disp(['Test= ', num2str(a), '.', num2str(i), ' lambda= ', num2str(lambda(a))])
     %[reward(:,:,i), e_time(:,i), Vavg(:,i), tp_faults(:,i), goals(i),  Qx,Qy,Qrot] = Dribbling2d(conf, RL, i);

@@ -27,11 +27,11 @@ folder = 'tests/'; % To record the test result
 %stringName = 'fuz-DRL1; lambda0.95; softmax1.1; decay9; alpha0.3; Nactions3; 25RUNS.mat';
 %conf.DRL = 1; conf.fuzzQ = 1; conf.MAapproach = 0;
 
-stringName = 'MAapproach1; DRL1; lambda0.95; alpha0.4; softmax1.1; decay10; 25RUNS.mat';
-conf.DRL = 1; conf.fuzzQ = 0; conf.MAapproach = 1; 
+%stringName = 'MAapproach1; DRL1; lambda0.95; alpha0.4; softmax1.1; decay10; 25RUNS.mat';
+%conf.DRL = 1; conf.fuzzQ = 0; conf.MAapproach = 0; 
 
-
-
+%stringName = 'MAapproach2; DRL1; lambda0.95; softmax2; alpha0.3; decay8; beta0.7; k-leninet1; 25RUNS_k1_beta0.7.mat';
+%conf.DRL = 1; conf.fuzzQ = 0; conf.MAapproach = 0;
 
 conf.DRAWS = 1;
 conf.record = 1;
@@ -91,7 +91,8 @@ conf.feature_step = [200, 30, 30 conf.V_action_steps(2)]; %[50, 10, 10]  %states
 conf.feature_min = [0, -45, -45 conf.Vr_min(2)];
 conf.feature_max = [800, 45, 45 conf.Vr_max(2)];
 
-a_spot={'r' 'g' 'b' 'c' 'm' 'y' 'k' '--r' '--g' '--b' '--c' };
+conf.fileName = stringName;
+
 
 %parfor n=1:RUNS
 for n=1:RUNS

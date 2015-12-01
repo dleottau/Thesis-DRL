@@ -13,11 +13,11 @@ conf.Ts = 0.2; %Sample time of a RL step
 conf.maxDistance = 800;    % maximum ball distance permited before to end the episode X FIELD DIMENSION
 conf.Runs = RUNS;
 conf.NOISE = 0.01;
-conf.DRL = x(5); %Decentralized RL(1) or Centralized RL(0)
+conf.DRL = x(7); %Decentralized RL(1) or Centralized RL(0)
 conf.DRAWS = 1;
-conf.record = 0;
+conf.record = 1;
 conf.fuzzQ = 0;
-conf.MAapproach = x(6);
+conf.MAapproach = x(8);
 
 if conf.opti
     conf.DRAWS = 0;
@@ -27,12 +27,14 @@ end
 
 
 conf.Q_INIT = 0;
-conf.EXPL_EPISODES_FACTOR = x(1);
-RL.param.alpha       = x(3);   % learning rate
+conf.EXPL_EPISODES_FACTOR = x(3); %x(1);
+RL.param.alpha       = x(4); %x(3);   % learning rate
 RL.param.gamma       = 0.99;   % discount factor
-RL.param.lambda      = x(4);   % the decaying elegibiliy trace parameter
+RL.param.lambda      = x(6);   % the decaying elegibiliy trace parameter
 RL.param.epsilon = 1;
-RL.param.softmax = x(2);
+RL.param.softmax = x(5); %x(2);
+RL.param.k          = x(1); %x(4);    %1.5 lenience parameter
+RL.param.beta       = x(2); %x(5);   %0.9 lenience discount factor
 
 if conf.Test %Para pruebas de performance
     RL.param.epsilon = 0;
@@ -64,9 +66,19 @@ if conf.DRAWS
     figure('position',[0.1*size(3) 0.05*size(4) 0.85*size(3) 0.7*size(4)]);
 end
 
+if conf.MAapproach == 2
+   stringName = [stringName '_k' num2str(RL.param.k) '_beta' num2str(RL.param.beta) ];
+end
+if conf.fuzzQ
+    stringName=['fuz-' stringName];
+end
+if conf.Test
+   stringName=['Test-' loadFile]; 
+end 
+conf.fileName = stringName;
 
-parfor n=1:RUNS
-%for n=1:RUNS
+%parfor n=1:RUNS
+for n=1:RUNS
     %[reward(:,:,i), e_time(:,i), Vavg(:,i), scored(:,i),  RL] = Dribbling2d( i, conf, RL);
     [pscored(:,n) scored(:, n) Q{n} Qw{n}] = Dribbling2d( n, conf, RL);
 end
@@ -101,10 +113,6 @@ f=mean(pf); % Fitness function: percentage of goals scored
 results.mean_goals = mean(pscored,2);
 results.std_goals = std(pscored,0,2);
 
-if conf.fuzzQ
-    stringName=['fuz-' stringName];
-end
-
 if conf.DRAWS==1
      figure,plot(mean(pscored,2))
      if conf.record > 0
@@ -112,9 +120,7 @@ if conf.DRAWS==1
      end
 end
 
-if conf.Test
-   stringName=['Test-' loadFile]; 
-end    
+   
 if conf.record > 0
    save ([folder stringName '.mat'], 'results');
 end

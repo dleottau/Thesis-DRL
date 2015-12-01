@@ -18,15 +18,14 @@ M=[];
 S=[];
 
 
-load MAS-coop/DRL-3runs-Noise005-2000exp8-NoSync-boltzman20.mat
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'softmax-Temp20');
+% load MAS-coop/DRL-3runs-Noise005-2000exp8-NoSync-boltzman20.mat
+% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'softmax-Temp20');
+% 
+% load MAS-coop/DRL-3runs-Noise005-2000exp8-NoSync-egreedy.mat
+% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'e-greedy');
 
-load MAS-coop/DRL-3runs-Noise005-2000exp8-NoSync-egreedy.mat
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'e-greedy');
-
-
- 
-
+load 'finalTests/DRL_25Runs_Noise0.1_MA1_alpha0.1_lambda0.9_softmax21_decay8.mat'
+[M,S,n,legendN] = load_results(results,M,S,n,legendN,'CA-DRL');
 
 
 Ms=M;%Smoothed means
