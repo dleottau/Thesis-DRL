@@ -6,7 +6,12 @@ function f = RUN_SCRIPT(x,RUNS)
 % clear all
 % close all
 
-folder = 'finalTests/';
+folder = 'finalTests/';  
+%loadFile = 'DRL_25Runs_Noise0.1_MA0_alpha0.5_lambda0.9_softmax70_decay6.mat';
+%loadFile = 'DRL_25Runs_Noise0.1_MA1_alpha0.1_lambda0.9_softmax21_decay8.mat';
+loadFile = 'DRL_25Runs_Noise0.1_MA2_alpha0.1_lambda0.9_k1.5_beta0.9_softmax70_decay6.mat';
+% folder = 'RC-2015/results/';  
+% loadFile = 'resultsFull_NASh-v2-20runs-Noise01-exp8.mat';
 
 global flagFirst;
 global opti;
@@ -17,10 +22,10 @@ conf.opti=opti;
 conf.episodes = 2000; %500;   %2000  maximum number of  episode
 conf.Runs = RUNS;
 conf.record = 1;
-conf.DRAWS = 0;
+conf.DRAWS = 1;
 conf.NOISE = 0.1;
 
-conf.TRANSFER = 0;  %=1 transfer, >1 acts gready from source policy, =0 learns from scratch, =-1 just for test performance from stored policies
+conf.TRANSFER = -1;  %=1 transfer, >1 acts gready from source policy, =0 learns from scratch, =-1 just for test performance from stored policies
 conf.nash = 0;   % 0 COntrol sharing, 1 NASh
 conf.MAapproach = x(6);   % 0 no cordination, 1 frequency adjusted, 2 leninet
 conf.Mtimes = 0; % state-action pair must be visited M times before Q being updated
@@ -31,6 +36,7 @@ conf.sync.nash      = 0;
 conf.sync.TL        = 0;
 conf.sync.expl      = 0;
 if conf.TRANSFER, conf.sync.expl=1; end
+if conf.TRANSFER<0, conf.episodes=100; end
 
 if conf.opti
     conf.DRAWS = 0;
@@ -46,11 +52,15 @@ RL.param.exp_decay  = x(3); % 8 exploration decay parameter
 RL.param.k          = x(4);    %1.5 lenience parameter
 RL.param.beta       = x(5);   %0.9 lenience discount factor
 
+
+
 %evolutionFile = 'MAS-coop/DRL-3runs-Noise005-2000exp8-NoSync-FAboltzman20';
 %performanceFile = 'boltzmann/Vx-5runs-Noise03-50exp30-NoSync-boltzmann1';
 
+
 conf.maxDistance =6000;    % maximum ball distance permited before to end the episode X FIELD DIMENSION
 conf.th_max = [250 15 15];      % maximum pho desired
+
 
 conf.Voffset = 1; %Offset Speed in mm/s
 conf.V_action_steps = [25, 20, 20]/4; % /4 works good
@@ -66,9 +76,6 @@ conf.Ts = 0.2; %Sample time of a RL step
 
 %a_spot={'r' 'g' 'b' 'c' 'm' 'y' 'k' '--r' '--g' '--b' '--c' };
 
-
-%folder = 'MAS-coop/';  
-loadFile = 'resultsFull_NASh-v2-20runs-Noise01-exp8.mat';
 
 
 fileNameP = ['DRL_' int2str(conf.Runs) 'Runs_Noise' num2str(conf.NOISE) '_MA' int2str(conf.MAapproach) '_alpha' num2str(RL.param.alpha) '_lambda' num2str(RL.param.lambda)];
@@ -91,7 +98,7 @@ elseif conf.nash==0 && conf.TRANSFER
 end
     
 
-%loadFile = [folder loadFile];
+loadFile = [folder loadFile];
 evolutionFile = [folder fileName ];
 performanceFile = loadFile; 
 conf.fileName = fileName;
@@ -103,15 +110,15 @@ end
 
 
 if conf.TRANSFER<0 %Para pruebas de performance
-    load loadFile;
-end
-
-%========TRANSFER=========
-if conf.TRANSFER<0 %Para pruebas de performance
-RL.Q        = results.Qok_x;%Qx_DRL;
-RL.Q_y      = results.Qok_y;%Qy_DRL;
-RL.Q_rot    = results.Qok_rot;%Qrot_DRL;
-clear results;
+    %load loadFile;
+    results=importdata(loadFile);
+    RL.Q        = results.Qx_best;
+    RL.Q_y      = results.Qy_best;
+    RL.Q_rot    = results.Qw_best;
+%     RL.Q        = results.Qok_x;
+%     RL.Q_y      = results.Qok_y;
+%     RL.Q_rot    = results.Qok_rot;
+    clear results;
 end
 %========================
 
@@ -123,8 +130,8 @@ if flagFirst
 end
 
 
-parfor i=1:RUNS
-%for i=1:conf.Runs
+%parfor i=1:RUNS
+for i=1:conf.Runs
     %conf.nRun=i;
 %    disp(['Test= ', num2str(a), '.', num2str(i), ' lambda= ', num2str(lambda(a))])
     %[reward(:,:,i), e_time(:,i), Vavg(:,i), tp_faults(:,i), goals(i),  Qx,Qy,Qrot] = Dribbling2d(conf, RL, i);

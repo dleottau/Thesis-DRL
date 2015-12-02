@@ -11,15 +11,15 @@ global opti;
 opti=0;
 
 if ~opti
-    RUNS=25;
+    RUNS=1;
 
-    myCluster = parcluster('local');
-    if matlabpool('size') == 0 % checking to see if my pool is already open
-        matlabpool(myCluster.NumWorkers)
-    else
-        matlabpool close
-        matlabpool(myCluster.NumWorkers)
-    end
+%     myCluster = parcluster('local');
+%     if matlabpool('size') == 0 % checking to see if my pool is already open
+%         matlabpool(myCluster.NumWorkers)
+%     else
+%         matlabpool close
+%         matlabpool(myCluster.NumWorkers)
+%     end
 end
     
 
@@ -42,7 +42,7 @@ xname{5}='beta';
 x0(5) = 0.9; 
 
 xname{6}='MAapproach';
-x0(6) = 1;   % 0 no cordination, 1 frequency adjusted, 2 leninet
+x0(6) = 0;   % 0 no cordination, 1 frequency adjusted, 2 leninet
 
 
 

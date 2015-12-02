@@ -11,6 +11,7 @@ conf.Actions  = ActionTable( conf.Vr_min, conf.V_action_steps, conf.Vr_max, conf
 conf.nstates     = size(conf.States,1);
 conf.nactions    = size(conf.Actions,1);
 
+if conf.TRANSFER==0 
 RL.Q        = QTable( conf.nstates,conf.nactions, conf.Q_INIT );  % the Qtable for the vx agent
 RL.Q_y      = RL.Q;  % the Qtable for the vy agent
 RL.Q_rot    = RL.Q;  % the Qtable for the v_rot agent
@@ -18,6 +19,7 @@ RL.Q_rot    = RL.Q;  % the Qtable for the v_rot agent
 RL.trace    = QTable( conf.nstates,conf.nactions,0 );  % the elegibility trace for the vx agent
 RL.trace_y  = RL.trace;  % the elegibility trace for the vy agent
 RL.trace_rot = RL.trace;  % the elegibility trace for the v_rot agent
+end
 
 RL.QM       = QTable( 1,1, 0 ); %QTable( conf.nstates,conf.nactions, 0 );
 RL.QM_y     = RL.QM;
@@ -42,6 +44,7 @@ alpha0   = 1;%RL.param.alpha;
 if conf.TRANSFER<0 %Para pruebas de performance
     epsilon0             = 0;    
     p0                   = 0;
+    temp0                = 0;
 end    
 
 EXPLORATION = conf.episodes/RL.param.exp_decay;

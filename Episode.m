@@ -38,10 +38,11 @@ NoiseBall = [0.12; 0]+NOISE*0.8; %  0.8
 NoisePerception = NOISE*0.0025; % 
 
 % ------------- INIT PARAMETERS ---------------------
-RL.trace    = 0*RL.trace;
-RL.trace_y  = RL.trace;  % the elegibility trace for the vy agent
-RL.trace_rot = RL.trace;  % the elegibility trace for the v_rot agent
-
+if conf.TRANSFER>=0
+    RL.trace    = 0*RL.trace;
+    RL.trace_y  = RL.trace;  % the elegibility trace for the vy agent
+    RL.trace_rot = RL.trace;  % the elegibility trace for the v_rot agent
+end
 
 total_reward = 0;
 time(1)=0;
@@ -184,6 +185,7 @@ while 1
         fap = 1-min([fa_x-bias, fa_y-bias, fa_rot-bias])+1E-3;
         %fap = RL.param.alpha2 + 0.001;
         fap = clipDLF(fap, 0, 1);
+        
     end
         
     
@@ -222,8 +224,9 @@ while 1
     % terminal state?
     goal=0;
     
-    if (conf.TRANSFER >= 0 && (time(i)>1000 || abs(Pr(i,2))>maxDistance/2 || abs(Pb(i,2))>maxDistance/2 || Pr(i,1)>maxDistance || Pr(i,1)<0 || Pb(i,1)<0 || abs(gamma_) > 90 || abs(phi_) > 150))
-        Vavg=0;
+    %if (conf.TRANSFER >= 0 && (time(i)>100 || abs(Pr(i,2))>maxDistance/2 || abs(Pb(i,2))>maxDistance/2 || Pr(i,1)>maxDistance || Pr(i,1)<0 || Pb(i,1)<0 || abs(gamma_) > 90 || abs(phi_) > 150))
+    if (time(i)>1000 || abs(Pr(i,2))>maxDistance/2 || abs(Pb(i,2))>maxDistance/2 || Pr(i,1)>maxDistance || Pr(i,1)<0 || Pb(i,1)<0 || abs(gamma_) > 90 || abs(phi_) > 150)
+    Vavg=0;
         break
     end
     
