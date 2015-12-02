@@ -68,9 +68,9 @@ FV = getFeatureVector(X, conf.cores);
 ballState=0;
 
 % selects an action 
-[a, p] = action_selection(RL.Q, FV, RL.param);
+[a, p] = action_selection(RL.Q, RL.T, FV, RL.param);
 if conf.DRL
-    [a_rot, p_rot] = action_selection(RL.Q_rot, FV, RL.param);
+    [a_rot, p_rot] = action_selection(RL.Q_rot, RL.T_rot, FV, RL.param);
 end
 
 U=1;
@@ -180,9 +180,9 @@ while 1
    
    
     % select action prime
-    [ap, fa] = action_selection(RL.Q, FVp, RL.param);
+    [ap, fa] = action_selection(RL.Q, RL.T, FVp, RL.param);
     if conf.DRL
-        [ap_rot, fa_rot] = action_selection(RL.Q_rot, FVp, RL.param);
+        [ap_rot, fa_rot] = action_selection(RL.Q_rot, RL.T_rot, FVp, RL.param);
         fap = 1-min([(fa-1/conf.nactions_x), (fa_rot-1/conf.nactions_w)])+1E-6;
         fap = clipDLF(fap, 0, 1);
     end
@@ -195,14 +195,14 @@ while 1
     %if ballState==0 || ballState==3
     if ~conf.Test
         if conf.DRL % Decentralized
-            [RL.Q_rot, trace_rot] = UpdateSARSA(FV, a_rot, r(2), FVp, ap_rot, RL.Q_rot, trace_rot, RL.param, conf.MAapproach);
+            [RL.Q_rot, trace_rot, RL.T_rot] = UpdateSARSA(FV, a_rot, r(2), FVp, ap_rot, RL.Q_rot, trace_rot, RL.param, RL.T_rot, conf.MAapproach);
             if conf.fuzzQ %Fuzzy Q learning
                 [ RL.Q, trace, U, Qv] = UpdateQfuzzy(FV, r(1), RL.Q, trace, RL.param, Qv);
             else % SARSA
-                [RL.Q, trace] = UpdateSARSA(FV, a, r(1), FVp, ap, RL.Q,     trace,     RL.param, conf.MAapproach);
+                [RL.Q, trace, RL.T] = UpdateSARSA(FV, a, r(1), FVp, ap, RL.Q, trace, RL.param, RL.T, conf.MAapproach);
             end
         else % Centralized
-            [RL.Q, trace] = UpdateSARSA(FV, a, r(1), FVp, ap, RL.Q,     trace,     RL.param, conf.MAapproach);
+            [RL.Q, trace, RL.T] = UpdateSARSA(FV, a, r(1), FVp, ap, RL.Q, trace, RL.param, RL.T, conf.MAapproach);
         end
     end
         

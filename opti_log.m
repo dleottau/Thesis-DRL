@@ -1,4 +1,49 @@
 -
+opti/DRL_4Runs_Noise0.1_MA1_alpha0.5_lambda0.9_softmax50_decay8
+-
+Fitness:33.9459; alpha:0.5; softmax:50; decay:8
+Fitness:29.8376; alpha:0.4; softmax:51; decay:8
+Fitness:24.5055; alpha:0.3; softmax:51; decay:8
+Fitness:40.8875; alpha:0.6; softmax:51; decay:8
+Fitness:30.4088; alpha:0.7; softmax:51; decay:8
+Fitness:28.1339; alpha:0.2; softmax:51; decay:8
+Fitness:34.4857; alpha:0.1; softmax:51; decay:8
+Fitness:37.4909; alpha:0.3; softmax:41; decay:8
+Fitness:24.049; alpha:0.3; softmax:31; decay:8
+Fitness:27.6206; alpha:0.3; softmax:61; decay:8
+Fitness:28.6261; alpha:0.3; softmax:71; decay:8
+Fitness:29.0587; alpha:0.3; softmax:21; decay:8
+Fitness:44.1335; alpha:0.3; softmax:11; decay:8
+Fitness:31.768; alpha:0.3; softmax:31; decay:7
+Fitness:29.3253; alpha:0.3; softmax:31; decay:6
+Fitness:29.079; alpha:0.3; softmax:31; decay:9
+Fitness:25.4624; alpha:0.3; softmax:31; decay:10
+Fitness:25.3903; alpha:0.2; softmax:31; decay:8
+Fitness:18.8958; alpha:0.1; softmax:31; decay:8
+Fitness:29.1361; alpha:0.4; softmax:31; decay:8
+Fitness:26.8433; alpha:0.5; softmax:31; decay:8
+Fitness:15.953; alpha:0.1; softmax:21; decay:8
+Fitness:17.6457; alpha:0.1; softmax:11; decay:8
+Fitness:24.003; alpha:0.1; softmax:41; decay:8
+Fitness:22.0974; alpha:0.1; softmax:1; decay:8
+Fitness:22.8201; alpha:0.1; softmax:21; decay:7
+Fitness:19.4122; alpha:0.1; softmax:21; decay:6
+Fitness:29.0765; alpha:0.1; softmax:21; decay:9
+Fitness:17.5082; alpha:0.1; softmax:21; decay:10
+Fitness:28.8478; alpha:0.2; softmax:21; decay:8
+
+x =
+
+    0.1000
+   21.0000
+    8.0000
+
+
+fval =
+
+   15.9530
+
+-
 opti/DRL_4Runs_Noise0.1_MA2_alpha0.5_lambda0.9_k1.5_beta0.9_softmax70_decay6
 -
 Fitness:24.2811; alpha:0.5; softmax:70; decay:6; k-lenient:1.5; beta:0.9

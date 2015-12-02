@@ -1,3 +1,76 @@
+Lenient DRL 2 ok
+
+cumGoals:38.9001; MAapproach2; DRL1; lambda0.95; softmax2; alpha0.3; decay8; beta0.9; k-leninet1.5; 6RUNS
+cumGoals:42.1123; MAapproach2; DRL1; lambda0.95; softmax2; alpha0.3; decay8; beta0.9; k-leninet1; 6RUNS
+cumGoals:39.2533; MAapproach2; DRL1; lambda0.95; softmax2; alpha0.3; decay8; beta0.9; k-leninet0.5; 6RUNS
+cumGoals:39.0346; MAapproach2; DRL1; lambda0.95; softmax2; alpha0.3; decay8; beta0.9; k-leninet2; 6RUNS
+cumGoals:39.4719; MAapproach2; DRL1; lambda0.95; softmax2; alpha0.3; decay8; beta0.9; k-leninet2.5; 6RUNS
+cumGoals:39.9933; MAapproach2; DRL1; lambda0.95; softmax2; alpha0.3; decay8; beta0.8; k-leninet1; 6RUNS
+cumGoals:44.1641; MAapproach2; DRL1; lambda0.95; softmax2; alpha0.3; decay8; beta0.7; k-leninet1; 6RUNS
+cumGoals:39.1692; MAapproach2; DRL1; lambda0.95; softmax2; alpha0.3; decay8; beta0.6; k-leninet1; 6RUNS
+cumGoals:39.8251; MAapproach2; DRL1; lambda0.95; softmax2; alpha0.3; decay8; beta0.5; k-leninet1; 6RUNS
+cumGoals:39.8419; MAapproach2; DRL1; lambda0.95; softmax2; alpha0.3; decay7; beta0.7; k-leninet1; 6RUNS
+cumGoals:40.8174; MAapproach2; DRL1; lambda0.95; softmax2; alpha0.3; decay6; beta0.7; k-leninet1; 6RUNS
+cumGoals:38.5301; MAapproach2; DRL1; lambda0.95; softmax2; alpha0.3; decay9; beta0.7; k-leninet1; 6RUNS
+cumGoals:40.0437; MAapproach2; DRL1; lambda0.95; softmax2; alpha0.3; decay10; beta0.7; k-leninet1; 6RUNS
+cumGoals:39.371; MAapproach2; DRL1; lambda0.95; softmax2; alpha0.2; decay8; beta0.7; k-leninet1; 6RUNS
+cumGoals:35.4356; MAapproach2; DRL1; lambda0.95; softmax2; alpha0.1; decay8; beta0.7; k-leninet1; 6RUNS
+cumGoals:39.0683; MAapproach2; DRL1; lambda0.95; softmax2; alpha0.4; decay8; beta0.7; k-leninet1; 6RUNS
+cumGoals:31.5674; MAapproach2; DRL1; lambda0.95; softmax2; alpha0.5; decay8; beta0.7; k-leninet1; 6RUNS
+cumGoals:38.1937; MAapproach2; DRL1; lambda0.95; softmax2; alpha0.3; decay8; beta0.7; k-leninet0.5; 6RUNS
+cumGoals:40.5483; MAapproach2; DRL1; lambda0.95; softmax2; alpha0.3; decay8; beta0.7; k-leninet1.5; 6RUNS
+cumGoals:41.6751; MAapproach2; DRL1; lambda0.95; softmax2; alpha0.3; decay8; beta0.7; k-leninet2; 6RUNS
+
+x =
+
+    1.0000
+    0.7000
+    8.0000
+    0.3000
+
+
+fval =
+
+  -44.1641
+
+LENIENT DRL 1 
+
+Starting matlabpool using the 'local' profile ... connected to 4 workers.
+cumGoals:39.5896; Decay:10; SoftmaxT:2; alpha:0.3; k-lenient:1.5; beta:0.9
+cumGoals:41.4228; Decay:9; SoftmaxT:2.1; alpha:0.3; k-lenient:1.5; beta:0.9
+cumGoals:41.5237; Decay:8; SoftmaxT:2.1; alpha:0.3; k-lenient:1.5; beta:0.9
+cumGoals:38.7487; Decay:11; SoftmaxT:2.1; alpha:0.3; k-lenient:1.5; beta:0.9
+cumGoals:38.9674; Decay:12; SoftmaxT:2.1; alpha:0.3; k-lenient:1.5; beta:0.9
+cumGoals:39.556; Decay:7; SoftmaxT:2.1; alpha:0.3; k-lenient:1.5; beta:0.9
+cumGoals:39.6065; Decay:6; SoftmaxT:2.1; alpha:0.3; k-lenient:1.5; beta:0.9
+cumGoals:40.0774; Decay:8; SoftmaxT:1.6; alpha:0.3; k-lenient:1.5; beta:0.9
+cumGoals:40.1278; Decay:8; SoftmaxT:1.1; alpha:0.3; k-lenient:1.5; beta:0.9
+cumGoals:39.2028; Decay:8; SoftmaxT:2.6; alpha:0.3; k-lenient:1.5; beta:0.9
+cumGoals:40.3465; Decay:8; SoftmaxT:3.1; alpha:0.3; k-lenient:1.5; beta:0.9
+cumGoals:39.5392; Decay:8; SoftmaxT:2.1; alpha:0.2; k-lenient:1.5; beta:0.9
+cumGoals:38.261; Decay:8; SoftmaxT:2.1; alpha:0.1; k-lenient:1.5; beta:0.9
+cumGoals:40.7837; Decay:8; SoftmaxT:2.1; alpha:0.4; k-lenient:1.5; beta:0.9
+cumGoals:34.3592; Decay:8; SoftmaxT:2.1; alpha:0.5; k-lenient:1.5; beta:0.9
+cumGoals:38.1769; Decay:8; SoftmaxT:2.1; alpha:0.3; k-lenient:1; beta:0.9
+cumGoals:41.2378; Decay:8; SoftmaxT:2.1; alpha:0.3; k-lenient:0.5; beta:0.9
+cumGoals:38.3451; Decay:8; SoftmaxT:2.1; alpha:0.3; k-lenient:2; beta:0.9
+cumGoals:38.816; Decay:8; SoftmaxT:2.1; alpha:0.3; k-lenient:2.5; beta:0.9
+cumGoals:41.2714; Decay:8; SoftmaxT:2.1; alpha:0.3; k-lenient:1.5; beta:0.8
+cumGoals:39.7578; Decay:8; SoftmaxT:2.1; alpha:0.3; k-lenient:1.5; beta:0.7
+
+x =
+
+    8.0000
+    2.1000
+    0.3000
+    1.5000
+    0.9000
+
+
+fval =
+
+  -41.5237
+
 DRL
 
 Starting matlabpool using the 'local' profile ... connected to 2 workers.
