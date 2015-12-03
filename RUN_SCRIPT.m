@@ -52,8 +52,6 @@ RL.param.exp_decay  = x(3); % 8 exploration decay parameter
 RL.param.k          = x(4);    %1.5 lenience parameter
 RL.param.beta       = x(5);   %0.9 lenience discount factor
 
-
-
 %evolutionFile = 'MAS-coop/DRL-3runs-Noise005-2000exp8-NoSync-FAboltzman20';
 %performanceFile = 'boltzmann/Vx-5runs-Noise03-50exp30-NoSync-boltzmann1';
 
