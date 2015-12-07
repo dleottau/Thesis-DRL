@@ -11,7 +11,7 @@ global opti;
 opti=0;
 
 if ~opti
-    RUNS=1;
+    RUNS=28;
 
 %     myCluster = parcluster('local');
 %     if matlabpool('size') == 0 % checking to see if my pool is already open
@@ -26,13 +26,13 @@ end
 x0 = [];
 
 xname{1}='alpha';
-x0(1) = 0.1;
+x0(1) = 0.2;
 
 xname{2}='softmax';
 x0(2) = 21;
 
 xname{3}='decay';
-x0(3) = 8;  
+x0(3) = 6;  
 % ------
 
 xname{4}='k-lenient';
@@ -42,7 +42,7 @@ xname{5}='beta';
 x0(5) = 0.9; 
 
 xname{6}='MAapproach';
-x0(6) = 0;   % 0 no cordination, 1 frequency adjusted, 2 leninet
+x0(6) = 1;   % 0 no cordination, 1 frequency adjusted, 2 leninet
 
 
 

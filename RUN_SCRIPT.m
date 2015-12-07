@@ -6,6 +6,7 @@ function f = RUN_SCRIPT(x,RUNS)
 % clear all
 % close all
 
+%folder = 'opti/';  
 folder = 'finalTests/';  
 %loadFile = 'DRL_25Runs_Noise0.1_MA0_alpha0.5_lambda0.9_softmax70_decay6.mat';
 %loadFile = 'DRL_25Runs_Noise0.1_MA1_alpha0.1_lambda0.9_softmax21_decay8.mat';
@@ -22,10 +23,10 @@ conf.opti=opti;
 conf.episodes = 2000; %500;   %2000  maximum number of  episode
 conf.Runs = RUNS;
 conf.record = 1;
-conf.DRAWS = 1;
+conf.DRAWS = 0;
 conf.NOISE = 0.1;
 
-conf.TRANSFER = -1;  %=1 transfer, >1 acts gready from source policy, =0 learns from scratch, =-1 just for test performance from stored policies
+conf.TRANSFER = 0;  %=1 transfer, >1 acts gready from source policy, =0 learns from scratch, =-1 just for test performance from stored policies
 conf.nash = 0;   % 0 COntrol sharing, 1 NASh
 conf.MAapproach = x(6);   % 0 no cordination, 1 frequency adjusted, 2 leninet
 conf.Mtimes = 0; % state-action pair must be visited M times before Q being updated
@@ -148,7 +149,7 @@ cr_min=Inf;
 v_min=Inf;
 pf_max=-Inf;
 
-interval=0.7;
+interval=0.7;  % 0.7 by default
 if conf.TRANSFER < 0
     interval=0.1;
 end

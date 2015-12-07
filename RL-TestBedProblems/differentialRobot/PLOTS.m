@@ -38,9 +38,11 @@ results=importdata([folder stringName]);
 
 stringName = 'MAapproach2; DRL1; lambda0.95; softmax2; alpha0.3; decay8; beta0.7; k-leninet1; 25RUNS_k1_beta0.7.mat';
 results=importdata([folder stringName]);
+[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-LRL1');
+
+stringName = 'MAapproach2; DRL1; lambda0.95; softmax2; decay8; alpha0.2; beta0.6; k-leninet1; 25RUNS_k1_beta0.6.mat';
+results=importdata([folder stringName]);
 [M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-LRL');
-
-
 
 
 

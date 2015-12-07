@@ -1,18 +1,18 @@
-% function f = optimizationFunction(x)
-% global RUNS;
-% global opti;
-
-clc
-clf
-clear all
-close all
-tic
+function f = optimizationFunction(x)
+global RUNS;
 global opti;
-opti=0;
 
-if ~opti
-     RUNS=25;
-
+% clc
+% clf
+% clear all
+% close all
+% tic
+% global opti;
+% opti=0;
+% 
+% if ~opti
+%      RUNS=25;
+% 
 %     myCluster = parcluster('local');
 %     if matlabpool('size') == 0 % checking to see if my pool is already open
 %         matlabpool(myCluster.NumWorkers)
@@ -20,7 +20,7 @@ if ~opti
 %         matlabpool close
 %         matlabpool(myCluster.NumWorkers)
 %     end
-end
+% end
 
 x0 = [];
 
@@ -30,11 +30,11 @@ x0(1) = 1;   %
 xname{2}='beta';
 x0(2) = 0.7;   % 
 
-xname{3}='decay';
-x0(3) = 8;   % exploration decay
+xname{3}='alpha';
+x0(3) = 0.3;   % learning rate
 
-xname{4}='alpha';
-x0(4) = 0.3;   % learning rate
+xname{4}='decay';
+x0(4) = 8;   % exploration decay
 
 xname{5}='softmax';
 x0(5)  = 2;  % epsilon
@@ -67,7 +67,7 @@ if opti
     x0(1) = x(1);
     x0(2) = x(2);
     x0(3) = x(3);
-    x0(4) = x(4);
+    %x0(4) = x(4);
 end
 
 stringName=[];

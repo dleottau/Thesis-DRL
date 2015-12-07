@@ -5,7 +5,7 @@ for n=1:size(results.Vavg,2)
 end
 [(1:length(F))', F']
  
-evolutionFile = 'C:\Users\leottau\Desktop\Thesis-DRL\finalTests\DRL_25Runs_Noise0.1_MA1_alpha0.1_lambda0.9_softmax21_decay8';
+evolutionFile = 'finalTests/DRL_25Runs_Noise0.1_MA1_alpha0.2_lambda0.9_softmax21_decay6';
 
 Vavg=results.Vavg;
 tp_faults=results.faults;

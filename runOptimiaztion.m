@@ -5,29 +5,29 @@ close all
 
 tic
 global RUNS;
-RUNS=4;
+RUNS=8;
 
 global flagFirst;
 flagFirst=true;
 global opti;
 opti=1;
 
+myCluster = parcluster('local');
+if matlabpool('size') == 0 % checking to see if my pool is already open
+    matlabpool(myCluster.NumWorkers)
+else
+    matlabpool close
+    matlabpool(myCluster.NumWorkers)
 % myCluster = parcluster('local');
-% if matlabpool('size') == 0 % checking to see if my pool is already open
-%     matlabpool(myCluster.NumWorkers)
-% else
-%     matlabpool close
-%     matlabpool(myCluster.NumWorkers)
-% % myCluster = parcluster('local');
-% % myCluster.NumWorkers = 4;  % 'Modified' property now TRUE
-% % saveProfile(myCluster);    % 'local' profile now updated, 'Modified' property now FALSE 
-% end
+% myCluster.NumWorkers = 4;  % 'Modified' property now TRUE
+% saveProfile(myCluster);    % 'local' profile now updated, 'Modified' property now FALSE 
+end
 
 x0 = [];
 xname{1}='alpha';
-x0(1) = 0.5;
+x0(1) = 0.3;
 xname{2}='softmax';
-x0(2) = 50;
+x0(2) = 20;
 xname{3}='decay';
 x0(3) = 8;
 % xname{4}='k-lenient';

@@ -1,7 +1,8 @@
 function f = RUN_SCRIPT(x,RUNS,stringName)
 conf.Test=0;
 
-folder = 'final/';
+%folder = 'final/';
+folder = 'opti/';
 
 global flagFirst;
 global opti;
@@ -27,8 +28,8 @@ end
 
 
 conf.Q_INIT = 0;
-conf.EXPL_EPISODES_FACTOR = x(3); %x(1);
-RL.param.alpha       = x(4); %x(3);   % learning rate
+conf.EXPL_EPISODES_FACTOR = x(4); %x(1);
+RL.param.alpha       = x(3); %x(3);   % learning rate
 RL.param.gamma       = 0.99;   % discount factor
 RL.param.lambda      = x(6);   % the decaying elegibiliy trace parameter
 RL.param.epsilon = 1;
@@ -77,8 +78,8 @@ if conf.Test
 end 
 conf.fileName = stringName;
 
-%parfor n=1:RUNS
-for n=1:RUNS
+parfor n=1:RUNS
+%for n=1:RUNS
     %[reward(:,:,i), e_time(:,i), Vavg(:,i), scored(:,i),  RL] = Dribbling2d( i, conf, RL);
     [pscored(:,n) scored(:, n) Q{n} Qw{n}] = Dribbling2d( n, conf, RL);
 end

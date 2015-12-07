@@ -1,5 +1,48 @@
 Lenient DRL 2 ok
 
+cumGoals:40.6539; MAapproach2; DRL1; lambda0.95; softmax2; decay8; alpha0.3; beta0.7; k-leninet1; 25RUNS
+cumGoals:40.5126; MAapproach2; DRL1; lambda0.95; softmax2; decay8; alpha0.3; beta0.7; k-leninet0.5; 25RUNS
+cumGoals:40.6095; MAapproach2; DRL1; lambda0.95; softmax2; decay8; alpha0.3; beta0.7; k-leninet1.5; 25RUNS
+cumGoals:40.6256; MAapproach2; DRL1; lambda0.95; softmax2; decay8; alpha0.3; beta0.7; k-leninet2; 25RUNS
+cumGoals:39.2492; MAapproach2; DRL1; lambda0.95; softmax2; decay8; alpha0.3; beta0.6; k-leninet1; 25RUNS
+cumGoals:40.1292; MAapproach2; DRL1; lambda0.95; softmax2; decay8; alpha0.3; beta0.5; k-leninet1; 25RUNS
+cumGoals:40.9687; MAapproach2; DRL1; lambda0.95; softmax2; decay8; alpha0.3; beta0.8; k-leninet1; 25RUNS
+cumGoals:40.4279; MAapproach2; DRL1; lambda0.95; softmax2; decay8; alpha0.3; beta0.9; k-leninet1; 25RUNS
+cumGoals:39.8103; MAapproach2; DRL1; lambda0.95; softmax2; decay8; alpha0.2; beta0.8; k-leninet1; 25RUNS
+cumGoals:38.5873; MAapproach2; DRL1; lambda0.95; softmax2; decay8; alpha0.1; beta0.8; k-leninet1; 25RUNS
+cumGoals:38.4904; MAapproach2; DRL1; lambda0.95; softmax2; decay8; alpha0.4; beta0.8; k-leninet1; 25RUNS
+cumGoals:35.2856; MAapproach2; DRL1; lambda0.95; softmax2; decay8; alpha0.5; beta0.8; k-leninet1; 25RUNS
+cumGoals:41.0293; MAapproach2; DRL1; lambda0.95; softmax2; decay8; alpha0.3; beta0.8; k-leninet0.5; 25RUNS
+cumGoals:40.0928; MAapproach2; DRL1; lambda0.95; softmax2; decay8; alpha0.3; beta0.8; k-leninet1.5; 25RUNS
+cumGoals:39.6327; MAapproach2; DRL1; lambda0.95; softmax2; decay8; alpha0.3; beta0.8; k-leninet2; 25RUNS
+cumGoals:41.2513; MAapproach2; DRL1; lambda0.95; softmax2; decay8; alpha0.3; beta0.6; k-leninet0.5; 25RUNS
+cumGoals:39.8587; MAapproach2; DRL1; lambda0.95; softmax2; decay8; alpha0.3; beta0.9; k-leninet0.5; 25RUNS
+cumGoals:40.5691; MAapproach2; DRL1; lambda0.95; softmax2; decay8; alpha0.3; beta0.5; k-leninet0.5; 25RUNS
+cumGoals:40.004; MAapproach2; DRL1; lambda0.95; softmax2; decay8; alpha0.3; beta0.4; k-leninet0.5; 25RUNS
+cumGoals:41.2674; MAapproach2; DRL1; lambda0.95; softmax2; decay8; alpha0.2; beta0.6; k-leninet0.5; 25RUNS
+cumGoals:39.3784; MAapproach2; DRL1; lambda0.95; softmax2; decay8; alpha0.1; beta0.6; k-leninet0.5; 25RUNS
+cumGoals:37.3401; MAapproach2; DRL1; lambda0.95; softmax2; decay8; alpha0.4; beta0.6; k-leninet0.5; 25RUNS
+cumGoals:33.7235; MAapproach2; DRL1; lambda0.95; softmax2; decay8; alpha0.5; beta0.6; k-leninet0.5; 25RUNS
+cumGoals:41.8204; MAapproach2; DRL1; lambda0.95; softmax2; decay8; alpha0.2; beta0.6; k-leninet1; 25RUNS
+cumGoals:41.5177; MAapproach2; DRL1; lambda0.95; softmax2; decay8; alpha0.2; beta0.6; k-leninet1.5; 25RUNS
+cumGoals:40.6297; MAapproach2; DRL1; lambda0.95; softmax2; decay8; alpha0.2; beta0.6; k-leninet2; 25RUNS
+cumGoals:40.4642; MAapproach2; DRL1; lambda0.95; softmax2; decay8; alpha0.2; beta0.5; k-leninet1; 25RUNS
+cumGoals:40.7064; MAapproach2; DRL1; lambda0.95; softmax2; decay8; alpha0.2; beta0.4; k-leninet1; 25RUNS
+cumGoals:40.6498; MAapproach2; DRL1; lambda0.95; softmax2; decay8; alpha0.2; beta0.7; k-leninet1; 25RUNS
+cumGoals:38.4702; MAapproach2; DRL1; lambda0.95; softmax2; decay8; alpha0.1; beta0.6; k-leninet1; 25RUNS
+cumGoals:38.6922; MAapproach2; DRL1; lambda0.95; softmax2; decay8; alpha0.4; beta0.6; k-leninet1; 25RUNS
+
+x =
+
+    1.0000
+    0.6000
+    0.2000
+
+
+fval =
+
+  -41.8204
+
 cumGoals:38.9001; MAapproach2; DRL1; lambda0.95; softmax2; alpha0.3; decay8; beta0.9; k-leninet1.5; 6RUNS
 cumGoals:42.1123; MAapproach2; DRL1; lambda0.95; softmax2; alpha0.3; decay8; beta0.9; k-leninet1; 6RUNS
 cumGoals:39.2533; MAapproach2; DRL1; lambda0.95; softmax2; alpha0.3; decay8; beta0.9; k-leninet0.5; 6RUNS
