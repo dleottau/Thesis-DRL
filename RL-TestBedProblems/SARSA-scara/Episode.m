@@ -72,7 +72,8 @@ for i=1:maxsteps
     % if MA approach is cooperative adaptive learning rate
     if param.MAapproach==1
         bias=1/length(actionlist);
-        param.pcoop = 1-min(param.p-bias);
+        param.pcoop = 1-min(param.p-bias); % decremental Learnng Rate
+        %param.pcoop = min(param.p-bias); % incremental Learnng Rate
         param.pcoop = clipDLF(param.pcoop, 0, 1);
     end
     param.p = p;

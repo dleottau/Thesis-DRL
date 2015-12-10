@@ -66,8 +66,8 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                         REINFORCEMENT LEARNING LOOP
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-parfor i=1:RUNS
-%for i=1:RUNS
+%parfor i=1:RUNS
+for i=1:RUNS
     [f_i(i), cumSteps(:,i)]=ScaraDemo(param, f1, f2, grafica);
 end
 cumSteps=100*cumSteps/param.maxsteps;
