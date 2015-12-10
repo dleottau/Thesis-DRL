@@ -42,7 +42,7 @@ xname{5}='beta';
 x0(5) = 0.9; 
 
 xname{6}='MAapproach';
-x0(6) = 0;   % 0 no cordination, 1 frequency adjusted, 2 leninet
+x0(6) = 1;   % 0 no cordination, 1 frequency adjusted, 2 leninet
 
 
 

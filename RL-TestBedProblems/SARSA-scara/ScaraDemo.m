@@ -1,9 +1,12 @@
-function  f=ScaraDemo( maxepisodes, param )
+function  [f, ypoints]=ScaraDemo(param, f1, f2, grafica)
 %MountainCarDemo, the main function of the demo
 %maxepisodes: maximum number of episodes to run the demo
-global TxtEpisode goal f1 f2 grafica
+%global TxtEpisode goal f1 f2 grafica
 
-clc
+
+TxtEpisode=[];
+
+maxepisodes = param.maxepisodes;
 statelist   = BuildStateList();  % the list of states
 actionlist  = BuildActionList(); % the list of actions
 
@@ -42,7 +45,7 @@ for i=1:maxepisodes
     
     goal = randgoal();  % activate the random location of the goal
     set(TxtEpisode,'string',strcat('Episode: ',int2str(i)));     
-    [total_reward,steps,Q ] = Episode( Q, goal, statelist,actionlist,grafica, param, T );    
+    [total_reward,steps,Q, grafica ] = Episode( Q, goal, statelist,actionlist,grafica, param, T, grafica );    
     
     if (mod(i,20)==0)
         save Q.mat Q;
@@ -51,7 +54,7 @@ for i=1:maxepisodes
     %disp(['Espisode: ',int2str(i),' steps: ',int2str(steps),' reward: ',num2str(total_reward),' epsilon: ',num2str(param.epsilon)])
     
     xpoints(i) = i-1;
-    ypoints(i) = steps;
+    ypoints(i,1) = steps;
     
     if param.DRAW
         subplot(f2);
@@ -66,7 +69,7 @@ for i=1:maxepisodes
     end
 
     param.epsilon = param.epsilon * 0.99;
-    param.softmax = param.softmax * 0.99;
+    param.softmax = param.softmax * param.beta;
     
     if (i>1000)
         grafica=true;
@@ -74,8 +77,8 @@ for i=1:maxepisodes
     
     
 end
-
-f=100*mean(ypoints(ceil(0.7*maxepisodes):end))/param.maxsteps;
+interval=0.5;
+f=100*mean(ypoints(ceil(interval*maxepisodes):end))/param.maxsteps;
 
 
 

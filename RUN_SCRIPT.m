@@ -21,11 +21,11 @@ conf.opti=opti;
 
 conf.episodes = 2000; %500;   %2000  maximum number of  episode
 conf.Runs = RUNS;
-conf.record = 1;
+conf.record = 0;
 conf.DRAWS = 1;
 conf.NOISE = 0.1;
 
-conf.TRANSFER = -1;  %=1 transfer, >1 acts gready from source policy, =0 learns from scratch, =-1 just for test performance from stored policies
+conf.TRANSFER = 0;  %=1 transfer, >1 acts gready from source policy, =0 learns from scratch, =-1 just for test performance from stored policies
 conf.nash = 0;   % 0 COntrol sharing, 1 NASh
 conf.MAapproach = x(6);   % 0 no cordination, 1 frequency adjusted, 2 leninet
 conf.Mtimes = 0; % state-action pair must be visited M times before Q being updated
