@@ -10,7 +10,7 @@ lineW=[3 2 2 2 3 2 2 2];
 legendN=[];
 
 K=10; % # points ploted for errobar
-span=0.1;
+span=0.2;
 %span=0.07;
 
 n=1;
@@ -24,15 +24,17 @@ stringName = 'MAapproach0; gamma1; lenientBeta0.9; lenientGain1.5; softmax10; ep
 results=importdata([folder stringName]);
 [M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL');
 
-stringName = 'MAapproach1; gamma1; softmax10; lenientBeta0.8; lenientGain1.5; epsilon0.02; alpha0.1.mat';
+stringName = 'e-greedy-MAapproach1; gamma1; lenientBeta0.8; epsilon0.01; alpha0.3; lenientGain0.6.mat';
 results=importdata([folder stringName]);
 [M,S,n,legendN] = load_results(results,M,S,n,legendN,'CA-DRL');
 
-%stringName = 'MAapproach2; gamma1; softmax10; lenientBeta0.8; lenientGain1.5; epsilon0.01; alpha0.3.mat';
-stringName = 'MAapproach2; gamma1; softmax10; lenientBeta0.8; lenientGain1.5; epsilon0.01; alpha0.3.mat';
+stringName = 'e-greedy-MAapproach-Inc1; gamma1; lenientBeta0.8; epsilon0.01; alpha0.3; lenientGain1.6.mat';
+results=importdata([folder stringName]);
+[M,S,n,legendN] = load_results(results,M,S,n,legendN,'CAinc-DRL');
+
+stringName = 'e-greedy-MAapproach2; gamma1; epsilon0.01; alpha0.3; lenientBeta0.8; lenientGain2.1.mat';
 results=importdata([folder stringName]);
 [M,S,n,legendN] = load_results(results,M,S,n,legendN,'Lenient-DRL');
-
 
 
 Ms=M;%Smoothed means
