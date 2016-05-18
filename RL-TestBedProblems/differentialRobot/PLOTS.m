@@ -30,35 +30,20 @@ results=importdata([folder stringName]);
 
 stringName = 'fuz-DRL1; lambda0.95; softmax1.1; decay9; alpha0.3; Nactions3; 25RUNS.mat';
 results=importdata([folder stringName]);
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-FQL');
+[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-Hybrid');
 
 stringName = 'MAapproach1; DRL1; lambda0.95; alpha0.4; softmax1.1; decay10; 25RUNS.mat';
 results=importdata([folder stringName]);
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-CA');
-
+[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-CAdec');
+% 
 stringName = 'MAapproach-Inc1; DRL1; lambda0.95; beta0.7; k-leninet1; alpha0.3; decay13; softmax0.5; 29RUNS.mat';
 results=importdata([folder stringName]);
 [M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-CAinc');
-
-%stringName = 'MAapproach2; DRL1; lambda0.95; softmax2; alpha0.3; decay8; beta0.7; k-leninet1; 25RUNS_k1_beta0.7.mat';
-%results=importdata([folder stringName]);
-%[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-LRL1');
-
-stringName = 'MAapproach2; DRL1; lambda0.95; softmax2; decay8; alpha0.2; beta0.6; k-leninet1; 25RUNS_k1_beta0.6.mat';
+% 
+% 
+stringName = 'MAapproach2; DRL1; lambda0.95; softmax2; alpha0.3; decay8; beta0.7; k-leninet1; 25RUNS_k1_beta0.7.mat';
 results=importdata([folder stringName]);
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-LRL');
-
-
-
-
-
-%load MAS-coop/DRL-3runs-Noise005-2000exp8-NoSync-egreedy.mat
-%[M,S,n,legendN] = load_results(results,M,S,n,legendN,'e-greedy');
-
-
-
-
-
+[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-Lenient');
 
 
 
@@ -77,7 +62,7 @@ E=size(M,1);
 L=floor(E/K);
 MK=zeros(K-1,size(M,2),size(M,3));
 SK=MK;
-for k=1:K-1
+for k=ceil(K/2):K-1
     for i=1:size(M,3)
         for j=1:size(M,2)
             s = round(k*L + (j-1)*L/(2*size(M,2)));
@@ -92,7 +77,7 @@ end
 
 
 figure
-
+set(gca,'fontsize',16)
 %subplot(3,1,1);    
 %subplot(2,1,1); 
 plot(x(:,1),zeros(length(x(:,1))), '.w')
@@ -108,7 +93,7 @@ grid on
 ylabel('% of Scored Goals');
 xlabel('Episodes');
 legend(pt,legendN);
-saveas(gcf,[folder 'CRLvsDRL.fig'])
+saveas(gcf,[folder 'fig.fig'])
 end
 
 function [M, S, n, legendN] = load_results(results, M, S, n, legendN, leg)

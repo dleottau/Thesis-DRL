@@ -1,26 +1,26 @@
-function f = optimizationFunction(x)
-global RUNS;
-global opti;
-
-% clc
-% clf
-% clear all
-% close all
-% tic
+% function f = optimizationFunction(x)
+% global RUNS;
 % global opti;
-% opti=0;
-% 
-% if ~opti
-%     RUNS=29;
-% 
-%     myCluster = parcluster('local');
-%     if matlabpool('size') == 0 % checking to see if my pool is already open
-%         matlabpool(myCluster.NumWorkers)
-%     else
-%         matlabpool close
-%         matlabpool(myCluster.NumWorkers)
-%     end
-% end
+
+clc
+clf
+clear all
+close all
+tic
+global opti;
+opti=0;
+
+if ~opti
+    RUNS=29;
+
+    myCluster = parcluster('local');
+    if matlabpool('size') == 0 % checking to see if my pool is already open
+        matlabpool(myCluster.NumWorkers)
+    else
+        matlabpool close
+        matlabpool(myCluster.NumWorkers)
+    end
+end
     
 
 x0 = [];

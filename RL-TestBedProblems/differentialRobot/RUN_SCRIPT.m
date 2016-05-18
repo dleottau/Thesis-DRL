@@ -2,7 +2,6 @@ function f = RUN_SCRIPT(x,RUNS,stringName)
 conf.Test=0;
 
 folder = 'final/';
-%folder = 'opti/';
 
 global flagFirst;
 global opti;
@@ -15,7 +14,7 @@ conf.maxDistance = 800;    % maximum ball distance permited before to end the ep
 conf.Runs = RUNS;
 conf.NOISE = 0.01;
 conf.DRL = x(7); %Decentralized RL(1) or Centralized RL(0)
-conf.DRAWS = 0;
+conf.DRAWS = 1;
 conf.record = 1;
 conf.fuzzQ = 0;
 conf.MAapproach = x(8);
@@ -28,14 +27,14 @@ end
 
 
 conf.Q_INIT = 0;
-conf.EXPL_EPISODES_FACTOR = x(2); %x(1);
-RL.param.alpha       = x(3); %x(3);   % learning rate
+conf.EXPL_EPISODES_FACTOR = x(3); %x(1);
+RL.param.alpha       = x(4); %x(3);   % learning rate
 RL.param.gamma       = 0.99;   % discount factor
 RL.param.lambda      = x(6);   % the decaying elegibiliy trace parameter
 RL.param.epsilon = 1;
-RL.param.softmax = x(1); %x(2);
-RL.param.k          = x(4); %x(4);    %1.5 lenience parameter
-RL.param.beta       = x(5); %x(5);   %0.9 lenience discount factor
+RL.param.softmax = x(5); %x(2);
+RL.param.k          = x(1); %x(4);    %1.5 lenience parameter
+RL.param.beta       = x(2); %x(5);   %0.9 lenience discount factor
 
 if conf.Test %Para pruebas de performance
     RL.param.epsilon = 0;
@@ -78,8 +77,8 @@ if conf.Test
 end 
 conf.fileName = stringName;
 
-parfor n=1:RUNS
-%for n=1:RUNS
+%parfor n=1:RUNS
+for n=1:RUNS
     %[reward(:,:,i), e_time(:,i), Vavg(:,i), scored(:,i),  RL] = Dribbling2d( i, conf, RL);
     [pscored(:,n) scored(:, n) Q{n} Qw{n}] = Dribbling2d( n, conf, RL);
 end

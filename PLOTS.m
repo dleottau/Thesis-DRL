@@ -17,29 +17,18 @@ n=1;
 M=[];
 S=[];
 
-
-load finalTests/DRL_25Runs_Noise0.1_MA2_alpha0.1_lambda0.9_k1.5_beta0.9_softmax70_decay6.mat
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'L-RL');
-
-load 'finalTests/DRL_29Runs_Noise0.1_MA1inc_alpha0.1_lambda0.9_softmax41_decay9.mat'
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'CAinc-DRL');
-
-load 'finalTests/DRL_25Runs_Noise0.1_MA1_alpha0.1_lambda0.9_softmax21_decay8.mat'
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'CA-DRL');
-
 load finalTests/DRL_25Runs_Noise0.1_MA0_alpha0.5_lambda0.9_softmax70_decay6.mat
 [M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL');
+
+load 'finalTests/DRL_25Runs_Noise0.1_MA1_alpha0.1_lambda0.9_softmax21_decay8.mat'
+[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-CAdec');
+
+load finalTests/DRL_25Runs_Noise0.1_MA2_alpha0.1_lambda0.9_k1.5_beta0.9_softmax70_decay6.mat
+[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-Lenient');
 
 load RC-2015/results/resultsFull_NASh-v2-20runs-Noise01-exp8.mat
 [M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL+Transfer');
 
-
-
-% load MAS-coop/DRL-3runs-Noise005-2000exp8-NoSync-boltzman20.mat
-% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'softmax-Temp20');
-% 
-% load MAS-coop/DRL-3runs-Noise005-2000exp8-NoSync-egreedy.mat
-% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'e-greedy');
 
 
 Ms=M;%Smoothed means
@@ -57,7 +46,7 @@ E=size(M,1);
 L=floor(E/K);
 MK=zeros(K-1,size(M,2),size(M,3));
 SK=MK;
-for k=1:K-1
+for k=ceil(K/2):K-1
     for i=1:size(M,3)
         for j=1:size(M,2)
             s = round(k*L + (j-1)*L/(2*size(M,2)));
@@ -72,8 +61,8 @@ end
 
 
 figure
-
 subplot(3,1,1);    
+set(gca,'fontsize',16)
 %subplot(2,1,1); 
 plot(x(:,1),zeros(length(x(:,1))), '.w')
 hold on
@@ -90,6 +79,7 @@ grid on
 ylabel('% of max. forward speed');
 
 subplot(3,1,2); 
+set(gca,'fontsize',16)
 %subplot(2,1,2)
 plot(x(:,1),zeros(length(x(:,1))), '.w')
 hold on
@@ -108,6 +98,7 @@ ylabel('% of time in fault-state');
 
 %Solo para el fitness global
 subplot(3,1,3); 
+set(gca,'fontsize',16)
 %subplot(2,1,2)
  hold on
  for j=1:size(M,2)     
@@ -119,6 +110,7 @@ subplot(3,1,3);
  grid on
  xlabel('Episodes');
  ylabel('Global Fitness');
+ set(gca,'fontsize',16)
  legend(pt,legendN);
 % 
 

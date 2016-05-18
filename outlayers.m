@@ -1,3 +1,5 @@
+record = 0;
+draw = 0;
 interval=0.7;
 for n=1:size(results.Vavg,2)
     mF =  1/2*(100-results.Vavg(:,n) + results.faults(:,n));
@@ -94,7 +96,7 @@ results.performance(5,2)=mean(pf_sd);
 results.performance(6,2)=results.performance(5,2)/tested_episodes;
 results.performance(4,2)=pf_xxx; %best
 
-f=(100-mean(vm)+mean(pf))/2;  % Fitness function
+f=(100-mean(vm)+mean(pf))/2  % Fitness function
 results.performance(1,3)=f;
 
 results.performance(3,4)=cr_min;
@@ -126,5 +128,6 @@ results.std_rewRot = std(reward(:,3),0,2);
 %results.conf = conf;
 %results.RLparam = RL.param;
 
-save ([evolutionFile  '.mat'], 'results');
-
+if record
+    save ([evolutionFile  '.mat'], 'results');
+end

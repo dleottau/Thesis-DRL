@@ -1,36 +1,37 @@
-function f = optimizationFunction(x)
-global RUNS;
-
-% clc
-% clf
-% clear all
-% close all
-% tic
+% function f = optimizationFunction(x)
+% global RUNS;
 % global opti;
-% opti=0;
-% 
-% if ~opti
-%     RUNS=5;
-% 
-%     myCluster = parcluster('local');
-%     if matlabpool('size') == 0 % checking to see if my pool is already open
-%         matlabpool(myCluster.NumWorkers)
-%     else
-%         matlabpool close
-%         matlabpool(myCluster.NumWorkers)
-%     end
-% end
+
+clc
+clf
+clear all
+close all
+tic
+global opti;
+opti=0;
+
+if ~opti
+    RUNS=29;
+
+    myCluster = parcluster('local');
+    if matlabpool('size') == 0 % checking to see if my pool is already open
+        matlabpool(myCluster.NumWorkers)
+    else
+        matlabpool close
+        matlabpool(myCluster.NumWorkers)
+    end
+end
     
 x0 = [];
 
 xname{1}='alpha';
-x0(1) = 0.1;
+x0(1) = 0.2;
 
 xname{2}='lambda';
-x0(2) = 0.95;
+x0(2) = 0.8;
 
 xname{3}='epsilon';
-x0(3) = 0.04;  
+x0(3) = 0.06;  
 
 xname{4}='k-lenient';
 x0(4) = 3.5;  
@@ -39,7 +40,7 @@ xname{5}='beta';
 x0(5) = 0.8; 
 
 xname{6}='DRL'; 
-x0(6)= 2;  % 0 for CRL, 1 for DRL, 2 for DRL with joint states
+x0(6)= 1;  % 0 for CRL, 1 for DRL, 2 for DRL with joint states
 
 xname{7}='MAapproach-Inc';
 x0(7) = 1;   % 0 no cordination, 1 frequency adjusted, 2 leninet

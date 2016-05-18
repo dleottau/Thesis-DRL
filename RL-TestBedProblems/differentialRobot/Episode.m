@@ -183,8 +183,7 @@ while 1
     [ap, fa] = action_selection(RL.Q, RL.T, FVp, RL.param);
     if conf.DRL
         [ap_rot, fa_rot] = action_selection(RL.Q_rot, RL.T_rot, FVp, RL.param);
-        %fap = 1-min([(fa-1/conf.nactions_x), (fa_rot-1/conf.nactions_w)])+1E-6;
-        fap = min([(fa-1/conf.nactions_x), (fa_rot-1/conf.nactions_w)])+1E-6;
+        fap = 1-min([(fa-1/conf.nactions_x), (fa_rot-1/conf.nactions_w)])+1E-6;
         fap = clipDLF(fap, 0, 1);
     end
     

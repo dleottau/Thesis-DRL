@@ -1,3 +1,68 @@
+-
+opti/DRL2_5RUNS_epsilon0.06_decay0.99_alpha0.2_lambda0.95_MA-Inc1
+-
+cumRew:-237.5769; ITAE:39516.1853; alpha:0.2; lambda:0.95; epsilon:0.06
+cumRew:-261.3549; ITAE:42652.381; alpha:0.15; lambda:0.95; epsilon:0.06
+cumRew:-245.3912; ITAE:44604.692; alpha:0.1; lambda:0.95; epsilon:0.06
+cumRew:-224.8055; ITAE:36851.33; alpha:0.25; lambda:0.95; epsilon:0.06
+cumRew:-213.9088; ITAE:34852.0217; alpha:0.3; lambda:0.95; epsilon:0.06
+cumRew:-216.7088; ITAE:39074.514; alpha:0.35; lambda:0.95; epsilon:0.06
+cumRew:-326.3363; ITAE:44799.406; alpha:0.4; lambda:0.95; epsilon:0.06
+cumRew:-310.3758; ITAE:46261.5013; alpha:0.3; lambda:0.9; epsilon:0.06
+cumRew:-248.2176; ITAE:41146.3017; alpha:0.3; lambda:0.85; epsilon:0.06
+cumRew:-227.6308; ITAE:36190.312; alpha:0.3; lambda:0.95; epsilon:0.04
+cumRew:-209.9978; ITAE:34866.3947; alpha:0.3; lambda:0.95; epsilon:0.02
+cumRew:-242.3374; ITAE:38693.4357; alpha:0.3; lambda:0.95; epsilon:0.08
+cumRew:-226.2286; ITAE:40252.4667; alpha:0.3; lambda:0.95; epsilon:0.1
+cumRew:-230.8648; ITAE:37779.8947; alpha:0.3; lambda:0.95; epsilon:0
+cumRew:-219.3549; ITAE:35360.6773; alpha:0.25; lambda:0.95; epsilon:0.02
+cumRew:-227.3143; ITAE:38004.701; alpha:0.2; lambda:0.95; epsilon:0.02
+cumRew:-218.389; ITAE:36913.3963; alpha:0.35; lambda:0.95; epsilon:0.02
+cumRew:-219.1879; ITAE:38296.6677; alpha:0.4; lambda:0.95; epsilon:0.02
+cumRew:-235.9879; ITAE:38465.7037; alpha:0.3; lambda:0.9; epsilon:0.02
+cumRew:-221.3374; ITAE:38894.3943; alpha:0.3; lambda:0.85; epsilon:0.02
+
+x =
+
+    0.3000
+    0.9500
+    0.0200
+
+
+fval =
+
+  209.9978
+
+
+-
+opti/DRL1_5RUNS_epsilon0.06_decay0.99_alpha0.25_lambda0.8_MA-Inc1
+-
+cumRew:-962.4934; ITAE:104522.258; alpha:0.25; lambda:0.8; epsilon:0.06
+cumRew:-229.1648; ITAE:37331.1507; alpha:0.2; lambda:0.8; epsilon:0.06
+cumRew:-257.8637; ITAE:36894.6747; alpha:0.15; lambda:0.8; epsilon:0.06
+cumRew:-1293.0242; ITAE:128490.519; alpha:0.3; lambda:0.8; epsilon:0.06
+cumRew:-1660.9989; ITAE:206694.1983; alpha:0.35; lambda:0.8; epsilon:0.06
+cumRew:-269.1725; ITAE:39528.5083; alpha:0.1; lambda:0.8; epsilon:0.06
+cumRew:-261.4934; ITAE:38742.8093; alpha:0.2; lambda:0.75; epsilon:0.06
+cumRew:-248.7593; ITAE:38123.0333; alpha:0.2; lambda:0.7; epsilon:0.06
+cumRew:-773.9385; ITAE:83869.164; alpha:0.2; lambda:0.85; epsilon:0.06
+cumRew:-1015.2308; ITAE:127717.9153; alpha:0.2; lambda:0.9; epsilon:0.06
+cumRew:-240.3593; ITAE:37925.1653; alpha:0.2; lambda:0.8; epsilon:0.04
+cumRew:-902.9934; ITAE:95197.0957; alpha:0.2; lambda:0.8; epsilon:0.02
+cumRew:-601.3604; ITAE:67168.815; alpha:0.2; lambda:0.8; epsilon:0.08
+cumRew:-396.7077; ITAE:49663.6653; alpha:0.2; lambda:0.8; epsilon:0.1
+
+x =
+
+    0.2000
+    0.8000
+    0.0600
+
+
+fval =
+
+  229.1648
+
 egreedy_opti/DRL1_2RUNS_epsilon0.04_decay0.99_alpha0.15_lambda0.9_MA2_k2.5_beta0.8
 
 cumRew:-241.4451; ITAE:37310.5533; k:2.5; beta:0.8; alpha:0.15; lambda:0.9; epsilon:0.04

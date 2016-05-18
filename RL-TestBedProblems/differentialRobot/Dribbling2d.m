@@ -67,7 +67,7 @@ for i=1:conf.episodes
             lB=[0.1*conf.maxDistance 0.7*conf.maxDistance -180];
             conf.Pr = rand(1,3).*(uB-lB) + lB;
             [~,~,~,~, pho, gamma, phi]=movDiffRobot(Ts, conf.Pr, conf.Pt, conf.Pb, [0 0],0,0,0,zeros(2,1));
-            if ~sum([pho abs(gamma) abs(phi)]>conf.feature_max(1:3).*[1 0.2 0.6])
+            if ~sum([pho abs(gamma) abs(phi)]>conf.feature_max(1:3).*[1 0.25 0.9])
                 break
             end
         end
