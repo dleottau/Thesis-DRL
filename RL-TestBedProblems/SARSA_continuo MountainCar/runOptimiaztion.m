@@ -5,31 +5,31 @@ close all
 
 tic
 global RUNS;
-RUNS=4;
+RUNS=8;
 
 global flagFirst;
 flagFirst=true;
 global opti;
 opti=1;
 
-myCluster = parcluster('local');
-if matlabpool('size') == 0 % checking to see if my pool is already open
-    matlabpool(myCluster.NumWorkers)
-else
-    matlabpool close
-    matlabpool(myCluster.NumWorkers)
 % myCluster = parcluster('local');
-% myCluster.NumWorkers = 4;  % 'Modified' property now TRUE
-% saveProfile(myCluster);    % 'local' profile now updated, 'Modified' property now FALSE 
-end
+% if matlabpool('size') == 0 % checking to see if my pool is already open
+%     matlabpool(myCluster.NumWorkers)
+% else
+%     matlabpool close
+%     matlabpool(myCluster.NumWorkers)
+% % myCluster = parcluster('local');
+% % myCluster.NumWorkers = 4;  % 'Modified' property now TRUE
+% % saveProfile(myCluster);    % 'local' profile now updated, 'Modified' property now FALSE 
+% end
 
 x0 = [];
 xname{1}='alpha';
-x0(1) = 0.15;   % learning rate
+x0(1) = 0.2;   % learning rate
 xname{2}='lambda';
 x0(2) = 0.95;   % lambda
 xname{3}='epsilon';
-x0(3)  = 0.02;  % epsilon
+x0(3)  = 0.06;  % epsilon
 
 %----------  
 
@@ -46,25 +46,7 @@ options.oneDimPerTry = 1;
 x
 fval
 
-matlabpool close;
+%matlabpool close;
 toc
 
-% 
-% 
-% clc
-% clf
-% clear all
-% close all
-% xname{1}='alpha';
-% x(1) = 0.15;   % learning rate
-% xname{2}='lambda';
-% x(2) = 0.8;   % lambda
-% xname{3}='epsilon';
-% x(3)  = 0.08;  % epsilon
-% RUNS=1;
-% 
-% fitness = MC3D_run(x,RUNS);
-% f=-fitness;
-% 
-% 
-% for i=1:length(x)
+

@@ -79,7 +79,7 @@ conf.Ts = 0.2; %Sample time of a RL step
 
 
 
-fileNameP = ['DRL_' int2str(conf.Runs) 'Runs_Noise' num2str(conf.NOISE) '_MA' int2str(conf.MAapproach) '_alpha' num2str(RL.param.alpha) '_lambda' num2str(RL.param.lambda)];
+fileNameP = ['DRL_' int2str(conf.Runs) 'Runs_Noise' num2str(conf.NOISE) '_MAinc' int2str(conf.MAapproach) '_alpha' num2str(RL.param.alpha) '_lambda' num2str(RL.param.lambda)];
 if RL.param.softmax > 0
    fileName = ['_softmax' int2str(RL.param.softmax) '_decay' num2str(RL.param.exp_decay)];
 else
@@ -149,7 +149,7 @@ cr_min=Inf;
 v_min=Inf;
 pf_max=-Inf;
 
-interval=0.7;  % 0.7 by default
+interval=0.7;
 if conf.TRANSFER < 0
     interval=0.1;
 end

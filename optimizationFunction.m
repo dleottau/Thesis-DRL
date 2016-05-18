@@ -1,18 +1,18 @@
-% function f = optimizationFunction(x)
-% global RUNS;
-% global opti;
-
-clc
-clf
-clear all
-close all
-tic
+function f = optimizationFunction(x)
+global RUNS;
 global opti;
-opti=0;
 
-if ~opti
-    RUNS=28;
-
+% clc
+% clf
+% clear all
+% close all
+% tic
+% global opti;
+% opti=0;
+% 
+% if ~opti
+%     RUNS=29;
+% 
 %     myCluster = parcluster('local');
 %     if matlabpool('size') == 0 % checking to see if my pool is already open
 %         matlabpool(myCluster.NumWorkers)
@@ -20,19 +20,19 @@ if ~opti
 %         matlabpool close
 %         matlabpool(myCluster.NumWorkers)
 %     end
-end
+% end
     
 
 x0 = [];
 
 xname{1}='alpha';
-x0(1) = 0.2;
+x0(1) = 0.1;
 
 xname{2}='softmax';
-x0(2) = 21;
+x0(2) = 41;
 
 xname{3}='decay';
-x0(3) = 6;  
+x0(3) = 9;  
 % ------
 
 xname{4}='k-lenient';
@@ -41,7 +41,7 @@ x0(4) = 1.5;
 xname{5}='beta';
 x0(5) = 0.9; 
 
-xname{6}='MAapproach';
+xname{6}='MAapproach-Inc';
 x0(6) = 1;   % 0 no cordination, 1 frequency adjusted, 2 leninet
 
 

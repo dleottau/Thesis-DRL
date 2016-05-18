@@ -30,8 +30,11 @@ folder = 'tests/'; % To record the test result
 %stringName = 'MAapproach1; DRL1; lambda0.95; alpha0.4; softmax1.1; decay10; 25RUNS.mat';
 %conf.DRL = 1; conf.fuzzQ = 0; conf.MAapproach = 0; 
 
-%stringName = 'MAapproach2; DRL1; lambda0.95; softmax2; alpha0.3; decay8; beta0.7; k-leninet1; 25RUNS_k1_beta0.7.mat';
-%conf.DRL = 1; conf.fuzzQ = 0; conf.MAapproach = 0;
+%stringName = 'MAapproach2; DRL1; lambda0.95; softmax2; decay8; alpha0.2; beta0.6; k-leninet1; 25RUNS_k1_beta0.6.mat';
+%conf.DRL = 1; conf.fuzzQ = 0; conf.MAapproach = 2;
+
+stringName = 'MAapproach-Inc1; DRL1; lambda0.95; beta0.7; k-leninet1; alpha0.3; decay13; softmax0.5; 29RUNS.mat';
+conf.DRL = 1; conf.fuzzQ = 0; conf.MAapproach = 1;
 
 conf.DRAWS = 1;
 conf.record = 1;

@@ -70,7 +70,8 @@ for i = 1: cfg.maxsteps
         [apx, fa_x] = action_selection(RL.Q, FVp(:,1), RL.param, RL.Tx);
         [apy, fa_y] = action_selection(RL.Qy, FVp(:,2), RL.param, RL.Ty);
         % Frequency adjusted param
-        fap = 1-min([fa_x, fa_y])+1E-6;
+        %fap = 1-min([fa_x, fa_y])+1E-6;
+        fap = min([fa_x, fa_y])+1E-6;
     else
         [ap, fap] = action_selection(RL.Q, FVp, RL.param, 0);
         fap=1-fap;

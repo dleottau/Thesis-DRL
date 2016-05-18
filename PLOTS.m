@@ -1,6 +1,6 @@
 function PLOTS()
 
-clear all
+%clear all
 close all
 clc
 
@@ -21,20 +21,17 @@ S=[];
 load finalTests/DRL_25Runs_Noise0.1_MA2_alpha0.1_lambda0.9_k1.5_beta0.9_softmax70_decay6.mat
 [M,S,n,legendN] = load_results(results,M,S,n,legendN,'L-RL');
 
-%load 'finalTests/DRL_25Runs_Noise0.1_MA1_alpha0.1_lambda0.9_softmax21_decay8.mat'
-%[M,S,n,legendN] = load_results(results,M,S,n,legendN,'CA1-DRL');
+load 'finalTests/DRL_29Runs_Noise0.1_MA1inc_alpha0.1_lambda0.9_softmax41_decay9.mat'
+[M,S,n,legendN] = load_results(results,M,S,n,legendN,'CAinc-DRL');
+
+load 'finalTests/DRL_25Runs_Noise0.1_MA1_alpha0.1_lambda0.9_softmax21_decay8.mat'
+[M,S,n,legendN] = load_results(results,M,S,n,legendN,'CA-DRL');
 
 load finalTests/DRL_25Runs_Noise0.1_MA0_alpha0.5_lambda0.9_softmax70_decay6.mat
 [M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL');
 
-load 'finalTests/DRL_25Runs_Noise0.1_MA1_alpha0.2_lambda0.9_softmax21_decay6.mat'
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'CA-DRL');
-
 load RC-2015/results/resultsFull_NASh-v2-20runs-Noise01-exp8.mat
 [M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL+Transfer');
-
-% load finalTests/DRL_8Runs_Noise0.1_MA1_alpha0.2_lambda0.9_softmax21_decay6.mat
-% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'CA8-DRL');
 
 
 

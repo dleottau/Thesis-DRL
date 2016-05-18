@@ -1,25 +1,25 @@
-% function f = optimizationFunction(x)
-% global RUNS;
+function f = optimizationFunction(x)
+global RUNS;
 
-clc
-clf
-clear all
-close all
-tic
-global opti;
-opti=0;
-
-if ~opti
-    RUNS=5;
-
-    myCluster = parcluster('local');
-    if matlabpool('size') == 0 % checking to see if my pool is already open
-        matlabpool(myCluster.NumWorkers)
-    else
-        matlabpool close
-        matlabpool(myCluster.NumWorkers)
-    end
-end
+% clc
+% clf
+% clear all
+% close all
+% tic
+% global opti;
+% opti=0;
+% 
+% if ~opti
+%     RUNS=5;
+% 
+%     myCluster = parcluster('local');
+%     if matlabpool('size') == 0 % checking to see if my pool is already open
+%         matlabpool(myCluster.NumWorkers)
+%     else
+%         matlabpool close
+%         matlabpool(myCluster.NumWorkers)
+%     end
+% end
     
 x0 = [];
 
@@ -39,10 +39,10 @@ xname{5}='beta';
 x0(5) = 0.8; 
 
 xname{6}='DRL'; 
-x0(6)= 1;  % 0 for CRL, 1 for DRL, 2 for DRL with joint states
+x0(6)= 2;  % 0 for CRL, 1 for DRL, 2 for DRL with joint states
 
-xname{7}='MAapproach';
-x0(7) = 2;   % 0 no cordination, 1 frequency adjusted, 2 leninet
+xname{7}='MAapproach-Inc';
+x0(7) = 1;   % 0 no cordination, 1 frequency adjusted, 2 leninet
 
 xname{8}='5actions';
 x0(8) = 0; % enable original proposal which uses 5 actions instead of 9

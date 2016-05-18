@@ -1,43 +1,43 @@
-function f = optimizationFunction(x)
-global RUNS;
-global opti;
-
-% clc
-% clf
-% clear all
-% close all
-% tic
+% function f = optimizationFunction(x)
+% global RUNS;
 % global opti;
-% opti=0;
-% 
-% if ~opti
-%      RUNS=25;
-% 
-%     myCluster = parcluster('local');
-%     if matlabpool('size') == 0 % checking to see if my pool is already open
-%         matlabpool(myCluster.NumWorkers)
-%     else
-%         matlabpool close
-%         matlabpool(myCluster.NumWorkers)
-%     end
-% end
+
+clc
+clf
+clear all
+close all
+tic
+global opti;
+opti=0;
+
+if ~opti
+     RUNS=29;
+
+    myCluster = parcluster('local');
+    if matlabpool('size') == 0 % checking to see if my pool is already open
+        matlabpool(myCluster.NumWorkers)
+    else
+        matlabpool close
+        matlabpool(myCluster.NumWorkers)
+    end
+end
 
 x0 = [];
 
-xname{1}='k-leninet';
-x0(1) = 1;   %
+xname{1}='softmax';
+x0(1) = 0.5;   %
 
-xname{2}='beta';
-x0(2) = 0.7;   % 
+xname{2}='decay';
+x0(2) = 13;   % exploration decay
 
 xname{3}='alpha';
 x0(3) = 0.3;   % learning rate
 
-xname{4}='decay';
-x0(4) = 8;   % exploration decay
+xname{4}='k-leninet';
+x0(4) = 1;   %
 
-xname{5}='softmax';
-x0(5)  = 2;  % epsilon
+xname{5}='beta';
+x0(5) = 0.7;   % 
 
 % xname{1}='decay';
 % x0(1) = 8;   % exploration decay
@@ -60,8 +60,8 @@ x0(6) = 0.95;   % lambda
 xname{7}='DRL'; 
 x0(7) = 1;  % 0 for CRL, 1 for DRL
 
-xname{8}='MAapproach'; 
-x0(8) = 2; % MAapproach, 0 DRL, 1 FA, 2 Lenient ;
+xname{8}='MAapproach-Inc'; 
+x0(8) = 1; % MAapproach, 0 DRL, 1 FA, 2 Lenient ;
 
 if opti
     x0(1) = x(1);

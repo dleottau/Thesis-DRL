@@ -34,11 +34,15 @@ results=importdata([folder stringName]);
 
 stringName = 'MAapproach1; DRL1; lambda0.95; alpha0.4; softmax1.1; decay10; 25RUNS.mat';
 results=importdata([folder stringName]);
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-CALR');
+[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-CA');
 
-stringName = 'MAapproach2; DRL1; lambda0.95; softmax2; alpha0.3; decay8; beta0.7; k-leninet1; 25RUNS_k1_beta0.7.mat';
+stringName = 'MAapproach-Inc1; DRL1; lambda0.95; beta0.7; k-leninet1; alpha0.3; decay13; softmax0.5; 29RUNS.mat';
 results=importdata([folder stringName]);
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-LRL1');
+[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-CAinc');
+
+%stringName = 'MAapproach2; DRL1; lambda0.95; softmax2; alpha0.3; decay8; beta0.7; k-leninet1; 25RUNS_k1_beta0.7.mat';
+%results=importdata([folder stringName]);
+%[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-LRL1');
 
 stringName = 'MAapproach2; DRL1; lambda0.95; softmax2; decay8; alpha0.2; beta0.6; k-leninet1; 25RUNS_k1_beta0.6.mat';
 results=importdata([folder stringName]);

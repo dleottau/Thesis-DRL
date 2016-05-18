@@ -1,3 +1,34 @@
+CA inc
+
+cumGoals:32.5933; MAapproach-Inc1; DRL1; lambda0.95; beta0.7; k-leninet1; alpha0.3; decay10; softmax1.1; 8RUNS
+cumGoals:36.3017; MAapproach-Inc1; DRL1; lambda0.95; beta0.7; k-leninet1; alpha0.3; decay10; softmax0.5; 8RUNS
+cumGoals:33.3123; MAapproach-Inc1; DRL1; lambda0.95; beta0.7; k-leninet1; alpha0.3; decay10; softmax1.5; 8RUNS
+cumGoals:33.943; MAapproach-Inc1; DRL1; lambda0.95; beta0.7; k-leninet1; alpha0.3; decay10; softmax2; 8RUNS
+cumGoals:35.7846; MAapproach-Inc1; DRL1; lambda0.95; beta0.7; k-leninet1; alpha0.3; decay9; softmax0.5; 8RUNS
+cumGoals:34.9016; MAapproach-Inc1; DRL1; lambda0.95; beta0.7; k-leninet1; alpha0.3; decay8; softmax0.5; 8RUNS
+cumGoals:36.8441; MAapproach-Inc1; DRL1; lambda0.95; beta0.7; k-leninet1; alpha0.3; decay11; softmax0.5; 8RUNS
+cumGoals:36.7936; MAapproach-Inc1; DRL1; lambda0.95; beta0.7; k-leninet1; alpha0.3; decay12; softmax0.5; 8RUNS
+cumGoals:37.3865; MAapproach-Inc1; DRL1; lambda0.95; beta0.7; k-leninet1; alpha0.3; decay13; softmax0.5; 8RUNS
+cumGoals:36.4531; MAapproach-Inc1; DRL1; lambda0.95; beta0.7; k-leninet1; alpha0.3; decay14; softmax0.5; 8RUNS
+cumGoals:37.2225; MAapproach-Inc1; DRL1; lambda0.95; beta0.7; k-leninet1; alpha0.3; decay15; softmax0.5; 8RUNS
+cumGoals:36.0242; MAapproach-Inc1; DRL1; lambda0.95; beta0.7; k-leninet1; alpha0.2; decay13; softmax0.5; 8RUNS
+cumGoals:29.6418; MAapproach-Inc1; DRL1; lambda0.95; beta0.7; k-leninet1; alpha0.1; decay13; softmax0.5; 8RUNS
+cumGoals:36.1125; MAapproach-Inc1; DRL1; lambda0.95; beta0.7; k-leninet1; alpha0.4; decay13; softmax0.5; 8RUNS
+cumGoals:35.671; MAapproach-Inc1; DRL1; lambda0.95; beta0.7; k-leninet1; alpha0.5; decay13; softmax0.5; 8RUNS
+cumGoals:36.2639; MAapproach-Inc1; DRL1; lambda0.95; beta0.7; k-leninet1; alpha0.3; decay13; softmax1; 8RUNS
+cumGoals:35.9612; MAapproach-Inc1; DRL1; lambda0.95; beta0.7; k-leninet1; alpha0.3; decay13; softmax1.5; 8RUNS
+
+x =
+
+    0.5000
+   13.0000
+    0.3000
+
+
+fval =
+
+  -37.3865
+
 Lenient DRL 2 ok
 
 cumGoals:40.6539; MAapproach2; DRL1; lambda0.95; softmax2; decay8; alpha0.3; beta0.7; k-leninet1; 25RUNS

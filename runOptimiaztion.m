@@ -5,7 +5,7 @@ close all
 
 tic
 global RUNS;
-RUNS=8;
+RUNS=5;
 
 global flagFirst;
 flagFirst=true;
@@ -25,11 +25,11 @@ end
 
 x0 = [];
 xname{1}='alpha';
-x0(1) = 0.3;
+x0(1) = 0.5;
 xname{2}='softmax';
-x0(2) = 20;
+x0(2) = 70;
 xname{3}='decay';
-x0(3) = 8;
+x0(3) = 6;
 % xname{4}='k-lenient';
 % x0(4) = 1.5;  
 % xname{5}='beta';

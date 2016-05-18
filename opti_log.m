@@ -1,4 +1,56 @@
 -
+opti/DRL_5Runs_Noise0.1_MA0_alpha0.5_lambda0.9_softmax70_decay6
+-
+Fitness:22.36; alpha:0.5; softmax:70; decay:6
+Fitness:22.506; alpha:0.4; softmax:71; decay:6
+Fitness:22.0074; alpha:0.3; softmax:71; decay:6
+Fitness:21.7348; alpha:0.6; softmax:71; decay:6
+Fitness:30.4481; alpha:0.7; softmax:71; decay:6
+Fitness:24.5826; alpha:0.6; softmax:61; decay:6
+Fitness:21.0716; alpha:0.6; softmax:51; decay:6
+Fitness:22.2489; alpha:0.6; softmax:41; decay:6
+Fitness:26.5881; alpha:0.6; softmax:31; decay:6
+Fitness:21.7366; alpha:0.6; softmax:51; decay:5
+Fitness:24.5821; alpha:0.6; softmax:51; decay:7
+Fitness:27.3531; alpha:0.6; softmax:51; decay:8
+Fitness:20.5088; alpha:0.5; softmax:51; decay:6
+Fitness:21.1366; alpha:0.4; softmax:51; decay:6
+Fitness:33.9325; alpha:0.7; softmax:51; decay:6
+Fitness:20.0466; alpha:0.3; softmax:51; decay:6
+Fitness:19.6263; alpha:0.2; softmax:51; decay:6
+Fitness:19.1284; alpha:0.1; softmax:51; decay:6
+Fitness:18.1177; alpha:0.1; softmax:41; decay:6
+Fitness:18.5775; alpha:0.1; softmax:31; decay:6
+Fitness:21.0368; alpha:0.1; softmax:61; decay:6
+Fitness:18.424; alpha:0.1; softmax:71; decay:6
+Fitness:19.1607; alpha:0.1; softmax:21; decay:6
+Fitness:19.7249; alpha:0.1; softmax:41; decay:5
+Fitness:18.2984; alpha:0.1; softmax:41; decay:7
+Fitness:17.8438; alpha:0.1; softmax:41; decay:8
+Fitness:16.6894; alpha:0.1; softmax:41; decay:9
+Fitness:18.8873; alpha:0.1; softmax:41; decay:10
+Fitness:17.5325; alpha:0.1; softmax:41; decay:11
+Fitness:20.795; alpha:0.2; softmax:41; decay:9
+Fitness:20.7563; alpha:0.3; softmax:41; decay:9
+Fitness:17.6963; alpha:0.1; softmax:31; decay:9
+Fitness:18.7818; alpha:0.1; softmax:21; decay:9
+Fitness:19.5301; alpha:0.1; softmax:51; decay:9
+Fitness:17.8534; alpha:0.1; softmax:61; decay:9
+
+x =
+
+    0.1000
+   41.0000
+    9.0000
+
+
+fval =
+
+   16.6894
+
+Elapsed time is 95284.104914 seconds.
+
+-
 opti/DRL_4Runs_Noise0.1_MA1_alpha0.5_lambda0.9_softmax50_decay8
 -
 Fitness:33.9459; alpha:0.5; softmax:50; decay:8

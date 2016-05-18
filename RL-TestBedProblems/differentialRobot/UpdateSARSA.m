@@ -28,9 +28,9 @@ end
 TD = r + RLparam.gamma*Qap - Qa;
 
 if MAapproach == 0 || MAapproach == 1  || MAapproach == 2 && ( TD>0 || rand()>1-exp(-RLparam.k*Ta)) 
-    e_trace = e_trace* RLparam.gamma * RLparam.lambda + FVT;
     Q =  Q + RLparam.fa * RLparam.alpha * ( e_trace*TD);
 end
+e_trace = e_trace* RLparam.gamma * RLparam.lambda + FVT;
 %
 %[Qa2,b,FV2] = efbd(x,Q(:,a),cores);
 %[Qa Qa2]
