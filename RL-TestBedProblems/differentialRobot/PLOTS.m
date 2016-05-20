@@ -9,7 +9,7 @@ spot_dot={'.r' '.g' '.c' '.k' '.b' '.m' '.r' '.g'};
 lineW=[3 2 2 2 3 2 2 2];
 legendN=[];
 
-K=10; % # points ploted for errobar
+K=12; % # points ploted for errobar
 span=0.00001;
 %span=0.07;
 
@@ -18,33 +18,35 @@ M=[];
 S=[];
 
 
-folder = 'final/'; 
+folder = 'final/Delft/'; 
 
-stringName = 'DRL0; lambda0.9; alpha0.5; softmax2; decay7; 25RUNS.mat';
+%stringName = 'DRL0; lambda0.9; alpha0.5; softmax2; decay7; 25RUNS.mat';
+stringName = 'MAapproach0; DRL0; lambda0.9; softmax2; alpha0.5; decay7; beta0.7; k-leninet1; 25RUNS.mat';
 results=importdata([folder stringName]);
 [M,S,n,legendN] = load_results(results,M,S,n,legendN,'CRL');
 
-stringName = 'DRL1; lambda0.9; alpha0.3; softmax1.1; decay10; 25RUNS.mat';
+%stringName = 'DRL1; lambda0.9; alpha0.3; softmax1.1; decay10; 25RUNS.mat';
+stringName = 'MAapproach0; DRL1; lambda0.9; softmax1; alpha0.3; decay10; beta0.7; k-leninet1; 25RUNS.mat';
 results=importdata([folder stringName]);
 [M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL');
 
-stringName = 'fuz-DRL1; lambda0.95; softmax1.1; decay9; alpha0.3; Nactions3; 25RUNS.mat';
-results=importdata([folder stringName]);
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-Hybrid');
-
-stringName = 'MAapproach1; DRL1; lambda0.95; alpha0.4; softmax1.1; decay10; 25RUNS.mat';
-results=importdata([folder stringName]);
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-CAdec');
+% stringName = 'fuz-DRL1; lambda0.95; softmax1.1; decay9; alpha0.3; Nactions3; 25RUNS.mat';
+% results=importdata([folder stringName]);
+% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-Hybrid');
 % 
-stringName = 'MAapproach-Inc1; DRL1; lambda0.95; beta0.7; k-leninet1; alpha0.3; decay13; softmax0.5; 29RUNS.mat';
-results=importdata([folder stringName]);
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-CAinc');
+% stringName = 'MAapproach1; DRL1; lambda0.95; alpha0.4; softmax1.1; decay10; 25RUNS.mat';
+% results=importdata([folder stringName]);
+% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-CAdec');
+% % 
+% stringName = 'MAapproach-Inc1; DRL1; lambda0.95; beta0.7; k-leninet1; alpha0.3; decay13; softmax0.5; 29RUNS.mat';
+% results=importdata([folder stringName]);
+% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-CAinc');
+% % 
+% % 
+% stringName = 'MAapproach2; DRL1; lambda0.95; softmax2; alpha0.3; decay8; beta0.7; k-leninet1; 25RUNS_k1_beta0.7.mat';
+% results=importdata([folder stringName]);
+% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-Lenient');
 % 
-% 
-stringName = 'MAapproach2; DRL1; lambda0.95; softmax2; alpha0.3; decay8; beta0.7; k-leninet1; 25RUNS_k1_beta0.7.mat';
-results=importdata([folder stringName]);
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-Lenient');
-
 
 
 Ms=M;%Smoothed means
@@ -62,7 +64,8 @@ E=size(M,1);
 L=floor(E/K);
 MK=zeros(K-1,size(M,2),size(M,3));
 SK=MK;
-for k=ceil(K/2):K-1
+for k=1:K-1
+%for k=ceil(K/2):K-1
     for i=1:size(M,3)
         for j=1:size(M,2)
             s = round(k*L + (j-1)*L/(2*size(M,2)));
@@ -105,7 +108,7 @@ function [M, S, n, legendN] = load_results(results, M, S, n, legendN, leg)
     M(:,n,1) = results.mean_goals';
     %M(:,n,2) = results.mean_faults';
     
-    S(:,n,1) = results.std_goals';
+    S(:,n,1) = results.std_goals'/5;
     %S(:,n,2) = results.std_faults';
     
     legendN{n} = leg;

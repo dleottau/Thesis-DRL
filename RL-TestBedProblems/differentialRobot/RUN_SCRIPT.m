@@ -1,7 +1,7 @@
 function f = RUN_SCRIPT(x,RUNS,stringName)
 conf.Test=0;
 
-folder = 'final/';
+folder = 'final/Delft/';
 
 global flagFirst;
 global opti;
@@ -14,7 +14,7 @@ conf.maxDistance = 800;    % maximum ball distance permited before to end the ep
 conf.Runs = RUNS;
 conf.NOISE = 0.01;
 conf.DRL = x(7); %Decentralized RL(1) or Centralized RL(0)
-conf.DRAWS = 1;
+conf.DRAWS = 0;
 conf.record = 1;
 conf.fuzzQ = 0;
 conf.MAapproach = x(8);

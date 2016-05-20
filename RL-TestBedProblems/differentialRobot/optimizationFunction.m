@@ -31,13 +31,13 @@ xname{2}='beta';
 x0(2) = 0.7;   % 
 
 xname{3}='decay';
-x0(3) = 8;   % exploration decay
+x0(3) = 10;   % exploration decay
 
 xname{4}='alpha';
 x0(4) = 0.3;   % learning rate
 
 xname{5}='softmax';
-x0(5)  = 2;  % epsilon
+x0(5)  = 1;  % epsilon
 
 % xname{1}='decay';
 % x0(1) = 8;   % exploration decay
@@ -55,13 +55,13 @@ x0(5)  = 2;  % epsilon
 % x0(5) = 0.9;   % 
 
 xname{6}='lambda';
-x0(6) = 0.95;   % lambda
+x0(6) = 0.9;   % lambda
 
 xname{7}='DRL'; 
 x0(7) = 1;  % 0 for CRL, 1 for DRL
 
 xname{8}='MAapproach'; 
-x0(8) = 2; % MAapproach, 0 DRL, 1 FA, 2 Lenient ;
+x0(8) = 0; % MAapproach, 0 DRL, 1 FA, 2 Lenient ;
 
 if opti
     x0(1) = x(1);
@@ -90,8 +90,8 @@ if ~opti
     disp('-');
     disp(['cumGoals:',num2str(cumGoals)]);
     disp('-');
-    matlabpool close;
     toc
+    matlabpool close;
 else
     %disp(['cumGoals:',num2str(cumGoals), '; Decay:',num2str(x0(1)),'; SoftmaxT:',num2str(x0(2)),'; alpha:',num2str(x0(3)),'; k-lenient:',num2str(x0(4)),'; beta:',num2str(x0(5))]);
     disp(['cumGoals:',num2str(cumGoals), '; ' stringName]);

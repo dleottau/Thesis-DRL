@@ -37,7 +37,7 @@ cfg.actionStep = [1 1];
 cfg.goalState = [0.5 0.5];
 cfg.maxsteps    = 5000;              % maximum number of steps per episode
 
-folder = 'experimentsFull/';  
+folder = 'experimentsFull/Delft/';  
 
 if RL.param.softmax > 0
     fileName = ['DRL' int2str(cfg.DRL) '_' int2str(RUNS) 'RUNS_softmax' int2str(RL.param.softmax) '_decay' num2str(RL.param.exp_decay) '_alpha' num2str(RL.param.alpha) '_lambda' num2str(RL.param.lambda) '_MA' num2str(cfg.MAapproach)];
@@ -68,8 +68,8 @@ if flagFirst
     disp('-');
 end
 
-parfor n=1:RUNS
-%for n=1:RUNS
+%parfor n=1:RUNS
+for n=1:RUNS
     %cfg.runs=n;
     [reward{n}, itae(n), x_{n}, Qx{n}, Qy{n}] = MountainCarDemo(cfg, RL, n);
 end

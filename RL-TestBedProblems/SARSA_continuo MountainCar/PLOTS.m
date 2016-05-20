@@ -4,29 +4,26 @@ clear all
 close all
 clc
 
-folder = 'experimentsFull/fig1/'; 
+folder = 'experimentsFull/Delft/'; 
 files = dir(fullfile([folder '*.mat']));
-
 
 spot={':r' '-g' '-.c' '--k'  ':b' '-m' '-.r' '--g'};
 spot_dot={'.r' '.g' '.c' '.k' '.b' '.m' '.r' '.g'};
 lineW=[3 2 2 2 3 2 2 2];
 legendN=[];
 
-K=10; % # points ploted for errobar
-span=0.00001;
+K=12; % # points ploted for errobar
+span=0.01;
 %span=0.07;
 
 n=1;
 M=[];
 S=[];
 
-
 for i=1:size(files,1)
     results=importdata([folder files(i).name]);
     [M,S,n,legendN] = load_results(results,M,S,n,legendN,files(i).name);
 end
-
 
 Ms=M;%Smoothed means
 Ss=S;%Smoothed stdevs
@@ -43,7 +40,8 @@ E=size(M,1);
 L=floor(E/K);
 MK=zeros(K-1,size(M,2),size(M,3));
 SK=MK;
-for k=ceil(K/2):K-1
+%for k=ceil(K/2):K-1
+for k=1:K-1
     for i=1:size(M,3)
         for j=1:size(M,2)
             s = round(k*L + (j-1)*L/(2*size(M,2)));
@@ -84,9 +82,8 @@ function [M, S, n, legendN] = load_results(results, M, S, n, legendN, leg)
     %N=size(results.mean_goals,2);
     
     M(:,n,1) = results.mean_cumReward';
-    %M(:,n,2) = results.mean_faults';
-    
-    S(:,n,1) = results.std_cumReward';
+          
+    S(:,n,1) = (results.std_cumReward');
     %S(:,n,2) = results.std_faults';
     
     legendN{n} = leg;

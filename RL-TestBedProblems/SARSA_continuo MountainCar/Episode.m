@@ -90,11 +90,9 @@ for i = 1: cfg.maxsteps
     
     % Update the Qtable, that is,  learn from the experience
     if cfg.DRL   
-        TD(1) = getTemporalDifference(FV(:,1), ax, r(1), FVp(:,1), apx, RL.Q, RL.param);
-        TD(2) = getTemporalDifference(FV(:,2), ay, r(2), FVp(:,2), apy, RL.Qy, RL.param);
-                                                   
-        [ RL.Q, e_trace, RL.Tx] = UpdateSARSA(TD(1), TD, FV(:,1), ax, r(1), FVp(:,1), apx, RL.Q, e_trace, RL.param,RL.Tx, cfg.MAapproach);
-        [ RL.Qy, e_trace_y, RL.Ty] = UpdateSARSA(TD(2), TD, FV(:,2), ay, r(2), FVp(:,2), apy, RL.Qy, e_trace_y, RL.param,RL.Ty, cfg.MAapproach);
+                                                          
+        [ RL.Q, e_trace, RL.Tx] = UpdateSARSA(FV(:,1), ax, r(1), FVp(:,1), apx, RL.Q, e_trace, RL.param,RL.Tx, cfg.MAapproach);
+        [ RL.Qy, e_trace_y, RL.Ty] = UpdateSARSA(FV(:,2), ay, r(2), FVp(:,2), apy, RL.Qy, e_trace_y, RL.param,RL.Ty, cfg.MAapproach);
         %update the current variables
         ax = apx;
         ay = apy;
