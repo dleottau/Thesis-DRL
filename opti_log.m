@@ -1,3 +1,169 @@
+Starting matlabpool using the 'local' profile ... connected to 4 workers.
+-
+opti/DRL_10Runs_Noise0.1_MA1_alpha0.5_lambda0.7_softmax40_decay7
+-
+Fitness:32.5135; alpha:0.5; softmax:40; decay:7; lambda:0.7
+Fitness:21.3345; alpha:0.4; softmax:41; decay:7; lambda:0.7
+Fitness:26.7528; alpha:0.3; softmax:41; decay:7; lambda:0.7
+Fitness:24.269; alpha:0.6; softmax:41; decay:7; lambda:0.7
+Fitness:33.5576; alpha:0.7; softmax:41; decay:7; lambda:0.7
+Fitness:21.0922; alpha:0.2; softmax:41; decay:7; lambda:0.7
+Fitness:25.8311; alpha:0.1; softmax:41; decay:7; lambda:0.7
+Fitness:18.6108; alpha:0.2; softmax:31; decay:7; lambda:0.7
+Fitness:25.0366; alpha:0.2; softmax:21; decay:7; lambda:0.7
+Fitness:21.4611; alpha:0.2; softmax:51; decay:7; lambda:0.7
+Fitness:19.7818; alpha:0.2; softmax:61; decay:7; lambda:0.7
+Fitness:16.2916; alpha:0.2; softmax:11; decay:7; lambda:0.7
+Fitness:19.8036; alpha:0.2; softmax:1; decay:7; lambda:0.7
+Fitness:18.4004; alpha:0.2; softmax:11; decay:6; lambda:0.7
+Fitness:21.7279; alpha:0.2; softmax:11; decay:5; lambda:0.7
+Fitness:20.3263; alpha:0.2; softmax:11; decay:8; lambda:0.7
+Fitness:21.6134; alpha:0.2; softmax:11; decay:9; lambda:0.7
+Fitness:32.1883; alpha:0.2; softmax:11; decay:7; lambda:0.6
+Fitness:36.9087; alpha:0.2; softmax:11; decay:7; lambda:0.5
+Fitness:17.1517; alpha:0.2; softmax:11; decay:7; lambda:0.8
+Fitness:32.2585; alpha:0.2; softmax:11; decay:7; lambda:0.9
+Fitness:23.2292; alpha:0.1; softmax:11; decay:7; lambda:0.7
+Fitness:22.4807; alpha:0.3; softmax:11; decay:7; lambda:0.7
+Fitness:22.4681; alpha:0.4; softmax:11; decay:7; lambda:0.7
+
+x =
+
+    0.2000
+   11.0000
+    7.0000
+    0.7000
+
+
+fval =
+
+   16.2916
+
+Elapsed time is 66276.842192 seconds.
+
+-
+opti/DRL_6Runs_Noise0.1_MAinc1_alpha0.2_lambda0.9_softmax70_decay10
+-
+Fitness:77.8527; alpha:0.2; softmax:70; decay:10
+Fitness:80.8088; alpha:0.1; softmax:71; decay:10
+Fitness:77.9978; alpha:0.3; softmax:71; decay:10
+Fitness:78.132; alpha:0.4; softmax:71; decay:10
+Fitness:78.7116; alpha:0.2; softmax:61; decay:10
+Fitness:78.2645; alpha:0.2; softmax:51; decay:10
+Fitness:78.1936; alpha:0.2; softmax:71; decay:9
+Fitness:78.8644; alpha:0.2; softmax:71; decay:8
+Fitness:77.8219; alpha:0.2; softmax:71; decay:11
+Fitness:78.2025; alpha:0.2; softmax:71; decay:12
+Fitness:78.3292; alpha:0.2; softmax:71; decay:13
+Fitness:78.9111; alpha:0.1; softmax:71; decay:11
+Fitness:77.4349; alpha:0.3; softmax:71; decay:11
+Fitness:78.1911; alpha:0.4; softmax:71; decay:11
+Fitness:78.3938; alpha:0.5; softmax:71; decay:11
+Fitness:78.9594; alpha:0.3; softmax:61; decay:11
+Fitness:77.4868; alpha:0.3; softmax:51; decay:11
+Fitness:78.7533; alpha:0.3; softmax:71; decay:9
+Fitness:77.6375; alpha:0.3; softmax:71; decay:12
+Fitness:77.9355; alpha:0.3; softmax:71; decay:13
+
+x =
+
+    0.3000
+   71.0000
+   11.0000
+
+
+fval =
+
+   77.4349
+
+Elapsed time is 2508.829274 seconds.
+
+-
+4 finalTests/DRL_5Runs_Noise0.1_MA1_alpha0.2_lambda0.9_softmax60_decay7
+-
+Fitness:26.8569; alpha:0.2; softmax:60; decay:7
+Fitness:35.4282; alpha:0.1; softmax:61; decay:7
+Fitness:35.321; alpha:0.3; softmax:61; decay:7
+Fitness:32.0542; alpha:0.4; softmax:61; decay:7
+Fitness:28.5129; alpha:0.2; softmax:51; decay:7
+Fitness:22.6841; alpha:0.2; softmax:41; decay:7
+Fitness:29.4971; alpha:0.2; softmax:71; decay:7
+Fitness:30.4313; alpha:0.2; softmax:31; decay:7
+Fitness:30.5002; alpha:0.2; softmax:21; decay:7
+Fitness:23.3806; alpha:0.2; softmax:41; decay:6
+Fitness:25.3538; alpha:0.2; softmax:41; decay:5
+Fitness:30.3839; alpha:0.2; softmax:41; decay:8
+Fitness:29.458; alpha:0.2; softmax:41; decay:9
+Fitness:27.871; alpha:0.1; softmax:41; decay:7
+Fitness:36.0632; alpha:0.3; softmax:41; decay:7
+Fitness:33.9885; alpha:0.4; softmax:41; decay:7
+
+x =
+
+    0.2000
+   41.0000
+    7.0000
+
+
+fval =
+
+   22.6841
+
+Elapsed time is 12187.886313 seconds.
+
+
+3 finalTests/DRL_5Runs_Noise0.1_MA1_alpha0.2_lambda0.9_softmax60_decay6
+-
+Fitness:25.1778; alpha:0.2; softmax:60; decay:6
+Fitness:22.5938; alpha:0.1; softmax:61; decay:6
+Fitness:29.7707; alpha:0.3; softmax:61; decay:6
+Fitness:34.8383; alpha:0.4; softmax:61; decay:6
+Fitness:24.9324; alpha:0.1; softmax:51; decay:6
+Fitness:26.6264; alpha:0.1; softmax:41; decay:6
+Fitness:27.2166; alpha:0.1; softmax:71; decay:6
+Fitness:25.133; alpha:0.1; softmax:61; decay:5
+Fitness:23.6925; alpha:0.1; softmax:61; decay:7
+Fitness:26.6601; alpha:0.1; softmax:61; decay:8
+
+x =
+
+    0.1000
+   61.0000
+    6.0000
+
+
+fval =
+
+   22.5938
+
+Elapsed time is 6593.969880 seconds.
+
+-
+2 finalTests/DRL_5Runs_Noise0.1_MA1_alpha0.5_lambda0.9_softmax70_decay6
+-
+Fitness:34.3875; alpha:0.5; softmax:70; decay:6
+Fitness:34.5601; alpha:0.4; softmax:71; decay:6
+Fitness:30.9103; alpha:0.3; softmax:71; decay:6
+Fitness:39.4925; alpha:0.6; softmax:71; decay:6
+Fitness:41.3312; alpha:0.7; softmax:71; decay:6
+Fitness:25.2573; alpha:0.2; softmax:71; decay:6
+Fitness:25.5482; alpha:0.1; softmax:71; decay:6
+Fitness:20.6234; alpha:0.2; softmax:61; decay:6
+Fitness:28.023; alpha:0.2; softmax:51; decay:6
+Fitness:25.4667; alpha:0.2; softmax:41; decay:6
+Fitness:24.4703; alpha:0.2; softmax:61; decay:5
+Fitness:21.7771; alpha:0.2; softmax:61; decay:7
+Fitness:27.1813; alpha:0.2; softmax:61; decay:8
+Fitness:23.6314; alpha:0.1; softmax:61; decay:6
+Fitness:33.1831; alpha:0.3; softmax:61; decay:6
+Fitness:36.273; alpha:0.4; softmax:61; decay:6
+
+x =
+
+    0.2000
+   61.0000
+    6.0000
+
 -
 opti/DRL_5Runs_Noise0.1_MA0_alpha0.5_lambda0.9_softmax70_decay6
 -

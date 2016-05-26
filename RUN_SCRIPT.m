@@ -20,7 +20,7 @@ conf.opti=opti;
 
 %dbstop in softmax_selection.m at 38
 
-conf.episodes = 2000; %500;   %2000  maximum number of  episode
+conf.episodes = 2000; %  maximum number of  episode
 conf.Runs = RUNS;
 conf.record = 1;
 conf.DRAWS = 0;
@@ -46,11 +46,11 @@ end
 
 RL.param.alpha      = x(1);%0.5;   % 0.3-0.5 learning rate
 RL.param.gamma      = 0.99;   % discount factor
-RL.param.lambda     = 0.9;   % the decaying elegibiliy trace parameter
+RL.param.lambda     = x(4);   % the decaying elegibiliy trace parameter
 RL.param.epsilon    = 1;
 RL.param.softmax    = x(2);   % Boltzmann temperature (50 by default), if <= 0 e-greaddy
 RL.param.exp_decay  = x(3); % 8 exploration decay parameter
-RL.param.k          = x(4);    %1.5 lenience parameter
+RL.param.k          = x(7);    %1.5 lenience parameter
 RL.param.beta       = x(5);   %0.9 lenience discount factor
 
 
@@ -79,7 +79,7 @@ conf.Ts = 0.2; %Sample time of a RL step
 
 
 
-fileNameP = ['DRL_' int2str(conf.Runs) 'Runs_Noise' num2str(conf.NOISE) '_MAinc' int2str(conf.MAapproach) '_alpha' num2str(RL.param.alpha) '_lambda' num2str(RL.param.lambda)];
+fileNameP = ['DRL_' int2str(conf.Runs) 'Runs_Noise' num2str(conf.NOISE) '_MA' int2str(conf.MAapproach) '_alpha' num2str(RL.param.alpha) '_lambda' num2str(RL.param.lambda)];
 if RL.param.softmax > 0
    fileName = ['_softmax' int2str(RL.param.softmax) '_decay' num2str(RL.param.exp_decay)];
 else

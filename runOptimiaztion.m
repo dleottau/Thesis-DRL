@@ -5,7 +5,7 @@ close all
 
 tic
 global RUNS;
-RUNS=5;
+RUNS=10;
 
 global flagFirst;
 flagFirst=true;
@@ -27,9 +27,12 @@ x0 = [];
 xname{1}='alpha';
 x0(1) = 0.5;
 xname{2}='softmax';
-x0(2) = 70;
+x0(2) = 40;
 xname{3}='decay';
-x0(3) = 6;
+x0(3) = 7;
+xname{4}='lambda';
+x0(4) = 0.7;  
+
 % xname{4}='k-lenient';
 % x0(4) = 1.5;  
 % xname{5}='beta';
@@ -40,8 +43,8 @@ x0(3) = 6;
 options = hilloptions('TimeLimit', 600);
 % options.step = [0.1; 10; 1; 0.5; 0.1];
 % options.space = [[0.1; 1; 5; 0.5; 0.4], [0.7; 80; 15; 5; 0.99]];
-options.step = [0.1; 10; 1;];
-options.space = [[0.1; 1; 5;], [0.7; 80; 15;]];
+options.step = [0.1; 10; 1; 0.1;];
+options.space = [[0.1; 1; 5; 0.1;], [0.7; 80; 15; 0.99]];
 options.peaks = 2;
 options.oneDimPerTry = 1;
 

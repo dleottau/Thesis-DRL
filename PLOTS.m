@@ -4,6 +4,8 @@ function PLOTS()
 close all
 clc
 
+%record =  true;
+
 spot={':r' '-g' '-.c' '--k'  ':b' '-m' '-.r' '--g'};
 spot_dot={'.r' '.g' '.c' '.k' '.b' '.m' '.r' '.g'};
 lineW=[3 2 2 2 3 2 2 2];
@@ -17,19 +19,21 @@ n=1;
 M=[];
 S=[];
 
+%---------------------
 load finalTests/DRL_25Runs_Noise0.1_MA0_alpha0.5_lambda0.9_softmax70_decay6.mat
 [M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL');
-
-load 'finalTests/DRL_25Runs_Noise0.1_MA1_alpha0.1_lambda0.9_softmax21_decay8.mat'
+%  
+load 'finalTests/DRL_25Runs_Noise0.1_MA1_alpha0.2_lambda0.8_softmax11_decay7.mat'
 [M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-CAdec');
-
+%  
 load finalTests/DRL_25Runs_Noise0.1_MA2_alpha0.1_lambda0.9_k1.5_beta0.9_softmax70_decay6.mat
 [M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-Lenient');
-
+%  
 load RC-2015/results/resultsFull_NASh-v2-20runs-Noise01-exp8.mat
 [M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL+Transfer');
 
-
+%load 'finalTests/DRL_6Runs_Noise0.1_MAinc1_alpha0.3_lambda0.9_softmax71_decay11.mat'
+%[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-CAinc');
 
 Ms=M;%Smoothed means
 Ss=S;%Smoothed stdevs
@@ -46,7 +50,8 @@ E=size(M,1);
 L=floor(E/K);
 MK=zeros(K-1,size(M,2),size(M,3));
 SK=MK;
-for k=ceil(K/2):K-1
+%for k=ceil(K/2):K-1
+for k=1:K-1
     for i=1:size(M,3)
         for j=1:size(M,2)
             s = round(k*L + (j-1)*L/(2*size(M,2)));
@@ -57,8 +62,7 @@ for k=ceil(K/2):K-1
     end
 end
 
-
-
+SK=SK/sqrt(25); % Computing standard error
 
 figure
 subplot(3,1,1);    
@@ -67,8 +71,8 @@ set(gca,'fontsize',16)
 plot(x(:,1),zeros(length(x(:,1))), '.w')
 hold on
 for j=1:size(M,2)
-    pt(j)=plot(Ms(:,j,1), spot{j}, 'LineWidth',lineW(j))
-    errorbar(x(:,j) ,MK(:,j,1),SK(:,j,1), spot_dot{j})
+    pt(j)=plot(Ms(:,j,1), spot{j}, 'LineWidth',lineW(j));
+    errorbar(x(:,j) ,MK(:,j,1),SK(:,j,1), spot_dot{j});
 end
 hold
 axis([1 E 0 100])
@@ -84,8 +88,8 @@ set(gca,'fontsize',16)
 plot(x(:,1),zeros(length(x(:,1))), '.w')
 hold on
 for j=1:size(M,2)     
-    pf(j)=plot(Ms(:,j,2), spot{j}, 'LineWidth',lineW(j))
-    errorbar(x(:,j), MK(:,j,2),SK(:,j,2), spot_dot{j})
+    pf(j)=plot(Ms(:,j,2), spot{j}, 'LineWidth',lineW(j));
+    errorbar(x(:,j), MK(:,j,2),SK(:,j,2), spot_dot{j});
 end
 hold
 axis([1 E 0 100])
@@ -102,7 +106,8 @@ set(gca,'fontsize',16)
 %subplot(2,1,2)
  hold on
  for j=1:size(M,2)     
-     pf2(j)=plot(.5*(100-Ms(:,j,1)+Ms(:,j,2)), spot{j}, 'LineWidth',lineW(j))
+     pf2(j)=plot(.5*(100-Ms(:,j,1)+Ms(:,j,2)), spot{j}, 'LineWidth',lineW(j));
+     errorbar(x(:,j), .5*(100-MK(:,j,1)+MK(:,j,2)), .5*(SK(:,j,1)+SK(:,j,2)), spot_dot{j});
  end
  hold
  axis([1 E 0 100])

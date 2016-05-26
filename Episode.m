@@ -182,10 +182,12 @@ while 1
     fap=1;
     if conf.MAapproach==1
         bias=1/conf.nactions;
-        %fap = 1-min([fa_x-bias, fa_y-bias, fa_rot-bias])+1E-3;
-        fap = min([fa_x-bias, fa_y-bias, fa_rot-bias])+1E-3;
+        bias=0;
+        
+        fap = 1-min([fa_x-bias, fa_y-bias, fa_rot-bias]);
+        %fap = min([fa_x-bias, fa_y-bias, fa_rot-bias]);
         %fap = RL.param.alpha2 + 0.001;
-        fap = clipDLF(fap, 0, 1);
+        fap = clipDLF(fap, 1E-3, 1);
         
     end
         
