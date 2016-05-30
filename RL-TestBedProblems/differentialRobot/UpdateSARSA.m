@@ -25,12 +25,15 @@ if MAapproach == 2
 % OJO: quizas necesario vover a calcular Ta o multiplicarlo por beta 
 end
 
+e_trace(:,a) = FV;
 TD = r + RLparam.gamma*Qap - Qa;
 
-if MAapproach == 0 || MAapproach == 1  || MAapproach == 2 && ( TD>0 || rand()>1-exp(-RLparam.k*Ta)) 
-    e_trace = e_trace* RLparam.gamma * RLparam.lambda + FVT;
+if MAapproach ~= 2  || MAapproach == 2 && ( TD>0 || rand()>1-exp(-RLparam.k*Ta)) 
+
     Q =  Q + RLparam.fa * RLparam.alpha * ( e_trace*TD);
 end
+
+e_trace = e_trace* RLparam.gamma * RLparam.lambda;
 %
 %[Qa2,b,FV2] = efbd(x,Q(:,a),cores);
 %[Qa Qa2]

@@ -60,17 +60,19 @@ X = [x_obs(5), x_obs(7), x_obs(8) x_obs(13)];
 X = clipDLF(X, conf.feature_min, conf.feature_max);
 
 
-FV = getFeatureVector(X, conf.cores);
-
+[FVx, FVw] = getFeatureVector(X, conf.cores, conf.jointState);
+FV=FVw;
 % Get velocity From Linear Controller 
 [V_FLC] = controller_dribbling (xG,Vr_min,Vr_max);
 
 ballState=0;
 
 % selects an action 
-[a, p] = action_selection(RL.Q, RL.T, FV, RL.param);
 if conf.DRL
-    [a_rot, p_rot] = action_selection(RL.Q_rot, RL.T_rot, FV, RL.param);
+    [a, p] = action_selection(RL.Q, RL.T, FVx, RL.param);
+    [a_rot, p_rot] = action_selection(RL.Q_rot, RL.T_rot, FVw, RL.param);
+else
+    [a, p] = action_selection(RL.Q, RL.T, FV, RL.param);
 end
 
 U=1;
@@ -88,7 +90,7 @@ while 1
         action_rot = actionlist_w(a_rot); 
         if conf.fuzzQ
             if conf.Test
-                MF=FV/sum(FV);
+                MF=FV/sum(FVx);
                 [qv, av] = max(RL.Q,[],2);
                 U = sum( MF .* av);
             end
@@ -107,8 +109,6 @@ while 1
     
     Vr_req(1)=action; 
     Vr_req(2)=Vr(i-1,2)+action_rot;
-    
-    
        
     %if ballState~=0
     %if ballState==3
@@ -119,10 +119,6 @@ while 1
     %      Vr_req(2)=0;%V_FLC(2);
     %     Vr_req(3)=V_FLC(3);
 %    
-
-
-
-
     %Vr is the current robot speed
     dVelReq = Vr_req - Vr(i-1,:);
     
@@ -162,14 +158,15 @@ while 1
     Xp = [x_obs(5), x_obs(7), x_obs(8), x_obs(13)];
     Xp = clipDLF(Xp, conf.feature_min, conf.feature_max);
     
-    FVp = getFeatureVector(Xp, conf.cores);
+    [FVxp, FVwp] = getFeatureVector(Xp, conf.cores, conf.jointState);
+    FVp=FVwp;
     
     % Get velocity From Linear Controller
     [V_FLC] = controller_dribbling (Xp,Vr_min,Vr_max);
     %---------------------------------------        
           
     % observe the reward at state xp and the final state flag
-    
+   
     balline=[Pb(i,:);Pb(i-1,:)];
     goalline=[conf.PgoalPostR; conf.PgoalPostL];
     [checkGoal, Pbi]=goal1(goalline,balline);
@@ -177,17 +174,22 @@ while 1
 
     [r,f]  = GetReward(Xp, Vr_max, conf.feature_max, Pr(i,:), Pb(i,:), Pt, conf.goalSize, maxDistance,checkGoal,Pbi,ballState,Vr(i,:));
     total_reward = total_reward + r;
-   
-   
+  
     % select action prime
-    [ap, fa] = action_selection(RL.Q, RL.T, FVp, RL.param);
+    
     if conf.DRL
-        [ap_rot, fa_rot] = action_selection(RL.Q_rot, RL.T_rot, FVp, RL.param);
-        fap = 1-min([(fa-1/conf.nactions_x), (fa_rot-1/conf.nactions_w)])+1E-6;
-        fap = clipDLF(fap, 0, 1);
+        [ap, fa] = action_selection(RL.Q, RL.T, FVxp, RL.param);
+        [ap_rot, fa_rot] = action_selection(RL.Q_rot, RL.T_rot, FVwp, RL.param);
+        fap = min([(fa-1/conf.nactions_x), (fa_rot-1/conf.nactions_w)]); %CAinc
+        if conf.MAapproach==1
+            fap = 1-fap; %CAdec
+        end
+        fap = clipDLF(fap, 1E-3, 1);
+    else
+        [ap, fa] = action_selection(RL.Q, RL.T, FVp, RL.param);
     end
     
-    if conf.MAapproach~=1
+    if conf.MAapproach~=1 && conf.MAapproach~=3
         fap=1;
     end
                      
@@ -195,11 +197,11 @@ while 1
     %if ballState==0 || ballState==3
     if ~conf.Test
         if conf.DRL % Decentralized
-            [RL.Q_rot, trace_rot, RL.T_rot] = UpdateSARSA(FV, a_rot, r(2), FVp, ap_rot, RL.Q_rot, trace_rot, RL.param, RL.T_rot, conf.MAapproach);
+            [RL.Q_rot, trace_rot, RL.T_rot] = UpdateSARSA(FVw, a_rot, r(2), FVwp, ap_rot, RL.Q_rot, trace_rot, RL.param, RL.T_rot, conf.MAapproach);
             if conf.fuzzQ %Fuzzy Q learning
-                [ RL.Q, trace, U, Qv] = UpdateQfuzzy(FV, r(1), RL.Q, trace, RL.param, Qv);
+                [ RL.Q, trace, U, Qv] = UpdateQfuzzy(FVx, r(1), RL.Q, trace, RL.param, Qv);
             else % SARSA
-                [RL.Q, trace, RL.T] = UpdateSARSA(FV, a, r(1), FVp, ap, RL.Q, trace, RL.param, RL.T, conf.MAapproach);
+                [RL.Q, trace, RL.T] = UpdateSARSA(FVx, a, r(1), FVxp, ap, RL.Q, trace, RL.param, RL.T, conf.MAapproach);
             end
         else % Centralized
             [RL.Q, trace, RL.T] = UpdateSARSA(FV, a, r(1), FVp, ap, RL.Q, trace, RL.param, RL.T, conf.MAapproach);
@@ -214,6 +216,8 @@ while 1
         a_rot = ap_rot;
     end
     FV = FVp;
+    FVx = FVxp;
+    FVw = FVwp;
     RL.param.fa = fap;
                 
     %Compute performance index
@@ -248,8 +252,7 @@ while 1
         end
         break
     end
-    
-   
-end
  
+end
+
 end

@@ -1,4 +1,4 @@
-function FV = getFeatureVector(X,cores)
+function [FVx, FV] = getFeatureVector(X,cores,jointState)
 
 m1=cores.mean.ro;
 m2=cores.mean.gama;
@@ -44,4 +44,20 @@ for d4=1:D4
 end
 end
 end
+end
+
+if ~jointState
+    FVx=zeros(D1*D2*D3,1);
+    index=1;
+    for d1=1:D1    
+    for d2=1:D2
+    for d3=1:D3
+        FVx(index,1) = mf1(d1)*mf2(d2)*mf3(d3);
+        index=index+1;
+    end
+    end
+    end
+
+else
+    FVx=FV;
 end

@@ -1,4 +1,4 @@
-function [ cores, nstates] = StateTable(feature_min, feature_step, feature_max )
+function [ cores] = StateTable(feature_min, feature_step, feature_max )
 %BuildStateList builds a state list from a state matrix
 
 ro = feature_min(1) : feature_step(1) : feature_max(1);
@@ -30,4 +30,4 @@ cores.std.gama = gama_std;
 cores.std.fi = fi_std;
 cores.std.vw = vw_std;
 
-nstates = length(ro)*length(gama)*length(fi)*length(vw);
+

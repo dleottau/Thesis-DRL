@@ -4,6 +4,8 @@ clear all
 close all
 clc
 
+record=0;
+
 spot={':r' '-g' '-.c' '--k'  ':b' '-m' '-.r' '--g'};
 spot_dot={'.r' '.g' '.c' '.k' '.b' '.m' '.r' '.g'};
 lineW=[3 2 2 2 3 2 2 2];
@@ -18,17 +20,24 @@ M=[];
 S=[];
 
 
-folder = 'final/Delft/'; 
+folder = 'final/'; 
 
-%stringName = 'DRL0; lambda0.9; alpha0.5; softmax2; decay7; 25RUNS.mat';
-stringName = 'MAapproach0; DRL0; lambda0.9; softmax2; alpha0.5; decay7; beta0.7; k-leninet1; 25RUNS.mat';
+stringName = 'MAapproach0; jointState0; DRL1; lambda0.9; beta8; k-leninet3; alpha0.5; decay8; softmax3; 25RUNS.mat';
 results=importdata([folder stringName]);
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'CRL');
+[M,S,n,legendN] = load_results(results,M,S,n,legendN,'fDRL');
 
-%stringName = 'DRL1; lambda0.9; alpha0.3; softmax1.1; decay10; 25RUNS.mat';
-stringName = 'MAapproach0; DRL1; lambda0.9; softmax1; alpha0.3; decay10; beta0.7; k-leninet1; 25RUNS.mat';
+stringName = 'MAapproach1; jointState0; DRL1; lambda0.9; beta8; k-leninet2; alpha0.3; decay8; softmax2; 25RUNS.mat';
 results=importdata([folder stringName]);
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL');
+[M,S,n,legendN] = load_results(results,M,S,n,legendN,'fDRL-CAdec');
+
+stringName = 'MAapproach2; jointState0; DRL1; lambda0.9; beta0.9; k-leninet1; alpha0.5; decay0.9; softmax1; 25RUNS_k1_beta0.9.mat';
+results=importdata([folder stringName]);
+[M,S,n,legendN] = load_results(results,M,S,n,legendN,'fDRL-Lenient');
+
+stringName = 'MAapproach3; jointState0; DRL1; lambda0.9; beta7; k-leninet0; alpha0.5; decay7; softmax0; 25RUNS.mat';
+results=importdata([folder stringName]);
+[M,S,n,legendN] = load_results(results,M,S,n,legendN,'fDRL-CAinc');
+
 
 % stringName = 'fuz-DRL1; lambda0.95; softmax1.1; decay9; alpha0.3; Nactions3; 25RUNS.mat';
 % results=importdata([folder stringName]);
@@ -96,7 +105,10 @@ grid on
 ylabel('% of Scored Goals');
 xlabel('Episodes');
 legend(pt,legendN);
-saveas(gcf,[folder 'fig.fig'])
+if record
+    saveas(gcf,[folder 'fig.fig']); 
+end
+
 end
 
 function [M, S, n, legendN] = load_results(results, M, S, n, legendN, leg)
@@ -108,7 +120,7 @@ function [M, S, n, legendN] = load_results(results, M, S, n, legendN, leg)
     M(:,n,1) = results.mean_goals';
     %M(:,n,2) = results.mean_faults';
     
-    S(:,n,1) = results.std_goals'/5;
+    S(:,n,1) = results.std_goals';
     %S(:,n,2) = results.std_faults';
     
     legendN{n} = leg;

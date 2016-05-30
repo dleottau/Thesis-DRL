@@ -8,7 +8,12 @@ epsilon0     = RL.param.epsilon;  % probability of a random action selection
 softmax0     = RL.param.softmax;
 
 Ts = conf.Ts; %Sample time of a RL step
-[conf.cores, conf.nstates]   = StateTable( conf.feature_min, conf.feature_step, conf.feature_max );  % the table of states
+cores   = StateTable( conf.feature_min, conf.feature_step, conf.feature_max);  % the table of states
+conf.cores=cores;
+conf.nstates   = length(cores.mean.ro)*length(cores.mean.gama)*length(cores.mean.fi)*length(cores.mean.vw);
+nsVx=length(cores.mean.ro)*length(cores.mean.gama)*length(cores.mean.fi);
+conf.nstatesD   = [nsVx, conf.nstates];
+
 [conf.Actions]  = ActionTable( conf ); % the table of actions
 
 if conf.DRL
@@ -19,9 +24,12 @@ else
 end
 
 if ~conf.Test
-    if conf.DRL
+    if conf.DRL && conf.jointState
         RL.Q = QTable( conf.nstates, conf.nactions_x, conf.Q_INIT );  % the Qtable for the vx agent
         RL.Q_rot = QTable( conf.nstates, conf.nactions_w, conf.Q_INIT );  % the Qtable for the v_rot agent
+    elseif conf.DRL % individual states
+        RL.Q = QTable( conf.nstatesD(1), conf.nactions_x, conf.Q_INIT );  % the Qtable for the vx agent
+        RL.Q_rot = QTable( conf.nstatesD(2), conf.nactions_w, conf.Q_INIT );  % the Qtable for the v_rot agent
     else
         RL.Q = QTable( conf.nstates, conf.nactions, conf.Q_INIT ); 
         RL.Q_rot = 0;
@@ -30,9 +38,14 @@ end
 
 RL.T        = 0;
 RL.T_rot    = 0;
-if conf.MAapproach == 2 && conf.DRL
-    RL.T        = QTable( conf.nstates,conf.nactions_x, 1);
-    RL.T_rot    = QTable( conf.nstates, conf.nactions_w, 1 );
+if conf.MAapproach == 2 && conf.DRL 
+    if conf.jointState
+        RL.T        = QTable( conf.nstates,conf.nactions_x, 1);
+        RL.T_rot    = QTable( conf.nstates, conf.nactions_w, 1 );
+    else
+        RL.T        = QTable( conf.nstatesD(1),conf.nactions_x, 1);
+        RL.T_rot    = QTable( conf.nstatesD(2), conf.nactions_w, 1 );
+    end
 end
 
 EXPLORATION = conf.episodes/conf.EXPL_EPISODES_FACTOR;
@@ -46,11 +59,7 @@ conf.PgoalPostL = [conf.Pt(1)-conf.goalSize/2 conf.Pt(2)];
 
    
 for i=1:conf.episodes    
-
-    
-    conf.episodeN=i;
-    
-    
+conf.episodeN=i;
    while 1
         conf.Pb = conf.posb;
         if ~conf.Test

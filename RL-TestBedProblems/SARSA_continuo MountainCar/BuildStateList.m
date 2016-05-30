@@ -21,7 +21,8 @@ cores.std.xp = stdvs{2};
 cores.std.y = stdvs{3};
 cores.std.yp = stdvs{4};
 
-
 if cfg.DRL==1
     nstates=length(means{1})*length(means{2});
+elseif cfg.DRL==3
+    nstates=length(means{1})*length(means{2})*length(means{1}); 
 end

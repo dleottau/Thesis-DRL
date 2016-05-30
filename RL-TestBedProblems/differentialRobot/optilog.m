@@ -1,3 +1,160 @@
+Starting matlabpool using the 'local' profile ... connected to 4 workers.
+cumGoals:24.9546; MAapproach3; jointState0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.3; decay8; softmax2; 10RUNS
+cumGoals:26.4178; MAapproach3; jointState0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.3; decay8; softmax1; 10RUNS
+cumGoals:35.3986; MAapproach3; jointState0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.3; decay8; softmax0; 10RUNS
+cumGoals:23.5015; MAapproach3; jointState0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.3; decay8; softmax3; 10RUNS
+cumGoals:24.4803; MAapproach3; jointState0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.3; decay8; softmax4; 10RUNS
+cumGoals:37.8406; MAapproach3; jointState0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.3; decay7; softmax0; 10RUNS
+cumGoals:37.6993; MAapproach3; jointState0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.3; decay6; softmax0; 10RUNS
+cumGoals:37.8406; MAapproach3; jointState0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.3; decay9; softmax0; 10RUNS
+cumGoals:36.8618; MAapproach3; jointState0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.3; decay10; softmax0; 10RUNS
+cumGoals:38.224; MAapproach3; jointState0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.3; decay5; softmax0; 10RUNS
+cumGoals:37.5782; MAapproach3; jointState0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.3; decay4; softmax0; 10RUNS
+cumGoals:36.0545; MAapproach3; jointState0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.3; decay3; softmax0; 10RUNS
+cumGoals:35.227; MAapproach3; jointState0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.2; decay5; softmax0; 10RUNS
+cumGoals:23.7841; MAapproach3; jointState0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.1; decay5; softmax0; 10RUNS
+cumGoals:36.4581; MAapproach3; jointState0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.4; decay5; softmax0; 10RUNS
+cumGoals:40.8274; MAapproach3; jointState0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.5; decay5; softmax0; 10RUNS
+cumGoals:39.9294; MAapproach3; jointState0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.6; decay5; softmax0; 10RUNS
+cumGoals:26.1453; MAapproach3; jointState0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.5; decay5; softmax1; 10RUNS
+cumGoals:24.551; MAapproach3; jointState0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.5; decay5; softmax2; 10RUNS
+cumGoals:38.9506; MAapproach3; jointState0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.5; decay4; softmax0; 10RUNS
+cumGoals:42.6842; MAapproach3; jointState0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.5; decay3; softmax0; 10RUNS
+cumGoals:38.8093; MAapproach3; jointState0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.5; decay6; softmax0; 10RUNS
+cumGoals:40.999; MAapproach3; jointState0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.5; decay7; softmax0; 10RUNS
+cumGoals:38.6377; MAapproach3; jointState0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.5; decay2; softmax0; 10RUNS
+cumGoals:40.1211; MAapproach3; jointState0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.4; decay3; softmax0; 10RUNS
+cumGoals:37.9717; MAapproach3; jointState0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.6; decay3; softmax0; 10RUNS
+cumGoals:17.4773; MAapproach3; jointState0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.5; decay3; softmax1; 10RUNS
+cumGoals:14.1271; MAapproach3; jointState0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.5; decay3; softmax2; 10RUNS
+
+x =
+
+         0
+    3.0000
+    0.5000
+
+
+fval =
+
+  -42.6842
+
+Warning: matlabpool will be removed in a future release.
+To shutdown a parallel pool use 'delete(gcp('nocreate'))' instead. 
+Parallel pool using the 'local' profile is shutting down.
+Elapsed time is 5775.261226 seconds.
+
+Starting matlabpool using the 'local' profile ... connected to 4 workers.
+cumGoals:31.4934; MAapproach2; jointState0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.3; decay0.9; softmax2; 10RUNS
+cumGoals:36.2765; MAapproach2; jointState0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.3; decay0.9; softmax1; 10RUNS
+cumGoals:38.0323; MAapproach2; jointState0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.3; decay0.9; softmax0; 10RUNS
+cumGoals:27.3259; MAapproach2; jointState0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.3; decay0.9; softmax3; 10RUNS
+cumGoals:26.0444; MAapproach2; jointState0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.3; decay0.9; softmax4; 10RUNS
+cumGoals:36.9021; MAapproach2; jointState0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.3; decay0.8; softmax0; 10RUNS
+cumGoals:35.8527; MAapproach2; jointState0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.3; decay0.7; softmax0; 10RUNS
+cumGoals:38.3148; MAapproach2; jointState0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.2; decay0.9; softmax0; 10RUNS
+cumGoals:36.3774; MAapproach2; jointState0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.1; decay0.9; softmax0; 10RUNS
+cumGoals:37.7497; MAapproach2; jointState0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.4; decay0.9; softmax0; 10RUNS
+cumGoals:38.5974; MAapproach2; jointState0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.5; decay0.9; softmax0; 10RUNS
+cumGoals:38.1332; MAapproach2; jointState0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.6; decay0.9; softmax0; 10RUNS
+cumGoals:41.332; MAapproach2; jointState0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.5; decay0.9; softmax1; 10RUNS
+cumGoals:34.0161; MAapproach2; jointState0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.5; decay0.9; softmax2; 10RUNS
+cumGoals:31.8063; MAapproach2; jointState0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.5; decay0.9; softmax3; 10RUNS
+cumGoals:38.6075; MAapproach2; jointState0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.5; decay0.8; softmax1; 10RUNS
+cumGoals:39.7881; MAapproach2; jointState0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.5; decay0.7; softmax1; 10RUNS
+cumGoals:39.1726; MAapproach2; jointState0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.4; decay0.9; softmax1; 10RUNS
+cumGoals:38.6478; MAapproach2; jointState0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.6; decay0.9; softmax1; 10RUNS
+
+x =
+
+    1.0000
+    0.9000
+    0.5000
+
+
+fval =
+
+  -41.3320
+
+Warning: matlabpool will be removed in a future release.
+To shutdown a parallel pool use 'delete(gcp('nocreate'))' instead. 
+Parallel pool using the 'local' profile is shutting down.
+Elapsed time is 4664.554262 seconds.
+
+
+
+Starting matlabpool using the 'local' profile ... connected to 4 workers.
+cumGoals:42.8153; MAapproach1; jointState0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.3; decay8; softmax2; 10RUNS
+cumGoals:41.4228; MAapproach1; jointState0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.3; decay8; softmax1; 10RUNS
+cumGoals:28.5166; MAapproach1; jointState0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.3; decay8; softmax0; 10RUNS
+cumGoals:43.8143; MAapproach1; jointState0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.3; decay8; softmax3; 10RUNS
+cumGoals:42.4924; MAapproach1; jointState0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.3; decay8; softmax4; 10RUNS
+cumGoals:39.2936; MAapproach1; jointState0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.3; decay8; softmax5; 10RUNS
+cumGoals:42.0182; MAapproach1; jointState0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.3; decay7; softmax3; 10RUNS
+cumGoals:42.8254; MAapproach1; jointState0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.3; decay6; softmax3; 10RUNS
+cumGoals:38.5066; MAapproach1; jointState0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.3; decay9; softmax3; 10RUNS
+cumGoals:41.7053; MAapproach1; jointState0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.3; decay10; softmax3; 10RUNS
+cumGoals:39.001; MAapproach1; jointState0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.2; decay8; softmax3; 10RUNS
+cumGoals:35.8123; MAapproach1; jointState0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.1; decay8; softmax3; 10RUNS
+cumGoals:41.332; MAapproach1; jointState0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.4; decay8; softmax3; 10RUNS
+cumGoals:40.2926; MAapproach1; jointState0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.5; decay8; softmax3; 10RUNS
+
+x =
+
+    3.0000
+    8.0000
+    0.3000
+
+
+fval =
+
+  -43.8143
+
+Warning: matlabpool will be removed in a future release.
+To shutdown a parallel pool use 'delete(gcp('nocreate'))' instead. 
+Parallel pool using the 'local' profile is shutting down.
+Elapsed time is 2263.720282 seconds.
+
+Individual State Spaces
+Starting matlabpool using the 'local' profile ... connected to 4 workers.
+cumGoals:40.6458; MAapproach0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.3; decay10; softmax1; 10RUNS
+cumGoals:37.8507; MAapproach0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.3; decay10; softmax0; 10RUNS
+cumGoals:40.0404; MAapproach0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.3; decay10; softmax2; 10RUNS
+cumGoals:41.1907; MAapproach0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.3; decay10; softmax3; 10RUNS
+cumGoals:39.6973; MAapproach0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.3; decay10; softmax4; 10RUNS
+cumGoals:40.2926; MAapproach0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.3; decay10; softmax5; 10RUNS
+cumGoals:41.9576; MAapproach0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.3; decay9; softmax3; 10RUNS
+cumGoals:42.3613; MAapproach0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.3; decay8; softmax3; 10RUNS
+cumGoals:40.3935; MAapproach0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.3; decay11; softmax3; 10RUNS
+cumGoals:41.0192; MAapproach0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.3; decay12; softmax3; 10RUNS
+cumGoals:40.8274; MAapproach0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.3; decay7; softmax3; 10RUNS
+cumGoals:41.3219; MAapproach0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.3; decay6; softmax3; 10RUNS
+cumGoals:38.2644; MAapproach0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.2; decay8; softmax3; 10RUNS
+cumGoals:36.3774; MAapproach0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.1; decay8; softmax3; 10RUNS
+cumGoals:40.3935; MAapproach0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.4; decay8; softmax3; 10RUNS
+cumGoals:43.4511; MAapproach0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.5; decay8; softmax3; 10RUNS
+cumGoals:42.6135; MAapproach0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.6; decay8; softmax3; 10RUNS
+cumGoals:40.2018; MAapproach0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.5; decay8; softmax2; 10RUNS
+cumGoals:41.9273; MAapproach0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.5; decay8; softmax1; 10RUNS
+cumGoals:41.554; MAapproach0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.5; decay8; softmax4; 10RUNS
+cumGoals:40; MAapproach0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.5; decay8; softmax5; 10RUNS
+cumGoals:42.3007; MAapproach0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.5; decay7; softmax3; 10RUNS
+cumGoals:40.6054; MAapproach0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.5; decay6; softmax3; 10RUNS
+cumGoals:40.0706; MAapproach0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.5; decay9; softmax3; 10RUNS
+cumGoals:41.4329; MAapproach0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.5; decay10; softmax3; 10RUNS
+
+x =
+
+    3.0000
+    8.0000
+    0.5000
+
+
+fval =
+
+  -43.4511
+
+
 Lenient DRL 2 ok
 
 cumGoals:38.9001; MAapproach2; DRL1; lambda0.95; softmax2; alpha0.3; decay8; beta0.9; k-leninet1.5; 6RUNS
@@ -33,6 +190,11 @@ fval =
 
   -44.1641
 
+Warning: matlabpool will be removed in a future release.
+To shutdown a parallel pool use 'delete(gcp('nocreate'))' instead. 
+Parallel pool using the 'local' profile is shutting down.
+Elapsed time is 4026.672207 seconds.
+  
 LENIENT DRL 1 
 
 Starting matlabpool using the 'local' profile ... connected to 4 workers.
