@@ -44,7 +44,7 @@ if conf.opti
     conf.record = 1;
 end
 
-RL.param.alpha      = x(1);%0.5;   % 0.3-0.5 learning rate
+RL.param.alpha      = x(1);   % 0.5;   % 0.3-0.5 learning rate
 RL.param.gamma      = 0.99;   % discount factor
 RL.param.lambda     = x(4);   % the decaying elegibiliy trace parameter
 RL.param.epsilon    = 1;

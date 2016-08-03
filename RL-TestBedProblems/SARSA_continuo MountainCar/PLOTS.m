@@ -4,12 +4,12 @@ clear all
 close all
 clc
 
-folder = 'experimentsFull/Delft/'; 
+folder = 'experimentsFull/fig3/'; 
 files = dir(fullfile([folder '*.mat']));
 
 spot={':r' '-g' '-.c' '--k'  ':b' '-m' '-.r' '--g'};
 spot_dot={'.r' '.g' '.c' '.k' '.b' '.m' '.r' '.g'};
-lineW=[3 2 2 2 3 2 2 2];
+lineW=[2 1 1 1 2 1 1 1];
 legendN=[];
 
 K=12; % # points ploted for errobar
@@ -25,6 +25,7 @@ for i=1:size(files,1)
     [M,S,n,legendN] = load_results(results,M,S,n,legendN,files(i).name);
 end
 
+S=S/5;
 Ms=M;%Smoothed means
 Ss=S;%Smoothed stdevs
 
@@ -56,7 +57,7 @@ end
 
 
 figure
-
+set(gca,'fontsize',14)
 %subplot(3,1,1);    
 %subplot(2,1,1); 
 plot(x(:,1),zeros(length(x(:,1))), '.w')
@@ -72,7 +73,7 @@ grid on
 ylabel('Averaged Cumulative Reward');
 xlabel('Episodes');
 legend(pt,legendN);
-saveas(gcf,[folder 'fig.fig'])
+%saveas(gcf,[folder 'fig.fig'])
 end
 
 function [M, S, n, legendN] = load_results(results, M, S, n, legendN, leg)

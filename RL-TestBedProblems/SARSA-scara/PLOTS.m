@@ -11,8 +11,8 @@ legendN=[];
 STEPS=400;
 
 K=7; % # points ploted for errobar
-%span=0.00001;
-span=0.2;
+%span=0.00001; 0.2
+span=0.11;
 
 n=1;
 M=[];
@@ -39,10 +39,7 @@ results=importdata([folder stringName]);
 
 
 
-
-
-
-
+S=S/5; % Standar error
 
 Ms=M;%Smoothed means
 Ss=S;%Smoothed stdevs
@@ -60,7 +57,8 @@ E=size(M,1);
 L=ceil(E/K);
 MK=zeros(K-1,size(M,2),size(M,3));
 SK=MK;
-for k=floor(K/2):K-1
+%for k=floor(K/2):K-1
+for k=1:K-1
     for i=1:size(M,3)
         for j=1:size(M,2)
             s = round((k)*L + (j-1)*L/(2*size(M,2)));

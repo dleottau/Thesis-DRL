@@ -1,14 +1,14 @@
-% function f = optimizationFunction(x)
-% global RUNS;
-% global opti;
-
-clc
-clf
-clear all
-close all
-tic
+function f = optimizationFunction(x)
+global RUNS;
 global opti;
-opti=0;
+
+% clc
+% clf
+% clear all
+% close all
+% tic
+% global opti;
+% opti=0;
 
 
 

@@ -56,7 +56,7 @@ options.oneDimPerTry = 1;
 x
 fval
 
-matlabpool close;
+%matlabpool close;
 toc
 
 

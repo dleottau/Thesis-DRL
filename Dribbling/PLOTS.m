@@ -6,9 +6,14 @@ clc
 
 %record =  true;
 
+%spot={':r' '-g' '-.c' '--k'  ':b' '-m' '-.r' '--g'};
+%spot_dot={'.r' '.g' '.c' '.k' '.b' '.m' '.r' '.g'};
+%lineW=[1 .5 .5 .5 1 .5 .5 .5];
+
 spot={':r' '-g' '-.c' '--k'  ':b' '-m' '-.r' '--g'};
 spot_dot={'.r' '.g' '.c' '.k' '.b' '.m' '.r' '.g'};
-lineW=[1 .5 .5 .5 1 .5 .5 .5];
+lineW=[2 1 1 1 2 1 1 1];
+
 legendN=[];
 
 K=10; % # points ploted for errobar
@@ -66,57 +71,52 @@ SK=SK/sqrt(25); % Computing standard error
 
 figure
 subplot(3,1,1);    
-set(gca,'fontsize',16)
-%subplot(2,1,1); 
+set(gca,'fontsize',14)
 plot(x(:,1),zeros(length(x(:,1))), '.w')
 hold on
 for j=1:size(M,2)
     pt(j)=plot(Ms(:,j,1), spot{j}, 'LineWidth',lineW(j));
     errorbar(x(:,j) ,MK(:,j,1),SK(:,j,1), spot_dot{j});
 end
-hold
 axis([1 E 0 100])
 %axis([1 160 0 100])
 %legend(pt,legendN)
 %title('% Vmax') ; 
 grid on
 ylabel('% of max. forward speed');
+hold
 
+
+%figure
 subplot(3,1,2); 
-set(gca,'fontsize',16)
-%subplot(2,1,2)
+set(gca,'fontsize',14)
 plot(x(:,1),zeros(length(x(:,1))), '.w')
 hold on
 for j=1:size(M,2)     
     pf(j)=plot(Ms(:,j,2), spot{j}, 'LineWidth',lineW(j));
     errorbar(x(:,j), MK(:,j,2),SK(:,j,2), spot_dot{j});
 end
-hold
 axis([1 E 0 100])
-%axis([1 160 0 100])
-%title('% Faults'); 
 grid on
-%xlabel('Episodes');
 ylabel('% of time in fault-state');
 %legend(pt,legendN);
+hold
 
+%figure
 %Solo para el fitness global
 subplot(3,1,3); 
-set(gca,'fontsize',16)
-%subplot(2,1,2)
- hold on
- for j=1:size(M,2)     
+set(gca,'fontsize',14)
+hold on
+for j=1:size(M,2)     
      pf2(j)=plot(.5*(100-Ms(:,j,1)+Ms(:,j,2)), spot{j}, 'LineWidth',lineW(j));
      errorbar(x(:,j), .5*(100-MK(:,j,1)+MK(:,j,2)), .5*(SK(:,j,1)+SK(:,j,2)), spot_dot{j});
- end
- hold
- axis([1 E 0 100])
- %axis([1 160 0 100])
- grid on
- xlabel('Episodes');
- ylabel('Global Fitness');
- set(gca,'fontsize',16)
- legend(pt,legendN);
+end
+axis([1 E 0 100])
+grid on
+xlabel('Episodes');
+ylabel('Global Fitness');
+legend(pt,legendN);
+hold
 % 
 
 

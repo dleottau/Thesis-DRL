@@ -6,9 +6,9 @@ clc
 
 record=0;
 
-spot={':r' '-g' '-.c' '--k'  ':b' '-m' '-.r' '--g'};
-spot_dot={'.r' '.g' '.c' '.k' '.b' '.m' '.r' '.g'};
-lineW=[3 2 2 2 3 2 2 2];
+spot={':r' '-g' '-.c' '--k'  ':b' '-m' '-.r' '--g' ':c' '-k'  '-.b' '--m'};
+spot_dot={'.r' '.g' '.c' '.k' '.b' '.m' '.r' '.g' '.c' '.k' '.b' '.m'};
+lineW=[3 2 2 2 3 2 2 2 3 2 2 2];
 legendN=[];
 
 K=12; % # points ploted for errobar
@@ -22,40 +22,59 @@ S=[];
 
 folder = 'final/'; 
 
-stringName = 'MAapproach0; jointState0; DRL1; lambda0.9; beta8; k-leninet3; alpha0.5; decay8; softmax3; 25RUNS.mat';
-results=importdata([folder stringName]);
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'fDRL');
-
-stringName = 'MAapproach1; jointState0; DRL1; lambda0.9; beta8; k-leninet2; alpha0.3; decay8; softmax2; 25RUNS.mat';
-results=importdata([folder stringName]);
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'fDRL-CAdec');
-
-stringName = 'MAapproach2; jointState0; DRL1; lambda0.9; beta0.9; k-leninet1; alpha0.5; decay0.9; softmax1; 25RUNS_k1_beta0.9.mat';
-results=importdata([folder stringName]);
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'fDRL-Lenient');
-
-stringName = 'MAapproach3; jointState0; DRL1; lambda0.9; beta7; k-leninet0; alpha0.5; decay7; softmax0; 25RUNS.mat';
-results=importdata([folder stringName]);
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'fDRL-CAinc');
-
-
-% stringName = 'fuz-DRL1; lambda0.95; softmax1.1; decay9; alpha0.3; Nactions3; 25RUNS.mat';
+% stringName = 'MAapproach0; jointState0; DRL1; lambda0.9; beta8; k-leninet3; alpha0.5; decay8; softmax3; 25RUNS.mat';
 % results=importdata([folder stringName]);
-% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-Hybrid');
+% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'fDRL');
 % 
-% stringName = 'MAapproach1; DRL1; lambda0.95; alpha0.4; softmax1.1; decay10; 25RUNS.mat';
+% stringName = 'MAapproach1; jointState0; DRL1; lambda0.9; beta8; k-leninet2; alpha0.3; decay8; softmax2; 25RUNS.mat';
 % results=importdata([folder stringName]);
-% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-CAdec');
-% % 
-% stringName = 'MAapproach-Inc1; DRL1; lambda0.95; beta0.7; k-leninet1; alpha0.3; decay13; softmax0.5; 29RUNS.mat';
-% results=importdata([folder stringName]);
-% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-CAinc');
-% % 
-% % 
-% stringName = 'MAapproach2; DRL1; lambda0.95; softmax2; alpha0.3; decay8; beta0.7; k-leninet1; 25RUNS_k1_beta0.7.mat';
-% results=importdata([folder stringName]);
-% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-Lenient');
+% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'fDRL-CAdec');
 % 
+% stringName = 'MAapproach3; jointState0; DRL1; lambda0.9; beta7; k-leninet0; alpha0.5; decay7; softmax0; 25RUNS.mat';
+% results=importdata([folder stringName]);
+% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'fDRL-CAinc');
+% 
+% stringName = 'MAapproach2; jointState0; DRL1; lambda0.9; beta0.9; k-leninet1; alpha0.5; decay0.9; softmax1; 25RUNS_k1_beta0.9.mat';
+% results=importdata([folder stringName]);
+% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'fDRL-Lenient');
+%--------
+
+stringName = 'MAapproach0; DRL0; lambda0.9; softmax2; alpha0.5; decay7; beta0.7; k-leninet1; 25RUNS.mat';
+results=importdata([folder stringName]);
+[M,S,n,legendN] = load_results(results,M,S,n,legendN,'CRL');
+
+stringName = 'DRL1; lambda0.9; alpha0.3; softmax1.1; decay10; 25RUNS.mat';
+results=importdata([folder stringName]);
+[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL');
+
+% stringName = 'MAapproach0; DRL1; lambda0.9; softmax1; alpha0.3; decay10; beta0.7; k-leninet1; 25RUNS.mat';
+% results=importdata([folder stringName]);
+% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL2');
+
+stringName = 'MAapproach1; DRL1; lambda0.95; alpha0.4; softmax1.1; decay10; 25RUNS.mat';
+results=importdata([folder stringName]);
+[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-CAdec');
+ 
+stringName = 'MAapproach-Inc1; DRL1; lambda0.95; beta0.7; k-leninet1; alpha0.3; decay13; softmax0.5; 29RUNS.mat';
+results=importdata([folder stringName]);
+[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-CAinc');
+ 
+stringName = 'MAapproach2; DRL1; lambda0.95; softmax2; alpha0.3; decay8; beta0.7; k-leninet1; 25RUNS_k1_beta0.7.mat';
+results=importdata([folder stringName]);
+[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-Lenient');
+
+stringName = 'fuz-DRL1; lambda0.95; softmax1.1; decay9; alpha0.3; Nactions3; 25RUNS.mat';
+results=importdata([folder stringName]);
+[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-Hybrid');
+
+
+% stringName = 'DRL0; lambda0.9; alpha0.5; softmax2; decay7; 25RUNS.mat';
+% results=importdata([folder stringName]);
+% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'CRL1');
+
+
+
+
 
 
 Ms=M;%Smoothed means
@@ -99,7 +118,7 @@ for j=1:size(M,2)
     errorbar(x(:,j) ,MK(:,j,1),SK(:,j,1), spot_dot{j})
 end
 hold
-axis([1 E 0 100])
+axis([1 E 0 50])
 
 grid on
 ylabel('% of Scored Goals');
@@ -120,7 +139,7 @@ function [M, S, n, legendN] = load_results(results, M, S, n, legendN, leg)
     M(:,n,1) = results.mean_goals';
     %M(:,n,2) = results.mean_faults';
     
-    S(:,n,1) = results.std_goals';
+    S(:,n,1) = results.std_goals' * (1/5); % (1/sqrt(25 runs)) for standard error
     %S(:,n,2) = results.std_faults';
     
     legendN{n} = leg;
