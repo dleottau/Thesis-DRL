@@ -1,0 +1,226 @@
+-
+TEST
+Manual policy Source: if x(2)>=0, a=3; else a=1; end
+vx.nCores7; x.nCores11; 25RUNS
+-
+Starting parallel pool (parpool) using the 'local' profile ... connected to 4 workers.
+-
+Fitness:122
+-
+Elapsed time is 64.647925 seconds.
+
+
+
+-
+TEST
+vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 25RUNS
+-
+-
+Fitness:106.1507
+-
+Elapsed time is 131.895431 seconds.
+
+Starting matlabpool using the 'local' profile ... connected to 4 workers.
+Fitness:161.2459; vx.nCores7; x.nCores7; epsilon0.01; lambda0.9; alpha0.1; 8RUNS
+Fitness:135.1507; vx.nCores7; x.nCores7; epsilon0.01; lambda0.9; alpha0.2; 8RUNS
+Fitness:111.6581; vx.nCores7; x.nCores7; epsilon0.01; lambda0.9; alpha0.3; 8RUNS
+Fitness:228.8195; vx.nCores7; x.nCores7; epsilon0.01; lambda0.9; alpha0.4; 8RUNS
+Fitness:203.1382; vx.nCores7; x.nCores7; epsilon0.01; lambda0.9; alpha0.5; 8RUNS
+Fitness:300.6225; vx.nCores7; x.nCores7; epsilon0.01; lambda0.8; alpha0.3; 8RUNS
+Fitness:159.4967; vx.nCores7; x.nCores7; epsilon0.01; lambda0.7; alpha0.3; 8RUNS
+Fitness:263.1573; vx.nCores7; x.nCores7; epsilon0.01; lambda0.6; alpha0.3; 8RUNS
+Fitness:343.0075; vx.nCores7; x.nCores7; epsilon0.01; lambda0.5; alpha0.3; 8RUNS
+Fitness:112.1705; vx.nCores7; x.nCores7; epsilon0.03; lambda0.9; alpha0.3; 8RUNS
+Fitness:171.6614; vx.nCores7; x.nCores7; epsilon0.05; lambda0.9; alpha0.3; 8RUNS
+Fitness:173.3725; vx.nCores7; x.nCores7; epsilon0.07; lambda0.9; alpha0.3; 8RUNS
+Fitness:141.577; vx.nCores7; x.nCores7; epsilon0.09; lambda0.9; alpha0.3; 8RUNS
+Fitness:119.6498; vx.nCores7; x.nCores6; epsilon0.01; lambda0.9; alpha0.3; 8RUNS
+Fitness:209.399; vx.nCores7; x.nCores5; epsilon0.01; lambda0.9; alpha0.3; 8RUNS
+Fitness:478.8791; vx.nCores7; x.nCores4; epsilon0.01; lambda0.9; alpha0.3; 8RUNS
+Fitness:273.4429; vx.nCores7; x.nCores3; epsilon0.01; lambda0.9; alpha0.3; 8RUNS
+Fitness:106.0141; vx.nCores7; x.nCores8; epsilon0.01; lambda0.9; alpha0.3; 8RUNS
+Fitness:126.4727; vx.nCores7; x.nCores9; epsilon0.01; lambda0.9; alpha0.3; 8RUNS
+Fitness:109.3642; vx.nCores7; x.nCores10; epsilon0.01; lambda0.9; alpha0.3; 8RUNS
+Fitness:112.4123; vx.nCores7; x.nCores11; epsilon0.01; lambda0.9; alpha0.3; 8RUNS
+Fitness:107.0257; vx.nCores7; x.nCores12; epsilon0.01; lambda0.9; alpha0.3; 8RUNS
+Fitness:163.6382; vx.nCores6; x.nCores8; epsilon0.01; lambda0.9; alpha0.3; 8RUNS
+Fitness:193.4776; vx.nCores5; x.nCores8; epsilon0.01; lambda0.9; alpha0.3; 8RUNS
+Fitness:132.7442; vx.nCores4; x.nCores8; epsilon0.01; lambda0.9; alpha0.3; 8RUNS
+Fitness:148.3916; vx.nCores3; x.nCores8; epsilon0.01; lambda0.9; alpha0.3; 8RUNS
+Fitness:123.9098; vx.nCores8; x.nCores8; epsilon0.01; lambda0.9; alpha0.3; 8RUNS
+Fitness:108.7268; vx.nCores9; x.nCores8; epsilon0.01; lambda0.9; alpha0.3; 8RUNS
+Fitness:121.2061; vx.nCores10; x.nCores8; epsilon0.01; lambda0.9; alpha0.3; 8RUNS
+Fitness:123.7517; vx.nCores11; x.nCores8; epsilon0.01; lambda0.9; alpha0.3; 8RUNS
+Fitness:115.9238; vx.nCores7; x.nCores8; epsilon0.01; lambda0.9; alpha0.2; 8RUNS
+Fitness:129.0646; vx.nCores7; x.nCores8; epsilon0.01; lambda0.9; alpha0.1; 8RUNS
+Fitness:158.9404; vx.nCores7; x.nCores8; epsilon0.01; lambda0.9; alpha0.4; 8RUNS
+Fitness:160.2575; vx.nCores7; x.nCores8; epsilon0.01; lambda0.9; alpha0.5; 8RUNS
+Fitness:143.5596; vx.nCores7; x.nCores8; epsilon0.01; lambda0.8; alpha0.3; 8RUNS
+Fitness:142.2161; vx.nCores7; x.nCores8; epsilon0.01; lambda0.7; alpha0.3; 8RUNS
+Fitness:146.0546; vx.nCores7; x.nCores8; epsilon0.01; lambda0.6; alpha0.3; 8RUNS
+Fitness:143.6879; vx.nCores7; x.nCores8; epsilon0.01; lambda0.5; alpha0.3; 8RUNS
+Fitness:105.6863; vx.nCores7; x.nCores8; epsilon0.03; lambda0.9; alpha0.3; 8RUNS
+Fitness:109.7641; vx.nCores7; x.nCores8; epsilon0.05; lambda0.9; alpha0.3; 8RUNS
+Fitness:111.2757; vx.nCores7; x.nCores8; epsilon0.07; lambda0.9; alpha0.3; 8RUNS
+Fitness:113.8137; vx.nCores7; x.nCores8; epsilon0.09; lambda0.9; alpha0.3; 8RUNS
+Fitness:125.8444; vx.nCores7; x.nCores6; epsilon0.03; lambda0.9; alpha0.3; 8RUNS
+Fitness:329.8336; vx.nCores7; x.nCores5; epsilon0.03; lambda0.9; alpha0.3; 8RUNS
+Fitness:480.4743; vx.nCores7; x.nCores4; epsilon0.03; lambda0.9; alpha0.3; 8RUNS
+Fitness:112.3013; vx.nCores7; x.nCores9; epsilon0.03; lambda0.9; alpha0.3; 8RUNS
+Fitness:107.7343; vx.nCores7; x.nCores10; epsilon0.03; lambda0.9; alpha0.3; 8RUNS
+Fitness:104.7276; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.3; 8RUNS
+Fitness:112.5894; vx.nCores7; x.nCores12; epsilon0.03; lambda0.9; alpha0.3; 8RUNS
+Fitness:105.2997; vx.nCores7; x.nCores13; epsilon0.03; lambda0.9; alpha0.3; 8RUNS
+Fitness:137.5199; vx.nCores7; x.nCores14; epsilon0.03; lambda0.9; alpha0.3; 8RUNS
+Fitness:115.6035; vx.nCores7; x.nCores15; epsilon0.03; lambda0.9; alpha0.3; 8RUNS
+Fitness:177.0257; vx.nCores6; x.nCores11; epsilon0.03; lambda0.9; alpha0.3; 8RUNS
+Fitness:145.1945; vx.nCores5; x.nCores11; epsilon0.03; lambda0.9; alpha0.3; 8RUNS
+Fitness:131.5017; vx.nCores4; x.nCores11; epsilon0.03; lambda0.9; alpha0.3; 8RUNS
+Fitness:149.2318; vx.nCores3; x.nCores11; epsilon0.03; lambda0.9; alpha0.3; 8RUNS
+Fitness:117.6424; vx.nCores8; x.nCores11; epsilon0.03; lambda0.9; alpha0.3; 8RUNS
+Fitness:107.5397; vx.nCores9; x.nCores11; epsilon0.03; lambda0.9; alpha0.3; 8RUNS
+Fitness:120.2566; vx.nCores10; x.nCores11; epsilon0.03; lambda0.9; alpha0.3; 8RUNS
+Fitness:116.9776; vx.nCores11; x.nCores11; epsilon0.03; lambda0.9; alpha0.3; 8RUNS
+Fitness:105.7533; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.2; 8RUNS
+Fitness:113.2401; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 8RUNS
+Fitness:128.8543; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.4; 8RUNS
+Fitness:186.4197; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.5; 8RUNS
+Fitness:104.8369; vx.nCores7; x.nCores11; epsilon0.03; lambda0.8; alpha0.3; 8RUNS
+Fitness:115.3013; vx.nCores7; x.nCores11; epsilon0.03; lambda0.7; alpha0.3; 8RUNS
+Fitness:134.6705; vx.nCores7; x.nCores11; epsilon0.03; lambda0.6; alpha0.3; 8RUNS
+Fitness:134.9015; vx.nCores7; x.nCores11; epsilon0.03; lambda0.5; alpha0.3; 8RUNS
+Fitness:123.4727; vx.nCores7; x.nCores11; epsilon0.05; lambda0.9; alpha0.3; 8RUNS
+Fitness:143.072; vx.nCores7; x.nCores11; epsilon0.07; lambda0.9; alpha0.3; 8RUNS
+Fitness:121.644; vx.nCores7; x.nCores11; epsilon0.09; lambda0.9; alpha0.3; 8RUNS
+
+x =
+
+    0.3000
+    0.9000
+    0.0300
+   11.0000
+    7.0000
+
+
+fval =
+
+  104.7276
+
+Warning: matlabpool will be removed in a future release.
+To shutdown a parallel pool use 'delete(gcp('nocreate'))' instead. 
+Parallel pool using the 'local' profile is shutting down.
+Elapsed time is 776.768269 seconds.
+
+
+
+
+%********************************
+
+-
+TEST
+vx.nCores11; x.nCores3; epsilon0.03; lambda0.6; alpha0.1; 25RUNS
+-
+Starting parallel pool (parpool) using the 'local' profile ... connected to 4 workers.
+-
+Fitness:105.6594
+-
+Elapsed time is 28.259783 seconds.
+
+Starting matlabpool using the 'local' profile ... connected to 4 workers.
+Fitness:273.5444; vx.nCores2; x.nCores2; epsilon0.01; lambda0.9; alpha0.1; 8RUNS
+Fitness:203.254; vx.nCores2; x.nCores2; epsilon0.01; lambda0.9; alpha0.2; 8RUNS
+Fitness:329.6048; vx.nCores2; x.nCores2; epsilon0.01; lambda0.9; alpha0.3; 8RUNS
+Fitness:500; vx.nCores2; x.nCores2; epsilon0.01; lambda0.9; alpha0.4; 8RUNS
+Fitness:500; vx.nCores2; x.nCores2; epsilon0.01; lambda0.9; alpha0.5; 8RUNS
+Fitness:371.379; vx.nCores2; x.nCores2; epsilon0.01; lambda0.8; alpha0.2; 8RUNS
+Fitness:149; vx.nCores2; x.nCores2; epsilon0.01; lambda0.7; alpha0.2; 8RUNS
+Fitness:144.3145; vx.nCores2; x.nCores2; epsilon0.01; lambda0.6; alpha0.2; 8RUNS
+Fitness:145.0444; vx.nCores2; x.nCores2; epsilon0.01; lambda0.5; alpha0.2; 8RUNS
+Fitness:142.4718; vx.nCores2; x.nCores2; epsilon0.03; lambda0.6; alpha0.2; 8RUNS
+Fitness:150.1411; vx.nCores2; x.nCores2; epsilon0.05; lambda0.6; alpha0.2; 8RUNS
+Fitness:155.9194; vx.nCores2; x.nCores2; epsilon0.07; lambda0.6; alpha0.2; 8RUNS
+Fitness:159.3992; vx.nCores2; x.nCores2; epsilon0.09; lambda0.6; alpha0.2; 8RUNS
+Fitness:153.6331; vx.nCores2; x.nCores3; epsilon0.03; lambda0.6; alpha0.2; 8RUNS
+Fitness:227.7097; vx.nCores2; x.nCores4; epsilon0.03; lambda0.6; alpha0.2; 8RUNS
+Fitness:162.6048; vx.nCores2; x.nCores5; epsilon0.03; lambda0.6; alpha0.2; 8RUNS
+Fitness:171.5766; vx.nCores2; x.nCores6; epsilon0.03; lambda0.6; alpha0.2; 8RUNS
+Fitness:160.496; vx.nCores3; x.nCores2; epsilon0.03; lambda0.6; alpha0.2; 8RUNS
+Fitness:194.2702; vx.nCores4; x.nCores2; epsilon0.03; lambda0.6; alpha0.2; 8RUNS
+Fitness:225.2419; vx.nCores5; x.nCores2; epsilon0.03; lambda0.6; alpha0.2; 8RUNS
+Fitness:207.7661; vx.nCores6; x.nCores2; epsilon0.03; lambda0.6; alpha0.2; 8RUNS
+Fitness:139.25; vx.nCores2; x.nCores2; epsilon0.03; lambda0.6; alpha0.1; 8RUNS
+Fitness:154.2097; vx.nCores2; x.nCores2; epsilon0.03; lambda0.6; alpha0.3; 8RUNS
+Fitness:171.3468; vx.nCores2; x.nCores2; epsilon0.03; lambda0.6; alpha0.4; 8RUNS
+Fitness:183.5323; vx.nCores2; x.nCores2; epsilon0.03; lambda0.6; alpha0.5; 8RUNS
+Fitness:145.2016; vx.nCores2; x.nCores2; epsilon0.03; lambda0.5; alpha0.1; 8RUNS
+Fitness:139.5323; vx.nCores2; x.nCores2; epsilon0.03; lambda0.7; alpha0.1; 8RUNS
+Fitness:183.3145; vx.nCores2; x.nCores2; epsilon0.03; lambda0.8; alpha0.1; 8RUNS
+Fitness:153.4597; vx.nCores2; x.nCores2; epsilon0.03; lambda0.9; alpha0.1; 8RUNS
+Fitness:186.5806; vx.nCores2; x.nCores2; epsilon0.01; lambda0.6; alpha0.1; 8RUNS
+Fitness:139.0847; vx.nCores2; x.nCores2; epsilon0.05; lambda0.6; alpha0.1; 8RUNS
+Fitness:144.9677; vx.nCores2; x.nCores2; epsilon0.07; lambda0.6; alpha0.1; 8RUNS
+Fitness:148.8831; vx.nCores2; x.nCores2; epsilon0.09; lambda0.6; alpha0.1; 8RUNS
+Fitness:129.4274; vx.nCores2; x.nCores3; epsilon0.05; lambda0.6; alpha0.1; 8RUNS
+Fitness:216.2016; vx.nCores2; x.nCores4; epsilon0.05; lambda0.6; alpha0.1; 8RUNS
+Fitness:140.0444; vx.nCores2; x.nCores5; epsilon0.05; lambda0.6; alpha0.1; 8RUNS
+Fitness:164.0565; vx.nCores2; x.nCores6; epsilon0.05; lambda0.6; alpha0.1; 8RUNS
+Fitness:141.5605; vx.nCores2; x.nCores7; epsilon0.05; lambda0.6; alpha0.1; 8RUNS
+Fitness:133.4839; vx.nCores3; x.nCores3; epsilon0.05; lambda0.6; alpha0.1; 8RUNS
+Fitness:131.7661; vx.nCores4; x.nCores3; epsilon0.05; lambda0.6; alpha0.1; 8RUNS
+Fitness:139.8306; vx.nCores5; x.nCores3; epsilon0.05; lambda0.6; alpha0.1; 8RUNS
+Fitness:116.75; vx.nCores6; x.nCores3; epsilon0.05; lambda0.6; alpha0.1; 8RUNS
+Fitness:167.4153; vx.nCores7; x.nCores3; epsilon0.05; lambda0.6; alpha0.1; 8RUNS
+Fitness:122.2218; vx.nCores8; x.nCores3; epsilon0.05; lambda0.6; alpha0.1; 8RUNS
+Fitness:107.3911; vx.nCores9; x.nCores3; epsilon0.05; lambda0.6; alpha0.1; 8RUNS
+Fitness:108.4113; vx.nCores10; x.nCores3; epsilon0.05; lambda0.6; alpha0.1; 8RUNS
+Fitness:106.4274; vx.nCores11; x.nCores3; epsilon0.05; lambda0.6; alpha0.1; 8RUNS
+Fitness:108.6452; vx.nCores12; x.nCores3; epsilon0.05; lambda0.6; alpha0.1; 8RUNS
+Fitness:119.879; vx.nCores11; x.nCores3; epsilon0.05; lambda0.6; alpha0.2; 8RUNS
+Fitness:125.1694; vx.nCores11; x.nCores3; epsilon0.05; lambda0.6; alpha0.3; 8RUNS
+Fitness:162.3105; vx.nCores11; x.nCores3; epsilon0.05; lambda0.6; alpha0.4; 8RUNS
+Fitness:166.746; vx.nCores11; x.nCores3; epsilon0.05; lambda0.6; alpha0.5; 8RUNS
+Fitness:111.5524; vx.nCores11; x.nCores3; epsilon0.05; lambda0.5; alpha0.1; 8RUNS
+Fitness:113.3871; vx.nCores11; x.nCores3; epsilon0.05; lambda0.7; alpha0.1; 8RUNS
+Fitness:121.7661; vx.nCores11; x.nCores3; epsilon0.05; lambda0.8; alpha0.1; 8RUNS
+Fitness:146.0847; vx.nCores11; x.nCores3; epsilon0.05; lambda0.9; alpha0.1; 8RUNS
+Fitness:105.6411; vx.nCores11; x.nCores3; epsilon0.03; lambda0.6; alpha0.1; 8RUNS
+Fitness:109.6048; vx.nCores11; x.nCores3; epsilon0.01; lambda0.6; alpha0.1; 8RUNS
+Fitness:108.2218; vx.nCores11; x.nCores3; epsilon0.07; lambda0.6; alpha0.1; 8RUNS
+Fitness:108.9073; vx.nCores11; x.nCores3; epsilon0.09; lambda0.6; alpha0.1; 8RUNS
+Fitness:305.2298; vx.nCores11; x.nCores2; epsilon0.03; lambda0.6; alpha0.1; 8RUNS
+Fitness:298.3831; vx.nCores11; x.nCores4; epsilon0.03; lambda0.6; alpha0.1; 8RUNS
+Fitness:146.3831; vx.nCores11; x.nCores5; epsilon0.03; lambda0.6; alpha0.1; 8RUNS
+Fitness:176.0161; vx.nCores11; x.nCores6; epsilon0.03; lambda0.6; alpha0.1; 8RUNS
+Fitness:140.2621; vx.nCores11; x.nCores7; epsilon0.03; lambda0.6; alpha0.1; 8RUNS
+Fitness:107.75; vx.nCores10; x.nCores3; epsilon0.03; lambda0.6; alpha0.1; 8RUNS
+Fitness:107.0927; vx.nCores9; x.nCores3; epsilon0.03; lambda0.6; alpha0.1; 8RUNS
+Fitness:128.1089; vx.nCores8; x.nCores3; epsilon0.03; lambda0.6; alpha0.1; 8RUNS
+Fitness:158.6371; vx.nCores7; x.nCores3; epsilon0.03; lambda0.6; alpha0.1; 8RUNS
+Fitness:108.754; vx.nCores12; x.nCores3; epsilon0.03; lambda0.6; alpha0.1; 8RUNS
+Fitness:115.9919; vx.nCores11; x.nCores3; epsilon0.03; lambda0.6; alpha0.2; 8RUNS
+Fitness:125.3831; vx.nCores11; x.nCores3; epsilon0.03; lambda0.6; alpha0.3; 8RUNS
+Fitness:157.4637; vx.nCores11; x.nCores3; epsilon0.03; lambda0.6; alpha0.4; 8RUNS
+Fitness:216.6573; vx.nCores11; x.nCores3; epsilon0.03; lambda0.6; alpha0.5; 8RUNS
+Fitness:109.75; vx.nCores11; x.nCores3; epsilon0.03; lambda0.5; alpha0.1; 8RUNS
+Fitness:123.3952; vx.nCores11; x.nCores3; epsilon0.03; lambda0.7; alpha0.1; 8RUNS
+Fitness:121.9032; vx.nCores11; x.nCores3; epsilon0.03; lambda0.8; alpha0.1; 8RUNS
+Fitness:142.2782; vx.nCores11; x.nCores3; epsilon0.03; lambda0.9; alpha0.1; 8RUNS
+
+x =
+
+    0.1000
+    0.6000
+    0.0300
+    3.0000
+   11.0000
+
+
+fval =
+
+  105.6411
+
+Warning: matlabpool will be removed in a future release.
+To shutdown a parallel pool use 'delete(gcp('nocreate'))' instead. 
+Parallel pool using the 'local' profile is shutting down.
+Elapsed time is 295.083000 seconds.
+
