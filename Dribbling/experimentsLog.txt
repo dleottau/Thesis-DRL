@@ -1,0 +1,68 @@
+k-lenient1.5; MAapproach1; beta0.9; lambda0.8; decay7; softmax11; alpha0.2
+-
+RUN: 1; Fitness: 22.8726
+RUN: 2; Fitness: 18.9035
+RUN: 3; Fitness: 24.0076
+RUN: 4; Fitness: 36.2273
+RUN: 5; Fitness: 22.4085
+RUN: 6; Fitness: 16.4877
+RUN: 7; Fitness: 36.3136
+RUN: 8; Fitness: 17.464
+RUN: 9; Fitness: 14.2161
+RUN: 10; Fitness: 18.0156
+RUN: 11; Fitness: 20.9073
+RUN: 12; Fitness: 13.6401
+RUN: 13; Fitness: 19.7704
+RUN: 14; Fitness: 15.237
+RUN: 15; Fitness: 27.6657
+RUN: 16; Fitness: 12.4844
+RUN: 17; Fitness: 13.1606
+RUN: 18; Fitness: 12.7427
+RUN: 19; Fitness: 16.6338
+RUN: 20; Fitness: 19.5338
+RUN: 21; Fitness: 37.5389
+RUN: 22; Fitness: 13.7417
+RUN: 23; Fitness: 25.6543
+RUN: 24; Fitness: 17.9409
+RUN: 25; Fitness: 17.4739
+-
+fitness:20.4417
+-
+Elapsed time is 8235.584552 seconds.
+
+-
+k-lenient1.5; MAapproach1; beta0.9; lambda0.7; decay7; softmax11; alpha0.2
+-
+RUN: 1; Fitness: 25.8297
+RUN: 2; Fitness: 13.0075
+RUN: 3; Fitness: 22.8835
+RUN: 4; Fitness: 19.5402
+RUN: 5; Fitness: 26.1093
+RUN: 6; Fitness: 21.6416
+RUN: 7; Fitness: 21.6467
+RUN: 8; Fitness: 28.5761
+RUN: 9; Fitness: 27.339
+RUN: 10; Fitness: 17.9223
+RUN: 11; Fitness: 20.3574
+RUN: 12; Fitness: 17.1723
+RUN: 13; Fitness: 20.8286
+RUN: 14; Fitness: 17.6014
+RUN: 15; Fitness: 19.3621
+RUN: 16; Fitness: 30.0446
+RUN: 17; Fitness: 17.1346
+RUN: 18; Fitness: 15.7961
+RUN: 19; Fitness: 22.7081
+RUN: 20; Fitness: 20.2762
+RUN: 21; Fitness: 24.1943
+RUN: 22; Fitness: 21.1195
+RUN: 23; Fitness: 16.7674
+RUN: 24; Fitness: 22.1433
+RUN: 25; Fitness: 15.913
+RUN: 26; Fitness: 15.1429
+RUN: 27; Fitness: 17.0363
+RUN: 28; Fitness: 16.8767
+RUN: 29; Fitness: 15.1925
+-
+fitness:20.3505
+-
+Elapsed time is 7574.901239 seconds.
