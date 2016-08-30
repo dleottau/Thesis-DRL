@@ -1,10 +1,10 @@
 function PLOTS()
 
-clear all
+%clear all
 close all
 clc
 
-folder = 'experimentsFull/fig3/'; 
+folder = 'NASSh/'; 
 files = dir(fullfile([folder '*.mat']));
 
 spot={':r' '-g' '-.c' '--k'  ':b' '-m' '-.r' '--g'};

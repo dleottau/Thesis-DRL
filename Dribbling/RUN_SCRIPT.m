@@ -1,11 +1,5 @@
 function f = RUN_SCRIPT(x,RUNS)
 
-%conf.Test=0;
-% clc
-% clf
-% clear all
-% close all
-
 %folder = 'opti/';  
 folder = 'finalTests/';  
 %loadFile = 'DRL_25Runs_Noise0.1_MA0_alpha0.5_lambda0.9_softmax70_decay6.mat';
@@ -14,6 +8,7 @@ loadFile = 'DRL_25Runs_Noise0.1_MA2_alpha0.1_lambda0.9_k1.5_beta0.9_softmax70_de
 % folder = 'RC-2015/results/';  
 % loadFile = 'resultsFull_NASh-v2-20runs-Noise01-exp8.mat';
 
+global test;
 global flagFirst;
 global opti;
 conf.opti=opti;
@@ -26,8 +21,8 @@ conf.record = 1;
 conf.DRAWS = 0;
 conf.NOISE = 0.1;
 
-conf.TRANSFER = 0;  %=1 transfer, >1 acts gready from source policy, =0 learns from scratch, =-1 just for test performance from stored policies
-conf.nash = 0;   % 0 COntrol sharing, 1 NASh
+conf.TRANSFER = x(8);  %=1 transfer, >1 acts gready from source policy, =0 learns from scratch, =-1 just for test performance from stored policies
+conf.nash = x(9);   % 0 COntrol sharing, 1 NASh
 conf.MAapproach = x(6);   % 0 no cordination, 1 frequency adjusted, 2 leninet
 conf.Mtimes = 0; % state-action pair must be visited M times before Q being updated
 conf.Q_INIT = 0;
@@ -42,7 +37,13 @@ if conf.TRANSFER<0, conf.episodes=100; end
 if conf.opti
     conf.DRAWS = 0;
     conf.record = 1;
+    finalTest = 0;
+    folder = 'opti/';
 end
+if test 
+    conf.DRAWS = 1;
+    conf.record = 0;
+end 
 
 RL.param.alpha      = x(1);   % 0.5;   % 0.3-0.5 learning rate
 RL.param.gamma      = 0.99;   % discount factor
@@ -130,13 +131,14 @@ if flagFirst
     disp('-');
 end
 
-
-%parfor i=1:RUNS
-for i=1:conf.Runs
-    %conf.nRun=i;
-%    disp(['Test= ', num2str(a), '.', num2str(i), ' lambda= ', num2str(lambda(a))])
-    %[reward(:,:,i), e_time(:,i), Vavg(:,i), tp_faults(:,i), goals(i),  Qx,Qy,Qrot] = Dribbling2d(conf, RL, i);
-    [reward(:,:,i), e_time(:,i), Vavg(:,i), tp_faults(:,i),  Qx{i},Qy{i},Qrot{i}] = Dribbling2d(conf, RL, i);
+if test
+    for i=1:conf.Runs
+        [reward(:,:,i), e_time(:,i), Vavg(:,i), tp_faults(:,i),  Qx{i},Qy{i},Qrot{i}] = Dribbling2d(conf, RL, i);
+    end
+else
+    parfor i=1:conf.Runs
+        [reward(:,:,i), e_time(:,i), Vavg(:,i), tp_faults(:,i),  Qx{i},Qy{i},Qrot{i}] = Dribbling2d(conf, RL, i);
+    end
 end      
 
 et_min=Inf;
