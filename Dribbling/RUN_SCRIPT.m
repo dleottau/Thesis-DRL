@@ -1,7 +1,7 @@
 function f = RUN_SCRIPT(x,RUNS)
 
-%folder = 'opti/';  
-folder = 'finalTests/';  
+folder = 'opti/';  
+%folder = 'finalTests/';  
 %loadFile = 'DRL_25Runs_Noise0.1_MA0_alpha0.5_lambda0.9_softmax70_decay6.mat';
 %loadFile = 'DRL_25Runs_Noise0.1_MA1_alpha0.1_lambda0.9_softmax21_decay8.mat';
 loadFile = 'DRL_25Runs_Noise0.1_MA2_alpha0.1_lambda0.9_k1.5_beta0.9_softmax70_decay6.mat';
@@ -15,7 +15,7 @@ conf.opti=opti;
 
 %dbstop in softmax_selection.m at 38
 
-conf.episodes = 2000; %  maximum number of  episode
+conf.episodes = 1000; %  maximum number of  episode
 conf.Runs = RUNS;
 conf.record = 1;
 conf.DRAWS = 0;
@@ -25,19 +25,18 @@ conf.TRANSFER = x(8);  %=1 transfer, >1 acts gready from source policy, =0 learn
 conf.nash = x(9);   % 0 COntrol sharing, 1 NASh
 conf.MAapproach = x(6);   % 0 no cordination, 1 frequency adjusted, 2 leninet
 conf.Mtimes = 0; % state-action pair must be visited M times before Q being updated
-conf.Q_INIT = 0;
+conf.Q_INIT = 5;
 
 %sync=1, synchronizes using tne same random number for the 3 D-RL agents, otherwise, uses independetn random numbers per agent
-conf.sync.nash      = 0;
-conf.sync.TL        = 0;
-conf.sync.expl      = 0;
+conf.sync.nash      = 1;
+conf.sync.TL        = 1;
+conf.sync.expl      = 1;
 if conf.TRANSFER, conf.sync.expl=1; end
 if conf.TRANSFER<0, conf.episodes=100; end
 
 if conf.opti
     conf.DRAWS = 0;
     conf.record = 1;
-    finalTest = 0;
     folder = 'opti/';
 end
 if test 
@@ -50,19 +49,13 @@ RL.param.gamma      = 0.99;   % discount factor
 RL.param.lambda     = x(4);   % the decaying elegibiliy trace parameter
 RL.param.epsilon    = 1;
 RL.param.softmax    = x(2);   % Boltzmann temperature (50 by default), if <= 0 e-greaddy
-RL.param.exp_decay  = x(3); % 8 exploration decay parameter
-RL.param.k          = x(7);    %1.5 lenience parameter
-RL.param.beta       = x(5);   %0.9 lenience discount factor
+RL.param.exp_decay  = x(3);   % 8 exploration decay parameter
+RL.param.k          = x(7);   % 1.5 lenience parameter
+RL.param.beta       = x(5);   % 0.9 lenience discount factor
+RL.param.aScale      = x(10);    % scale factor for the action space in neash
 
-
-
-%evolutionFile = 'MAS-coop/DRL-3runs-Noise005-2000exp8-NoSync-FAboltzman20';
-%performanceFile = 'boltzmann/Vx-5runs-Noise03-50exp30-NoSync-boltzmann1';
-
-
-conf.maxDistance =6000;    % maximum ball distance permited before to end the episode X FIELD DIMENSION
-conf.th_max = [250 15 15];      % maximum pho desired
-
+conf.maxDistance =6000;       % maximum ball distance permited before to end the episode X FIELD DIMENSION
+conf.th_max = [250 15 15];    % maximum pho desired
 
 conf.Voffset = 1; %Offset Speed in mm/s
 conf.V_action_steps = [25, 20, 20]/4; % /4 works good
@@ -75,10 +68,7 @@ conf.feature_max = [600, 40, 40]; %30, 30
 conf.maxDeltaV = conf.Vr_max.*[1/3 1/3 1/2]; %mm/s/Ts
 conf.Ts = 0.2; %Sample time of a RL step
 
-
 %a_spot={'r' 'g' 'b' 'c' 'm' 'y' 'k' '--r' '--g' '--b' '--c' };
-
-
 
 fileNameP = ['DRL_' int2str(conf.Runs) 'Runs_Noise' num2str(conf.NOISE) '_MA' int2str(conf.MAapproach) '_alpha' num2str(RL.param.alpha) '_lambda' num2str(RL.param.lambda)];
 if RL.param.softmax > 0

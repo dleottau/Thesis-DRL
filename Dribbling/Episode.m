@@ -167,7 +167,7 @@ while 1
     a_transf_y = 1 + round(V_FLC(2)/V_action_steps(2)  + Vr_max(2)/V_action_steps(2) );
     a_transf_rot = 1 + round(V_FLC(3)/V_action_steps(3) + Vr_max(3)/V_action_steps(3) );
     
-    if conf.sync.nash>0, rnd.nash=randn(); rnd.nashExpl=randn(); end
+    if conf.sync.nash>0, rnd.nash=rand(); rnd.nashExpl=randn(); end
     if conf.sync.expl>0, rnd.expl=rand(); end
     if conf.sync.TL>0, rnd.TL=rand(); end
     

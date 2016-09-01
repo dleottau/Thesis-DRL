@@ -1,18 +1,24 @@
-function f = optimizationFunction(x)
-global RUNS;
-global opti;
-global test;
-
-
-% clc
-% clf
-% clear all
-% close all
-% tic
+% function f = optimizationFunction(x)
+% global RUNS;
 % global opti;
-% opti=0;
 % global test;
-% test=1;
+
+
+clc
+clf
+clear all
+close all
+tic
+global opti;
+opti=0;
+global test;
+%test=1;
+
+
+
+if test
+     RUNS=1;
+end
 
 if ~opti
     RUNS=25;
@@ -26,23 +32,18 @@ if ~opti
 %     end
 end
 
-if test
-    RUNS=1;
-end
+
 
 x0 = [];
 
 xname{1}='alpha';
-x0(1) = 0.5;
-
+x0(1) = 0.3;
 xname{2}='softmax';
-x0(2) = 70;
-
+x0(2) = 10;
 xname{3}='decay';
 x0(3) = 6; 
-
 xname{4}='lambda';
-x0(4) = 0.9; 
+x0(4) = 0.8; 
 % ------
 xname{6}='MAapproach';
 x0(6) = 0;   % 0 no cordination, 1 frequency adjusted, 2 leninet
@@ -54,12 +55,14 @@ xname{8}='Transfer';
 x0(8) = 1;   %=1 transfer, >1 acts gready from source policy, =0 learns from scratch, =-1 just for test performance from stored policies
 xname{9}='NeASh';
 x0(9) = 1;   % 0 COntrol sharing, 1 NASh
+xname{10}='ScaleNeash';
+x0(10) = 0.04;   % scale factor for the action space in neash
 
 if opti
-    x0(1) = x(1);
+    x0(10) = x(1);
     x0(2) = x(2);
     x0(3) = x(3);
-    x0(4) = x(4);
+    %x0(4) = x(4);
     %x0(5) = x(5);
 end
 
