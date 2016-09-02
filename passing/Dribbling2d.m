@@ -1,6 +1,4 @@
-function  [pscored, scored, Qx, Qy, Qw] = Dribbling2d( nRun, conf, RL )
-% function  [pscored, scored, Qx, Qy, Qw, score_out] = Dribbling2d( nRun, conf, RL )
-% function  [pscored, scored, Qx, Qw, score_out] = Dribbling2d( nRun, conf, RL )
+function  [pscored, scored, dist_BT, Qx, Qy, Qw] = Dribbling2d( nRun, conf, RL )
 
 % Dribbling1d SARSA, the main function of the trainning
 
@@ -11,8 +9,8 @@ softmax0     = RL.param.softmax;
 
 Ts = conf.Ts;                     % Sample time of a RL step
 
-[conf.cores, conf.nstates] = StateTable( conf.feature_min, conf.feature_step, conf.feature_max );   % The table of states
-[conf.Actions]             = ActionTable( conf );                                                   % The table of actions
+[conf.cores, conf.nstates, conf.div_disc] = StateTable( conf.feature_min, conf.feature_step, conf.feature_max );   % The table of states
+[conf.Actions]                            = ActionTable( conf );                                                   % The table of actions
 
 if conf.DRL
     conf.nactions_x = length(conf.Actions.x);
@@ -26,21 +24,33 @@ end
 
 if ~conf.Test
     if conf.DRL
-        RL.Q     = QTable( conf.nstates, conf.nactions_x, conf );   % The Qtable for the vx agent
+        RL.Q     = QTable( conf.nstates, conf.nactions_x, conf.Q_INIT );   % The Qtable for the vx agent
         % -----------------------------------------------------------------
-        RL.Qy    = QTable( conf.nstates, conf.nactions_y, conf );   % The Qtable for the vy agent
+        RL.Qy    = QTable( conf.nstates, conf.nactions_y, conf.Q_INIT );   % The Qtable for the vy agent
         % -----------------------------------------------------------------
-        RL.Q_rot = QTable( conf.nstates, conf.nactions_w, conf );   % The Qtable for the v_rot agent
+        RL.Q_rot = QTable( conf.nstates, conf.nactions_w, conf.Q_INIT );   % The Qtable for the v_rot agent
     else
-        RL.Q     = QTable( conf.nstates, conf.nactions, conf );
+        RL.Q     = QTable( conf.nstates, conf.nactions, conf.Q_INIT );
         % -----------------------------------------------------------------
-        RL.Qy    = QTable( conf.nstates, conf.nactions, conf );
+        RL.Qy    = QTable( conf.nstates, conf.nactions, conf.Q_INIT );
         % -----------------------------------------------------------------
         RL.Q_rot = 0;
     end
 end
 
-EXPLORATION = conf.episodes/conf.EXPL_EPISODES_FACTOR;
+RL.T        = 0;
+RL.T_y      = 0;
+RL.T_rot    = 0;
+
+if conf.MAapproach == 2 && conf.DRL
+    RL.T     = QTable( conf.nstates,conf.nactions_x, 1);
+    RL.T_y   = QTable( conf.nstates, conf.nactions_y, 1 );
+    RL.T_rot = QTable( conf.nstates, conf.nactions_w, 1 );
+end
+
+% ----------------------------------------------------------------------- %
+EXPLORATION = conf.episodes/RL.param.exp_decay;
+% ----------------------------------------------------------------------- %
 epsDec      = -log(0.05) * 1/EXPLORATION;  % Epsilon decrece a un 5% (0.005) en maxEpisodes cuartos (maxepisodes/4), de esta manera el decrecimiento de epsilon es independiente del numero de episodios.-
 
 RL.param.fuzzQ  = conf.fuzzQ;
@@ -48,51 +58,44 @@ conf.goalSize   = 150;
 conf.PgoalPostR = [conf.Pt(1)+conf.goalSize/2 conf.Pt(2)]; % Right Goal Post position
 conf.PgoalPostL = [conf.Pt(1)-conf.goalSize/2 conf.Pt(2)]; % Left Goal Post position
 
-% keyboard
-
 for i = 1:conf.episodes
     conf.episodeN = i;
     while 1
-        
         if ~conf.Test
-            uB      = [conf.maxDistance conf.maxDistance 180];
-            lB      = [0 conf.Pb(2) -180];
-            conf.Pr = rand(1,3).*(uB-lB) + lB;
+            uB         = [conf.Pb(1)+1000 conf.Pb(2)+1000  180];
+            lB         = [conf.Pb(1)-1000 conf.Pb(2)-1000 -180];
+            % conf.Pr    = rand(1,3).*(uB-lB) + lB;
             
-            conf.Pr    = [conf.Pb(1) conf.Pb(2)+500 180];
+            conf.Pr    = [conf.Pb(1)+800 conf.Pb(2) 180];
             conf.Pr(3) = moduloPiDLF(atan2(conf.Pb(2)-conf.Pr(2),conf.Pb(1)-conf.Pr(1)),'r2d');
             
-            %% Movimiento Robot.-
+            %% Robot movement.---------------------------------------------                    
+            [~, ~, ~, ~, phi, gamma, pho, ~, ~, ~] = mov(Ts,conf.Pr,conf.Pt,conf.Pb,0,0,0,100,100,100,0,0,conf.Fr,zeros(2,1));
             % -------------------------------------------------------------
-            %[~,~,~,~, pho, gamma, phi] = movDiffRobot(Ts, conf.Pr, conf.Pt, conf.Pb, [0 0 0],0,0,0,w);
-            [~, ~, ~, ~, phi, gamma, pho, ~, ~, ~]=mov(Ts,conf.Pr,conf.Pt,conf.Pb,0,0,0,100,100,100,0,0,conf.Fr,zeros(2,1));
-            % -------------------------------------------------------------
-                        
-            % Revisar esta parte (inicialización Robot)
-            if ~sum([pho abs(gamma) abs(phi)] > [conf.maxDistance 45 45])% && pho < 1000
+            
+            if (pho <= conf.r_ext && conf.r_int <= pho) && (abs(phi) < conf.c_ang) && (abs(gamma) < 45)
                 break
             end
         else
-            uB                         = [0.9 * conf.maxDistance 1.0 * conf.maxDistance 180];
-            lB                         = [0.1 * conf.maxDistance 0.7 * conf.maxDistance -180];
-            conf.Pr                    = rand(1,3).*(uB-lB) + lB;
-            % -------------------------------------------------------------
-            [~,~,~,~, pho, gamma, phi] = movDiffRobot(Ts, conf.Pr, conf.Pt, conf.Pb, [0 0 0],0,0,0,zeros(2,1));
-            % -------------------------------------------------------------
+            uB         = [conf.Pb(1)+1000 conf.Pb(2)+1000  180];
+            lB         = [conf.Pb(1)-1000 conf.Pb(2)-1000 -180];
+            conf.Pr    = rand(1,3).*(uB-lB) + lB;
             
-            if ~sum([pho abs(gamma) abs(phi)] > conf.feature_max(1:3).*[1 0.25 0.9])
+            % conf.Pr    = [conf.Pb(1)+800 conf.Pb(2) 180];
+            % conf.Pr(3) = moduloPiDLF(atan2(conf.Pb(2)-conf.Pr(2),conf.Pb(1)-conf.Pr(1)),'r2d');
+            
+            %% Robot movement.---------------------------------------------                                        
+            [~, ~, ~, ~, phi, gamma, pho, ~, ~, ~] = mov(Ts,conf.Pr,conf.Pt,conf.Pb,0,0,0,100,100,100,0,0,conf.Fr,zeros(2,1));
+            % -------------------------------------------------------------
+                        
+            if (pho <= conf.r_ext && conf.r_int <= pho) && (abs(phi) < conf.c_ang) && (abs(gamma) < 30)
                 break
             end
         end
     end
     
     %% Se ejecuta la rutina Episode.-
-    [RL, Vr,ro,fi,gama,Pt,Pb,Pbi,Pr,Vb,total_reward,steps,Vavg_k,time,scored_,score_zone] = Episode( RL, conf );
-    
-%     if isempty(score_zone) ~= 1
-%         score_out(conf.cE,:) = score_zone;
-%         conf.cE              = conf.cE + 1;
-%     end
+    [RL, Vr,ro,fi,gama,Pt,Pb,Pbi,Pr,Vb,total_reward,steps,Vavg_k,time,scored_] = Episode( RL, conf );
     
     RL.param.epsilon = epsilon0 * exp(-i*epsDec);
     RL.param.softmax = softmax0 * exp(-i*epsDec);
@@ -103,37 +106,61 @@ for i = 1:conf.episodes
     Vavg(i,1)    = Vavg_k;
     scored(i)    = scored_;
     pscored(i,1) = mean(scored);
+            
+    % ---------------------------------------------------------------------    
+    % dist_BT(i) = 100 * (sqrt((Pb(end,1) - Pt(1))^2 + (Pb(end,2) - Pt(2))^2)) / sqrt((conf.maxDistance_x/2)^2 + (conf.maxDistance_y/2)^2);    
+    dist_BT(i) = 100 * (sqrt((Pb(end,1) - Pt(1))^2 + (Pb(end,2) - Pt(2))^2)) / norm(conf.Pb - conf.Pt);
     
-    % keyboard
-    %% Plot del entrenamiento.-
-    % Se agrega el plot del círculo.-
+    if 100 <= dist_BT(i)
+        dist_BT(i) = 100;
+    end
+    if dist_BT(i) <= 0
+        dist_BT(i) = 0;
+    end    
+    
+    m_dBT(i,1) = mean(dist_BT);
+    % ---------------------------------------------------------------------
+    
+    %% Training plot.------------------------------------------------------
     if conf.DRAWS == 1
-        subplot(1,3,3)
+        subplot(2,3,3)
         plot(reward)
         grid
+        title('Reward')
+        subplot(2,3,6)
+        plot(dist_BT,'k','LineWidth',2)  
+        % plot(m_dBT,'k','LineWidth',2)  
+        ylim([0 110])
+        grid
+        title('Distance Ball-Target')
         
-        % Gráfico score.---------------------------------------------------
-        subplot(1,3,2);
+        % Score Plot.------------------------------------------------------
+        subplot(2,3,[2,5]);
         plot(xpoints,pscored)
         grid
-        title('% goals scored')
+        title('% Goals Scored')
         % -----------------------------------------------------------------
         
-        % Gráfico movimiento robot.----------------------------------------
-        subplot(1,3,1)
-        plot(Pt(1),Pt(2),'.k','LineWidth',2)                % Posición del target
+        % Robot Movement Plot.----------------------------------------
+        subplot(2,3,[1,4])
+        plot(Pt(1),Pt(2),'.k','LineWidth',2)                % Target Position
         hold on
-        plot(Pb(:,1),Pb(:,2),'*r')                          % Posición de la bola
-        plot(Pr(:,1),Pr(:,2),'gx')                          % Posición del robot
-        axis([0 conf.maxDistance -1500 conf.maxDistance])
+        view(90,90)
+        plot(Pb(:,1),Pb(:,2),'*r')                          % Ball Position
+        plot(Pr(:,1),Pr(:,2),'gx')                          % Robot Positions
+        xlim([-conf.maxDistance_x/2 conf.maxDistance_x/2])
+        ylim([-conf.maxDistance_y/2 conf.maxDistance_y/2])
         grid
         % -----------------------------------------------------------------
         
-        % Gráfico elipses.-------------------------------------------------
+        % Circle plot.-----------------------------------------------------
         h_figur = gcf;
+        circle_plot(conf.Pt(1), conf.Pt(2), conf.a3, conf.b3, conf.r3, 0, 2 * pi, h_figur, 'k',2);
         
-        circle_plot(conf.Pt(1), conf.Pt(2), conf.a1, conf.b1, conf.r1, conf.tx1, conf.ty1, h_figur, 'b')
-        circle_plot(conf.Pt(1), conf.Pt(2), conf.a3, conf.b3, conf.r3, conf.tx3, conf.ty3, h_figur, 'k')
+        [xci1,xci2,yci1,yci2] = circle_plot(conf.Pb(1), conf.Pb(2), 1, 1, conf.r_int, -conf.c_ang * pi / 180, conf.c_ang * pi / 180, h_figur, 'c',1);
+        [xce1,xce2,yce1,yce2] = circle_plot(conf.Pb(1), conf.Pb(2), 1, 1, conf.r_ext, -conf.c_ang * pi / 180, conf.c_ang * pi / 180, h_figur, 'c',1);
+        plot([xci1 xce1],[yci1 yce1],'c')
+        plot([xci2 xce2],[yci2 yce2],'c')
         % -----------------------------------------------------------------
         
         title('X-Y Plane');
@@ -148,6 +175,7 @@ Qy = RL.Qy;
 % -----------------------------------------------------------------
 Qw = RL.Q_rot;
 
-if ~conf.opti
-    disp(['RUN: ' int2str(nRun) '; cumGoals: ',num2str(pscored(end))]);
-end
+% if ~conf.opti
+    % disp(['RUN: ' int2str(nRun) '; cumGoals: ',num2str(m_dBT(end))]);
+    % disp(['RUN: ' int2str(nRun) '; cumGoals: ',num2str(dist_BT)]);
+% end

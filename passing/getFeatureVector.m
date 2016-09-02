@@ -3,12 +3,12 @@ function FV = getFeatureVector(X,cores)
 m1 = cores.mean.ro;
 m2 = cores.mean.gama;
 m3 = cores.mean.fi;
-m4 = cores.mean.vw;
+m4 = cores.mean.dBT;
 
 s1 = cores.std.ro;
 s2 = cores.std.gama;
 s3 = cores.std.fi;
-s4 = cores.std.vw;
+s4 = cores.std.dBT;
 
 D1 = length(m1);
 D2 = length(m2);
