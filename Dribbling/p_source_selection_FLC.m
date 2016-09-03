@@ -22,9 +22,10 @@ if nash==1 %if nearby action sharing
         a_target = e_greedy_selection(Q, s, RLparam.epsilon, rnd.expl);
     end
     
-    neashNDist = normpdf(1:nActions, a_sh, RLparam.aScale*(1 - RLparam.p + 100*realmin));
-    RLparam.softmax=0;
-    [a_source, ~] = softmax_selection(neashNDist, 0, s, RLparam, rnd.nash);
+    a_source = a_sh;
+    %neashNDist = normpdf(1:nActions, a_sh, RLparam.aScale*(1 - RLparam.p + 100*realmin));
+    %RLparam.softmax=0;
+    %[a_source, ~] = softmax_selection(neashNDist, 0, s, RLparam, rnd.nash);
     %a_source = clipDLF( round(a_sh + 2*rnd.nash*(1 - RLparam.p)), 1,nActions );
     %a_target = clipDLF( round(GetBestAction(Q,s) + 1*rnd.nashExpl* RLparam.epsilon), 1,nActions );
 else

@@ -160,17 +160,17 @@ while 1
     sp  = DiscretizeStateDLF(x_obs,cores,feature_step,div_disc);
     
     % select action prime
-    %ap = e_greedy_selection(RL.Q , sp, RL.param.epsilon);
-
-    %a_transf = GetBestAction(RL.Qs,sp);   
-    a_transf = 1 + round(V_FLC(1)/V_action_steps(1));  % from FLC
-    a_transf_y = 1 + round(V_FLC(2)/V_action_steps(2)  + Vr_max(2)/V_action_steps(2) );
-    a_transf_rot = 1 + round(V_FLC(3)/V_action_steps(3) + Vr_max(3)/V_action_steps(3) );
-    
     if conf.sync.nash>0, rnd.nash=rand(); rnd.nashExpl=randn(); end
     if conf.sync.expl>0, rnd.expl=rand(); end
     if conf.sync.TL>0, rnd.TL=rand(); end
     
+    % NeASh
+    V_FLC=clipDLF( V_FLC + ((Vr_max-Vr_min)/RL.param.aScale)*rnd.nash*(1 - RL.param.p), Vr_min,Vr_max);
+    
+    a_transf = 1 + round(V_FLC(1)/V_action_steps(1));  % from FLC
+    a_transf_y = 1 + round(V_FLC(2)/V_action_steps(2)  + Vr_max(2)/V_action_steps(2) );
+    a_transf_rot = 1 + round(V_FLC(3)/V_action_steps(3) + Vr_max(3)/V_action_steps(3) );
+       
     [ap, fa_x] = p_source_selection_FLC(RL.Q,RL.T,sp, RL.param, a_transf, conf.nash, conf.sync, rnd);
     [ap_y, fa_y] = p_source_selection_FLC(RL.Q_y, RL.T_y, sp, RL.param, a_transf_y, conf.nash, conf.sync, rnd);
     [ap_rot, fa_rot] = p_source_selection_FLC(RL.Q_rot, RL.T_rot, sp, RL.param, a_transf_rot, conf.nash, conf.sync, rnd);

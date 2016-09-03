@@ -84,7 +84,7 @@ else
 end
 
 if conf.nash==1 && conf.TRANSFER
-    fileName = [fileName '_NASSh'];
+    fileName = [fileName '_NeASh' num2str(RL.param.aScale)];  
 elseif conf.nash==0 && conf.TRANSFER
     fileName = [fileName '_CoSh'];
 end

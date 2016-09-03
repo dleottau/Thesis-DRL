@@ -24,14 +24,11 @@ n=1;
 M=[];
 S=[];
 
-load opti/NeASh/test2/DRL_8Runs_Noise0.1_MA0_alpha0.3_lambda0.8_softmax10_decay6_NASSh.mat
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL+NeASh1');
-
-load opti/NeASh/test2/DRL_8Runs_Noise0.1_MA0_alpha0.3_lambda0.8_softmax10_decay5_NASSh.mat
+load opti/NeASh/DRL_25Runs_Noise0.1_MA0_alpha0.3_lambda0.8_softmax10_decay6_NASSh0.04.mat
 [M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL+NeASh2');
 
-load opti/NeASh/test2/DRL_8Runs_Noise0.1_MA0_alpha0.3_lambda0.8_softmax10_decay4_NASSh.mat
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL+NeASh3');
+load opti/CoSh/DRL_25Runs_Noise0.1_MA0_alpha0.3_lambda0.8_softmax5_decay6_CoSh.mat
+[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL+CoSh');
 
 
 

@@ -26,12 +26,12 @@ else
 end
 
 x0 = [];
-xname{1}='aScale';
-x0(1) = 0.01;
-xname{2}='softmax';
-x0(2) = 10;
-xname{3}='decay';
-x0(3) = 6;
+xname{1}='softmax';
+x0(1) = 9;
+xname{2}='decay';
+x0(2) = 6;
+xname{3}='aScale';
+x0(3) = 20;
 
 % xname{4}='k-lenient';
 % x0(4) = 1.5;  
@@ -43,8 +43,8 @@ x0(3) = 6;
 options = hilloptions('TimeLimit', 600);
 % options.step = [0.1; 10; 1; 0.5; 0.1];
 % options.space = [[0.1; 1; 5; 0.5; 0.4], [0.7; 80; 15; 5; 0.99]];
-options.step = [0.01; 5; 1;];
-options.space = [[0.01; 0; 2;], [0.1; 30; 12;]];
+options.step = [2; 1; 5];
+options.space = [[1; 2; 5], [20; 16; 30]];
 options.peaks = 4;
 options.oneDimPerTry = 1;
 
