@@ -11,7 +11,7 @@ conf.Actions  = ActionTable( conf.Vr_min, conf.V_action_steps, conf.Vr_max, conf
 conf.nstates     = size(conf.States,1);
 conf.nactions    = size(conf.Actions,1);
 
-if conf.TRANSFER==0 
+if conf.TRANSFER>=0
 RL.Q        = QTable( conf.nstates,conf.nactions, conf.Q_INIT );  % the Qtable for the vx agent
 RL.Q_y      = RL.Q;  % the Qtable for the vy agent
 RL.Q_rot    = RL.Q;  % the Qtable for the v_rot agent

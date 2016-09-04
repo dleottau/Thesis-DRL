@@ -35,9 +35,14 @@ FV = getFeatureVector(x, cfg.cores, cfg.DRL);
 if cfg.DRL
     [ax, px] = action_selection(RL.Q, FV(:,1), RL.param, RL.Tx);
     [ay, py] = action_selection(RL.Qy, FV(:,2), RL.param, RL.Ty);
+    ax = sourcePolicy(x(1:2),ax,cfg.transfer,RL.param);
+    ay = sourcePolicy(x(3:4),ay,cfg.transfer,RL.param);
 else
     [a, p] = action_selection(RL.Q, FV, RL.param, 0);
 end
+
+
+
 
 for i = 1: cfg.maxsteps    
         
@@ -69,6 +74,8 @@ for i = 1: cfg.maxsteps
     if cfg.DRL
         [apx, fa_x] = action_selection(RL.Q, FVp(:,1), RL.param, RL.Tx);
         [apy, fa_y] = action_selection(RL.Qy, FVp(:,2), RL.param, RL.Ty);
+        apx = sourcePolicy(x(1:2),apx,cfg.transfer,RL.param);
+        apy = sourcePolicy(x(3:4),apy,cfg.transfer,RL.param);
         % Frequency adjusted param
         %fap = 1-min([fa_x, fa_y])+1E-6;
         fap = min([fa_x, fa_y])+1E-6;

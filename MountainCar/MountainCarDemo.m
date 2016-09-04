@@ -1,4 +1,4 @@
-function f =  MountainCarDemo( maxepisodes, x, run )
+function ypoints =  MountainCarDemo( maxepisodes, x, run )
 
 %MountainCarDemo, the main function of the demo
 %maxepisodes: maximum number of episodes to run the demo
@@ -14,8 +14,8 @@ function f =  MountainCarDemo( maxepisodes, x, run )
 set(gcf,'BackingStore','off')  % for realtime inverse kinematics
 set(gcf,'name','Reinforcement Learning Mountain Car')  % for realtime inverse kinematics
 
-
-cfg.grafica     = 1; % indicates if display the graphical interface
+cfg.transfer = x(6);  % flag for trasferring: 0 no-transfer; 1 cosh;
+cfg.grafica     = 0; % indicates if display the graphical interface
 
 cfg.feature_min = [-1.2 -0.07];
 cfg.feature_max = [ 0.6  0.07];
@@ -36,7 +36,9 @@ RL.param.lambda      = x(2);%0.8;
 RL.param.epsilon     = x(3);%0.01;  % probability of a random action selection
 RL.param.exp_decay   = 0.99; % factor to decay exploration rate
 RL.param.p=1; % Transfer knowledge probability
-RL.param.p_decay   = 0.95; % factor to decay transfer knowledge probability
+RL.param.p_decay   = x(7); % factor to decay transfer knowledge probability
+RL.param.scale(1) = x(8); % nash scalization
+RL.param.scale(2) = x(9); % nash scalization
 
 epsilon0 = RL.param.epsilon;
 EXPLORATION = maxepisodes/RL.param.exp_decay;
@@ -74,6 +76,6 @@ for i=1:maxepisodes
     end
 end
 
-f = abs(mean(ypoints(round(maxepisodes*0.5):end)));
+%f = abs(mean(ypoints(round(maxepisodes*0.5):end)));
 %f = itae/maxepisodes;
 

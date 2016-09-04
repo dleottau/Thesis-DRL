@@ -8,8 +8,8 @@ cfg.DRL = x(6);  % 0 for CRL, 1 for DRL, 2 for DRL with joint states
 cfg.MAapproach = x(7);   % 0 no cordination, 1 frequency adjusted, 2 leninet
 cfg.ac5= x(8);%1;  % enable original proposal which uses 5 actions instead of 9
 %RUNS = 1;
-cfg.DRAWS = 0;
-cfg.record = 1;
+cfg.DRAWS = 1;
+cfg.record = 0;
 if opti
     cfg.DRAWS = 0;
     cfg.record = 1;
@@ -26,8 +26,13 @@ RL.param.exp_decay = 0.99;
 % RL.param.epsilon = 0.7; 
 RL.param.k = x(4);  % exponent coeficient for leniency
 RL.param.beta = x(5);  % exponent coeficient for leniency
+RL.param.p=1; % Transfer knowledge probability
+RL.param.p_decay   = x(10); % factor to decay transfer knowledge probability
+RL.param.scale(1) = x(11); % nash scalization
+RL.param.scale(2) = x(12); % nash scalization
 
-cfg.episodes = 300;
+cfg.transfer = x(9);  % flag for trasferring: 0 no-transfer; 1 cosh;
+cfg.episodes = 100;
 cfg.feature_min = [-1.2 -0.07  -1.2 -0.07];
 cfg.feature_max = [ 0.6  0.07   0.6  0.07];
 cfg.init_condition = [-pi()/6   0.0 -pi()/6 0.0];
@@ -80,7 +85,7 @@ itae_best=Inf;
 itae_worst=-Inf;
 
 for n=1:RUNS
-    interval=0.7;
+    interval=0.0001; %0.7
     itaem(n) = itae(n);
     if itaem(n) < itae_best
         itae_best=itaem(n);
@@ -122,7 +127,8 @@ results.mean_cumReward = mean(mRew,2);
 results.std_cumReward = std(mRew,0,2);
     
 if cfg.record
-        save ([evolutionFile '.mat'], 'results');
+        %save ([evolutionFile '.mat'], 'results');
+        save ([folder stringName '.mat'], 'results');
 end
 
 if cfg.DRAWS

@@ -5,7 +5,7 @@ close all
 
 tic
 global RUNS;
-RUNS=5;
+RUNS=8;
 
 global flagFirst;
 flagFirst=true;
@@ -24,21 +24,17 @@ else
 end
 
 x0 = [];
-xname{1}='alpha';
-x0(1) = 0.25;   % learning rate
-xname{2}='lambda';
-x0(2) = 0.8;   % lambda
-xname{3}='epsilon';
-x0(3)  = 0.02;  % epsilon
-
-%----------  
+xname{1}='pDec';
+x0(1)  = 0.9;  % factor to decay transfer knowledge probability
+xname{2}='scale1-';
+x0(2)  = 1.0;  % nash scalization
+xname{3}='scale2-';
+x0(3)  = 1.0;  % nash scalization
 
 options = hilloptions('TimeLimit', 600);
-options.step = [0.05; 0.05; 0.02];
-options.space = [[0.05; 0.5; 0], [0.5; 0.99; 0.3]];
-%options.step = [0.5; 0.05; 0.05; 0.05; 0.02];
-%options.space = [[0.5; 0.5; 0.05; 0.5; 0], [4; 0.99; 0.5; 0.99; 0.2]];
-options.peaks = 2;
+options.step = [0.05; 0.25; 0.25];
+options.space = [[0.2; 0.5; 0.5], [0.99; 2; 2]];
+options.peaks = 4;
 options.oneDimPerTry = 1;
 
 

@@ -33,6 +33,8 @@ total_reward = 0;
 % selects an action using the epsilon greedy selection strategy
 FV = getFeatureVector(x, cfg.cores);
 a   = e_greedy_selection(RL.Q, FV, RL.param.epsilon);
+%transfering knoweledge
+a = sourcePolicy(x,a,cfg.transfer,RL.param);
 
 %tic();
 for i=1: cfg.maxsteps    
@@ -52,7 +54,7 @@ for i=1: cfg.maxsteps
     ap = e_greedy_selection(RL.Q, FVp, RL.param.epsilon);
     
     %transfering knoweledge
-    ap=sourcePolicy(x,ap,RL.param.p);
+    ap = sourcePolicy(x,ap,cfg.transfer,RL.param);
     
     % Update the Qtable, that is,  learn from the experience
     [ RL.Q, e_trace] = UpdateSARSA( FV, a, r, FVp, ap, RL.Q, e_trace, RL.param);

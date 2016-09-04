@@ -57,6 +57,7 @@ for i=1:maxepisodes
     if RL.param.exp_decay<1
         RL.param.epsilon = RL.param.epsilon * RL.param.exp_decay;
         RL.param.softmax = RL.param.softmax * RL.param.exp_decay;
+        RL.param.p = RL.param.p * RL.param.p_decay;
     else
         RL.param.epsilon = epsilon0 * exp(-i*epsDec);
         RL.param.softmax = softmaxT0 * exp(-i*epsDec);

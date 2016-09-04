@@ -1,67 +1,61 @@
 function f = RUN_SCRIPT(x,RUNS)
 
-%conf.Test=0;
-% clc
-% clf
-% clear all
-% close all
-
-%folder = 'opti/';  
-folder = 'finalTests/';  
+folder = 'opti/';  
+%folder = 'finalTests/';  
 %loadFile = 'DRL_25Runs_Noise0.1_MA0_alpha0.5_lambda0.9_softmax70_decay6.mat';
 %loadFile = 'DRL_25Runs_Noise0.1_MA1_alpha0.1_lambda0.9_softmax21_decay8.mat';
 loadFile = 'DRL_25Runs_Noise0.1_MA2_alpha0.1_lambda0.9_k1.5_beta0.9_softmax70_decay6.mat';
 % folder = 'RC-2015/results/';  
 % loadFile = 'resultsFull_NASh-v2-20runs-Noise01-exp8.mat';
 
+global test;
 global flagFirst;
 global opti;
 conf.opti=opti;
 
 %dbstop in softmax_selection.m at 38
 
-conf.episodes = 2000; %  maximum number of  episode
+conf.episodes = 1000; %  maximum number of  episode
 conf.Runs = RUNS;
 conf.record = 1;
 conf.DRAWS = 0;
 conf.NOISE = 0.1;
 
-conf.TRANSFER = 0;  %=1 transfer, >1 acts gready from source policy, =0 learns from scratch, =-1 just for test performance from stored policies
-conf.nash = 0;   % 0 COntrol sharing, 1 NASh
+conf.TRANSFER = x(8);  %=1 transfer, >1 acts gready from source policy, =0 learns from scratch, =-1 just for test performance from stored policies
+conf.nash = x(9);   % 0 COntrol sharing, 1 NASh
 conf.MAapproach = x(6);   % 0 no cordination, 1 frequency adjusted, 2 leninet
 conf.Mtimes = 0; % state-action pair must be visited M times before Q being updated
-conf.Q_INIT = 0;
+conf.Q_INIT = 5;
 
 %sync=1, synchronizes using tne same random number for the 3 D-RL agents, otherwise, uses independetn random numbers per agent
-conf.sync.nash      = 0;
-conf.sync.TL        = 0;
-conf.sync.expl      = 0;
+conf.sync.nash      = 1;
+conf.sync.TL        = 1;
+conf.sync.expl      = 1;
 if conf.TRANSFER, conf.sync.expl=1; end
 if conf.TRANSFER<0, conf.episodes=100; end
 
 if conf.opti
     conf.DRAWS = 0;
     conf.record = 1;
+    folder = 'opti/';
 end
+if test 
+    conf.DRAWS = 1;
+    conf.record = 0;
+end 
 
 RL.param.alpha      = x(1);   % 0.5;   % 0.3-0.5 learning rate
 RL.param.gamma      = 0.99;   % discount factor
 RL.param.lambda     = x(4);   % the decaying elegibiliy trace parameter
 RL.param.epsilon    = 1;
 RL.param.softmax    = x(2);   % Boltzmann temperature (50 by default), if <= 0 e-greaddy
-RL.param.exp_decay  = x(3); % 8 exploration decay parameter
-RL.param.k          = x(7);    %1.5 lenience parameter
-RL.param.beta       = x(5);   %0.9 lenience discount factor
+RL.param.exp_decay  = x(3);   % 8 exploration decay parameter
+RL.param.k          = x(7);   % 1.5 lenience parameter
+RL.param.beta       = x(5);   % 0.9 lenience discount factor
+RL.param.aScale      = x(10);    % scale factor for the action space in neash
 
-
-
-%evolutionFile = 'MAS-coop/DRL-3runs-Noise005-2000exp8-NoSync-FAboltzman20';
-%performanceFile = 'boltzmann/Vx-5runs-Noise03-50exp30-NoSync-boltzmann1';
-
-
-conf.maxDistance =6000;    % maximum ball distance permited before to end the episode X FIELD DIMENSION
-conf.th_max = [250 15 15];      % maximum pho desired
-
+conf.maxDistance =6000;       % maximum ball distance permited before to end the episode X FIELD DIMENSION
+conf.th_max = [250 15 15];    % maximum pho desired
 
 conf.Voffset = 1; %Offset Speed in mm/s
 conf.V_action_steps = [25, 20, 20]/4; % /4 works good
@@ -74,10 +68,7 @@ conf.feature_max = [600, 40, 40]; %30, 30
 conf.maxDeltaV = conf.Vr_max.*[1/3 1/3 1/2]; %mm/s/Ts
 conf.Ts = 0.2; %Sample time of a RL step
 
-
 %a_spot={'r' 'g' 'b' 'c' 'm' 'y' 'k' '--r' '--g' '--b' '--c' };
-
-
 
 fileNameP = ['DRL_' int2str(conf.Runs) 'Runs_Noise' num2str(conf.NOISE) '_MA' int2str(conf.MAapproach) '_alpha' num2str(RL.param.alpha) '_lambda' num2str(RL.param.lambda)];
 if RL.param.softmax > 0
@@ -93,7 +84,7 @@ else
 end
 
 if conf.nash==1 && conf.TRANSFER
-    fileName = [fileName '_NASSh'];
+    fileName = [fileName '_NeASh' num2str(RL.param.aScale)];  
 elseif conf.nash==0 && conf.TRANSFER
     fileName = [fileName '_CoSh'];
 end
@@ -130,13 +121,14 @@ if flagFirst
     disp('-');
 end
 
-
-%parfor i=1:RUNS
-for i=1:conf.Runs
-    %conf.nRun=i;
-%    disp(['Test= ', num2str(a), '.', num2str(i), ' lambda= ', num2str(lambda(a))])
-    %[reward(:,:,i), e_time(:,i), Vavg(:,i), tp_faults(:,i), goals(i),  Qx,Qy,Qrot] = Dribbling2d(conf, RL, i);
-    [reward(:,:,i), e_time(:,i), Vavg(:,i), tp_faults(:,i),  Qx{i},Qy{i},Qrot{i}] = Dribbling2d(conf, RL, i);
+if test
+    for i=1:conf.Runs
+        [reward(:,:,i), e_time(:,i), Vavg(:,i), tp_faults(:,i),  Qx{i},Qy{i},Qrot{i}] = Dribbling2d(conf, RL, i);
+    end
+else
+    parfor i=1:conf.Runs
+        [reward(:,:,i), e_time(:,i), Vavg(:,i), tp_faults(:,i),  Qx{i},Qy{i},Qrot{i}] = Dribbling2d(conf, RL, i);
+    end
 end      
 
 et_min=Inf;

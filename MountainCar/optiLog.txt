@@ -1,3 +1,158 @@
+**** NASh *******
+Starting matlabpool using the 'local' profile ... connected to 4 workers.
+Fitness:163.3862; scale2-1.5; scale1-1.5; pDec0.95; transfer2; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 8RUNS
+Fitness:161.8581; scale2-1.5; scale1-1.5; pDec0.9; transfer2; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 8RUNS
+Fitness:146.6731; scale2-1.5; scale1-1.5; pDec0.85; transfer2; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 8RUNS
+Fitness:158.3781; scale2-1.5; scale1-1.5; pDec0.8; transfer2; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 8RUNS
+Fitness:157.1375; scale2-1.5; scale1-1.5; pDec0.75; transfer2; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 8RUNS
+Fitness:148.0687; scale2-1.5; scale1-1.5; pDec0.7; transfer2; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 8RUNS
+Fitness:163.1913; scale2-1.5; scale1-1.5; pDec0.65; transfer2; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 8RUNS
+Fitness:161.055; scale2-1.5; scale1-1.25; pDec0.85; transfer2; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 8RUNS
+Fitness:159.8463; scale2-1.5; scale1-1; pDec0.85; transfer2; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 8RUNS
+Fitness:150.4675; scale2-1.5; scale1-0.75; pDec0.85; transfer2; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 8RUNS
+Fitness:149.9181; scale2-1.5; scale1-0.5; pDec0.85; transfer2; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 8RUNS
+Fitness:154.9306; scale2-1.5; scale1-1.75; pDec0.85; transfer2; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 8RUNS
+Fitness:147.4113; scale2-1.5; scale1-2; pDec0.85; transfer2; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 8RUNS
+Fitness:146.93; scale2-1.5; scale1-2.25; pDec0.85; transfer2; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 8RUNS
+Fitness:156.1588; scale2-1.5; scale1-2.5; pDec0.85; transfer2; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 8RUNS
+Fitness:154.2081; scale2-1.25; scale1-1.5; pDec0.85; transfer2; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 8RUNS
+Fitness:159.7506; scale2-1; scale1-1.5; pDec0.85; transfer2; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 8RUNS
+Fitness:158.6281; scale2-0.75; scale1-1.5; pDec0.85; transfer2; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 8RUNS
+Fitness:144.7894; scale2-0.5; scale1-1.5; pDec0.85; transfer2; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 8RUNS
+Fitness:154.2006; scale2-1.75; scale1-1.5; pDec0.85; transfer2; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 8RUNS
+Fitness:153.8113; scale2-2; scale1-1.5; pDec0.85; transfer2; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 8RUNS
+Fitness:151.9688; scale2-2.25; scale1-1.5; pDec0.85; transfer2; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 8RUNS
+Fitness:154.6694; scale2-2.5; scale1-1.5; pDec0.85; transfer2; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 8RUNS
+Fitness:147.5319; scale2-0.5; scale1-1.5; pDec0.8; transfer2; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 8RUNS
+Fitness:168.175; scale2-0.5; scale1-1.5; pDec0.75; transfer2; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 8RUNS
+Fitness:150.3531; scale2-0.5; scale1-1.5; pDec0.7; transfer2; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 8RUNS
+Fitness:147.2719; scale2-0.5; scale1-1.5; pDec0.65; transfer2; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 8RUNS
+Fitness:155.8938; scale2-0.5; scale1-1.5; pDec0.9; transfer2; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 8RUNS
+Fitness:171.8419; scale2-0.5; scale1-1.5; pDec0.95; transfer2; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 8RUNS
+Fitness:165.3569; scale2-0.5; scale1-1.25; pDec0.85; transfer2; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 8RUNS
+Fitness:157.9131; scale2-0.5; scale1-1; pDec0.85; transfer2; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 8RUNS
+Fitness:160.6413; scale2-0.5; scale1-0.75; pDec0.85; transfer2; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 8RUNS
+Fitness:150.2231; scale2-0.5; scale1-0.5; pDec0.85; transfer2; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 8RUNS
+Fitness:151.9238; scale2-0.5; scale1-1.75; pDec0.85; transfer2; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 8RUNS
+Fitness:155.9775; scale2-0.5; scale1-2; pDec0.85; transfer2; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 8RUNS
+Fitness:168.3619; scale2-0.5; scale1-2.25; pDec0.85; transfer2; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 8RUNS
+Fitness:160.8325; scale2-0.5; scale1-2.5; pDec0.85; transfer2; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 8RUNS
+
+x =
+
+    0.8500
+    1.5000
+    0.5000
+
+
+fval =
+
+  144.7894
+
+Starting matlabpool using the 'local' profile ... connected to 4 workers.
+Fitness:109.9592; scale21; scale11; pDec0.5; transfer2; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 8RUNS
+Fitness:105.7772; scale21.1; scale11.1; pDec0.45; transfer2; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 8RUNS
+Fitness:110.9876; scale21.1; scale11.1; pDec0.4; transfer2; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 8RUNS
+Fitness:106.0891; scale21.1; scale11.1; pDec0.35; transfer2; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 8RUNS
+Fitness:105.0087; scale21.1; scale11.1; pDec0.3; transfer2; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 8RUNS
+Fitness:111.5433; scale21.1; scale11.1; pDec0.55; transfer2; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 8RUNS
+Fitness:115.2636; scale21.1; scale11.1; pDec0.6; transfer2; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 8RUNS
+Fitness:137.7859; scale21.1; scale11.1; pDec0.65; transfer2; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 8RUNS
+Fitness:114.2946; scale21.1; scale11.1; pDec0.7; transfer2; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 8RUNS
+Fitness:115.9035; scale21.1; scale10.6; pDec0.3; transfer2; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 8RUNS
+Fitness:106.203; scale21.1; scale10.1; pDec0.3; transfer2; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 8RUNS
+Fitness:112.6114; scale21.1; scale11.6; pDec0.3; transfer2; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 8RUNS
+Fitness:110.1225; scale21.1; scale12.1; pDec0.3; transfer2; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 8RUNS
+Fitness:115.3973; scale21.1; scale12.6; pDec0.3; transfer2; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 8RUNS
+Fitness:110.5817; scale20.6; scale11.1; pDec0.3; transfer2; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 8RUNS
+Fitness:105.2191; scale20.1; scale11.1; pDec0.3; transfer2; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 8RUNS
+Fitness:111.9703; scale21.6; scale11.1; pDec0.3; transfer2; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 8RUNS
+Fitness:116.7797; scale22.1; scale11.1; pDec0.3; transfer2; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 8RUNS
+Fitness:110.4356; scale22.6; scale11.1; pDec0.3; transfer2; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 8RUNS
+
+x =
+
+    0.3000
+    1.1000
+    1.1000
+
+
+fval =
+
+  105.0087
+
+
+**** CoSh *******
+Starting matlabpool using the 'local' profile ... connected to 4 workers.
+Fitness:117.6851; pDec0.5; transfer1; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 25RUNS
+Fitness:110.2685; pDec0.475; transfer1; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 25RUNS
+Fitness:112.6448; pDec0.45; transfer1; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 25RUNS
+Fitness:113.6499; pDec0.425; transfer1; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 25RUNS
+Fitness:114.4226; pDec0.4; transfer1; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 25RUNS
+Fitness:109.3762; pDec0.525; transfer1; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 25RUNS
+Fitness:110.0115; pDec0.55; transfer1; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 25RUNS
+Fitness:124.3149; pDec0.575; transfer1; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 25RUNS
+Fitness:118.4614; pDec0.6; transfer1; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 25RUNS
+Fitness:115.7679; pDec0.625; transfer1; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 25RUNS
+
+x =
+
+    0.5250
+
+
+fval =
+
+  109.3762
+
+Starting matlabpool using the 'local' profile ... connected to 4 workers.
+Fitness:116.4598; pDec0.9; transfer1; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 25RUNS
+Fitness:113.0107; pDec0.875; transfer1; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 25RUNS
+Fitness:119.2776; pDec0.85; transfer1; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 25RUNS
+Fitness:115.501; pDec0.825; transfer1; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 25RUNS
+Fitness:120.8463; pDec0.8; transfer1; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 25RUNS
+Fitness:123.8467; pDec0.925; transfer1; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 25RUNS
+Fitness:126.6329; pDec0.95; transfer1; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 25RUNS
+Fitness:111.3786; pDec0.975; transfer1; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 25RUNS
+
+x =
+
+    0.9750
+
+
+fval =
+
+  111.3786
+
+Starting matlabpool using the 'local' profile ... connected to 4 workers.
+Fitness:117.2836; pDec0.8; transfer1; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 25RUNS
+Fitness:117.1263; pDec0.75; transfer1; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 25RUNS
+Fitness:112.3743; pDec0.7; transfer1; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 25RUNS
+Fitness:117.5667; pDec0.65; transfer1; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 25RUNS
+Fitness:111.9026; pDec0.6; transfer1; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 25RUNS
+Fitness:121.6939; pDec0.85; transfer1; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 25RUNS
+Fitness:110.4463; pDec0.9; transfer1; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 25RUNS
+Fitness:124.9568; pDec0.95; transfer1; vx.nCores7; x.nCores11; epsilon0.03; lambda0.9; alpha0.1; 25RUNS
+
+x =
+
+    0.9000
+
+
+fval =
+
+  110.4463
+
+Warning: matlabpool will be removed in a future release.
+To shutdown a parallel pool use 'delete(gcp('nocreate'))' instead. 
+Parallel pool using the 'local' profile is shutting down.
+Elapsed time is 166.539366 seconds.
+
+
+
+
+
+
+***** RL from scratch ******
 -
 TEST
 Manual policy Source: if x(2)>=0, a=3; else a=1; end
