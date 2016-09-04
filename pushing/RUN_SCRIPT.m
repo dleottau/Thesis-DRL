@@ -1,12 +1,14 @@
 function f = RUN_SCRIPT(x,RUNS,stringName)
+
 conf.Test=0;
 
+folder = 'final/Delft/';
 global flagFirst;
 global finalTest;
 global opti;
 conf.opti=opti;
 
-folder = 'tests/';
+
 
 conf.episodes = 1000;   % maximum number of  episode
 conf.Ts = 0.2; %Sample time of a RL step
