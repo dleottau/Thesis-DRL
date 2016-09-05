@@ -1,18 +1,18 @@
-function f = optimizationFunction(x)
-global RUNS;
-global opti;
-global test;
-
-
-% clc
-% clf
-% clear all
-% close all
-% tic
+% function f = optimizationFunction(x)
+% global RUNS;
 % global opti;
-% opti=0;
 % global test;
-% test=1;
+
+
+clc
+clf
+clear all
+close all
+tic
+global opti;
+opti=0;
+global test;
+test=1;
 
 
 
@@ -38,9 +38,9 @@ x0 = [];
 xname{1}='alpha';
 x0(1) = 0.3;
 xname{2}='softmax';
-x0(2) = 8;
+x0(2) = 5;
 xname{3}='decay';
-x0(3) = 7; 
+x0(3) = 10; 
 xname{4}='lambda';
 x0(4) = 0.8; 
 % ------
@@ -55,7 +55,7 @@ x0(8) = 1;   %=1 transfer, >1 acts gready from source policy, =0 learns from scr
 xname{9}='NeASh';
 x0(9) = 1;   % 0 COntrol sharing, 1 NASh
 xname{10}='ScaleNeash';
-x0(10) = 15;    % 0.04 scale factor for the action space in neash
+x0(10) = 10;    % 0.04 scale factor for the action space in neash
 
 if opti
     %x0(10) = x(1);

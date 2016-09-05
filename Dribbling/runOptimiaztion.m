@@ -27,11 +27,11 @@ end
 
 x0 = [];
 xname{1}='softmax';
-x0(1) = 9;
+x0(1) = 5;
 xname{2}='decay';
-x0(2) = 6;
+x0(2) = 10;
 xname{3}='aScale';
-x0(3) = 20;
+x0(3) = 10;
 
 % xname{4}='k-lenient';
 % x0(4) = 1.5;  

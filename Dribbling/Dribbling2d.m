@@ -2,7 +2,6 @@ function  [reward, e_time, Vavg, tp_faults, Qx,Qy,Qrot] =Dribbling2d( conf, RL, 
 %Dribbling1d SARSA, the main function of the trainning
 
 
-load W-FLC-RC2014;
 set(gcf,'name',['DRL Dribbling ' conf.fileName])  % for realtime inverse kinematics
 
 Ts = conf.Ts; %Sample time of a RL step
@@ -66,7 +65,7 @@ for i=1:conf.episodes
         RL.param.p=0; %learns from scratch
     end %else Transfer from source decaying as p
     
-    [RL, Vr,ro,fi,gama,Pt,Pb,Pr,Vb,total_reward,steps,fitness_k,btd_k,Vavg_k,time,faults,goal_k] = Episode( wf, RL, conf);
+    [RL, Vr,ro,fi,gama,Pt,Pb,Pr,Vb,total_reward,steps,fitness_k,btd_k,Vavg_k,time,faults,goal_k] = Episode(RL, conf);
     
     %disp(['Epsilon:',num2str(eps),'  Espisode: ',int2str(i),'  Steps:',int2str(steps),'  Reward:',num2str(total_reward),' epsilon: ',num2str(epsilon)])
     

@@ -1,4 +1,4 @@
-function [ RL, Vr,ro,fi,gama,Pt,Pb,Pr,Vb,total_reward,steps, fitness,btd,Vavg,time,faults,goal] = Episode( w, RL, conf)
+function [ RL, Vr,ro,fi,gama,Pt,Pb,Pr,Vb,total_reward,steps, fitness,btd,Vavg,time,faults,goal] = Episode(RL, conf)
          
 
 %Dribbling1d do one episode  with sarsa learning              
@@ -76,7 +76,7 @@ dV=0;
 x = [Pr(i,1),Pb(i,1),Vb(i,1),Vr(i,1),ro(i,1),dV,gama(i,1),fi(i,1)];
 
 % Get velocity FLC 
-[V_FLC] = FLC_dribbling (w,x,Vr_min,Vr_max);
+[V_src] = controller (x,Vr_min,Vr_max);
 
 % convert the continous state variables to an index of the statelist
 %s   = DiscretizeState(x,statelist);
@@ -144,7 +144,7 @@ while 1
     x_obs(4) = Vr_req(1); % x speed of the robot , not influenced by noise in perceptions
     
     % Get velocity FLC 
-    [V_FLC] = FLC_dribbling (w,x_obs,Vr_min,Vr_max);
+    [V_src] = controller (x_obs,Vr_min,Vr_max);
     %---------------------------------------        
           
     % observe the reward at state xp and the final state flag
@@ -158,22 +158,26 @@ while 1
     % convert the continous state variables in [xp] to an index of the statelist    
     %sp  = DiscretizeState(x_obs,statelist);
     sp  = DiscretizeStateDLF(x_obs,cores,feature_step,div_disc);
+        
+    % Syncronizing exploration and transfer between agents
+    if conf.sync.nash, rnd.nash=randn(); end
+    if conf.sync.expl, rnd.expl=rand(); end
+    if conf.sync.TL, rnd.TL=rand(); end
     
+    % Transfer knowledge
+    if conf.TRANSFER && conf.nash
+        if ~conf.sync.nash, rnd.nash=randn(1,3); end
+        V_src = clipDLF( V_src + ((Vr_max-Vr_min)/RL.param.aScale)*rnd.nash.*(1 - RL.param.p), Vr_min,Vr_max);
+    end
+    
+    a_transf_x = 1 + round(V_src(1)/V_action_steps(1));  % from FLC
+    a_transf_y = 1 + round(V_src(2)/V_action_steps(2)  + Vr_max(2)/V_action_steps(2));
+    a_transf_w = 1 + round(V_src(3)/V_action_steps(3) + Vr_max(3)/V_action_steps(3));
+        
     % select action prime
-    if conf.sync.nash>0, rnd.nash=rand(); rnd.nashExpl=randn(); end
-    if conf.sync.expl>0, rnd.expl=rand(); end
-    if conf.sync.TL>0, rnd.TL=rand(); end
-    
-    % NeASh
-    V_FLC=clipDLF( V_FLC + ((Vr_max-Vr_min)/RL.param.aScale)*rnd.nash*(1 - RL.param.p), Vr_min,Vr_max);
-    
-    a_transf = 1 + round(V_FLC(1)/V_action_steps(1));  % from FLC
-    a_transf_y = 1 + round(V_FLC(2)/V_action_steps(2)  + Vr_max(2)/V_action_steps(2) );
-    a_transf_rot = 1 + round(V_FLC(3)/V_action_steps(3) + Vr_max(3)/V_action_steps(3) );
-       
-    [ap, fa_x] = p_source_selection_FLC(RL.Q,RL.T,sp, RL.param, a_transf, conf.nash, conf.sync, rnd);
-    [ap_y, fa_y] = p_source_selection_FLC(RL.Q_y, RL.T_y, sp, RL.param, a_transf_y, conf.nash, conf.sync, rnd);
-    [ap_rot, fa_rot] = p_source_selection_FLC(RL.Q_rot, RL.T_rot, sp, RL.param, a_transf_rot, conf.nash, conf.sync, rnd);
+    [ap, fa_x] = p_source_selection(RL.Q,RL.T,sp,RL.param, a_transf_x, conf.sync, rnd);
+    [ap_y, fa_y] = p_source_selection(RL.Q_y, RL.T_y, sp, RL.param, a_transf_y, conf.sync, rnd);
+    [ap_rot, fa_rot] = p_source_selection(RL.Q_rot, RL.T_rot, sp, RL.param, a_transf_w, conf.sync, rnd);
    
     RL.cum_fa = RL.cum_fa + [fa_x, fa_y, fa_rot];  
          
