@@ -210,11 +210,12 @@ while 1
     [r,f]        = GetReward(Xp, Pr(i,:), Pb(i,:), Pt, checkGoal, Pbi, ballState, conf);
     total_reward = total_reward + r;    
     
-    keyboard
+    % keyboard
     
     %% --------------------------------------------------------------------
     % ----------------------------------------------------------------%
-    sp  = DiscretizeStateDLF(x_obs,conf.cores,conf.feature_step,conf.div_disc);
+    % Esto no va.-
+    % sp  = DiscretizeStateDLF(x_obs,conf.cores,conf.feature_step,conf.div_disc);
     % ----------------------------------------------------------------%
     
     % select action prime
@@ -226,23 +227,23 @@ while 1
     a_transf_y   = 1 + round(V_FLC(2)/conf.V_action_steps(2) + Vr_max(2)/conf.V_action_steps(2) );
     a_transf_rot = 1 + round(V_FLC(3)/conf.V_action_steps(3) + Vr_max(3)/conf.V_action_steps(3) );
     
-    if conf.sync.nash>0
-        rnd.nash=randn(); rnd.nashExpl=randn();
+    if conf.sync.nash > 0
+        rnd.nash     = randn();
+        rnd.nashExpl = randn();
     end
-    if conf.sync.expl>0
-        rnd.expl=rand();
+    if conf.sync.expl > 0
+        rnd.expl = rand();
     end
-    if conf.sync.TL>0
-        rnd.TL=rand();
+    if conf.sync.TL > 0
+        rnd.TL = rand();
     end
     
-    [ap, fa_x]       = p_source_selection_FLC(RL.Q     , RL.T,sp  , RL.param     , a_transf     , conf.nash , conf.sync , rnd);
-    [ap_y, fa_y]     = p_source_selection_FLC(RL.Q_y   , RL.T_y   , sp, RL.param , a_transf_y   , conf.nash , conf.sync , rnd);
-    [ap_rot, fa_rot] = p_source_selection_FLC(RL.Q_rot , RL.T_rot , sp, RL.param , a_transf_rot , conf.nash , conf.sync , rnd);
+    [ap, fa_x]       = p_source_selection_FLC(RL.Q     , RL.T     , FVp , RL.param , a_transf     , conf.nash , conf.sync , rnd);
+    [ap_y, fa_y]     = p_source_selection_FLC(RL.Q_y   , RL.T_y   , FVp , RL.param , a_transf_y   , conf.nash , conf.sync , rnd);
+    [ap_rot, fa_rot] = p_source_selection_FLC(RL.Q_rot , RL.T_rot , FVp , RL.param , a_transf_rot , conf.nash , conf.sync , rnd);
     %% --------------------------------------------------------------------
     
-    
-    
+        
     % Select action prime
     [ap, fa] = action_selection(RL.Q, RL.T, FVp, RL.param);
     if conf.DRL

@@ -49,9 +49,6 @@ x0(6)    = 0;   % 0 no cordination, 1 frequency adjusted, 2 lenient
 xname{7} = 'k-lenient';
 x0(7)    = 1.5;
 
-xname{5} = 'beta';
-x0(5)    = 0.9;
-
 xname{8} = 'Transfer';
 x0(8)    = 1;   %=1 transfer, >1 acts gready from source policy, =0 learns from scratch, =-1 just for test performance from stored policies
 
