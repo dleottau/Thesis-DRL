@@ -38,11 +38,11 @@ folder = 'final/';
 % results=importdata([folder stringName]);
 % [M,S,n,legendN] = load_results(results,M,S,n,legendN,'fDRL-Lenient');
 %--------
-
+             
 stringName = 'MAapproach0; DRL0; lambda0.9; softmax2; alpha0.5; decay7; beta0.7; k-leninet1; 25RUNS.mat';
 results=importdata([folder stringName]);
 [M,S,n,legendN] = load_results(results,M,S,n,legendN,'CRL');
-
+             
 stringName = 'DRL1; lambda0.9; alpha0.3; softmax1.1; decay10; 25RUNS.mat';
 results=importdata([folder stringName]);
 [M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL');

@@ -1,16 +1,8 @@
-% function f = RUN_SCRIPT(x,RUNS,stringName)
-% conf.Test=0;
-% 
-% folder = 'opti/';
-
- %=========TESTS=============
+%=========TESTS=============
 clear all
 clc
 clf
 close all
-
-%dbstop in getQvalue.m
-
 
 conf.Test=1;
 sfolder = 'final/'; % Source folder
@@ -19,19 +11,22 @@ folder = 'tests/'; % To record the test result
 % Just uncomment file (policy) to use
 
 %stringName = 'DRL0; lambda0.9; alpha0.5; softmax2; decay7; 25RUNS.mat'; 
-%conf.DRL = 0; conf.fuzzQ = 0; conf.MAapproach = 0;
+%conf.DRL = 0; conf.fuzzQ = 0; conf.MAapproach = 0; conf.jointState = 1;
 
-%stringName = 'DRL1; lambda0.9; alpha0.3; softmax1.1; decay10; 25RUNS.mat';
-%conf.DRL = 1; conf.fuzzQ = 0; conf.MAapproach = 0;
+%stringName = 'MAapproach0; DRL1; lambda0.9; softmax1; alpha0.3; decay10; beta0.7; k-leninet1; 25RUNS.mat'
+%conf.DRL = 1; conf.fuzzQ = 0; conf.MAapproach = 0; conf.jointState = 1;
 
-%stringName = 'fuz-DRL1; lambda0.95; softmax1.1; decay9; alpha0.3; Nactions3; 25RUNS.mat';
-%conf.DRL = 1; conf.fuzzQ = 1; conf.MAapproach = 0;
+stringName = 'fuz-DRL1; lambda0.95; softmax1.1; decay9; alpha0.3; Nactions3; 25RUNS.mat';
+conf.DRL = 1; conf.fuzzQ = 1; conf.MAapproach = 0; conf.jointState = 1;
 
+
+%% **** These were for my thesis, just ignore them
 %stringName = 'MAapproach1; DRL1; lambda0.95; alpha0.4; softmax1.1; decay10; 25RUNS.mat';
-%conf.DRL = 1; conf.fuzzQ = 0; conf.MAapproach = 0; 
+%conf.DRL = 1; conf.fuzzQ = 0; conf.MAapproach = 0; conf.jointState = 1;
 
 %stringName = 'MAapproach2; DRL1; lambda0.95; softmax2; alpha0.3; decay8; beta0.7; k-leninet1; 25RUNS_k1_beta0.7.mat';
-%conf.DRL = 1; conf.fuzzQ = 0; conf.MAapproach = 0;
+%conf.DRL = 1; conf.fuzzQ = 0; conf.MAapproach = 0; conf.jointState = 1;
+%% ********
 
 conf.DRAWS = 1;
 conf.record = 1;
@@ -98,6 +93,7 @@ conf.fileName = stringName;
 for n=1:RUNS
     %[reward(:,:,i), e_time(:,i), Vavg(:,i), scored(:,i),  RL] = Dribbling2d( i, conf, RL);
     [pscored(:,n) scored(:, n) Q{n} Qw{n}] = Dribbling2d( n, conf, RL);
+    
 end
 
 pf_min=Inf;
