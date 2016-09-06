@@ -1,4 +1,4 @@
-function [ a, p ] = softmax_selection( Qs,T,s,RLparam,rnd )
+function [ a, Ps ] = softmax_selection( Qs,T,s,RLparam,rnd )
 % softmax_selection selects an action using the Gibs distribution and softmax strategy
 % Q: the Qtable
 % s: the current state

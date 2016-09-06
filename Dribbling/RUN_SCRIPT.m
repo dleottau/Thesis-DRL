@@ -25,7 +25,13 @@ conf.TRANSFER = x(8);  %=1 transfer, >1 acts gready from source policy, =0 learn
 conf.nash = x(9);   % 0 COntrol sharing, 1 NASh
 conf.MAapproach = x(6);   % 0 no cordination, 1 frequency adjusted, 2 leninet
 conf.Mtimes = 0; % state-action pair must be visited M times before Q being updated
-conf.Q_INIT = 5;
+
+conf.Q_INIT = 0;
+if conf.TRANSFER && conf.nash
+    conf.Q_INIT = 5; % if NeASh, optimistic initialization
+elseif conf.TRANSFER && ~conf.nash
+    conf.Q_INIT = -5; % if CoSh, pessimistic initialization
+end
 
 %sync=1, synchronizes using tne same random number for the 3 D-RL agents, otherwise, uses independetn random numbers per agent
 conf.sync.nash      = 1;
@@ -83,9 +89,9 @@ else
    fileName = [fileNameP fileName];
 end
 
-if conf.nash==1 && conf.TRANSFER
-    fileName = [fileName '_NASSh'];
-elseif conf.nash==0 && conf.TRANSFER
+if conf.nash && conf.TRANSFER
+    fileName = [fileName '_NeASh' num2str(RL.param.aScale)];  
+elseif ~conf.nash && conf.TRANSFER
     fileName = [fileName '_CoSh'];
 end
     

@@ -2,7 +2,6 @@ function  [reward, e_time, Vavg, tp_faults, Qx,Qy,Qrot] =Dribbling2d( conf, RL, 
 %Dribbling1d SARSA, the main function of the trainning
 
 
-load W-FLC-RC2014;
 set(gcf,'name',['DRL Dribbling ' conf.fileName])  % for realtime inverse kinematics
 
 Ts = conf.Ts; %Sample time of a RL step
@@ -66,7 +65,7 @@ for i=1:conf.episodes
         RL.param.p=0; %learns from scratch
     end %else Transfer from source decaying as p
     
-    [RL, Vr,ro,fi,gama,Pt,Pb,Pr,Vb,total_reward,steps,fitness_k,btd_k,Vavg_k,time,faults,goal_k] = Episode( wf, RL, conf);
+    [RL, Vr,ro,fi,gama,Pt,Pb,Pr,Vb,total_reward,steps,fitness_k,btd_k,Vavg_k,time,faults,goal_k] = Episode(RL, conf);
     
     %disp(['Epsilon:',num2str(eps),'  Espisode: ',int2str(i),'  Steps:',int2str(steps),'  Reward:',num2str(total_reward),' epsilon: ',num2str(epsilon)])
     
@@ -87,8 +86,9 @@ for i=1:conf.episodes
     %btd(i,1)=btd_k;
     tp_faults(i,1)=faults/steps*100;
     goals=goal_k+goals;
-    softmax(i,:)=RL.cum_fa/steps;
-    
+    dPa(i,:)=RL.cum_dPa/steps;
+    Pa(i,:)=RL.cum_Pa/steps;
+    beta(i,:)=RL.param.p;
     fitness=0.5*(100-Vavg+tp_faults);
     
     if conf.DRAWS==1
@@ -124,25 +124,34 @@ for i=1:conf.episodes
         hold
         
         subplot(3,3,5);    
-        plot(xpoints,softmax(:,1),'r')      
+        plot(xpoints,dPa(:,1),'r')      
         hold on
-        plot(xpoints,softmax(:,2),'g')      
-        plot(xpoints,softmax(:,3),'b')      
-        title(['Mean Softmax_P(rgb) FA*alpha: ', sprintf('%.3f',RL.param.alpha2*RL.param.alpha)])
+        plot(xpoints,dPa(:,2),'g')      
+        plot(xpoints,dPa(:,3),'b')      
+        title(['dPa(rgb)'])
+        hold
+
+        subplot(3,3,8);    
+        plot(xpoints,Pa(:,1),'r')      
+        hold on
+        plot(xpoints,Pa(:,2),'g')      
+        plot(xpoints,Pa(:,3),'b')  
+        plot(xpoints,1-max(Pa,[],2),'k','LineWidth',2) 
+        plot(xpoints,beta,'c','LineWidth',2)
+        
+        title(['Pa(rgb) 1-max(Pa)(k)) beta(c)'])
         hold
                
-        
-        FAalpha(i,1) = RL.param.alpha2*RL.param.alpha;
-        
-        subplot(3,3,8);    
-        plot(xpoints,FAalpha,'k')      
-        hold on
-        %plot(xpoints,mean(softmax,2),'r')      
-        %plot(xpoints,1-mean(softmax,2),'r')      
-        plot(xpoints,(1-min(softmax,[],2))*RL.param.alpha,'g')      
-        %plot(xpoints,1-max(softmax,[],2),'b')      
-        title('FA*alpha(k); P-softmax: mean(r),min(g),max(b)')
-        hold
+              
+%         subplot(3,3,8);    
+%         plot(xpoints,min(Pa,[],2),'k')      
+%         hold on
+%         %plot(xpoints,mean(softmax,2),'r')      
+%         %plot(xpoints,1-mean(softmax,2),'r')      
+%         plot(xpoints,min(dPa,[],2),'g')      
+%         %plot(xpoints,1-max(softmax,[],2),'b')      
+%         title('FA*alpha(k); P-softmax: mean(r),min(g),max(b)')
+%         hold
            
         subplot(3,3,3)
         plot(Pt(1,1),Pt(1,2),'*k')%posición del target 

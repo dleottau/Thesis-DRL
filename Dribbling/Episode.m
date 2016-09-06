@@ -1,4 +1,4 @@
-function [ RL, Vr,ro,fi,gama,Pt,Pb,Pr,Vb,total_reward,steps, fitness,btd,Vavg,time,faults,goal] = Episode( w, RL, conf)
+function [ RL, Vr,ro,fi,gama,Pt,Pb,Pr,Vb,total_reward,steps, fitness,btd,Vavg,time,faults,goal] = Episode(RL, conf)
          
 
 %Dribbling1d do one episode  with sarsa learning              
@@ -59,13 +59,12 @@ rnd.nashExpl=0;
 rnd.expl=0;
 rnd.TL=0;
 
-fa_x=1;
-fa_y=1;
-fa_rot=1;
-fa = 1;
+Pa=[0 0 0];
+pa = 0;
 
-RL.cum_fa = [0 0 0];
-
+RL.cum_Pa = [0 0 0];
+RL.cum_dPa = [0 0 0];
+dpa=0;
 
 Vr(i,:)=[Vr_min(1) 0 0]; %velocidad del robot
 Vb(i,1)=0; %velocidad de la bola
@@ -76,20 +75,20 @@ dV=0;
 x = [Pr(i,1),Pb(i,1),Vb(i,1),Vr(i,1),ro(i,1),dV,gama(i,1),fi(i,1)];
 
 % Get velocity FLC 
-[V_FLC] = FLC_dribbling (w,x,Vr_min,Vr_max);
+[V_src] = controller (x,Vr_min,Vr_max);
 
 % convert the continous state variables to an index of the statelist
 %s   = DiscretizeState(x,statelist);
 s  = DiscretizeStateDLF(x,cores,feature_step,div_disc);
 
 % selects an action using the epsilon greedy selection strategy
-a   = e_greedy_selection(RL.Q, s, RL.param.epsilon, rand());
-a_y = e_greedy_selection(RL.Q_y,s, RL.param.epsilon, rand());
-a_rot = e_greedy_selection(RL.Q_rot,s, RL.param.epsilon, rand());
+a(1)   = e_greedy_selection(RL.Q, s, RL.param.epsilon, rand());
+a(2) = e_greedy_selection(RL.Q_y,s, RL.param.epsilon, rand());
+a(3) = e_greedy_selection(RL.Q_rot,s, RL.param.epsilon, rand());
 %action = ones(1,3);
-ap=a;
-ap_y=a_y;
-ap_rot=a_rot;
+ap(1)=a(1);
+ap(2)=a(2);
+ap(3)=a(3);
 
 
 while 1  
@@ -99,9 +98,9 @@ while 1
          
     % convert the index of the action into an action value
     %action = actionlist(a,:);    
-    action = actionlist(a,1);    
-    action_y = actionlist(a_y,2);    
-    action_rot = actionlist(a_rot,3);    
+    action(1) = actionlist(a(1),1);    
+    action(2) = actionlist(a(2),2);    
+    action(3) = actionlist(a(3),3);    
         
     %-------DO ACTION -----------------
     % do the selected action and get the next  state  
@@ -110,7 +109,7 @@ while 1
     
     %Vr_ req is the robot speed requested
     %Vr_req=action; %centralized learner
-    Vr_req=[action action_y action_rot]; 
+    Vr_req=action; 
     %Vr_req(1)=V_FLC(1);
     %Vr_req(2)=V_FLC(2);
     %Vr_req(3)=V_FLC(3);
@@ -144,7 +143,7 @@ while 1
     x_obs(4) = Vr_req(1); % x speed of the robot , not influenced by noise in perceptions
     
     % Get velocity FLC 
-    [V_FLC] = FLC_dribbling (w,x_obs,Vr_min,Vr_max);
+    [V_src] = controller (x_obs,Vr_min,Vr_max);
     %---------------------------------------        
           
     % observe the reward at state xp and the final state flag
@@ -158,52 +157,60 @@ while 1
     % convert the continous state variables in [xp] to an index of the statelist    
     %sp  = DiscretizeState(x_obs,statelist);
     sp  = DiscretizeStateDLF(x_obs,cores,feature_step,div_disc);
+        
+    % Syncronizing exploration and transfer between agents
+    if conf.sync.nash, rnd.nash=randn(); end
+    if conf.sync.expl, rnd.expl=rand(); end
+    if conf.sync.TL, rnd.TL=rand(); end
     
+    % Transfer knowledge
+    if conf.TRANSFER && conf.nash
+        if ~conf.sync.nash, rnd.nash=randn(1,3); end
+        if conf.nash==2
+            V_src(1)=triang_dist(Vr_min(1),V_src(1),Vr_max(1),RL.param.p,RL.param.aScale);
+            V_src(2)=triang_dist(Vr_min(2),V_src(2),Vr_max(2),RL.param.p,RL.param.aScale);
+            V_src(3)=triang_dist(Vr_min(3),V_src(3),Vr_max(3),RL.param.p,RL.param.aScale);
+        else
+            V_src = clipDLF( V_src + ((Vr_max-Vr_min)/RL.param.aScale)*rnd.nash.*(1 - RL.param.p), Vr_min,Vr_max);
+        end
+    end
+    
+    a_transf(1) = 1 + round(V_src(1)/V_action_steps(1));  % from FLC
+    a_transf(2) = 1 + round(V_src(2)/V_action_steps(2)  + Vr_max(2)/V_action_steps(2));
+    a_transf(3) = 1 + round(V_src(3)/V_action_steps(3) + Vr_max(3)/V_action_steps(3));
+        
     % select action prime
-    %ap = e_greedy_selection(RL.Q , sp, RL.param.epsilon);
-
-    %a_transf = GetBestAction(RL.Qs,sp);   
-    a_transf = 1 + round(V_FLC(1)/V_action_steps(1));  % from FLC
-    a_transf_y = 1 + round(V_FLC(2)/V_action_steps(2)  + Vr_max(2)/V_action_steps(2) );
-    a_transf_rot = 1 + round(V_FLC(3)/V_action_steps(3) + Vr_max(3)/V_action_steps(3) );
-    
-    if conf.sync.nash>0, rnd.nash=rand(); rnd.nashExpl=randn(); end
-    if conf.sync.expl>0, rnd.expl=rand(); end
-    if conf.sync.TL>0, rnd.TL=rand(); end
-    
-    [ap, fa_x] = p_source_selection_FLC(RL.Q,RL.T,sp, RL.param, a_transf, conf.nash, conf.sync, rnd);
-    [ap_y, fa_y] = p_source_selection_FLC(RL.Q_y, RL.T_y, sp, RL.param, a_transf_y, conf.nash, conf.sync, rnd);
-    [ap_rot, fa_rot] = p_source_selection_FLC(RL.Q_rot, RL.T_rot, sp, RL.param, a_transf_rot, conf.nash, conf.sync, rnd);
+    [ap(1), Pap(1)] = p_source_selection(RL.Q,RL.T,sp,RL.param, a_transf(1), conf.sync, rnd);
+    [ap(2), Pap(2)] = p_source_selection(RL.Q_y, RL.T_y, sp, RL.param, a_transf(2), conf.sync, rnd);
+    [ap(3), Pap(3)] = p_source_selection(RL.Q_rot, RL.T_rot, sp, RL.param, a_transf(3), conf.sync, rnd);
    
-    RL.cum_fa = RL.cum_fa + [fa_x, fa_y, fa_rot];  
-         
+    RL.cum_Pa = RL.cum_Pa + Pap;
+    dPa=abs(Pap-Pa);
+    RL.cum_dPa = RL.cum_dPa + dPa;
     
     % select MA approach
-    fap=1;
+    pap=1;
     if conf.MAapproach==1
-        bias=1/conf.nactions;
-        bias=0;
-        
-        fap = 1-min([fa_x-bias, fa_y-bias, fa_rot-bias]);
-        %fap = min([fa_x-bias, fa_y-bias, fa_rot-bias]);
-        %fap = RL.param.alpha2 + 0.001;
-        fap = clipDLF(fap, 1E-3, 1);
-        
+        pap = 1-min(Pa); %CAdec
+        %pap = min(Pa); % CAinc
+        %pap = clipDLF(pap, 1E-3, 1);
     end
-        
+    
+    pap = min(Pap);
+    pa=1; % temp
     
 	% Update the Qtable, that is,  learn from the experience
     if conf.TRANSFER >= 0 %Para aprendizaje, TRANSFER<0 para pruebas de performance
-        [RL.Q, RL.trace, RL.T] = UpdateSARSAlambda( s, a, r(1), sp, ap, RL.Q, RL.param, RL.trace, conf.MAapproach, fa, RL.T);
-        [RL.Q_y, RL.trace_y, RL.T_y] = UpdateSARSAlambda( s, a_y, r(2), sp, ap_y, RL.Q_y, RL.param, RL.trace_y, conf.MAapproach, fa, RL.T_y );
-        [RL.Q_rot, RL.trace_rot, RL.T_rot] = UpdateSARSAlambda( s, a_rot, r(3), sp, ap_rot, RL.Q_rot, RL.param, RL.trace_rot, conf.MAapproach, fa, RL.T_rot);
+        [RL.Q, RL.trace, RL.T] = UpdateSARSAlambda( s,a(1), r(1), sp, ap(1), RL.Q, RL.param, RL.trace, conf.MAapproach, pa, RL.T);
+        [RL.Q_y, RL.trace_y, RL.T_y] = UpdateSARSAlambda( s,a(2), r(2), sp, ap(2), RL.Q_y, RL.param, RL.trace_y, conf.MAapproach, pa, RL.T_y );
+        [RL.Q_rot, RL.trace_rot, RL.T_rot] = UpdateSARSAlambda( s,a(3), r(3), sp, ap(3), RL.Q_rot, RL.param, RL.trace_rot, conf.MAapproach, pa, RL.T_rot);
     end    
     %update the current variables
     s = sp;
     a = ap;
-    a_y = ap_y;
-    a_rot = ap_rot;
-    fa = fap;
+    pa = pap;
+    Pa=Pap;
+    
             
     %Compute performance index
     Vrx = x(4);

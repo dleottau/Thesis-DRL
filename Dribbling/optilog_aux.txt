@@ -1,3 +1,81 @@
+
+-
+opti/DRL_8Runs_Noise0.1_MA0_alpha0.3_lambda0.8_softmax10_decay6_CoSh
+-
+Fitness:12.7253; ScaleNeash0.04; NeASh0; Transfer1; k-lenient1.5; MAapproach0; beta0.9; lambda0.8; decay6; softmax10; alpha0.3
+Fitness:11.3263; ScaleNeash0.04; NeASh0; Transfer1; k-lenient1.5; MAapproach0; beta0.9; lambda0.8; decay6; softmax5; alpha0.3
+Fitness:15.2773; ScaleNeash0.04; NeASh0; Transfer1; k-lenient1.5; MAapproach0; beta0.9; lambda0.8; decay6; softmax0; alpha0.3
+Fitness:13.8067; ScaleNeash0.04; NeASh0; Transfer1; k-lenient1.5; MAapproach0; beta0.9; lambda0.8; decay6; softmax15; alpha0.3
+Fitness:14.6276; ScaleNeash0.04; NeASh0; Transfer1; k-lenient1.5; MAapproach0; beta0.9; lambda0.8; decay6; softmax20; alpha0.3
+Fitness:17.7414; ScaleNeash0.04; NeASh0; Transfer1; k-lenient1.5; MAapproach0; beta0.9; lambda0.8; decay6; softmax25; alpha0.3
+Fitness:16.1973; ScaleNeash0.04; NeASh0; Transfer1; k-lenient1.5; MAapproach0; beta0.9; lambda0.8; decay6; softmax30; alpha0.3
+Fitness:11.6519; ScaleNeash0.04; NeASh0; Transfer1; k-lenient1.5; MAapproach0; beta0.9; lambda0.8; decay5; softmax5; alpha0.3
+Fitness:12.4849; ScaleNeash0.04; NeASh0; Transfer1; k-lenient1.5; MAapproach0; beta0.9; lambda0.8; decay4; softmax5; alpha0.3
+Fitness:14.7078; ScaleNeash0.04; NeASh0; Transfer1; k-lenient1.5; MAapproach0; beta0.9; lambda0.8; decay3; softmax5; alpha0.3
+Fitness:17.5384; ScaleNeash0.04; NeASh0; Transfer1; k-lenient1.5; MAapproach0; beta0.9; lambda0.8; decay2; softmax5; alpha0.3
+Fitness:12.2034; ScaleNeash0.04; NeASh0; Transfer1; k-lenient1.5; MAapproach0; beta0.9; lambda0.8; decay7; softmax5; alpha0.3
+Fitness:13.2215; ScaleNeash0.04; NeASh0; Transfer1; k-lenient1.5; MAapproach0; beta0.9; lambda0.8; decay8; softmax5; alpha0.3
+Fitness:13.6855; ScaleNeash0.04; NeASh0; Transfer1; k-lenient1.5; MAapproach0; beta0.9; lambda0.8; decay9; softmax5; alpha0.3
+Fitness:12.1698; ScaleNeash0.04; NeASh0; Transfer1; k-lenient1.5; MAapproach0; beta0.9; lambda0.8; decay10; softmax5; alpha0.3
+
+x =
+
+     5
+     6
+
+
+fval =
+
+   11.3263
+
+Elapsed time is 5788.033985 seconds.
+
+
+-
+% Tests3: Con distribución normal directamente en espacio de acciones para NeASh, 1000 episodios
+opti/DRL_8Runs_Noise0.1_MA0_alpha0.3_lambda0.8_softmax9_decay6_NeASh20
+-
+Fitness:13.7388; ScaleNeash20; NeASh1; Transfer1; k-lenient1.5; MAapproach0; beta0.9; lambda0.8; decay6; softmax9; alpha0.3
+Fitness:12.8993; ScaleNeash20; NeASh1; Transfer1; k-lenient1.5; MAapproach0; beta0.9; lambda0.8; decay6; softmax7; alpha0.3
+Fitness:14.2922; ScaleNeash20; NeASh1; Transfer1; k-lenient1.5; MAapproach0; beta0.9; lambda0.8; decay6; softmax5; alpha0.3
+Fitness:12.6738; ScaleNeash20; NeASh1; Transfer1; k-lenient1.5; MAapproach0; beta0.9; lambda0.8; decay6; softmax3; alpha0.3
+Fitness:12.4243; ScaleNeash20; NeASh1; Transfer1; k-lenient1.5; MAapproach0; beta0.9; lambda0.8; decay6; softmax1; alpha0.3
+Fitness:13.7995; ScaleNeash20; NeASh1; Transfer1; k-lenient1.5; MAapproach0; beta0.9; lambda0.8; decay6; softmax11; alpha0.3
+Fitness:14.3772; ScaleNeash20; NeASh1; Transfer1; k-lenient1.5; MAapproach0; beta0.9; lambda0.8; decay6; softmax13; alpha0.3
+Fitness:17.4573; ScaleNeash20; NeASh1; Transfer1; k-lenient1.5; MAapproach0; beta0.9; lambda0.8; decay6; softmax15; alpha0.3
+Fitness:15.4353; ScaleNeash20; NeASh1; Transfer1; k-lenient1.5; MAapproach0; beta0.9; lambda0.8; decay6; softmax17; alpha0.3
+Fitness:13.0663; ScaleNeash20; NeASh1; Transfer1; k-lenient1.5; MAapproach0; beta0.9; lambda0.8; decay5; softmax1; alpha0.3
+Fitness:13.8995; ScaleNeash20; NeASh1; Transfer1; k-lenient1.5; MAapproach0; beta0.9; lambda0.8; decay4; softmax1; alpha0.3
+Fitness:12.6373; ScaleNeash20; NeASh1; Transfer1; k-lenient1.5; MAapproach0; beta0.9; lambda0.8; decay3; softmax1; alpha0.3
+Fitness:21.0985; ScaleNeash20; NeASh1; Transfer1; k-lenient1.5; MAapproach0; beta0.9; lambda0.8; decay2; softmax1; alpha0.3
+Fitness:16.9718; ScaleNeash20; NeASh1; Transfer1; k-lenient1.5; MAapproach0; beta0.9; lambda0.8; decay7; softmax1; alpha0.3
+Fitness:14.1528; ScaleNeash20; NeASh1; Transfer1; k-lenient1.5; MAapproach0; beta0.9; lambda0.8; decay8; softmax1; alpha0.3
+Fitness:11.7395; ScaleNeash20; NeASh1; Transfer1; k-lenient1.5; MAapproach0; beta0.9; lambda0.8; decay9; softmax1; alpha0.3
+Fitness:15.7076; ScaleNeash20; NeASh1; Transfer1; k-lenient1.5; MAapproach0; beta0.9; lambda0.8; decay10; softmax1; alpha0.3
+Fitness:14.9279; ScaleNeash20; NeASh1; Transfer1; k-lenient1.5; MAapproach0; beta0.9; lambda0.8; decay11; softmax1; alpha0.3
+Fitness:15.5994; ScaleNeash20; NeASh1; Transfer1; k-lenient1.5; MAapproach0; beta0.9; lambda0.8; decay12; softmax1; alpha0.3
+Fitness:14.0574; ScaleNeash20; NeASh1; Transfer1; k-lenient1.5; MAapproach0; beta0.9; lambda0.8; decay13; softmax1; alpha0.3
+Fitness:14.3293; ScaleNeash15; NeASh1; Transfer1; k-lenient1.5; MAapproach0; beta0.9; lambda0.8; decay9; softmax1; alpha0.3
+Fitness:14.3095; ScaleNeash10; NeASh1; Transfer1; k-lenient1.5; MAapproach0; beta0.9; lambda0.8; decay9; softmax1; alpha0.3
+Fitness:14.1074; ScaleNeash5; NeASh1; Transfer1; k-lenient1.5; MAapproach0; beta0.9; lambda0.8; decay9; softmax1; alpha0.3
+Fitness:13.6377; ScaleNeash25; NeASh1; Transfer1; k-lenient1.5; MAapproach0; beta0.9; lambda0.8; decay9; softmax1; alpha0.3
+Fitness:14.592; ScaleNeash30; NeASh1; Transfer1; k-lenient1.5; MAapproach0; beta0.9; lambda0.8; decay9; softmax1; alpha0.3
+Fitness:14.5778; ScaleNeash20; NeASh1; Transfer1; k-lenient1.5; MAapproach0; beta0.9; lambda0.8; decay9; softmax3; alpha0.3
+Fitness:13.8174; ScaleNeash20; NeASh1; Transfer1; k-lenient1.5; MAapproach0; beta0.9; lambda0.8; decay9; softmax5; alpha0.3
+Fitness:14.0885; ScaleNeash20; NeASh1; Transfer1; k-lenient1.5; MAapproach0; beta0.9; lambda0.8; decay9; softmax7; alpha0.3
+Fitness:14.9305; ScaleNeash20; NeASh1; Transfer1; k-lenient1.5; MAapproach0; beta0.9; lambda0.8; decay9; softmax9; alpha0.3
+
+x =
+
+     1
+     9
+    20
+
+
+fval =
+
+   11.7395
+
 -
 % Tests2: Con distribución boltzman en generación de a_src para NeASh, 1000 episodios
 opti/DRL_8Runs_Noise0.1_MA0_alpha0.3_lambda0.8_softmax10_decay6_NASSh
