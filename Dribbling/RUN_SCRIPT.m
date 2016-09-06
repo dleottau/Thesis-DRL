@@ -89,9 +89,9 @@ else
    fileName = [fileNameP fileName];
 end
 
-if conf.nash==1 && conf.TRANSFER
+if conf.nash && conf.TRANSFER
     fileName = [fileName '_NeASh' num2str(RL.param.aScale)];  
-elseif conf.nash==0 && conf.TRANSFER
+elseif ~conf.nash && conf.TRANSFER
     fileName = [fileName '_CoSh'];
 end
     

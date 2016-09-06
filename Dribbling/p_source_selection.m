@@ -7,17 +7,15 @@ function [a, p] = p_source_selection( Q,T, s, RLparam, a_sh, sync, rnd)
 % at transferred action
 % p probability for choosing transferred action
 
-p=1;
-
 if ~sync.expl, rnd.expl=rand(); end
 if ~sync.TL, rnd.TL=rand(); end
 
-nActions = size(Q,2);
+N = size(Q,2); % number of actions
 Qs=Q(s,:);
 %a_best = GetBestAction(Q,s);
 
 a_source = a_sh;
-[a_target, p] = softmax_selection(Qs, T, s, RLparam, rnd.expl);
+[a_target, P] = softmax_selection(Qs, T, s, RLparam, rnd.expl);
 if RLparam.softmax <= 0
     a_target = e_greedy_selection(Q, s, RLparam.epsilon, rnd.expl);
 end
@@ -28,6 +26,8 @@ else
     a = a_source;
 end
 
+p=P(a);
+p = p - ( (N*p-1)/(N*(1-N)) + 1/N );
 
 %neashNDist = normpdf(1:nActions, a_sh, RLparam.aScale*(1 - RLparam.p + 100*realmin));
 %RLparam.softmax=0;
