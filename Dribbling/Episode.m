@@ -174,12 +174,20 @@ while 1
             V_src = clipDLF( V_src + ((Vr_max-Vr_min)/RL.param.aScale)*rnd.nash.*(1 - RL.param.p), Vr_min,Vr_max);
         end
     end
-    
+      
+    V_src = clipDLF( V_src,Vr_min,Vr_max);
     a_transf(1) = 1 + round(V_src(1)/V_action_steps(1));  % from FLC
     a_transf(2) = 1 + round(V_src(2)/V_action_steps(2)  + Vr_max(2)/V_action_steps(2));
     a_transf(3) = 1 + round(V_src(3)/V_action_steps(3) + Vr_max(3)/V_action_steps(3));
         
     % select action prime
+    
+    % testing beta adaptive
+    %pk=RL.param.p
+    %RL.param.p = 1-min(Pa);
+    %pk1=RL.param.p
+    % ----
+    
     [ap(1), Pap(1)] = p_source_selection(RL.Q,RL.T,sp,RL.param, a_transf(1), conf.sync, rnd);
     [ap(2), Pap(2)] = p_source_selection(RL.Q_y, RL.T_y, sp, RL.param, a_transf(2), conf.sync, rnd);
     [ap(3), Pap(3)] = p_source_selection(RL.Q_rot, RL.T_rot, sp, RL.param, a_transf(3), conf.sync, rnd);

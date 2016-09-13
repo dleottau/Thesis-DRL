@@ -1,4 +1,4 @@
-function f = RUN_SCRIPT(x,RUNS)
+function [f,Tth] = RUN_SCRIPT(x,RUNS,stringName)
 
 folder = 'opti/';  
 %folder = 'finalTests/';  
@@ -13,9 +13,12 @@ global flagFirst;
 global opti;
 conf.opti=opti;
 
+interval=0.3;
+thT=20; %Threshold to compute the Time to threshold
+
 %dbstop in softmax_selection.m at 38
 
-conf.episodes = 1000; %  maximum number of  episode
+conf.episodes = 2000; %  maximum number of  episode
 conf.Runs = RUNS;
 conf.record = 1;
 conf.DRAWS = 0;
@@ -74,32 +77,11 @@ conf.feature_max = [600, 40, 40]; %30, 30
 conf.maxDeltaV = conf.Vr_max.*[1/3 1/3 1/2]; %mm/s/Ts
 conf.Ts = 0.2; %Sample time of a RL step
 
-%a_spot={'r' 'g' 'b' 'c' 'm' 'y' 'k' '--r' '--g' '--b' '--c' };
-
-fileNameP = ['DRL_' int2str(conf.Runs) 'Runs_Noise' num2str(conf.NOISE) '_MA' int2str(conf.MAapproach) '_alpha' num2str(RL.param.alpha) '_lambda' num2str(RL.param.lambda)];
-if RL.param.softmax > 0
-   fileName = ['_softmax' int2str(RL.param.softmax) '_decay' num2str(RL.param.exp_decay)];
-else
-   fileName = ['_epsilon' num2str(RL.param.epsilon) '_decay' num2str(RL.param.exp_decay)]; 
-end
-
-if conf.MAapproach == 2
-   fileName = [fileNameP '_k' num2str(RL.param.k) '_beta' num2str(RL.param.beta) fileName ];
-else
-   fileName = [fileNameP fileName];
-end
-
-if conf.nash && conf.TRANSFER
-    fileName = [fileName '_NeASh' num2str(RL.param.aScale)];  
-elseif ~conf.nash && conf.TRANSFER
-    fileName = [fileName '_CoSh'];
-end
-    
 
 loadFile = [folder loadFile];
-evolutionFile = [folder fileName ];
+evolutionFile = [folder stringName ];
 performanceFile = loadFile; 
-conf.fileName = fileName;
+conf.fileName = stringName;
 
 if conf.DRAWS==1
     size=get(0,'ScreenSize');
@@ -147,7 +129,6 @@ cr_min=Inf;
 v_min=Inf;
 pf_max=-Inf;
 
-interval=0.7;
 if conf.TRANSFER < 0
     interval=0.1;
 end
@@ -171,8 +152,7 @@ for i=1:RUNS
     if vm(i) < v_min
         v_min=vm(i);
     end
-    
-       
+     
     pf(i) = mean(tp_faults(ceil(interval*conf.episodes):end,i));
     pf_sd(i) = std(tp_faults(ceil(interval*conf.episodes):end,i));
     if pf(i) < pf_min
@@ -181,8 +161,7 @@ for i=1:RUNS
     if pf(i) > pf_max
         pf_max=pf(i);
     end
-    
-         
+           
     cr(i) = mean(reward(ceil(interval*conf.episodes):end,1,i)) + mean(reward(ceil(interval*conf.episodes):end,2,i)) + mean(reward(ceil(interval*conf.episodes):end,3,i));
     if cr(i) > cr_max
         cr_max=cr(i);
@@ -236,14 +215,20 @@ results.performance(5,5)=mean(et_sd);
 results.performance(6,5)=results.performance(5,4)/tested_episodes;
 results.performance(4,5)=et_xxx; %best
 
-
-
 results.mean_Vavg = mean(Vavg,2);
 results.std_Vavg = std(Vavg,0,2);
 results.mean_faults = mean(tp_faults,2);
 results.std_faults = std(tp_faults,0,2);
-results.mean_eTime = mean(e_time,2);
-results.std_eTime = std(e_time,0,2);
+%results.mean_eTime = mean(e_time,2);
+%results.std_eTime = std(e_time,0,2);
+
+gf=0.5*(100-results.mean_Vavg+results.mean_faults);
+Tth=conf.episodes;
+if thT>=min(gf)
+    tth=find(gf<thT);
+    Tth=tth(1);
+end
+results.performance(1,6)=Tth;
 
 results.mean_rewX = mean(reward(:,1),2);
 results.std_rewX = std(reward(:,1),0,2);
@@ -301,6 +286,7 @@ if conf.TRANSFER >= 0
 else
     if conf.record > 0
         save ([performanceFile '.mat'], 'results');
+        
     end
 end
 

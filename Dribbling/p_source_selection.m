@@ -16,7 +16,7 @@ Qs=Q(s,:);
 
 a_source = a_sh;
 [a_target, P] = softmax_selection(Qs, T, s, RLparam, rnd.expl);
-if RLparam.softmax <= 0
+if RLparam.softmax < 0
     a_target = e_greedy_selection(Q, s, RLparam.epsilon, rnd.expl);
 end
 
