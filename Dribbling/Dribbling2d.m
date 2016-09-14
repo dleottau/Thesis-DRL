@@ -56,6 +56,8 @@ RL.param.epsilon = epsilon0;
 RL.param.p = p0;
 RL.param.alpha2 = alpha0; 
 
+RL.param.Beta=[1 1 1];
+
 goals=0;
 for i=1:conf.episodes    
             
@@ -76,13 +78,9 @@ for i=1:conf.episodes
     %btd(i,1)=btd_k;
     tp_faults(i,1)=faults/steps*100;
     goals=goal_k+goals;
-    dPa(i,:)= clipDLF(RL.cum_dPa/steps,0,1);
-    Pa(i,:)= clipDLF(RL.cum_Pa/steps,0,1);
-    beta(i,:)=RL.param.p;
+       
     fitness=0.5*(100-Vavg+tp_faults);
-    
-    
-    
+        
     dec = exp(-i*epsDec);
     dec2 = exp(-i*epsDec2);
     inc2 = 1-exp(-i*epsInc2);
@@ -90,11 +88,17 @@ for i=1:conf.episodes
     RL.param.softmax = temp0*dec;
     
     % testing beta adaptive
-    %RL.param.p = p0*dec;
-    RL.param.p = RL.param.p*(1-min(Pa(i,:)));
+    RL.param.p = p0*dec;
+    %RL.param.p = 1*(1-min(Pa(i,:)));
+    
+    %RL.param.Pa = (RL.param.Pa).*(1-RL.cum_Pa/steps);
+    RL.param.Beta = RL.param.Beta.*(1-RL.cum_Pa/steps);
+    Beta(i,:) = RL.param.Beta; 
+    dPa(i,:) = RL.cum_dPa/steps;
+    beta(i,:) = RL.param.p;
+    
     % ----
-    
-    
+        
     if conf.DRAWS==1
         
         subplot(3,3,1)
@@ -136,14 +140,14 @@ for i=1:conf.episodes
         hold
 
         subplot(3,3,8);    
-        plot(xpoints,Pa(:,1),'r')      
+        plot(xpoints,Beta(:,1),'r')      
         hold on
-        plot(xpoints,Pa(:,2),'g')      
-        plot(xpoints,Pa(:,3),'b')  
+        plot(xpoints,Beta(:,2),'g')      
+        plot(xpoints,Beta(:,3),'b')  
         %plot(xpoints,1-min(Pa,[],2),'k','LineWidth',2) 
         plot(xpoints,beta,'c','LineWidth',2)
         
-        title(['Pa(rgb) 1-min(Pa)(k)) beta(c)'])
+        title(['Beta(rgb) beta(c)'])
         hold
                
               
