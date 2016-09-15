@@ -16,8 +16,9 @@ Qs=Q(s,:);
 
 a_source = a_sh;
 
+RLparam.softmax=beta;
 [a_target, P] = softmax_selection(Qs, T, s, RLparam, rnd.expl);
-%a_target = clipDLF( round(GetBestAction(Q,s) + 1*rnd.nash*beta), 1,N );
+a_target = clipDLF( round(GetBestAction(Q,s) + RLparam.aScale*rnd.nash*beta), 1,N );
 
 if RLparam.softmax <= 0
     a_target = e_greedy_selection(Q, s, RLparam.epsilon, rnd.expl);
