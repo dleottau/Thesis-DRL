@@ -1,20 +1,20 @@
-% function f = optimizationFunction(x)
-% global RUNS;
-% global opti;
-% global prueba;
-
-clc
-clf
-clear all
-close all
-tic
-
+function f = optimizationFunction(x)
+global RUNS;
 global opti;
-opti = 0;
-global test;
-test=0;
 global prueba;
-prueba = 1;
+
+% clc
+% clf
+% clear all
+% close all
+% tic
+% 
+% global opti;
+% opti = 0;
+% global test;
+% test=0;
+% global prueba;
+% prueba = 1;
 
 if ~opti
     RUNS = 25;        
@@ -39,10 +39,10 @@ xname{1}  = 'alpha';
 x0(1)     = 0.2;
 
 xname{2}  = 'softmax';
-x0(2)     = 6;              % 11
+x0(2)     = 8;              % 11
 
 xname{3}  = 'decay';
-x0(3)     = 6;              % 8
+x0(3)     = 4;              % 8
 
 xname{4}  = 'lambda';
 x0(4)     = 0.95;
@@ -57,7 +57,7 @@ xname{7}  = 'k-lenient';
 x0(7)     = 1.5;
 
 xname{8}  = 'Transfer';
-x0(8)     = 1;      % =1 transfer, >1 acts gready from source policy, =0 learns from scratch, =-1 just for test performance from stored policies
+x0(8)     = 0;      % =1 transfer, >1 acts gready from source policy, =0 learns from scratch, =-1 just for test performance from stored policies
 
 xname{9}  = 'NeASh';
 x0(9)     = 0;      % 0 COntrol sharing, 1 NASh
@@ -70,7 +70,8 @@ x0(10)    = 9;             % 20    % 0.04 scale factor for the action space in n
 if opti
     x0(2)  = x(1);
     x0(3)  = x(2);
-    x0(10) = x(3);    
+    %x0(10) = x(3);    
+    x0(1) = x(3);    
 end
 
 stringName = [];
@@ -80,9 +81,11 @@ for i = length(x0) : -1 : 1
 end
 stringName = [stringName(3:end) '; ' num2str(RUNS) 'RUNS'];
 
-disp('-');
-disp(stringName);
-disp('-');
+if ~opti
+    disp('-');
+    disp(stringName);
+    disp('-');
+end
 
 %% Se ejecuta RUN_SCRIPT.-
 [f] = RUN_SCRIPT(x0,RUNS,stringName);
@@ -90,12 +93,12 @@ disp('-');
 
 if ~opti
     disp('-');
-    disp(['%Distance BT:',num2str(f)]);
+    disp(['%Distance BT: ',num2str(f)]);
     disp('-');
     % delete(gcp)
     toc
 else
-    disp(['%Distance BT:',num2str(f), '; Decay:',num2str(x0(3)),'; SoftmaxT:',num2str(x0(2)),'; alpha:',num2str(x0(1)),'; ScaleNeash:',num2str(x0(10))]);
-    %disp(['%Distance BT:',num2str(cumGoals), '; Nactions:',num2str(x0(1)),'; AlphaW:',num2str(x0(2)) ]);
+    disp(['%Distance BT: ',num2str(f), '; ', stringName]);
+    %disp(['%Distance BT: ',num2str(f), '; Time_th: ',num2str(tth), '; ' stringName]);
 end
 

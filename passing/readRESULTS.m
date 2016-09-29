@@ -3,45 +3,43 @@ clc
 clf
 close all
 
-%folder = 'opti/CoSh/test03/';
-%folder = 'opti/NeASh/test303/';
-folder = 'opti/NeASh/triang1Sat03/';
+sort_1f_0t = 0;  % sort by best fitness (0) or by fastest convergence (1)
+thT = 55; % threshold to time to threshold from 0-100%
 
-sort_1f_0t=0;
-
+folder = 'opti/cosh/test1/';
+%folder = 'opti/drl/test1/';
 
 record=0;
-thT=20; % threshold to time to threshold
 interval=0.7;
-%m=1;
-
+m=1;
+span=0.1;
 
 files = dir(fullfile([folder '*.mat']));
 f=[];
 j=1;
 for i=1:size(files,1)
-    result=importdata([folder files(i).name]);
-%     rth = find(result.<th);
-%     if ~isempty(rth) && length(rth)>=m
-%         time_th=rth(m);
-%     else time_th=inf;
-%     end
-    gf=0.5*(100-result.mean_Vavg+result.mean_faults);
-    Tth=result.conf.episodes;
-    if thT>=min(gf)
-        tth=find(gf<thT);
-        Tth=tth(1);
-    end
-    result.performance(1,6)=Tth;
     
+    result=importdata([folder files(i).name]);
+       
+    %F = result.mean_dbt;
+    %Tth=result.performance(1,2);
+    
+    F = smooth(result.mean_goals, span,'rloess');
+    Tth = size(F,1);
+    %keyboard
+    if sum(F<thT) && (sum(F<thT)>m)
+        tth=find(F<thT);
+        Tth=tth(m);
+    end
+       
     if record
         save([result.stringName], 'results');
     end
 
     results1{i}.name=files(i).name;
     results1{i}.Tth=Tth;
-    %results1{i}.f=result.performance(1,3);
-    results1{i}.f = mean(gf(ceil(interval*length(gf)):end));
+    %results1{i}.f=result.performance(1,1);
+    results1{i}.f = mean(F(ceil(interval*length(F)):end));
     
     f(i)=results1{i}.f;
     t(i)=results1{i}.Tth;

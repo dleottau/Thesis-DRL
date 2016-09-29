@@ -5,7 +5,7 @@ close all
 
 tic
 global RUNS;
-RUNS = 10;
+RUNS = 8;
 
 global flagFirst;
 flagFirst = true;
@@ -25,26 +25,29 @@ test = 0;
 % end
 
 % -------------------------------------------------------------------------
-desired_Cluster = parcluster('local');
-desired_Cluster.NumWorkers = 5;
-matlabpool('open',desired_Cluster.NumWorkers);
+%desired_Cluster = parcluster('local');
+%desired_Cluster.NumWorkers = 4;
+%matlabpool('open',desired_Cluster.NumWorkers);
 % -------------------------------------------------------------------------
 
 x0 = [];
 
 xname{1} = 'softmax';
-x0(1)    = 5;              % Epsilon
+x0(1)    = 8;              % Epsilon
 xname{2} = 'decay';
-x0(2)    = 2;               % Exploration decay
-xname{3} = 'aScale';
-x0(3)    = 9;
-
+x0(2)    = 5;               % Exploration decay
+% xname{3} = 'aScale';
+% x0(3)    = 9;
+xname{3} = 'alpha';
+x0(3)    = 0.2;
 %------------------------------------------
 
 options = hilloptions('TimeLimit', 600);
 
-options.step         = [10; 1; 5];
-options.space        = [[1; 2; 5], [80; 16; 30]];
+% options.step         = [10; 1; 5];
+% options.space        = [[1; 2; 5], [80; 16; 30]];
+options.step         = [1; 1; 0.1];
+options.space        = [[1; 2; 0.1], [20; 16; 0.6]];
 options.peaks        = 4;
 options.oneDimPerTry = 1;
 

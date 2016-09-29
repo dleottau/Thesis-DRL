@@ -19,34 +19,32 @@ dBT =   X(4);
 f    = false;
 
 
-r(1) = - 1 * ( sum([ro abs(gama) abs(fi) dBT] .* 1/feature_max));
+% r(1) = - 1 * ( sum([ro abs(gama) abs(fi) dBT] .* 1/feature_max));
 
-if abs(fi) > th_max(3)
-    r(2) = -1;
-else
-    r(2) = 1 + ( 1 - abs(fi)/(th_max(3)) );
-end
+% if abs(fi) > th_max(3)
+%     r(2) = -1;
+% else
+%     r(2) = 1 + ( 1 - abs(fi)/(th_max(3)) );
+% end
+% 
+% if abs(gama) > th_max(2) || abs(fi) > th_max(3)
+%     r(3) = -1;
+% else
+%     r(3) = 1 + ( 1 - abs(gama)/(th_max(2)) ) + ( 1 - abs(fi)/(th_max(3)) );
+% end
 
-if abs(gama) > th_max(2) || abs(fi) > th_max(3)
-    r(3) = -1;
-else
-    r(3) = 1 + ( 1 - abs(gama)/(th_max(2)) ) + ( 1 - abs(fi)/(th_max(3)) );
-end
-
-r(2) = r(1);
-r(3) = r(1);
 
 % <- PPPPP 
-% th_max = feature_max(1:3);
+th_max = feature_max(1:3);
 % 
 % % Ball-Target Distance.-
-% d_BT2 = 1 - f_gmm(Pbi(1),Pbi(2)) / f_gmm(0,0);
+d_BT2 = 1 - f_gmm(Pbi(1),Pbi(2)) / f_gmm(0,0);
 % 
-% if ballState == 0
-%     r(1) = - 1 * ( sum([ro abs(gama) abs(fi)] .* 1/th_max) + d_BT2 );
-% else
-%     r(1) = - 1 * d_BT2;
-% end
+if ballState == 0
+     r(1) = - 1 * ( sum([ro abs(gama) abs(fi)] .* 1/th_max) + d_BT2 );
+else
+     r(1) = - 1 * d_BT2;
+end
 
 if checkGoal
     f    = true;
@@ -55,6 +53,8 @@ if checkGoal
     r(3) = r(1);
 end
 
+ r(2) = r(1);
+ r(3) = r(1);
 
 if( abs(gama)>120 || abs(fi)>160 || Pr(1) > abs(maxDistance_x/2) || Pr(2) > abs(maxDistance_y/2) ||  Pb(1) > abs(maxDistance_x/2) || Pb(2) > abs(maxDistance_y/2) || Pr(1) < Pt(1) || ballState == 3)
     f = true;

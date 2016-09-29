@@ -11,8 +11,10 @@ global prueba;
 conf.opti = opti;
 conf.Test = test;
 
+conf.fileName = stringName;
+
 %% Parameters.-------------------------------------------------------------
-conf.episodes      = 2000;   % Maximum number of episodes
+conf.episodes      = 1500;   % Maximum number of episodes
 conf.Ts            = 0.2;    % Sample time of a RL step
 conf.maxDistance   = 4000;   % Max ball distance permited before to end the episode X FIELD DIMENSION
 conf.maxDistance_x = 6000;   % Max ball distance permited before to end the episode X FIELD DIMENSION
@@ -49,7 +51,7 @@ conf.Nactios   = [16,15,8];
 % -------------------------------------------------------------------------
 if conf.fuzzQ && conf.DRL
     %conf.Nactios = [16,15,8];
-    conf.Nactios = [16,15,12];
+    conf.Nactios = [10,10,10];
 end
 % -------------------------------------------------------------------------
 conf.sync.nash = 1;
@@ -64,12 +66,12 @@ if conf.TRANSFER < 0
 end
 % -------------------------------------------------------------------------
 if conf.opti
-    conf.DRAWS  = 0;
+    conf.DRAWS1  = 0;
     conf.record = 1;
     folder = 'opti/';
 end
 if prueba
-    conf.DRAWS  = 1;
+    conf.DRAWS1  = 1;
     conf.record = 0;
     folder = 'tests/';
 end
@@ -150,7 +152,7 @@ performanceFile = loadFile;
 conf.fileName   = fileName;
 
 %% ------------------------------------------------------------------------
-if conf.DRAWS == 1
+if conf.DRAWS1 == 1
     size_f = get(0,'ScreenSize');
     figure('position',[0.1*size_f(3) 0.05*size_f(4) 0.85*size_f(3) 0.7*size_f(4)]);
 end
@@ -202,23 +204,35 @@ for i = 1:RUNS
     end
 end
 
-results.performance(2,3) = pf_min;
-results.performance(1,3) = mean(pf);
-results.performance(3,3) = pf_max;
-results.performance(4,3) = mean(pf_sd);
+results.performance(1,1) = mean(pf);
+results.performance(2,1) = pf_min;
+results.performance(3,1) = pf_max;
+results.performance(4,1) = mean(pf_sd);
 
-f = mean(pf); % Fitness function: percentage of goals scored
+f = mean(pf); % Fitness function: percentage of distance from ball to target
 
-results.mean_goals = mean(dBT,2);
-results.std_goals  = std(dBT,0,2);
+results.mean_dbt = mean(dBT,2);
+results.std_dbt  = std(dBT,0,2);
+
+Tth=conf.episodes;
+if thT>=min(results.mean_dbt)
+    tth=find(results.mean_dbt<thT);
+    Tth=tth(1);
+end
+results.performance(1,2)=Tth;
+
 
 if conf.fuzzQ
     stringName=['fuz-' stringName];
 end
 
+results.conf = conf;
+results.RLparam = RL.param;
+
 if conf.TRANSFER >= 0
     if conf.record >0
-        save ([evolutionFile  '.mat'], 'results');
+        %save ([evolutionFile  '.mat'], 'results');
+        save ([stringName  '.mat'], 'results');
     end
     
     if conf.DRAWS1 == 1
@@ -226,12 +240,14 @@ if conf.TRANSFER >= 0
         grid
         
         if conf.record > 0
-            saveas(gcf,[evolutionFile '.fig'])
+            %saveas(gcf,[evolutionFile '.fig'])
+            saveas(gcf,[stringName '.fig'])
         end
     end
     close(gcf)
 else
     if conf.record > 0
-        save ([performanceFile '.mat'], 'results');
+        %save ([performanceFile '.mat'], 'results');
+        save ([stringName '.mat'], 'results');
     end
 end
