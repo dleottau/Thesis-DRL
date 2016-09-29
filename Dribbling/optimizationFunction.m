@@ -45,7 +45,7 @@ xname{4}='lambda';
 x0(4) = 0.8; 
 % ------
 xname{6}='MAapproach';
-x0(6) = 0;   % 0 no cordination, 1 frequency adjusted, 2 leninet
+x0(6) = 1;   % 0 no cordination, 1 frequency adjusted, 2 leninet
 xname{7}='k-lenient';
 x0(7) = 1.5;  
 xname{5}='beta';
@@ -53,7 +53,7 @@ x0(5) = 0.9;
 xname{8}='Transfer';
 x0(8) = 1;   %=1 transfer, >1 acts gready from source policy, =0 learns from scratch, =-1 just for test performance from stored policies
 xname{9}='NeASh';
-x0(9) = 1;   % 0 COntrol sharing, 1 NASh
+x0(9) = 0;   % 0 COntrol sharing, 1 NASh
 xname{10}='ScaleNeash';
 x0(10) = 20;    % 0.04 scale factor for the action space in neash
 

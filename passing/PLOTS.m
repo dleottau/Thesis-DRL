@@ -1,16 +1,19 @@
 function PLOTS()
 
-clear all
-close all
-clc
+% clear all
+% close all
+% clc
 
-spot     = {':r' '-g' '-.c' '--k'  ':b' '-m' '-.r' '--g'};
-spot_dot = {'.r' '.g' '.c' '.k' '.b' '.m' '.r' '.g'};
+% keyboard
+
+spot     = {':b' '-g' '-.c' '--k'  ':b' '-m' '-.r' '--g'};
+spot_dot = {'.b' '.g' '.c' '.k' '.b' '.m' '.r' '.g'};
 lineW    = [3 2 2 2 3 2 2 2];
 legendN  = [];
 
 K        = 10; % # points ploted for errobar
-span     = 0.00001;
+% span     = 0.00001;
+span     = 0.08;
 % span = 0.07;
 
 n = 1;
@@ -18,13 +21,13 @@ M = [];
 S = [];
 
 folder          = 'final/';
-stringName      = 'DRL0; lambda0.9; alpha0.5; softmax2; decay7; 25RUNS.mat';
+stringName      = 'DRL_1Runs_Noise0.01_MA0_alpha0.2_lambda0.95_softmax1_decay7_NeASh10.mat';
 results         = importdata([folder stringName]);
 [M,S,n,legendN] = load_results(results,M,S,n,legendN,'CRL');
 
-stringName      = 'DRL1; lambda0.9; alpha0.3; softmax1.1; decay10; 25RUNS.mat';
-results         = importdata([folder stringName]);
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL');
+% stringName      = 'DRL_10Runs_Noise0.01_MA0_alpha0.2_lambda0.95_softmax1_decay7_NeASh10.mat';
+% results         = importdata([folder stringName]);
+% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL');
 
 % stringName = 'fuz-DRL1; lambda0.95; softmax1.1; decay9; alpha0.3; Nactions3; 25RUNS.mat';
 % results=importdata([folder stringName]);
@@ -84,14 +87,10 @@ saveas(gcf,[folder 'CRLvsDRL.fig'])
 end
 
 function [M, S, n, legendN] = load_results(results, M, S, n, legendN, leg)
-% A = (results.time>60) .* (6000./(results.time));
-% N = size(results.mean_goals,2);
 
+N = size(results.mean_goals,2);
 M(:,n,1) = results.mean_goals';
-% M(:,n,2) = results.mean_faults';
-
-S(:,n,1) = results.std_goals';
-% S(:,n,2) = results.std_faults';
+S(:,n,1) = results.std_goals'/sqrt(N);  % Computing standard error
 
 legendN{n} = leg;
 n          = n+1;

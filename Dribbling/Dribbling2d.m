@@ -93,6 +93,10 @@ for i=1:conf.episodes
     
     %RL.param.Pa = (RL.param.Pa).*(1-RL.cum_Pa/steps);
     RL.param.Beta = RL.param.Beta.*(1-RL.cum_Pa/steps);
+    
+    %mm=max(RL.param.Beta);
+    %RL.param.Beta = [mm mm mm];
+    
     Beta(i,:) = RL.param.Beta; 
     dPa(i,:) = RL.cum_dPa/steps;
     beta(i,:) = RL.param.p;

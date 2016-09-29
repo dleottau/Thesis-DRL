@@ -1,48 +1,61 @@
-function [r,f] = GetReward(X, feature_max, Pr, Pb, Pt,maxDistance,checkGoal,Pbi,ballState,area_fin,time,f_gmm,pbx,pby,conf)
+function [r,f] = GetReward(X, Pr, Pb, Pt,checkGoal,Pbi,ballState,conf)
 % Dribbling1d returns the reward at the current state
 % x: a vector of Pr Pb and Pt
 % r: the returned reward.
 % f: true if terminal state, otherwise f is false
 
-ro   = X(1);
-gama = X(2);
-fi   = X(3);
+th_max=[0 5 5 0];
+
+feature_max   = conf.feature_max;
+maxDistance_x = conf.maxDistance_x;
+maxDistance_y = conf.maxDistance_y;
+f_gmm         = conf.f_gmm;
+
+ro   =  X(1);
+gama =  X(2);
+fi   =  X(3);
+dBT =   X(4);
+
 f    = false;
 
-th_max = feature_max(1:3);
 
-% Distancia Bola-Target.-
-d_BT = (sqrt((Pbi(1) - Pt(1))^2 + (Pbi(2) - Pt(2))^2)) / sqrt(pbx^2 + pby^2);
+r(1) = - 1 * ( sum([ro abs(gama) abs(fi) dBT] .* 1/feature_max));
 
-r(1) = - 1*( sum([ro abs(gama) abs(fi)].*1/th_max) + d_BT );
+if abs(fi) > th_max(3)
+    r(2) = -1;
+else
+    r(2) = 1 + ( 1 - abs(fi)/(th_max(3)) );
+end
+
+if abs(gama) > th_max(2) || abs(fi) > th_max(3)
+    r(3) = -1;
+else
+    r(3) = 1 + ( 1 - abs(gama)/(th_max(2)) ) + ( 1 - abs(fi)/(th_max(3)) );
+end
+
 r(2) = r(1);
+r(3) = r(1);
 
-% Se penaliza cuando la bola queda lejos de la elipse.-
-% if checkGoal ~= 1 && (ballState == 3 || time > 60)
-%     r(1) = r(1) - 2 * (sqrt((Pbi(1) - Pt(1))^2 + (Pbi(2) - Pt(2))^2)) / sqrt(pbx^2 + pby^2);
-%     r(2) = r(1);
+% <- PPPPP 
+% th_max = feature_max(1:3);
+% 
+% % Ball-Target Distance.-
+% d_BT2 = 1 - f_gmm(Pbi(1),Pbi(2)) / f_gmm(0,0);
+% 
+% if ballState == 0
+%     r(1) = - 1 * ( sum([ro abs(gama) abs(fi)] .* 1/th_max) + d_BT2 );
+% else
+%     r(1) = - 1 * d_BT2;
 % end
 
 if checkGoal
     f    = true;
-    switch area_fin
-        %         case 1
-        %             r(1) = 600 * 1/(1 + (sqrt((Pbi(1) - Pt(1))^2 + (Pbi(2) - Pt(2))^2)) );
-        %             r(2) = r(1);
-        %         case 2
-        %             r(1) = 500 * 1/(1 + (sqrt((Pbi(1) - Pt(1))^2 + (Pbi(2) - Pt(2))^2)) );
-        %             r(2) = r(1);
-        case 3
-            % r(1) = 1000 * 1/(1 + (sqrt((Pbi(1) - Pt(1))^2 + (Pbi(2) - Pt(2))^2)) );
-            % r(1) = 2000 * 1/(1 + (Pbi(1) - Pt(1))^2 + (Pbi(2) - Pt(2))^2);
-            % keyboard
-            r(1) = conf.Rgain * f_gmm(Pbi(1),Pbi(2));
-            r(2) = r(1);
-    end
+    r(1) = conf.Rgain * f_gmm(Pbi(1),Pbi(2));
+    r(2) = r(1);
+    r(3) = r(1);
 end
 
-% if(ballState==3 || (ballState==0 && (Pr(1)>maxDistance || Pr(1)<0 || Pr(2)>maxDistance || Pr(2)<0 ||  Pb(1)>maxDistance || Pb(1)<0 || Pb(2)>maxDistance || Pb(2)<0 ||  abs(gama) > 90   ||  abs(fi) > 150)))
-% if( Pr(1) > maxDistance || Pr(1) < Pt(2) || Pr(2) > maxDistance || Pr(2) < Pt(2) ||  Pb(1) > maxDistance || Pb(1) < Pt(2) || Pb(2) > maxDistance || Pb(2) < Pt(2) || ballState == 3)
-if( Pr(1) > maxDistance || Pr(1) < 0 || Pr(2) > maxDistance || Pr(2) < -1000 ||  Pb(1) > maxDistance || Pb(1) < 0 || Pb(2) > maxDistance || Pb(2) < -1000 || ballState == 3)
+
+if( abs(gama)>120 || abs(fi)>160 || Pr(1) > abs(maxDistance_x/2) || Pr(2) > abs(maxDistance_y/2) ||  Pb(1) > abs(maxDistance_x/2) || Pb(2) > abs(maxDistance_y/2) || Pr(1) < Pt(1) || ballState == 3)
     f = true;
 end

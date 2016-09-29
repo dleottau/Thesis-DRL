@@ -1,62 +1,76 @@
-% %% Algoritmo que ejecuta todo el c�digo.-
 % function f = optimizationFunction(x)
 % global RUNS;
 % global opti;
+% global prueba;
 
 clc
 clf
 clear all
 close all
 tic
+
 global opti;
 opti = 0;
+global test;
+test=0;
+global prueba;
+prueba = 1;
 
 if ~opti
-     RUNS = 1;
-%     myCluster = parcluster('local');
-%     if matlabpool('size') == 0 % checking to see if my pool is already open
-%         matlabpool(myCluster.NumWorkers)
-%     else
-%         matlabpool close
-%         matlabpool(myCluster.NumWorkers)
-%     end
+    RUNS = 25;        
+%         myCluster = parcluster('local');
+%         if isempty(gcp('nocreate')) == 0        % checking to see if my pool is already open
+%             parpool('local',myCluster.NumWorkers)
+%         else
+%             delete(gcp)
+%             parpool('local',myCluster.NumWorkers)
+%         end
+end
+
+if prueba
+    RUNS = 1;
 end
 
 x0 = [];
 
-%% Par�metros Algoritmo.-
-xname{1} = 'decay';
-% x0(1)    = 8;          % Exploration decay
-x0(1)  = 15;    % Exploration decay
+%% Algorithm parameters.-
 
-xname{2} = 'softmax';
-x0(2)    = 1.1;         % Epsilon
+xname{1}  = 'alpha';
+x0(1)     = 0.2;
 
-xname{3} = 'alpha';
-x0(3)    = 0.3;         % Learning rate
+xname{2}  = 'softmax';
+x0(2)     = 6;              % 11
 
-xname{4}='gain';
-x0(4) = 200000;   % reward function gain
+xname{3}  = 'decay';
+x0(3)     = 6;              % 8
 
-xname{5}='var';
-x0(5) = 50;   % reward function variance
+xname{4}  = 'lambda';
+x0(4)     = 0.95;
 
-xname{6} = 'lambda';
-x0(6)    = 0.9;         % Lambda
+xname{5}  = 'beta';
+x0(5)     = 0.9;
 
-xname{7} = 'DRL'; 
-x0(7)    = 1;           % 0 for CRL, 1 for DRL
+xname{6}  = 'MAapproach';
+x0(6)     = 0;      % 0 no cordination, 1 frequency adjusted, 2 lenient
 
-xname{8} = 'MAapproach'; 
-x0(8)    = 0;           % MAapproach, 0 DRL, 1 FA, 2 Lenient ;
+xname{7}  = 'k-lenient';
+x0(7)     = 1.5;
 
-%%
+xname{8}  = 'Transfer';
+x0(8)     = 1;      % =1 transfer, >1 acts gready from source policy, =0 learns from scratch, =-1 just for test performance from stored policies
+
+xname{9}  = 'NeASh';
+x0(9)     = 0;      % 0 COntrol sharing, 1 NASh
+
+xname{10} = 'ScaleNeash';
+x0(10)    = 9;             % 20    % 0.04 scale factor for the action space in neash
+
+% -------------------------------------------------------------------------
+
 if opti
-    x0(1) = x(1);
-    x0(2) = x(2);
-    x0(3) = x(3);
-    x0(4) = x(4);
-    x0(5) = x(5);
+    x0(2)  = x(1);
+    x0(3)  = x(2);
+    x0(10) = x(3);    
 end
 
 stringName = [];
@@ -66,23 +80,22 @@ for i = length(x0) : -1 : 1
 end
 stringName = [stringName(3:end) '; ' num2str(RUNS) 'RUNS'];
 
-if ~opti
-    disp('-');
-    disp(stringName);
-    disp('-');
-end
+disp('-');
+disp(stringName);
+disp('-');
 
 %% Se ejecuta RUN_SCRIPT.-
-[cumGoals] = RUN_SCRIPT(x0,RUNS,stringName);
-f = -cumGoals;
+[f] = RUN_SCRIPT(x0,RUNS,stringName);
+
 
 if ~opti
     disp('-');
-    disp(['cumGoals:',num2str(cumGoals)]);
+    disp(['%Distance BT:',num2str(f)]);
     disp('-');
-%     matlabpool close;
+    % delete(gcp)
     toc
 else
-    disp(['cumGoals:',num2str(cumGoals), '; Decay:',num2str(x0(1)),'; SoftmaxT:',num2str(x0(2)),'; alpha:',num2str(x0(3))]);
-    %disp(['cumGoals:',num2str(cumGoals), '; Nactions:',num2str(x0(1)),'; AlphaW:',num2str(x0(2)) ]);
+    disp(['%Distance BT:',num2str(f), '; Decay:',num2str(x0(3)),'; SoftmaxT:',num2str(x0(2)),'; alpha:',num2str(x0(1)),'; ScaleNeash:',num2str(x0(10))]);
+    %disp(['%Distance BT:',num2str(cumGoals), '; Nactions:',num2str(x0(1)),'; AlphaW:',num2str(x0(2)) ]);
 end
+
