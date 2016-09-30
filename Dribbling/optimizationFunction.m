@@ -40,12 +40,12 @@ x0(1) = 0.3;
 xname{2}='softmax';
 x0(2) = 2;
 xname{3}='decay';
-x0(3) = 10; 
+x0(3) = 11; 
 xname{4}='lambda';
 x0(4) = 0.8; 
 % ------
 xname{6}='MAapproach';
-x0(6) = 0;   % 0 no cordination, 1 frequency adjusted, 2 leninet
+x0(6) = 1;   % 0 no cordination, 1 frequency adjusted, 2 leninet
 xname{7}='k-lenient';
 x0(7) = 1.5;  
 xname{5}='beta';
@@ -53,7 +53,7 @@ x0(5) = 0.9;
 xname{8}='Transfer';
 x0(8) = 1;   %=1 transfer, >1 acts gready from source policy, =0 learns from scratch, =-1 just for test performance from stored policies
 xname{9}='NeASh';
-x0(9) = 2;   % 0 COntrol sharing, 1 NASh
+x0(9) = 0;   % 0 COntrol sharing, 1 NASh
 xname{10}='ScaleNeash';
 x0(10) = 20;    % 0.04 scale factor for the action space in neash
 
@@ -79,16 +79,16 @@ if ~opti
 end
 
 
-[f] = RUN_SCRIPT(x0,RUNS);
+[f, tth] = RUN_SCRIPT(x0,RUNS,stringName);
 
 if ~opti
     disp('-');
-    disp(['fitness:',num2str(f)]);
+    disp(['fitness:',num2str(f),'; Time_th:',num2str(tth)]);
     disp('-');
     toc
 else
     %disp(['Fitness:',num2str(f),'; alpha:',num2str(x0(1)),'; softmax:',num2str(x0(2)),'; decay:',num2str(x0(3)),'; k-lenient:',num2str(x0(4)),'; beta:',num2str(x0(5))]);
     %disp(['Fitness:',num2str(f),'; alpha:',num2str(x0(1)),'; softmax:',num2str(x0(2)),'; decay:',num2str(x0(3)),'; lambda:',num2str(x0(4))]);
-    disp(['Fitness:',num2str(f), '; ' stringName]);
+    disp(['Fitness:',num2str(f), '; Time_th:',num2str(tth), '; ' stringName]);
 end
 

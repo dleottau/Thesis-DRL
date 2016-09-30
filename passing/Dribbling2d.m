@@ -4,10 +4,11 @@ function  [pscored, scored, dist_BT, Qx, Qy, Qw] = Dribbling2d( nRun, conf, RL )
 
 RL.param.DRL = conf.DRL;
 
-epsilon0     = RL.param.epsilon;  % Probability of a random action selection
-softmax0     = RL.param.softmax;
+epsilon0 = RL.param.epsilon;  % Probability of a random action selection
+softmax0 = RL.param.softmax;
+p0       = 1;
 
-Ts = conf.Ts;                     % Sample time of a RL step
+Ts = conf.Ts;                 % Sample time of a RL step
 
 [conf.cores, conf.nstates, conf.div_disc] = StateTable( conf.feature_min, conf.feature_step, conf.feature_max );   % The table of states
 [conf.Actions]                            = ActionTable( conf );                                                   % The table of actions
@@ -38,16 +39,49 @@ if ~conf.Test
     end
 end
 
+<<<<<<< HEAD
+=======
+% -------------------------------------------------------------------------
+if conf.TRANSFER >= 0
+    RL.Q         = QTable( conf.nstates,conf.nactions_x, conf.Q_INIT );  % the Qtable for the vx agent
+    %     RL.Qy        = RL.Q;  % the Qtable for the vy agent
+    %     RL.Q_rot     = RL.Q;  % the Qtable for the v_rot agent
+    RL.Qy    = QTable( conf.nstates, conf.nactions_y, conf.Q_INIT );   % The Qtable for the vy agent
+    RL.Q_rot = QTable( conf.nstates, conf.nactions_w, conf.Q_INIT );   % The Qtable for the v_rot agent
+    
+    
+    RL.trace     = QTable( conf.nstates,conf.nactions_x,0 );  % the elegibility trace for the vx agent
+    RL.trace_y   = RL.trace;  % the elegibility trace for the vy agent
+    RL.trace_rot = RL.trace;  % the elegibility trace for the v_rot agent
+end
+% -------------------------------------------------------------------------
+
+>>>>>>> cf75efb6535d7fe341eacdca1e4878b07458e3cb
 RL.T        = 0;
 RL.T_y      = 0;
 RL.T_rot    = 0;
 
 if conf.MAapproach == 2 && conf.DRL
+<<<<<<< HEAD
     RL.T     = QTable( conf.nstates,conf.nactions_x, 1);
+=======
+    RL.T     = QTable( conf.nstates, conf.nactions_x, 1);
+>>>>>>> cf75efb6535d7fe341eacdca1e4878b07458e3cb
     RL.T_y   = QTable( conf.nstates, conf.nactions_y, 1 );
     RL.T_rot = QTable( conf.nstates, conf.nactions_w, 1 );
 end
 
+<<<<<<< HEAD
+=======
+% ------------------------------------------------------
+if conf.TRANSFER < 0    % Para pruebas de performance
+    epsilon0 = 0;
+    p0       = 0;
+    softmax0 = 0;
+end
+% ------------------------------------------------------
+
+>>>>>>> cf75efb6535d7fe341eacdca1e4878b07458e3cb
 % ----------------------------------------------------------------------- %
 EXPLORATION = conf.episodes/RL.param.exp_decay;
 % ----------------------------------------------------------------------- %
@@ -58,18 +92,43 @@ conf.goalSize   = 150;
 conf.PgoalPostR = [conf.Pt(1)+conf.goalSize/2 conf.Pt(2)]; % Right Goal Post position
 conf.PgoalPostL = [conf.Pt(1)-conf.goalSize/2 conf.Pt(2)]; % Left Goal Post position
 
+<<<<<<< HEAD
+=======
+% ------------------------------------------------
+RL.param.M       = conf.Mtimes;
+RL.param.epsilon = epsilon0;
+RL.param.p       = p0;
+% -----------------------------------------------
+
+>>>>>>> cf75efb6535d7fe341eacdca1e4878b07458e3cb
 for i = 1:conf.episodes
     conf.episodeN = i;
+    
+    if conf.TRANSFER > 1,
+        RL.param.p = 1;         % Acts greedy from source policy
+    elseif conf.TRANSFER == 0,
+        RL.param.p = 0;         % Learns from scratch
+    end                         % Else Transfer from source decaying as p
+    
     while 1
         if ~conf.Test
             uB         = [conf.Pb(1)+1000 conf.Pb(2)+1000  180];
             lB         = [conf.Pb(1)-1000 conf.Pb(2)-1000 -180];
+<<<<<<< HEAD
             % conf.Pr    = rand(1,3).*(uB-lB) + lB;
             
             conf.Pr    = [conf.Pb(1)+800 conf.Pb(2) 180];
             conf.Pr(3) = moduloPiDLF(atan2(conf.Pb(2)-conf.Pr(2),conf.Pb(1)-conf.Pr(1)),'r2d');
             
             %% Robot movement.---------------------------------------------                    
+=======
+            conf.Pr    = rand(1,3).*(uB-lB) + lB;
+            
+            % conf.Pr    = [conf.Pb(1)+800 conf.Pb(2) 180];
+            % conf.Pr(3) = moduloPiDLF(atan2(conf.Pb(2)-conf.Pr(2),conf.Pb(1)-conf.Pr(1)),'r2d');
+            
+            %% Robot movement.---------------------------------------------
+>>>>>>> cf75efb6535d7fe341eacdca1e4878b07458e3cb
             [~, ~, ~, ~, phi, gamma, pho, ~, ~, ~] = mov(Ts,conf.Pr,conf.Pt,conf.Pb,0,0,0,100,100,100,0,0,conf.Fr,zeros(2,1));
             % -------------------------------------------------------------
             
@@ -77,6 +136,7 @@ for i = 1:conf.episodes
                 break
             end
         else
+<<<<<<< HEAD
             uB         = [conf.Pb(1)+1000 conf.Pb(2)+1000  180];
             lB         = [conf.Pb(1)-1000 conf.Pb(2)-1000 -180];
             conf.Pr    = rand(1,3).*(uB-lB) + lB;
@@ -89,6 +149,35 @@ for i = 1:conf.episodes
             % -------------------------------------------------------------
                         
             if (pho <= conf.r_ext && conf.r_int <= pho) && (abs(phi) < conf.c_ang) && (abs(gamma) < 30)
+=======
+            %             uB         = [conf.Pb(1)+1000 conf.Pb(2)+1000  180];
+            %             lB         = [conf.Pb(1)-1000 conf.Pb(2)-1000 -180];
+            %             conf.Pr    = rand(1,3).*(uB-lB) + lB;
+            %
+            %             % conf.Pr    = [conf.Pb(1)+800 conf.Pb(2) 180];
+            %             % conf.Pr(3) = moduloPiDLF(atan2(conf.Pb(2)-conf.Pr(2),conf.Pb(1)-conf.Pr(1)),'r2d');
+            %
+            %             %% Robot movement.---------------------------------------------
+            %             [~, ~, ~, ~, phi, gamma, pho, ~, ~, ~] = mov(Ts,conf.Pr,conf.Pt,conf.Pb,0,0,0,100,100,100,0,0,conf.Fr,zeros(2,1));
+            %             % -------------------------------------------------------------
+            %
+            %             if (pho <= conf.r_ext && conf.r_int <= pho) && (abs(phi) < conf.c_ang) && (abs(gamma) < 30)
+            %                 break
+            %             end
+            
+            uB         = [conf.Pb(1)+1000 conf.Pb(2)+1000  180];
+            lB         = [conf.Pb(1)-1000 conf.Pb(2)-1000 -180];
+            % conf.Pr    = rand(1,3).*(uB-lB) + lB;
+            
+            conf.Pr    = [conf.Pb(1)+800 conf.Pb(2) 180];
+            conf.Pr(3) = moduloPiDLF(atan2(conf.Pb(2)-conf.Pr(2),conf.Pb(1)-conf.Pr(1)),'r2d');
+            
+            % Robot movement.---------------------------------------------
+            [~, ~, ~, ~, phi, gamma, pho, ~, ~, ~] = mov(Ts,conf.Pr,conf.Pt,conf.Pb,0,0,0,100,100,100,0,0,conf.Fr,zeros(2,1));
+            % -------------------------------------------------------------
+            
+            if (pho <= conf.r_ext && conf.r_int <= pho) && (abs(phi) < conf.c_ang) && (abs(gamma) < 45)
+>>>>>>> cf75efb6535d7fe341eacdca1e4878b07458e3cb
                 break
             end
         end
@@ -96,9 +185,15 @@ for i = 1:conf.episodes
     
     %% Se ejecuta la rutina Episode.-
     [RL, Vr,ro,fi,gama,Pt,Pb,Pbi,Pr,Vb,total_reward,steps,Vavg_k,time,scored_] = Episode( RL, conf );
+<<<<<<< HEAD
+=======
     
-    RL.param.epsilon = epsilon0 * exp(-i*epsDec);
-    RL.param.softmax = softmax0 * exp(-i*epsDec);
+    dec = exp(-i*epsDec);
+>>>>>>> cf75efb6535d7fe341eacdca1e4878b07458e3cb
+    
+    RL.param.epsilon = epsilon0 * dec;
+    RL.param.softmax = softmax0 * dec;
+    RL.param.p       = p0*dec;
     
     xpoints(i)   = i-1;
     reward(i,:)  = total_reward/steps;
@@ -111,11 +206,18 @@ for i = 1:conf.episodes
     % dist_BT(i) = 100 * (sqrt((Pb(end,1) - Pt(1))^2 + (Pb(end,2) - Pt(2))^2)) / sqrt((conf.maxDistance_x/2)^2 + (conf.maxDistance_y/2)^2);    
     dist_BT(i) = 100 * (sqrt((Pb(end,1) - Pt(1))^2 + (Pb(end,2) - Pt(2))^2)) / norm(conf.Pb - conf.Pt);
     
+<<<<<<< HEAD
+=======
+    % ---------------------------------------------------------------------
+    dist_BT(i) = 100 * (sqrt((Pb(end,1) - Pt(1))^2 + (Pb(end,2) - Pt(2))^2)) / norm(conf.Pb - conf.Pt);
+    
+>>>>>>> cf75efb6535d7fe341eacdca1e4878b07458e3cb
     if 100 <= dist_BT(i)
         dist_BT(i) = 100;
     end
     if dist_BT(i) <= 0
         dist_BT(i) = 0;
+<<<<<<< HEAD
     end    
     
     m_dBT(i,1) = mean(dist_BT);
@@ -123,13 +225,28 @@ for i = 1:conf.episodes
     
     %% Training plot.------------------------------------------------------
     if conf.DRAWS == 1
+=======
+    end
+    
+    
+        
+        
+    % ---------------------------------------------------------------------
+    
+    %% Training plot.------------------------------------------------------
+    if conf.DRAWS1 == 1
+>>>>>>> cf75efb6535d7fe341eacdca1e4878b07458e3cb
         subplot(2,3,3)
         plot(reward)
         grid
         title('Reward')
         subplot(2,3,6)
+<<<<<<< HEAD
         plot(dist_BT,'k','LineWidth',2)  
         % plot(m_dBT,'k','LineWidth',2)  
+=======
+        plot(smooth( dist_BT, 0.08,'rloess'),'k','LineWidth',2)
+>>>>>>> cf75efb6535d7fe341eacdca1e4878b07458e3cb
         ylim([0 110])
         grid
         title('Distance Ball-Target')
@@ -176,6 +293,11 @@ Qy = RL.Qy;
 Qw = RL.Q_rot;
 
 % if ~conf.opti
+<<<<<<< HEAD
     % disp(['RUN: ' int2str(nRun) '; cumGoals: ',num2str(m_dBT(end))]);
     % disp(['RUN: ' int2str(nRun) '; cumGoals: ',num2str(dist_BT)]);
+=======
+% disp(['RUN: ' int2str(nRun) '; cumGoals: ',num2str(m_dBT(end))]);
+% disp(['RUN: ' int2str(nRun) '; cumGoals: ',num2str(dist_BT)]);
+>>>>>>> cf75efb6535d7fe341eacdca1e4878b07458e3cb
 % end

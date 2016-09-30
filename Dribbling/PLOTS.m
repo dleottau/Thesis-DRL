@@ -6,38 +6,50 @@ clc
 
 %record =  true;
 
-%spot={':r' '-g' '-.c' '--k'  ':b' '-m' '-.r' '--g'};
-%spot_dot={'.r' '.g' '.c' '.k' '.b' '.m' '.r' '.g'};
-%lineW=[1 .5 .5 .5 1 .5 .5 .5];
-
 spot={':r' '-g' '-.c' '--k'  ':b' '-m' '-.r' '--g'};
 spot_dot={'.r' '.g' '.c' '.k' '.b' '.m' '.r' '.g'};
 lineW=[2 1 1 1 2 1 1 1];
 
-legendN=[];
 
+legendN=[];
 K=10; % # points ploted for errobar
 span=0.07;
-%span=0.07;
 
 n=1;
 M=[];
 S=[];
 
-% load opti/NeASh/gauss/DRL_8Runs_Noise0.1_MA0_alpha0.3_lambda0.8_softmax8_decay4_NeASh15.mat
-% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL+NeASh15-48');
+% ----------
+% spot={':r' '-g' '-.c' '--k'  ':b' '-m' '-.r' '--g' ':r' '-g' '-.c' '--k'  ':b' '-m' '-.r' '--g' ':r' '-g' '-.c' '--k'  ':b' '-m' '-.r' '--g' ':r' '-g' '-.c' '--k'  ':b' '-m' '-.r' '--g' ':r' '-g' '-.c' '--k'  ':b' '-m' '-.r' '--g' ':r' '-g' '-.c' '--k'  ':b' '-m' '-.r' '--g'};
+% spot_dot={'.r' '.g' '.c' '.k' '.b' '.m' '.r' '.g' '.r' '.g' '.c' '.k' '.b' '.m' '.r' '.g' '.r' '.g' '.c' '.k' '.b' '.m' '.r' '.g' '.r' '.g' '.c' '.k' '.b' '.m' '.r' '.g' '.r' '.g' '.c' '.k' '.b' '.m' '.r' '.g' '.r' '.g' '.c' '.k' '.b' '.m' '.r' '.g'};
+% lineW=[2 1 1 1 2 1 1 1 2 1 1 1 2 1 1 1 2 1 1 1 2 1 1 1 2 1 1 1 2 1 1 1 2 1 1 1 2 1 1 1 2 1 1 1 2 1 1 1];
+% 
+% folder = 'opti/CoSh/test03/'; %triang1Sat03  test303
+% files = dir(fullfile([folder '*.mat']));
+% 
+% for i=1:size(files,1)
+%     results=importdata([folder files(i).name]);
+%     [M,S,n,legendN] = load_results(results,M,S,n,legendN,files(i).name);
+% end
+% ----------
 
-load opti/NeASh/gauss/DRL_8Runs_Noise0.1_MA0_alpha0.3_lambda0.8_softmax4_decay14_NeASh15.mat
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL+NeASh15-14-4');
+load opti/NeASh/triang1Sat03/DRL_8Runs_Noise0.1_MA0_alpha0.3_lambda0.8_softmax4_decay9_NeASh9.mat;
+[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL+NeASh-triangSat-Best');
 
-load opti/NeASh/gauss/DRL_8Runs_Noise0.1_MA0_alpha0.3_lambda0.8_softmax3_decay14_NeASh15.mat
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL+NeASh15-14-3');
+load opti/NeASh/triang1Sat03/DRL_8Runs_Noise0.1_MA0_alpha0.3_lambda0.8_softmax4_decay11_NeASh9.mat;
+[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL+NeASh-triangSat-Fast');
 
-load opti/NeASh/gauss/DRL_8Runs_Noise0.1_MA0_alpha0.3_lambda0.8_softmax3_decay14_NeASh15.mat
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL+NeASh15-14-3');
+load 'opti/NeASh/test303/ScaleNeash19; NeASh1; Transfer1; k-lenient1.5; MAapproach0; beta0.9; lambda0.8; decay13; softmax6; alpha0.3.mat'
+[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL+NeASh-Gauss-Best&Fast');
 
-load opti/CoSh/DRL_8Runs_Noise0.1_MA0_alpha0.3_lambda0.8_softmax11_decay11_CoSh.mat
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL+CoSh');
+load 'opti/CoSh/test03/ScaleNeash2; NeASh0; Transfer1; k-lenient1.5; MAapproach0; beta0.9; lambda0.8; decay6; softmax2; alpha0.3.mat'
+[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL+CoSh-Best');
+
+load 'opti/CoSh/test03/ScaleNeash2; NeASh0; Transfer1; k-lenient1.5; MAapproach0; beta0.9; lambda0.8; decay11; softmax2; alpha0.3.mat'
+[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL+CoSh-Fast');
+
+% load opti/CoSh/DRL_8Runs_Noise0.1_MA0_alpha0.3_lambda0.8_softmax11_decay11_CoSh.mat
+% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL+CoSh');
 
 %---------------------
 %load finalTests/DRL_25Runs_Noise0.1_MA0_alpha0.5_lambda0.9_softmax70_decay6.mat
@@ -82,8 +94,6 @@ for k=1:K-1
     end
 end
 
-SK=SK/sqrt(25); % Computing standard error
-
 figure
 subplot(3,1,1);    
 set(gca,'fontsize',14)
@@ -100,7 +110,6 @@ axis([1 E 0 100])
 grid on
 ylabel('% of max. forward speed');
 hold
-
 
 %figure
 subplot(3,1,2); 
@@ -132,8 +141,6 @@ xlabel('Episodes');
 ylabel('Global Fitness');
 legend(pt,legendN);
 hold
-% 
-
 
 % 
 % figure
@@ -154,9 +161,8 @@ end
 function [M, S, n, legendN] = load_results(results, M, S, n, legendN, leg)
     
     %A= (results.time>60) .* (6000./(results.time));
-    
     %M(:,n,1) = mean(A,2)';
-    N=size(results.time,2);
+    N=size(results.faults,2);
     
     M(:,n,1) = results.mean_Vavg';
     M(:,n,2) = results.mean_faults';
@@ -164,25 +170,18 @@ function [M, S, n, legendN] = load_results(results, M, S, n, legendN, leg)
     %M(:,n,4) = results.mean_rewY';
     %M(:,n,5) = results.mean_rewRot';
     
-    S(:,n,1) = results.std_Vavg';
-    S(:,n,2) = results.std_faults';
+    S(:,n,1) = results.std_Vavg'/sqrt(N);  % Computing standard error
+    S(:,n,2) = results.std_faults'/sqrt(N); % Computing standard error
     %S(:,n,3) = results.std_rewX';
     %S(:,n,4) = results.std_rewY';
     %S(:,n,5) = results.std_rewRot';
-    
-%     mRx = M(:,n,3);
-%     normLRX = mRx<0;
-%     normHRX = mRx>0;
-%     M(:,n,3) = mRx/abs(min(mRx)*1.5).*normLRX + mRx.*normHRX;
-%     S(:,n,3) = S(:,n,3)/abs(min(S(:,n,3))*1.5).*normLRX + S(:,n,3).*normHRX;
-    
+
     legendN{n} = leg;
     n = n+1;
+    
+    %results.performance(1,3)  %To see fitness
+    %results.performance(1,6)  %To see time to threshold
 end
-
-
-
-
 
 % load boltzmann/Vx-5runs-Noise02-50exp10-NoSync-boltzmann20.mat
 % [M,S,n,legendN] = load_results(results,M,S,n,legendN,'temp20-50expl10');

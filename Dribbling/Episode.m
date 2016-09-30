@@ -102,17 +102,14 @@ while 1
     action(2) = actionlist(a(2),2);    
     action(3) = actionlist(a(3),3);    
         
-    %-------DO ACTION -----------------
+       %-------DO ACTION -----------------
     % do the selected action and get the next  state  
         
     % ADDING SATURATONS AND NOISE
     
     %Vr_ req is the robot speed requested
-    %Vr_req=action; %centralized learner
     Vr_req=action; 
-    %Vr_req(1)=V_FLC(1);
-    %Vr_req(2)=V_FLC(2);
-    %Vr_req(3)=V_FLC(3);
+    %Vr_req=V_src; % Enable for linear controlling only
     
     %Vr is the current robot speed
     dVelReq = Vr_req - Vr(i-1,:);
@@ -158,6 +155,8 @@ while 1
     %sp  = DiscretizeState(x_obs,statelist);
     sp  = DiscretizeStateDLF(x_obs,cores,feature_step,div_disc);
         
+    
+    
     % Syncronizing exploration and transfer between agents
     if conf.sync.nash, rnd.nash=randn(); end
     if conf.sync.expl, rnd.expl=rand(); end
@@ -171,19 +170,49 @@ while 1
             V_src(2)=triang_dist(Vr_min(2),V_src(2),Vr_max(2),RL.param.p,RL.param.aScale);
             V_src(3)=triang_dist(Vr_min(3),V_src(3),Vr_max(3),RL.param.p,RL.param.aScale);
         else
-            V_src = clipDLF( V_src + ((Vr_max-Vr_min)/RL.param.aScale)*rnd.nash.*(1 - RL.param.p), Vr_min,Vr_max);
+            V_src = clipDLF( V_src + ((Vr_max-Vr_min)/RL.param.aScale)*rnd.nash.*(1 - RL.param.Beta), Vr_min,Vr_max);
         end
     end
+      
+    V_src = clipDLF( V_src,Vr_min,Vr_max);
+    A_src(1) = 1 + round(V_src(1)/V_action_steps(1));  % from FLC
+    A_src(2) = 1 + round(V_src(2)/V_action_steps(2)  + Vr_max(2)/V_action_steps(2));
+    A_src(3) = 1 + round(V_src(3)/V_action_steps(3) + Vr_max(3)/V_action_steps(3));
     
-    a_transf(1) = 1 + round(V_src(1)/V_action_steps(1));  % from FLC
-    a_transf(2) = 1 + round(V_src(2)/V_action_steps(2)  + Vr_max(2)/V_action_steps(2));
-    a_transf(3) = 1 + round(V_src(3)/V_action_steps(3) + Vr_max(3)/V_action_steps(3));
-        
+    
+    % << Temporal for NeASh adaptive 
+%     A_target(1) = GetBestAction(RL.Q,s);
+%     A_target(2) = GetBestAction(RL.Q_y,s);
+%     A_target(3) = GetBestAction(RL.Q_rot,s);
+%     
+%     V_target(1) = actionlist(A_target(1),1);    
+%     V_target(2) = actionlist(A_target(2),2);    
+%     V_target(3) = actionlist(A_target(3),3);    
+%     
+%     V_target = clipDLF( V_target + ((Vr_max-Vr_min)/RL.param.aScale).*randn(1,3).*(RL.param.Pa), Vr_min, Vr_max);
+%     
+%     [~, PP(1,:)] = softmax_selection(RL.Q(s,:), 0, s, RL.param, rnd.expl);
+%     [~, PP(2,:)] = softmax_selection(RL.Q_y(s,:), 0, s, RL.param, rnd.expl);
+%     [~, PP(3,:)] = softmax_selection(RL.Q_rot(s,:), 0, s, RL.param, rnd.expl);
+%     
+%     A_target(1) = 1 + round(V_target(1)/V_action_steps(1));  
+%     A_target(2) = 1 + round(V_target(2)/V_action_steps(2)  + Vr_max(2)/V_action_steps(2));
+%     A_target(3) = 1 + round(V_target(3)/V_action_steps(3) + Vr_max(3)/V_action_steps(3));
+%       
+%     for m=1:3
+%         if (rnd.TL >= RL.param.Pa(m)), ap(m) = A_target(m); else ap(m) = A_src(m); end
+%     end
+%     
+%     Pap= [PP(1,ap(1)), PP(2,ap(2)), PP(3,ap(3))];
+    
     % select action prime
-    [ap(1), Pap(1)] = p_source_selection(RL.Q,RL.T,sp,RL.param, a_transf(1), conf.sync, rnd);
-    [ap(2), Pap(2)] = p_source_selection(RL.Q_y, RL.T_y, sp, RL.param, a_transf(2), conf.sync, rnd);
-    [ap(3), Pap(3)] = p_source_selection(RL.Q_rot, RL.T_rot, sp, RL.param, a_transf(3), conf.sync, rnd);
-   
+    
+    [ap(1), Pap(1)] = p_source_selection(RL.Q, RL.T,sp,RL.param, A_src(1), RL.param.Beta(1), conf.sync, rnd);
+    [ap(2), Pap(2)] = p_source_selection(RL.Q_y, RL.T_y, sp, RL.param, A_src(2), RL.param.Beta(2), conf.sync, rnd);
+    [ap(3), Pap(3)] = p_source_selection(RL.Q_rot, RL.T_rot, sp, RL.param, A_src(3), RL.param.Beta(3), conf.sync, rnd);
+    
+    % Temporal for NeASh adaptive >>
+    
     RL.cum_Pa = RL.cum_Pa + Pap;
     dPa=abs(Pap-Pa);
     RL.cum_dPa = RL.cum_dPa + dPa;

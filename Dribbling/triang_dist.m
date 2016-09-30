@@ -6,22 +6,22 @@ r_supp = 1/scale*(Vmax-Vmin)*(1 - beta + 10e-10); %
 
 
 % Case a < Vmin.-----------------------------------------------------------
-if (b - r_supp/2) < Vmin
-    a = Vmin;
-    c = Vmin + r_supp;
-end
-
-% Case b > Vmax.-----------------------------------------------------------
-if (b + r_supp/2) > Vmax
-    c = Vmax;
-    a = Vmax - r_supp;
-end
+% if (b - r_supp/2) < Vmin
+%     a = Vmin;
+%     c = Vmin + r_supp;
+% end
+% 
+% % Case b > Vmax.-----------------------------------------------------------
+% if (b + r_supp/2) > Vmax
+%     c = Vmax;
+%     a = Vmax - r_supp;
+% end
 
 % Case Vmin <= a && c <= Vmax
-if Vmin <= (b - r_supp/2) && (b + r_supp/2) <= Vmax
+%if Vmin <= (b - r_supp/2) && (b + r_supp/2) <= Vmax
    a = b - r_supp/2;
    c = b + r_supp/2;
-end
+%end
 
 
 

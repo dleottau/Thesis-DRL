@@ -1,40 +1,59 @@
 function PLOTS()
 
-clear all
-close all
-clc
+% clear all
+% close all
+% clc
 
-spot     = {':r' '-g' '-.c' '--k'  ':b' '-m' '-.r' '--g'};
-spot_dot = {'.r' '.g' '.c' '.k' '.b' '.m' '.r' '.g'};
-lineW    = [3 2 2 2 3 2 2 2];
+% keyboard
+
+spot={':r' '-g' '-.c' '--k'  ':b' '-m' '-.r' '--g' ':r' '-g' '-.c' '--k'  ':b' '-m' '-.r' '--g' ':r' '-g' '-.c' '--k'  ':b' '-m' '-.r' '--g' ':r' '-g' '-.c' '--k'  ':b' '-m' '-.r' '--g' ':r' '-g' '-.c' '--k'  ':b' '-m' '-.r' '--g' ':r' '-g' '-.c' '--k'  ':b' '-m' '-.r' '--g'};
+spot_dot={'.r' '.g' '.c' '.k' '.b' '.m' '.r' '.g' '.r' '.g' '.c' '.k' '.b' '.m' '.r' '.g' '.r' '.g' '.c' '.k' '.b' '.m' '.r' '.g' '.r' '.g' '.c' '.k' '.b' '.m' '.r' '.g' '.r' '.g' '.c' '.k' '.b' '.m' '.r' '.g' '.r' '.g' '.c' '.k' '.b' '.m' '.r' '.g'};
+lineW=[2 1 1 1 2 1 1 1 2 1 1 1 2 1 1 1 2 1 1 1 2 1 1 1 2 1 1 1 2 1 1 1 2 1 1 1 2 1 1 1 2 1 1 1 2 1 1 1];
+
 legendN  = [];
 
 K        = 10; % # points ploted for errobar
-span     = 0.00001;
+% span     = 0.00001;
+span     = 0.1;
 % span = 0.07;
 
 n = 1;
 M = [];
 S = [];
 
-folder          = 'final/';
-stringName      = 'DRL0; lambda0.9; alpha0.5; softmax2; decay7; 25RUNS.mat';
-results         = importdata([folder stringName]);
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'CRL');
+% ----------
+% folder = 'opti/drl/test1/'; 
+% files = dir(fullfile([folder '*.mat']));
+% 
+% for i=1:size(files,1)
+%     results=importdata([folder files(i).name]);
+%     [M,S,n,legendN] = load_results(results,M,S,n,legendN,files(i).name);
+% end
+% ----------
 
-stringName      = 'DRL1; lambda0.9; alpha0.3; softmax1.1; decay10; 25RUNS.mat';
-results         = importdata([folder stringName]);
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL');
+load opti/drl/test1/DRL_8Runs_Noise0.01_MA0_alpha0.2_lambda0.95_softmax10_decay5.mat;
+[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-Ind-Best1');
 
-% stringName = 'fuz-DRL1; lambda0.95; softmax1.1; decay9; alpha0.3; Nactions3; 25RUNS.mat';
-% results=importdata([folder stringName]);
-% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-FQL');
-%
-% stringName = 'MAapproach1; DRL1; lambda0.95; alpha0.4; softmax1.1; decay10; 25RUNS.mat';
-% results=importdata([folder stringName]);
-% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-CFA');
-% load MAS-coop/DRL-3runs-Noise005-2000exp8-NoSync-egreedy.mat
-% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'e-greedy');
+load opti/drl/test1/DRL_8Runs_Noise0.01_MA0_alpha0.2_lambda0.95_softmax6_decay5.mat;
+[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-Ind-Best2');
+
+load opti/drl/test1/DRL_8Runs_Noise0.01_MA0_alpha0.2_lambda0.95_softmax10_decay7.mat;
+[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-Ind-Fast1');
+
+load opti/drl/test1/DRL_8Runs_Noise0.01_MA0_alpha0.2_lambda0.95_softmax10_decay6.mat;
+[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-Ind-Fast2');
+
+
+load opti/cosh/test1/DRL_8Runs_Noise0.01_MA0_alpha0.2_lambda0.95_softmax10_decay5_CoSh.mat;
+[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-Neash-Best1');
+
+load opti/cosh/test1/DRL_8Runs_Noise0.01_MA0_alpha0.2_lambda0.95_softmax10_decay4_CoSh.mat;
+[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-Neash-Fast1');
+
+load opti/cosh/test1/DRL_8Runs_Noise0.01_MA0_alpha0.2_lambda0.95_softmax8_decay5_CoSh.mat;
+[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-Neash-Fast2');
+
+
 
 Ms = M;%Smoothed means
 Ss = S;%Smoothed stdevs
@@ -70,28 +89,28 @@ figure
 plot(x(:,1),zeros(length(x(:,1))), '.w')
 hold on
 for j = 1:size(M,2)
-    pt(j) = plot(Ms(:,j,1), spot{j}, 'LineWidth',lineW(j))
-    errorbar(x(:,j) ,MK(:,j,1),SK(:,j,1), spot_dot{j})
+    pt(j) = plot(Ms(:,j,1), spot{j}, 'LineWidth',lineW(j));
+    errorbar(x(:,j) ,MK(:,j,1),SK(:,j,1), spot_dot{j});
 end
 hold
 axis([1 E 0 100])
 
 grid on
-ylabel('% of Scored Goals');
+ylabel('% of Ball-Target distance');
 xlabel('Episodes');
 legend(pt,legendN);
-saveas(gcf,[folder 'CRLvsDRL.fig'])
+%saveas(gcf,[folder 'CRLvsDRL.fig'])
 end
 
 function [M, S, n, legendN] = load_results(results, M, S, n, legendN, leg)
-% A = (results.time>60) .* (6000./(results.time));
-% N = size(results.mean_goals,2);
 
+% N = size(results.mean_dbt,2);
+% M(:,n,1) = results.mean_dbt';
+% S(:,n,1) = results.std_dbt'/sqrt(N);  % Computing standard error
+
+N = size(results.mean_goals,2);
 M(:,n,1) = results.mean_goals';
-% M(:,n,2) = results.mean_faults';
-
-S(:,n,1) = results.std_goals';
-% S(:,n,2) = results.std_faults';
+S(:,n,1) = results.std_goals'/sqrt(N);  % Computing standard error
 
 legendN{n} = leg;
 n          = n+1;

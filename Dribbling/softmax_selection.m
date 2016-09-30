@@ -9,7 +9,7 @@ actions = size(Qs);
 
 %Qs=Q(s,:);
 
-if T ~= 0 & RLparam.softmax > 0
+if T ~= 0 && RLparam.softmax > 0
     Ts=T(s,:);
     minTemp = (10E-6 + (1-min(Ts)))*RLparam.k;
     v_qa = exp( (Qs-max(Qs))*minTemp);
