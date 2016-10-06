@@ -29,7 +29,7 @@ conf.TRANSFER      = x(8);   % =1 transfer, >1 acts gready from source policy, =
 conf.nash          = x(9);   % 0 COntrol sharing, 1 NASh, 2 Nash triang
 conf.Mtimes        = 0;      % State-action pair must be visited M times before Q being updated
 conf.flag_Vr       = 1;      % 1 learning ; 0  controller.-
-
+conf.thT           = 50;     % threshold to compute Time to threshold
 % -------------------------------------------------------------------------
 conf.Q_INIT = 0;                    % Q table initial values
 
@@ -47,11 +47,11 @@ conf.Vr_min(1) = 0;
 conf.Fr        = 150;            % Friction coefficient
 % -------------------------------------------------------------------------
 conf.maxDeltaV = conf.Vr_max .* [1/3 1/3 1/3];    % mm/s/Ts
-conf.Nactios   = [16,15,8];
+conf.Nactios   = [10,10,10];
 % -------------------------------------------------------------------------
-if conf.fuzzQ && conf.DRL
+if conf.DRL
     %conf.Nactios = [16,15,8];
-    conf.Nactios = [10,10,10];
+    conf.Nactios = [13,15,8];
 end
 % -------------------------------------------------------------------------
 conf.sync.nash = 1;
@@ -119,7 +119,7 @@ conf.f_gmm = @(x,y)mvnpdf([x y],mu,sigma);
 
 %% Other parameters.-------------------------------------------------------
 conf.V_action_steps = (conf.Vr_max-conf.Vr_min)./(conf.Nactios-[1 1 1]);
-conf.feature_step   = [250, 30, 40, 600];
+conf.feature_step   = [200, 10, 20, 600];
 conf.feature_max    = [1000, 60, 80 conf.Pb(1)];
 conf.feature_min    = [0, -60, -80, 0];
 
@@ -215,8 +215,8 @@ results.mean_dbt = mean(dBT,2);
 results.std_dbt  = std(dBT,0,2);
 
 Tth=conf.episodes;
-if thT>=min(results.mean_dbt)
-    tth=find(results.mean_dbt<thT);
+if conf.thT>=min(results.mean_dbt)
+    tth=find(results.mean_dbt<conf.thT);
     Tth=tth(1);
 end
 results.performance(1,2)=Tth;

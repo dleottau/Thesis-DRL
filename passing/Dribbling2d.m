@@ -86,6 +86,7 @@ conf.PgoalPostL = [conf.Pt(1)-conf.goalSize/2 conf.Pt(2)]; % Left Goal Post posi
 RL.param.M       = conf.Mtimes;
 RL.param.epsilon = epsilon0;
 RL.param.p       = p0;
+RL.break = 0;
 % -----------------------------------------------
 
 for i = 1:conf.episodes
@@ -147,9 +148,13 @@ for i = 1:conf.episodes
     end
     
     %% Se ejecuta la rutina Episode.-
+    
     [RL, Vr,ro,fi,gama,Pt,Pb,Pbi,Pr,Vb,total_reward,steps,Vavg_k,time,scored_] = Episode( RL, conf );
     
     dec = exp(-i*epsDec);
+    %dec = exp(-i*epsDec)*(1+cos(2*pi*i*10/EXPLORATION))/2;
+    
+    %keyboard
     
     RL.param.epsilon = epsilon0 * dec;
     RL.param.softmax = softmax0 * dec;
@@ -161,6 +166,7 @@ for i = 1:conf.episodes
     Vavg(i,1)    = Vavg_k;
     scored(i)    = scored_;
     pscored(i,1) = mean(scored);
+    DEC(i)=RL.param.softmax;
     
     % ---------------------------------------------------------------------
     dist_BT(i) = 100 * (sqrt((Pb(end,1) - Pt(1))^2 + (Pb(end,2) - Pt(2))^2)) / norm(conf.Pb - conf.Pt);
@@ -172,17 +178,23 @@ for i = 1:conf.episodes
         dist_BT(i) = 0;
     end
     
-    
-        
-        
+    RL.break = max(mean(reward,2))<0 && i>700 && conf.opti;  % PARA ACELERAR OPTIMIZACIÓN, si no converge antes de 700 episodios, no seguir entrenando
     % ---------------------------------------------------------------------
     
     %% Training plot.------------------------------------------------------
     if conf.DRAWS1 == 1
+        
+        subplot(2,3,5);
+        plot(xpoints,DEC)
+        %ylim([0 1])
+        grid
+        title('Decay')
+        
         subplot(2,3,3)
         plot(reward)
         grid
         title('Reward')
+                
         subplot(2,3,6)
         plot(smooth( dist_BT, 0.08,'rloess'),'k','LineWidth',2)
         ylim([0 110])
@@ -190,11 +202,12 @@ for i = 1:conf.episodes
         title('Distance Ball-Target')
         
         % Score Plot.------------------------------------------------------
-        subplot(2,3,[2,5]);
+        subplot(2,3,2);
         plot(xpoints,pscored)
         grid
         title('% Goals Scored')
         % -----------------------------------------------------------------
+                   
         
         % Robot Movement Plot.----------------------------------------
         subplot(2,3,[1,4])
