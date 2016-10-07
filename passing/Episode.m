@@ -100,6 +100,7 @@ ballState = 0;
 U           = 1;
 Qv          = 0;
 RL.param.fa = 0;
+updateSarsaFlag=1;
 
 while 1
     steps   = i;
@@ -160,10 +161,8 @@ while 1
     
     % Ball state = [0 stoped, 1 accelerating, 2 deaccelerating, 3 stoped after it was moved]
     if ballState ~= 0
-        %  if ballState == 3
-        % -----------------------------------------------------------------
         Vr_req = [0,0,0];
-        % -----------------------------------------------------------------
+        updateSarsaFlag=0; %do not update SARSA until ball stops
     end
 <<<<<<< HEAD
     
@@ -172,6 +171,7 @@ while 1
     % Vr_req(2) = V_FLC(2);
 =======
 >>>>>>> cf75efb6535d7fe341eacdca1e4878b07458e3cb
+    
     
         
     % Add Noise =========
@@ -205,6 +205,7 @@ while 1
         ballState = 2;                      % Deaccelerating
     elseif ballState == 2 && Vb(i,1) < 2
         ballState = 3;                      % Ball stops after it moves
+        updateSarsaFlag=1; % last update SARSA 
     end
     
     % Ground truth state vector
@@ -341,7 +342,7 @@ while 1
     
     
     % Update the Qtable, that is,  learn from the experience
-    if ~ conf.Test
+    if ~conf.Test && updateSarsaFlag
         if conf.DRL                                                                                                                 % Decentralized
             [RL.Q_rot, trace_rot] = UpdateSARSA(FV, a_rot, r(2), FVp, ap_rot, RL.Q_rot, trace_rot, RL.param, RL.T_rot, conf.MAapproach);
             % -------------------------------------------------------------
@@ -380,10 +381,14 @@ while 1
     
     % Terminal state?
 <<<<<<< HEAD
+<<<<<<< HEAD
     if ( f == true || time(i) > 100 )
 =======
     if ( f == true || time(i) > 200 )
 >>>>>>> cf75efb6535d7fe341eacdca1e4878b07458e3cb
+=======
+    if ( f == true || time(i) > 100 || RL.break)
+>>>>>>> 76d694adf23a0b9794f807965028052e887831db
         if checkGoal
             scored = 100;   % 100*(1-abs(Pbi(1)-Pt(1))/(conf.goalSize/2));
         end

@@ -93,7 +93,7 @@ xname{1}  = 'alpha';
 x0(1)     = 0.2;
 
 xname{2}  = 'softmax';
-x0(2)     = 8;              % 11
+x0(2)     = 7;              % 11
 
 xname{3}  = 'decay';
 x0(3)     = 4;              % 8

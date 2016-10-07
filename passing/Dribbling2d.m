@@ -98,6 +98,7 @@ conf.PgoalPostL = [conf.Pt(1)-conf.goalSize/2 conf.Pt(2)]; % Left Goal Post posi
 RL.param.M       = conf.Mtimes;
 RL.param.epsilon = epsilon0;
 RL.param.p       = p0;
+RL.break = 0;
 % -----------------------------------------------
 
 >>>>>>> cf75efb6535d7fe341eacdca1e4878b07458e3cb
@@ -184,12 +185,19 @@ for i = 1:conf.episodes
     end
     
     %% Se ejecuta la rutina Episode.-
+    
     [RL, Vr,ro,fi,gama,Pt,Pb,Pbi,Pr,Vb,total_reward,steps,Vavg_k,time,scored_] = Episode( RL, conf );
 <<<<<<< HEAD
 =======
     
     dec = exp(-i*epsDec);
+<<<<<<< HEAD
 >>>>>>> cf75efb6535d7fe341eacdca1e4878b07458e3cb
+=======
+    %dec = exp(-i*epsDec)*(1+cos(2*pi*i*10/EXPLORATION))/2;
+    
+    %keyboard
+>>>>>>> 76d694adf23a0b9794f807965028052e887831db
     
     RL.param.epsilon = epsilon0 * dec;
     RL.param.softmax = softmax0 * dec;
@@ -201,10 +209,14 @@ for i = 1:conf.episodes
     Vavg(i,1)    = Vavg_k;
     scored(i)    = scored_;
     pscored(i,1) = mean(scored);
+<<<<<<< HEAD
             
     % ---------------------------------------------------------------------    
     % dist_BT(i) = 100 * (sqrt((Pb(end,1) - Pt(1))^2 + (Pb(end,2) - Pt(2))^2)) / sqrt((conf.maxDistance_x/2)^2 + (conf.maxDistance_y/2)^2);    
     dist_BT(i) = 100 * (sqrt((Pb(end,1) - Pt(1))^2 + (Pb(end,2) - Pt(2))^2)) / norm(conf.Pb - conf.Pt);
+=======
+    DEC(i)=RL.param.softmax;
+>>>>>>> 76d694adf23a0b9794f807965028052e887831db
     
 <<<<<<< HEAD
 =======
@@ -228,18 +240,27 @@ for i = 1:conf.episodes
 =======
     end
     
-    
-        
-        
+    RL.break = max(mean(reward,2))<0 && i>700 && conf.opti;  % PARA ACELERAR OPTIMIZACIÓN, si no converge antes de 700 episodios, no seguir entrenando
     % ---------------------------------------------------------------------
     
     %% Training plot.------------------------------------------------------
     if conf.DRAWS1 == 1
+<<<<<<< HEAD
 >>>>>>> cf75efb6535d7fe341eacdca1e4878b07458e3cb
+=======
+        
+        subplot(2,3,5);
+        plot(xpoints,DEC)
+        %ylim([0 1])
+        grid
+        title('Decay')
+        
+>>>>>>> 76d694adf23a0b9794f807965028052e887831db
         subplot(2,3,3)
         plot(reward)
         grid
         title('Reward')
+                
         subplot(2,3,6)
 <<<<<<< HEAD
         plot(dist_BT,'k','LineWidth',2)  
@@ -252,11 +273,12 @@ for i = 1:conf.episodes
         title('Distance Ball-Target')
         
         % Score Plot.------------------------------------------------------
-        subplot(2,3,[2,5]);
+        subplot(2,3,2);
         plot(xpoints,pscored)
         grid
         title('% Goals Scored')
         % -----------------------------------------------------------------
+                   
         
         % Robot Movement Plot.----------------------------------------
         subplot(2,3,[1,4])
