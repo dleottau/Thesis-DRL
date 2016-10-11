@@ -29,91 +29,7 @@ conf.TRANSFER      = x(8);   % =1 transfer, >1 acts gready from source policy, =
 conf.nash          = x(9);   % 0 COntrol sharing, 1 NASh, 2 Nash triang
 conf.Mtimes        = 0;      % State-action pair must be visited M times before Q being updated
 conf.flag_Vr       = 1;      % 1 learning ; 0  controller.-
-<<<<<<< HEAD
-
-<<<<<<< HEAD
-%% Parameters.-------------------------------------------------------------
-conf.episodes      = 1500;   % Maximum number of episodes
-conf.Ts            = 0.2;    % Sample time of a RL step
-conf.maxDistance   = 4000;   % Max ball distance permited before to end the episode X FIELD DIMENSION
-conf.maxDistance_x = 6000;   % Max ball distance permited before to end the episode X FIELD DIMENSION
-conf.maxDistance_y = 4000;   % Max ball distance permited before to end the episode Y FIELD DIMENSION
-conf.Runs          = RUNS;   % # of runs
-conf.NOISE         = 0.01;   % Noise 0-1
-conf.DRL           = 1;      % Decentralized RL(1) or Centralized RL(0)
-conf.DRAWS         = 0;      % On-line plot.-
-conf.DRAWS1        = 1;      % Enable disable graphics
-conf.record        = 1;      % To record logs
-conf.fuzzQ         = 0;      % Enables fuzzy Q learning algorithm
-conf.Q_INIT        = 0;      % Q table initial values
-conf.MAapproach    = x(6);   % 0 no cordination, 1 frequency adjusted, 2 leninet
-conf.TRANSFER      = x(8);   % =1 transfer, >1 acts gready from source policy, =0 learns from scratch, =-1 just for test performance from stored policies
-conf.nash          = x(9);   % 0 COntrol sharing, 1 NASh
-conf.Mtimes        = 0;      % State-action pair must be visited M times before Q being updated
-
-% -------------------------------------------------------------------------
-conf.deltaVw   = 2;
-conf.Vr_max    = [100 40 40];    % x,y,rot Max Speed achieved by the robot.-
-conf.Vr_min    = -conf.Vr_max;
-conf.Vr_min(1) = 0;
-conf.Fr        = 150;            % Friction coefficient
-% -------------------------------------------------------------------------
-conf.maxDeltaV = conf.Vr_max .* [1/3 1/3 1/3];    % mm/s/Ts
-conf.Nactios   = [16,15,8];
-% -------------------------------------------------------------------------
-if conf.fuzzQ && conf.DRL
-    conf.Nactios = [16,15,8];
-end
-% -------------------------------------------------------------------------
-conf.sync.nash      = 0;
-conf.sync.TL        = 0;
-conf.sync.expl      = 0;
-
-if conf.TRANSFER
-    conf.sync.expl = 1; 
-end
-if conf.TRANSFER < 0
-    conf.episodes = 100;
-end
-% -------------------------------------------------------------------------
-if conf.opti
-    conf.DRAWS  = 0;
-    conf.record = 1;
-end
-% -------------------------------------------------------------------------
-conf.cE = 1;    % Counter of episodes.-
-% -------------------------------------------------------------------------
-
-%% RL parameters.----------------------------------------------------------
-RL.param.alpha     = x(1);      % Learning rate
-RL.param.gamma     = 0.99;      % Discount factor
-RL.param.lambda    = x(4);      % The decaying elegibiliy trace parameter
-RL.param.epsilon   = 1;
-RL.param.softmax   = x(2);
-RL.param.k         = x(7);      % 1.5 Lenience parameter
-RL.param.beta      = x(5);      % 0.9 Lenience discount factor
-RL.param.exp_decay = x(3);      % Exploration decay parameter
-
-if conf.Test                    % Performance tests
-    RL.param.epsilon = 0;
-    RL.param.softmax = 0;
-end
-
-%% Inwalk-Passing parameters.----------------------------------------------
-% Target and ball position.------------------------------------------------
-conf.Pt = [0 0];          % Target Position
-conf.Pb = [1800 0];       % Initial ball poition
-% -------------------------------------------------------------------------
-
-% Parameters of the Robot Initial position.--------------------------------
-conf.r_int = 700;
-conf.r_ext = 1200;
-conf.c_ang = 120;
-% -------------------------------------------------------------------------
-=======
-=======
 conf.thT           = 50;     % threshold to compute Time to threshold
->>>>>>> 76d694adf23a0b9794f807965028052e887831db
 % -------------------------------------------------------------------------
 conf.Q_INIT = 0;                    % Q table initial values
 
@@ -131,11 +47,14 @@ conf.Vr_min(1) = 0;
 conf.Fr        = 150;            % Friction coefficient
 % -------------------------------------------------------------------------
 conf.maxDeltaV = conf.Vr_max .* [1/3 1/3 1/3];    % mm/s/Ts
-conf.Nactios   = [10,10,10];
+% conf.Nactios   = [x(11),x(12),x(13)];
+% conf.Nactios   = [10,10,10];
 % -------------------------------------------------------------------------
 if conf.DRL
-    %conf.Nactios = [16,15,8];
-    conf.Nactios = [13,15,8];
+    % conf.Nactios = [16,15,8];
+    % conf.Nactios = [13,15,8];
+    conf.Nactios = [12,13,8];                   % Optimizado.-
+    % conf.Nactios   = [x(11),x(12),x(13)];
 end
 % -------------------------------------------------------------------------
 conf.sync.nash = 1;
@@ -186,53 +105,37 @@ conf.r_int = 700;
 conf.r_ext = 1200;
 conf.c_ang = 100;
 % -------------------------------------------------------------------------
->>>>>>> cf75efb6535d7fe341eacdca1e4878b07458e3cb
 
 % Parameters of the circle.------------------------------------------------
 conf.a3  = 1;
 conf.b3  = 1;
-<<<<<<< HEAD
-conf.r3  = 400;
-=======
 conf.r3  = 500;
->>>>>>> cf75efb6535d7fe341eacdca1e4878b07458e3cb
 % -------------------------------------------------------------------------
 
 % Parameters of Gaussian Distribution.-------------------------------------
 conf.Rgain = 1e8;
-<<<<<<< HEAD
-conf.Rvar  = 400;
-=======
 conf.Rvar  = 500;
->>>>>>> cf75efb6535d7fe341eacdca1e4878b07458e3cb
 mu         = [conf.Pt(1)  conf.Pt(2)];
 sigma      = [conf.Rvar^2 0 ; 0 conf.Rvar^2];
 conf.f_gmm = @(x,y)mvnpdf([x y],mu,sigma);
 % -------------------------------------------------------------------------
-<<<<<<< HEAD
 
 %% Other parameters.-------------------------------------------------------
+STP_1 = [50 100 125 200 250];
+STP_2 = [8 10 12 15 20 24 30];
+STP_3 = [10 16 20 32 40 80];
+STP_4 = [100 120 150 180 200 300 360 450 600];
+
 conf.V_action_steps = (conf.Vr_max-conf.Vr_min)./(conf.Nactios-[1 1 1]);
-conf.feature_step   = [200, 30, 30 600];
-conf.feature_min    = [0, -45, -45 0];
-conf.feature_max    = [conf.maxDistance_x, 45, 45 conf.Pb(1)];
-
-%% ------------------------------------------------------------------------
-if conf.DRAWS
-=======
-
-%% Other parameters.-------------------------------------------------------
-conf.V_action_steps = (conf.Vr_max-conf.Vr_min)./(conf.Nactios-[1 1 1]);
-conf.feature_step   = [200, 10, 20, 600];
-conf.feature_max    = [1000, 60, 80 conf.Pb(1)];
-conf.feature_min    = [0, -60, -80, 0];
-
-
+% conf.feature_step   = [200, 10, 20, 600];
+conf.feature_step   = [STP_1(x(11)), STP_2(x(12)), STP_3(x(13)), STP_4(x(14))];
+conf.feature_min    = [0    , -60 , -80 , 0];
+conf.feature_max    = [1000 , 60  , 80  , conf.Pb(1)];
 
 %% -----------------------------------------------------------------------
-fileNameP = ['DRL_' int2str(conf.Runs) 'Runs_Noise' num2str(conf.NOISE) '_MA' int2str(conf.MAapproach) '_alpha' num2str(RL.param.alpha) '_lambda' num2str(RL.param.lambda)];
+fileNameP = ['DRL_' int2str(conf.Runs) '_STP1_' int2str(STP_1(x(11))) '_STP2_' num2str(STP_2(x(12)))];
 if RL.param.softmax > 0
-    fileName = ['_softmax' int2str(RL.param.softmax) '_decay' num2str(RL.param.exp_decay)];
+    fileName = ['_STP3_' num2str(STP_3(x(13))) '_STP4_' num2str(STP_4(x(14)))];
 else
     fileName = ['_epsilon' num2str(RL.param.epsilon) '_decay' num2str(RL.param.exp_decay)];
 end
@@ -250,25 +153,15 @@ elseif ~conf.nash && conf.TRANSFER
 end
 
 % ------------------------------------------------------------------------
-loadFile        = [folder loadFile];
 evolutionFile   = [folder fileName ];
-performanceFile = loadFile;
 conf.fileName   = fileName;
 
 %% ------------------------------------------------------------------------
 if conf.DRAWS1 == 1
->>>>>>> cf75efb6535d7fe341eacdca1e4878b07458e3cb
     size_f = get(0,'ScreenSize');
     figure('position',[0.1*size_f(3) 0.05*size_f(4) 0.85*size_f(3) 0.7*size_f(4)]);
 end
-% -------------------------------------------------------------------------
 
-<<<<<<< HEAD
-%% Run Inwalk-Passing.-----------------------------------------------------
-% parfor n = 1:RUNS
-for n = 1:RUNS
-    [pscored(:,n),scored(:, n),dBT(:, n),Q{n},Qy{n},Qw{n}] = Dribbling2d( n, conf, RL );
-=======
 % -------------------------------------------------------------------------
 if conf.TRANSFER < 0                        % Para pruebas de performance
     results  = importdata(loadFile);
@@ -295,7 +188,6 @@ else
     parfor n = 1:conf.Runs
         [pscored(:,n),scored(:, n),dBT(:, n),Q{n},Qy{n},Qw{n}] = Dribbling2d( n, conf, RL );
     end
->>>>>>> cf75efb6535d7fe341eacdca1e4878b07458e3cb
 end
 
 pf_min   = Inf;
@@ -327,28 +219,19 @@ f = mean(pf); % Fitness function: percentage of distance from ball to target
 results.mean_dbt = mean(dBT,2);
 results.std_dbt  = std(dBT,0,2);
 
-Tth=conf.episodes;
+% -------------------------------------------------------------------------
+Tth = conf.episodes;
 if conf.thT>=min(results.mean_dbt)
     tth=find(results.mean_dbt<conf.thT);
     Tth=tth(1);
 end
 results.performance(1,2)=Tth;
-
-<<<<<<< HEAD
-results.mean_goals = mean(dBT,2);
-results.std_goals  = std(dBT,0,2);
-=======
->>>>>>> cf75efb6535d7fe341eacdca1e4878b07458e3cb
+% -------------------------------------------------------------------------
 
 if conf.fuzzQ
     stringName=['fuz-' stringName];
 end
 
-<<<<<<< HEAD
-if conf.DRAWS1 == 1
-    figure,plot(mean(dBT,2))
-    grid
-=======
 results.conf = conf;
 results.RLparam = RL.param;
 
@@ -369,19 +252,8 @@ if conf.TRANSFER >= 0
     end
     close(gcf)
 else
->>>>>>> cf75efb6535d7fe341eacdca1e4878b07458e3cb
     if conf.record > 0
         %save ([performanceFile '.mat'], 'results');
         save ([stringName '.mat'], 'results');
     end
-<<<<<<< HEAD
-end
-
-if conf.Test
-    stringName = ['Test-' loadFile];
-end
-if conf.record > 0
-    save ([folder stringName '.mat'], 'results');
-=======
->>>>>>> cf75efb6535d7fe341eacdca1e4878b07458e3cb
 end

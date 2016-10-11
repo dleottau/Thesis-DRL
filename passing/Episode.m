@@ -80,11 +80,7 @@ X     = clipDLF(X, conf.feature_min, conf.feature_max);
 FV = getFeatureVector(X, conf.cores);
 
 % Get velocity from Linear Controller
-<<<<<<< HEAD
-[V_FLC] = controller_dribbling (xG,Vr_min,Vr_max);
-=======
 [V_src] = controller_dribbling (xG,Vr_min,Vr_max);
->>>>>>> cf75efb6535d7fe341eacdca1e4878b07458e3cb
 
 ballState = 0;
 
@@ -92,10 +88,6 @@ ballState = 0;
 [a  , p]       = action_selection(RL.Q     , RL.T     , FV, RL.param);
 [a_y , p_y]    = action_selection(RL.Qy    , RL.T_y   , FV, RL.param);
 [a_rot, p_rot] = action_selection(RL.Q_rot , RL.T_rot , FV, RL.param);
-<<<<<<< HEAD
-
-=======
->>>>>>> cf75efb6535d7fe341eacdca1e4878b07458e3cb
 
 U           = 1;
 Qv          = 0;
@@ -136,16 +128,6 @@ while 1
     % ----------------------------- DO ACTION -----------------------------
     % do the selected action and get the next state
     
-<<<<<<< HEAD
-    % ADDING SATURATONS AND NOISE
-    Vr_req(1) = action;
-    % -------------------------------------------------------------
-    Vr_req(2) = action_y;
-    % -------------------------------------------------------------
-    Vr_req(3) = action_rot;
-    % Vr_req(2) = Vr(i-1,2) + action_rot;
-    % -------------------------------------------------------------
-=======
     %% ADDING SATURATONS AND NOISE
     if conf.flag_Vr == 1
         Vr_req(1) = action;
@@ -157,20 +139,12 @@ while 1
     else
         Vr_req = V_src;
     end
->>>>>>> cf75efb6535d7fe341eacdca1e4878b07458e3cb
     
     % Ball state = [0 stoped, 1 accelerating, 2 deaccelerating, 3 stoped after it was moved]
     if ballState ~= 0
         Vr_req = [0,0,0];
         updateSarsaFlag=0; %do not update SARSA until ball stops
     end
-<<<<<<< HEAD
-    
-    % Enables linear controller
-    % Vr_req(1) = V_FLC(1);
-    % Vr_req(2) = V_FLC(2);
-=======
->>>>>>> cf75efb6535d7fe341eacdca1e4878b07458e3cb
     
     
         
@@ -235,59 +209,6 @@ while 1
     
     %% Observe the reward at state xp and the final state flag.------------
     [r,f]        = GetReward(Xp, Pr(i,:), Pb(i,:), Pt, checkGoal, Pbi, ballState, conf);
-<<<<<<< HEAD
-    total_reward = total_reward + r;    
-    
-    % keyboard
-    
-    %% --------------------------------------------------------------------
-    % ----------------------------------------------------------------%
-    % Esto no va.-
-    % sp  = DiscretizeStateDLF(x_obs,conf.cores,conf.feature_step,conf.div_disc);
-    % ----------------------------------------------------------------%
-    
-    % select action prime
-    %ap = e_greedy_selection(RL.Q , sp, RL.param.epsilon);
-    
-    %a_transf = GetBestAction(RL.Qs,sp);
-    a_transf     = 1 + round(V_FLC(1)/conf.V_action_steps(1));  % from FLC
-    % a_transf     = 1 + round(V_FLC'/conf.V_action_steps(1));  % from FLC
-    a_transf_y   = 1 + round(V_FLC(2)/conf.V_action_steps(2) + Vr_max(2)/conf.V_action_steps(2) );
-    a_transf_rot = 1 + round(V_FLC(3)/conf.V_action_steps(3) + Vr_max(3)/conf.V_action_steps(3) );
-    
-    if conf.sync.nash > 0
-        rnd.nash     = randn();
-        rnd.nashExpl = randn();
-    end
-    if conf.sync.expl > 0
-        rnd.expl = rand();
-    end
-    if conf.sync.TL > 0
-        rnd.TL = rand();
-    end
-    
-    [ap, fa_x]       = p_source_selection_FLC(RL.Q     , RL.T     , FVp , RL.param , a_transf     , conf.nash , conf.sync , rnd);
-    [ap_y, fa_y]     = p_source_selection_FLC(RL.Q_y   , RL.T_y   , FVp , RL.param , a_transf_y   , conf.nash , conf.sync , rnd);
-    [ap_rot, fa_rot] = p_source_selection_FLC(RL.Q_rot , RL.T_rot , FVp , RL.param , a_transf_rot , conf.nash , conf.sync , rnd);
-    %% --------------------------------------------------------------------
-    
-        
-    % Select action prime
-    [ap, fa] = action_selection(RL.Q, RL.T, FVp, RL.param);
-    if conf.DRL
-        [ap_rot, fa_rot] = action_selection(RL.Q_rot, RL.T_rot, FVp, RL.param);
-        % -----------------------------------------------------------------
-        [ap_y, fa_y]     = action_selection(RL.Qy, RL.T_y, FVp, RL.param);
-        % -----------------------------------------------------------------
-        
-        fap = 1;
-        if conf.MAapproach == 1
-            fap = 1-min([(fa-1/conf.nactions_x), (fa_y-1/conf.nactions_y), (fa_rot-1/conf.nactions_w)])+1E-3;
-        elseif conf.MAapproach == 3
-            fap = min([(fa-1/conf.nactions_x), (fa_y-1/conf.nactions_y), (fa_rot-1/conf.nactions_w)])+1E-3;
-        end
-        fap = clipDLF(fap, 0, 1);
-=======
     total_reward = total_reward + r;
     
     % keyboard
@@ -309,7 +230,6 @@ while 1
         else
             V_src = V_src + ((Vr_max-Vr_min)/RL.param.aScale)*rnd.nash.*(1 - RL.param.p);
         end
->>>>>>> cf75efb6535d7fe341eacdca1e4878b07458e3cb
     end
       
     V_src = clipDLF( V_src,Vr_min,Vr_max);
@@ -338,7 +258,6 @@ while 1
     %         end
     %         fap = clipDLF(fap, 0, 1);
     %     end
-    
     
     
     % Update the Qtable, that is,  learn from the experience
@@ -380,15 +299,7 @@ while 1
     Vavg   = xG(1)/time(i);
     
     % Terminal state?
-<<<<<<< HEAD
-<<<<<<< HEAD
-    if ( f == true || time(i) > 100 )
-=======
-    if ( f == true || time(i) > 200 )
->>>>>>> cf75efb6535d7fe341eacdca1e4878b07458e3cb
-=======
     if ( f == true || time(i) > 100 || RL.break)
->>>>>>> 76d694adf23a0b9794f807965028052e887831db
         if checkGoal
             scored = 100;   % 100*(1-abs(Pbi(1)-Pt(1))/(conf.goalSize/2));
         end

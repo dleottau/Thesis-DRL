@@ -6,9 +6,11 @@ function PLOTS()
 
 % keyboard
 
+addpath('opti')
+
 spot={':r' '-g' '-.c' '--k'  ':b' '-m' '-.r' '--g' ':r' '-g' '-.c' '--k'  ':b' '-m' '-.r' '--g' ':r' '-g' '-.c' '--k'  ':b' '-m' '-.r' '--g' ':r' '-g' '-.c' '--k'  ':b' '-m' '-.r' '--g' ':r' '-g' '-.c' '--k'  ':b' '-m' '-.r' '--g' ':r' '-g' '-.c' '--k'  ':b' '-m' '-.r' '--g'};
 spot_dot={'.r' '.g' '.c' '.k' '.b' '.m' '.r' '.g' '.r' '.g' '.c' '.k' '.b' '.m' '.r' '.g' '.r' '.g' '.c' '.k' '.b' '.m' '.r' '.g' '.r' '.g' '.c' '.k' '.b' '.m' '.r' '.g' '.r' '.g' '.c' '.k' '.b' '.m' '.r' '.g' '.r' '.g' '.c' '.k' '.b' '.m' '.r' '.g'};
-lineW=[2 1 1 1 2 1 1 1 2 1 1 1 2 1 1 1 2 1 1 1 2 1 1 1 2 1 1 1 2 1 1 1 2 1 1 1 2 1 1 1 2 1 1 1 2 1 1 1];
+lineW=[3 2 2 2 3 1 1 1 2 1 1 1 2 1 1 1 2 1 1 1 2 1 1 1 2 1 1 1 2 1 1 1 2 1 1 1 2 1 1 1 2 1 1 1 2 1 1 1];
 
 legendN  = [];
 
@@ -22,36 +24,36 @@ M = [];
 S = [];
 
 % ----------
-% folder = 'opti/drl/test1/'; 
-% files = dir(fullfile([folder '*.mat']));
-% 
-% for i=1:size(files,1)
-%     results=importdata([folder files(i).name]);
-%     [M,S,n,legendN] = load_results(results,M,S,n,legendN,files(i).name);
-% end
+folder = 'opti/'; 
+files = dir(fullfile([folder '*.mat']));
+
+for i=1:size(files,1)
+    results=importdata([folder files(i).name]);
+    [M,S,n,legendN] = load_results(results,M,S,n,legendN,files(i).name);
+end
 % ----------
 
-load opti/drl/test1/DRL_8Runs_Noise0.01_MA0_alpha0.2_lambda0.95_softmax10_decay5.mat;
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-Ind-Best1');
+%load('STP4_9; STP3_3; STP2_2; STP1_1; 4RUNS.mat')
+%[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-Ind-Best1');
 
-load opti/drl/test1/DRL_8Runs_Noise0.01_MA0_alpha0.2_lambda0.95_softmax6_decay5.mat;
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-Ind-Best2');
-
-load opti/drl/test1/DRL_8Runs_Noise0.01_MA0_alpha0.2_lambda0.95_softmax10_decay7.mat;
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-Ind-Fast1');
-
-load opti/drl/test1/DRL_8Runs_Noise0.01_MA0_alpha0.2_lambda0.95_softmax10_decay6.mat;
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-Ind-Fast2');
-
-
-load opti/cosh/test1/DRL_8Runs_Noise0.01_MA0_alpha0.2_lambda0.95_softmax10_decay5_CoSh.mat;
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-Neash-Best1');
-
-load opti/cosh/test1/DRL_8Runs_Noise0.01_MA0_alpha0.2_lambda0.95_softmax10_decay4_CoSh.mat;
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-Neash-Fast1');
-
-load opti/cosh/test1/DRL_8Runs_Noise0.01_MA0_alpha0.2_lambda0.95_softmax8_decay5_CoSh.mat;
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-Neash-Fast2');
+% load opti/drl/test1/DRL_8Runs_Noise0.01_MA0_alpha0.2_lambda0.95_softmax6_decay5.mat;
+% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-Ind-Best2');
+% 
+% load opti/drl/test1/DRL_8Runs_Noise0.01_MA0_alpha0.2_lambda0.95_softmax10_decay7.mat;
+% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-Ind-Fast1');
+% 
+% load opti/drl/test1/DRL_8Runs_Noise0.01_MA0_alpha0.2_lambda0.95_softmax10_decay6.mat;
+% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-Ind-Fast2');
+% 
+% 
+% load opti/cosh/test1/DRL_8Runs_Noise0.01_MA0_alpha0.2_lambda0.95_softmax10_decay5_CoSh.mat;
+% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-Neash-Best1');
+% 
+% load opti/cosh/test1/DRL_8Runs_Noise0.01_MA0_alpha0.2_lambda0.95_softmax10_decay4_CoSh.mat;
+% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-Neash-Fast1');
+% 
+% load opti/cosh/test1/DRL_8Runs_Noise0.01_MA0_alpha0.2_lambda0.95_softmax8_decay5_CoSh.mat;
+% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-Neash-Fast2');
 
 
 
@@ -100,6 +102,7 @@ ylabel('% of Ball-Target distance');
 xlabel('Episodes');
 legend(pt,legendN);
 %saveas(gcf,[folder 'CRLvsDRL.fig'])
+rmpath('opti')
 end
 
 function [M, S, n, legendN] = load_results(results, M, S, n, legendN, leg)
@@ -108,9 +111,9 @@ function [M, S, n, legendN] = load_results(results, M, S, n, legendN, leg)
 % M(:,n,1) = results.mean_dbt';
 % S(:,n,1) = results.std_dbt'/sqrt(N);  % Computing standard error
 
-N = size(results.mean_goals,2);
-M(:,n,1) = results.mean_goals';
-S(:,n,1) = results.std_goals'/sqrt(N);  % Computing standard error
+N = size(results.mean_dbt,2);
+M(:,n,1) = results.mean_dbt';
+S(:,n,1) = results.std_dbt'/sqrt(N);  % Computing standard error
 
 legendN{n} = leg;
 n          = n+1;

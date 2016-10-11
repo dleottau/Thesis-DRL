@@ -39,8 +39,6 @@ if ~conf.Test
     end
 end
 
-<<<<<<< HEAD
-=======
 % -------------------------------------------------------------------------
 if conf.TRANSFER >= 0
     RL.Q         = QTable( conf.nstates,conf.nactions_x, conf.Q_INIT );  % the Qtable for the vx agent
@@ -56,23 +54,16 @@ if conf.TRANSFER >= 0
 end
 % -------------------------------------------------------------------------
 
->>>>>>> cf75efb6535d7fe341eacdca1e4878b07458e3cb
 RL.T        = 0;
 RL.T_y      = 0;
 RL.T_rot    = 0;
 
 if conf.MAapproach == 2 && conf.DRL
-<<<<<<< HEAD
-    RL.T     = QTable( conf.nstates,conf.nactions_x, 1);
-=======
     RL.T     = QTable( conf.nstates, conf.nactions_x, 1);
->>>>>>> cf75efb6535d7fe341eacdca1e4878b07458e3cb
     RL.T_y   = QTable( conf.nstates, conf.nactions_y, 1 );
     RL.T_rot = QTable( conf.nstates, conf.nactions_w, 1 );
 end
 
-<<<<<<< HEAD
-=======
 % ------------------------------------------------------
 if conf.TRANSFER < 0    % Para pruebas de performance
     epsilon0 = 0;
@@ -81,7 +72,6 @@ if conf.TRANSFER < 0    % Para pruebas de performance
 end
 % ------------------------------------------------------
 
->>>>>>> cf75efb6535d7fe341eacdca1e4878b07458e3cb
 % ----------------------------------------------------------------------- %
 EXPLORATION = conf.episodes/RL.param.exp_decay;
 % ----------------------------------------------------------------------- %
@@ -92,8 +82,6 @@ conf.goalSize   = 150;
 conf.PgoalPostR = [conf.Pt(1)+conf.goalSize/2 conf.Pt(2)]; % Right Goal Post position
 conf.PgoalPostL = [conf.Pt(1)-conf.goalSize/2 conf.Pt(2)]; % Left Goal Post position
 
-<<<<<<< HEAD
-=======
 % ------------------------------------------------
 RL.param.M       = conf.Mtimes;
 RL.param.epsilon = epsilon0;
@@ -101,7 +89,6 @@ RL.param.p       = p0;
 RL.break = 0;
 % -----------------------------------------------
 
->>>>>>> cf75efb6535d7fe341eacdca1e4878b07458e3cb
 for i = 1:conf.episodes
     conf.episodeN = i;
     
@@ -115,21 +102,12 @@ for i = 1:conf.episodes
         if ~conf.Test
             uB         = [conf.Pb(1)+1000 conf.Pb(2)+1000  180];
             lB         = [conf.Pb(1)-1000 conf.Pb(2)-1000 -180];
-<<<<<<< HEAD
-            % conf.Pr    = rand(1,3).*(uB-lB) + lB;
-            
-            conf.Pr    = [conf.Pb(1)+800 conf.Pb(2) 180];
-            conf.Pr(3) = moduloPiDLF(atan2(conf.Pb(2)-conf.Pr(2),conf.Pb(1)-conf.Pr(1)),'r2d');
-            
-            %% Robot movement.---------------------------------------------                    
-=======
             conf.Pr    = rand(1,3).*(uB-lB) + lB;
             
             % conf.Pr    = [conf.Pb(1)+800 conf.Pb(2) 180];
             % conf.Pr(3) = moduloPiDLF(atan2(conf.Pb(2)-conf.Pr(2),conf.Pb(1)-conf.Pr(1)),'r2d');
             
             %% Robot movement.---------------------------------------------
->>>>>>> cf75efb6535d7fe341eacdca1e4878b07458e3cb
             [~, ~, ~, ~, phi, gamma, pho, ~, ~, ~] = mov(Ts,conf.Pr,conf.Pt,conf.Pb,0,0,0,100,100,100,0,0,conf.Fr,zeros(2,1));
             % -------------------------------------------------------------
             
@@ -137,20 +115,6 @@ for i = 1:conf.episodes
                 break
             end
         else
-<<<<<<< HEAD
-            uB         = [conf.Pb(1)+1000 conf.Pb(2)+1000  180];
-            lB         = [conf.Pb(1)-1000 conf.Pb(2)-1000 -180];
-            conf.Pr    = rand(1,3).*(uB-lB) + lB;
-            
-            % conf.Pr    = [conf.Pb(1)+800 conf.Pb(2) 180];
-            % conf.Pr(3) = moduloPiDLF(atan2(conf.Pb(2)-conf.Pr(2),conf.Pb(1)-conf.Pr(1)),'r2d');
-            
-            %% Robot movement.---------------------------------------------                                        
-            [~, ~, ~, ~, phi, gamma, pho, ~, ~, ~] = mov(Ts,conf.Pr,conf.Pt,conf.Pb,0,0,0,100,100,100,0,0,conf.Fr,zeros(2,1));
-            % -------------------------------------------------------------
-                        
-            if (pho <= conf.r_ext && conf.r_int <= pho) && (abs(phi) < conf.c_ang) && (abs(gamma) < 30)
-=======
             %             uB         = [conf.Pb(1)+1000 conf.Pb(2)+1000  180];
             %             lB         = [conf.Pb(1)-1000 conf.Pb(2)-1000 -180];
             %             conf.Pr    = rand(1,3).*(uB-lB) + lB;
@@ -178,7 +142,6 @@ for i = 1:conf.episodes
             % -------------------------------------------------------------
             
             if (pho <= conf.r_ext && conf.r_int <= pho) && (abs(phi) < conf.c_ang) && (abs(gamma) < 45)
->>>>>>> cf75efb6535d7fe341eacdca1e4878b07458e3cb
                 break
             end
         end
@@ -187,17 +150,11 @@ for i = 1:conf.episodes
     %% Se ejecuta la rutina Episode.-
     
     [RL, Vr,ro,fi,gama,Pt,Pb,Pbi,Pr,Vb,total_reward,steps,Vavg_k,time,scored_] = Episode( RL, conf );
-<<<<<<< HEAD
-=======
     
     dec = exp(-i*epsDec);
-<<<<<<< HEAD
->>>>>>> cf75efb6535d7fe341eacdca1e4878b07458e3cb
-=======
     %dec = exp(-i*epsDec)*(1+cos(2*pi*i*10/EXPLORATION))/2;
     
     %keyboard
->>>>>>> 76d694adf23a0b9794f807965028052e887831db
     
     RL.param.epsilon = epsilon0 * dec;
     RL.param.softmax = softmax0 * dec;
@@ -209,35 +166,16 @@ for i = 1:conf.episodes
     Vavg(i,1)    = Vavg_k;
     scored(i)    = scored_;
     pscored(i,1) = mean(scored);
-<<<<<<< HEAD
-            
-    % ---------------------------------------------------------------------    
-    % dist_BT(i) = 100 * (sqrt((Pb(end,1) - Pt(1))^2 + (Pb(end,2) - Pt(2))^2)) / sqrt((conf.maxDistance_x/2)^2 + (conf.maxDistance_y/2)^2);    
-    dist_BT(i) = 100 * (sqrt((Pb(end,1) - Pt(1))^2 + (Pb(end,2) - Pt(2))^2)) / norm(conf.Pb - conf.Pt);
-=======
     DEC(i)=RL.param.softmax;
->>>>>>> 76d694adf23a0b9794f807965028052e887831db
     
-<<<<<<< HEAD
-=======
     % ---------------------------------------------------------------------
     dist_BT(i) = 100 * (sqrt((Pb(end,1) - Pt(1))^2 + (Pb(end,2) - Pt(2))^2)) / norm(conf.Pb - conf.Pt);
     
->>>>>>> cf75efb6535d7fe341eacdca1e4878b07458e3cb
     if 100 <= dist_BT(i)
         dist_BT(i) = 100;
     end
     if dist_BT(i) <= 0
         dist_BT(i) = 0;
-<<<<<<< HEAD
-    end    
-    
-    m_dBT(i,1) = mean(dist_BT);
-    % ---------------------------------------------------------------------
-    
-    %% Training plot.------------------------------------------------------
-    if conf.DRAWS == 1
-=======
     end
     
     RL.break = max(mean(reward,2))<0 && i>700 && conf.opti;  % PARA ACELERAR OPTIMIZACIÓN, si no converge antes de 700 episodios, no seguir entrenando
@@ -245,9 +183,6 @@ for i = 1:conf.episodes
     
     %% Training plot.------------------------------------------------------
     if conf.DRAWS1 == 1
-<<<<<<< HEAD
->>>>>>> cf75efb6535d7fe341eacdca1e4878b07458e3cb
-=======
         
         subplot(2,3,5);
         plot(xpoints,DEC)
@@ -255,19 +190,13 @@ for i = 1:conf.episodes
         grid
         title('Decay')
         
->>>>>>> 76d694adf23a0b9794f807965028052e887831db
         subplot(2,3,3)
         plot(reward)
         grid
         title('Reward')
                 
         subplot(2,3,6)
-<<<<<<< HEAD
-        plot(dist_BT,'k','LineWidth',2)  
-        % plot(m_dBT,'k','LineWidth',2)  
-=======
         plot(smooth( dist_BT, 0.08,'rloess'),'k','LineWidth',2)
->>>>>>> cf75efb6535d7fe341eacdca1e4878b07458e3cb
         ylim([0 110])
         grid
         title('Distance Ball-Target')
@@ -315,11 +244,6 @@ Qy = RL.Qy;
 Qw = RL.Q_rot;
 
 % if ~conf.opti
-<<<<<<< HEAD
-    % disp(['RUN: ' int2str(nRun) '; cumGoals: ',num2str(m_dBT(end))]);
-    % disp(['RUN: ' int2str(nRun) '; cumGoals: ',num2str(dist_BT)]);
-=======
 % disp(['RUN: ' int2str(nRun) '; cumGoals: ',num2str(m_dBT(end))]);
 % disp(['RUN: ' int2str(nRun) '; cumGoals: ',num2str(dist_BT)]);
->>>>>>> cf75efb6535d7fe341eacdca1e4878b07458e3cb
 % end

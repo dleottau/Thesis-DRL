@@ -2,19 +2,6 @@ function [ cores, nstates, div_disc] = StateTable( feature_min, feature_step, fe
 % BuildStateList builds a state list from a state matrix
 
 ro = feature_min(1) : feature_step(1) : feature_max(1);
-<<<<<<< HEAD
-
-ro_std = ro*0 + feature_step(1)*0.5;
-
-gama = [feature_min(2) -15 0 15 feature_max(2)];
-fi   = [feature_min(3) -15 0 15 feature_max(3)];
-
-gama_std = [30 15 8 15 30];
-fi_std   = [30 15 8 15 30];
-
-dBT     = feature_min(4) : feature_step(4) : feature_max(4);
-dBT_std = dBT*0 + feature_step(4)*0.5;
-=======
 ro_std = ro*0 + feature_step(1)*0.5;
 
 gama = feature_min(2): feature_step(2) : feature_max(2);
@@ -32,7 +19,6 @@ fi_std   = fi*0 + feature_step(3)*0.5;
 dBT     = feature_min(4) : feature_step(4) : feature_max(4);
 dBT_std = dBT*0 + feature_step(4)*0.5;
 
->>>>>>> cf75efb6535d7fe341eacdca1e4878b07458e3cb
 
 cores.mean.ro   = ro;
 cores.mean.gama = gama;
