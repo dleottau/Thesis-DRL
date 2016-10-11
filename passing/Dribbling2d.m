@@ -151,8 +151,8 @@ for i = 1:conf.episodes
     
     [RL, Vr,ro,fi,gama,Pt,Pb,Pbi,Pr,Vb,total_reward,steps,Vavg_k,time,scored_] = Episode( RL, conf );
     
-    dec = exp(-i*epsDec);
-    %dec = exp(-i*epsDec)*(1+cos(2*pi*i*10/EXPLORATION))/2;
+    %dec = exp(-i*epsDec);
+    dec = exp(-i*epsDec)*(1+cos(2*pi*i*10/EXPLORATION))/2;
     
     %keyboard
     
