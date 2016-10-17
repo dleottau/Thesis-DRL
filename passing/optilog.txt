@@ -1,0 +1,65 @@
+-
+opti/DRL_8Runs_Noise0.01_MA0_alpha0.2_lambda0.95_softmax8_decay5
+-
+Starting parallel pool (parpool) using the 'local' profile ... connected to 4 workers.
+%Distance BT: 56.1479; ScaleNeash9; NeASh0; Transfer0; k-lenient1.5; MAapproach0; beta0.9; lambda0.95; decay5; softmax8; alpha0.2; 8RUNS
+%Distance BT: 62.4891; ScaleNeash9; NeASh0; Transfer0; k-lenient1.5; MAapproach0; beta0.9; lambda0.95; decay5; softmax7; alpha0.2; 8RUNS
+%Distance BT: 59.1557; ScaleNeash9; NeASh0; Transfer0; k-lenient1.5; MAapproach0; beta0.9; lambda0.95; decay5; softmax6; alpha0.2; 8RUNS
+%Distance BT: 64.2934; ScaleNeash9; NeASh0; Transfer0; k-lenient1.5; MAapproach0; beta0.9; lambda0.95; decay5; softmax5; alpha0.2; 8RUNS
+%Distance BT: 59.1857; ScaleNeash9; NeASh0; Transfer0; k-lenient1.5; MAapproach0; beta0.9; lambda0.95; decay5; softmax4; alpha0.2; 8RUNS
+%Distance BT: 59.3695; ScaleNeash9; NeASh0; Transfer0; k-lenient1.5; MAapproach0; beta0.9; lambda0.95; decay5; softmax9; alpha0.2; 8RUNS
+%Distance BT: 62.8244; ScaleNeash9; NeASh0; Transfer0; k-lenient1.5; MAapproach0; beta0.9; lambda0.95; decay5; softmax10; alpha0.2; 8RUNS
+%Distance BT: 52.3545; ScaleNeash9; NeASh0; Transfer0; k-lenient1.5; MAapproach0; beta0.9; lambda0.95; decay5; softmax11; alpha0.2; 8RUNS
+%Distance BT: 50.4585; ScaleNeash9; NeASh0; Transfer0; k-lenient1.5; MAapproach0; beta0.9; lambda0.95; decay5; softmax12; alpha0.2; 8RUNS
+%Distance BT: 58.5285; ScaleNeash9; NeASh0; Transfer0; k-lenient1.5; MAapproach0; beta0.9; lambda0.95; decay5; softmax13; alpha0.2; 8RUNS
+%Distance BT: 49.6191; ScaleNeash9; NeASh0; Transfer0; k-lenient1.5; MAapproach0; beta0.9; lambda0.95; decay5; softmax14; alpha0.2; 8RUNS
+%Distance BT: 60.6444; ScaleNeash9; NeASh0; Transfer0; k-lenient1.5; MAapproach0; beta0.9; lambda0.95; decay5; softmax15; alpha0.2; 8RUNS
+%Distance BT: 52.6328; ScaleNeash9; NeASh0; Transfer0; k-lenient1.5; MAapproach0; beta0.9; lambda0.95; decay5; softmax16; alpha0.2; 8RUNS
+%Distance BT: 62.179; ScaleNeash9; NeASh0; Transfer0; k-lenient1.5; MAapproach0; beta0.9; lambda0.95; decay5; softmax17; alpha0.2; 8RUNS
+%Distance BT: 57.7065; ScaleNeash9; NeASh0; Transfer0; k-lenient1.5; MAapproach0; beta0.9; lambda0.95; decay5; softmax18; alpha0.2; 8RUNS
+%Distance BT: 61.0532; ScaleNeash9; NeASh0; Transfer0; k-lenient1.5; MAapproach0; beta0.9; lambda0.95; decay4; softmax14; alpha0.2; 8RUNS
+%Distance BT: 65.164; ScaleNeash9; NeASh0; Transfer0; k-lenient1.5; MAapproach0; beta0.9; lambda0.95; decay3; softmax14; alpha0.2; 8RUNS
+%Distance BT: 76.1752; ScaleNeash9; NeASh0; Transfer0; k-lenient1.5; MAapproach0; beta0.9; lambda0.95; decay2; softmax14; alpha0.2; 8RUNS
+%Distance BT: 59.2775; ScaleNeash9; NeASh0; Transfer0; k-lenient1.5; MAapproach0; beta0.9; lambda0.95; decay6; softmax14; alpha0.2; 8RUNS
+%Distance BT: 49.1917; ScaleNeash9; NeASh0; Transfer0; k-lenient1.5; MAapproach0; beta0.9; lambda0.95; decay7; softmax14; alpha0.2; 8RUNS
+%Distance BT: 53.4864; ScaleNeash9; NeASh0; Transfer0; k-lenient1.5; MAapproach0; beta0.9; lambda0.95; decay8; softmax14; alpha0.2; 8RUNS
+%Distance BT: 52.0993; ScaleNeash9; NeASh0; Transfer0; k-lenient1.5; MAapproach0; beta0.9; lambda0.95; decay9; softmax14; alpha0.2; 8RUNS
+%Distance BT: 55.4737; ScaleNeash9; NeASh0; Transfer0; k-lenient1.5; MAapproach0; beta0.9; lambda0.95; decay10; softmax14; alpha0.2; 8RUNS
+%Distance BT: 52.9802; ScaleNeash9; NeASh0; Transfer0; k-lenient1.5; MAapproach0; beta0.9; lambda0.95; decay11; softmax14; alpha0.2; 8RUNS
+%Distance BT: 51.9062; ScaleNeash9; NeASh0; Transfer0; k-lenient1.5; MAapproach0; beta0.9; lambda0.95; decay7; softmax14; alpha0.1; 8RUNS
+%Distance BT: 57.892; ScaleNeash9; NeASh0; Transfer0; k-lenient1.5; MAapproach0; beta0.9; lambda0.95; decay7; softmax14; alpha0.3; 8RUNS
+%Distance BT: 60.6825; ScaleNeash9; NeASh0; Transfer0; k-lenient1.5; MAapproach0; beta0.9; lambda0.95; decay7; softmax14; alpha0.4; 8RUNS
+%Distance BT: 70.0912; ScaleNeash9; NeASh0; Transfer0; k-lenient1.5; MAapproach0; beta0.9; lambda0.95; decay7; softmax14; alpha0.5; 8RUNS
+%Distance BT: 87.8366; ScaleNeash9; NeASh0; Transfer0; k-lenient1.5; MAapproach0; beta0.9; lambda0.95; decay7; softmax14; alpha0.6; 8RUNS
+%Distance BT: 47.6607; ScaleNeash9; NeASh0; Transfer0; k-lenient1.5; MAapproach0; beta0.9; lambda0.95; decay7; softmax13; alpha0.2; 8RUNS
+%Distance BT: 54.6028; ScaleNeash9; NeASh0; Transfer0; k-lenient1.5; MAapproach0; beta0.9; lambda0.95; decay7; softmax12; alpha0.2; 8RUNS
+%Distance BT: 61.0176; ScaleNeash9; NeASh0; Transfer0; k-lenient1.5; MAapproach0; beta0.9; lambda0.95; decay7; softmax11; alpha0.2; 8RUNS
+%Distance BT: 52.2067; ScaleNeash9; NeASh0; Transfer0; k-lenient1.5; MAapproach0; beta0.9; lambda0.95; decay7; softmax10; alpha0.2; 8RUNS
+%Distance BT: 53.311; ScaleNeash9; NeASh0; Transfer0; k-lenient1.5; MAapproach0; beta0.9; lambda0.95; decay7; softmax15; alpha0.2; 8RUNS
+%Distance BT: 59.0441; ScaleNeash9; NeASh0; Transfer0; k-lenient1.5; MAapproach0; beta0.9; lambda0.95; decay7; softmax16; alpha0.2; 8RUNS
+%Distance BT: 55.5994; ScaleNeash9; NeASh0; Transfer0; k-lenient1.5; MAapproach0; beta0.9; lambda0.95; decay7; softmax17; alpha0.2; 8RUNS
+%Distance BT: 60.3266; ScaleNeash9; NeASh0; Transfer0; k-lenient1.5; MAapproach0; beta0.9; lambda0.95; decay7; softmax18; alpha0.2; 8RUNS
+%Distance BT: 56.2633; ScaleNeash9; NeASh0; Transfer0; k-lenient1.5; MAapproach0; beta0.9; lambda0.95; decay7; softmax9; alpha0.2; 8RUNS
+%Distance BT: 61.968; ScaleNeash9; NeASh0; Transfer0; k-lenient1.5; MAapproach0; beta0.9; lambda0.95; decay6; softmax13; alpha0.2; 8RUNS
+%Distance BT: 48.3245; ScaleNeash9; NeASh0; Transfer0; k-lenient1.5; MAapproach0; beta0.9; lambda0.95; decay4; softmax13; alpha0.2; 8RUNS
+%Distance BT: 56.8172; ScaleNeash9; NeASh0; Transfer0; k-lenient1.5; MAapproach0; beta0.9; lambda0.95; decay3; softmax13; alpha0.2; 8RUNS
+%Distance BT: 56.4085; ScaleNeash9; NeASh0; Transfer0; k-lenient1.5; MAapproach0; beta0.9; lambda0.95; decay8; softmax13; alpha0.2; 8RUNS
+%Distance BT: 58.873; ScaleNeash9; NeASh0; Transfer0; k-lenient1.5; MAapproach0; beta0.9; lambda0.95; decay9; softmax13; alpha0.2; 8RUNS
+%Distance BT: 51.7065; ScaleNeash9; NeASh0; Transfer0; k-lenient1.5; MAapproach0; beta0.9; lambda0.95; decay10; softmax13; alpha0.2; 8RUNS
+%Distance BT: 66.409; ScaleNeash9; NeASh0; Transfer0; k-lenient1.5; MAapproach0; beta0.9; lambda0.95; decay11; softmax13; alpha0.2; 8RUNS
+%Distance BT: 47.7373; ScaleNeash9; NeASh0; Transfer0; k-lenient1.5; MAapproach0; beta0.9; lambda0.95; decay7; softmax13; alpha0.1; 8RUNS
+%Distance BT: 62.5846; ScaleNeash9; NeASh0; Transfer0; k-lenient1.5; MAapproach0; beta0.9; lambda0.95; decay7; softmax13; alpha0.3; 8RUNS
+%Distance BT: 59.6821; ScaleNeash9; NeASh0; Transfer0; k-lenient1.5; MAapproach0; beta0.9; lambda0.95; decay7; softmax13; alpha0.4; 8RUNS
+%Distance BT: 77.1318; ScaleNeash9; NeASh0; Transfer0; k-lenient1.5; MAapproach0; beta0.9; lambda0.95; decay7; softmax13; alpha0.5; 8RUNS
+%Distance BT: 71.9772; ScaleNeash9; NeASh0; Transfer0; k-lenient1.5; MAapproach0; beta0.9; lambda0.95; decay7; softmax13; alpha0.6; 8RUNS
+
+x =
+
+   13.0000
+    7.0000
+    0.2000
+
+
+fval =
+
+   47.6607
