@@ -3,15 +3,15 @@ clc
 clf
 close all
 
-sort_1f_0t = 1;  % sort by best fitness (0) or by fastest convergence (1)
+sort_1f_0t = 0;  % sort by best fitness (0) or by fastest convergence (1)
 thT = 55; % threshold to time to threshold from 0-100%
 
 %folder = 'opti/cosh/test1/';
-%folder = 'opti/cosh/test1/';
+%folder = 'opti/drl/test1/';
 
 record=0;
 interval=0.7;
-m=1;
+m=10;
 span=0.1;
 
 files = dir(fullfile([folder '*.mat']));

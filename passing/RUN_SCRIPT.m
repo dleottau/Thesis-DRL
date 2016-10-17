@@ -34,29 +34,23 @@ conf.thT           = 50;     % threshold to compute Time to threshold
 conf.Q_INIT = 0;                    % Q table initial values
 
 if conf.TRANSFER && conf.nash
-    conf.Q_INIT = 0;                % if NeASh, optimistic initialization
+    conf.Q_INIT = 5;                % if NeASh, optimistic initialization
 elseif conf.TRANSFER && ~conf.nash
-    conf.Q_INIT = -0;               % if CoSh, pessimistic initialization
+    conf.Q_INIT = -5;               % if CoSh, pessimistic initialization
 end
 
-% -------------------------------------------------------------------------
-% Target and ball position.------------------------------------------------
-conf.Pt = [0 0];          % Target Position
-conf.Pb = [1800 0];       % Initial ball poition
 % -------------------------------------------------------------------------
 conf.deltaVw   = 2;
 conf.Vr_max    = [100 40 40];    % x,y,rot Max Speed achieved by the robot.-
 conf.Vr_min    = -conf.Vr_max;
 conf.Vr_min(1) = 0;
 conf.Fr        = 150;            % Friction coefficient
+% -------------------------------------------------------------------------
 conf.maxDeltaV = conf.Vr_max .* [1/3 1/3 1/3];    % mm/s/Ts
 conf.Nactios   = [12,13,8];
-conf.V_action_steps = (conf.Vr_max-conf.Vr_min)./(conf.Nactios-[1 1 1]);
-conf.feature_max    = [1000, 60, 90 conf.Pb(1)];
-conf.feature_min    = [0, -60, -90, 0];
-conf.Nfeatures      = [20, 12, 10, 4];
-conf.feature_step   = (conf.feature_max-conf.feature_min)./(conf.Nfeatures-[1 1 1 1]);
-%conf.feature_step   = [50, 10, 20, 600];
+%conf.Nfeatures      = [20, 12, 10, 4];
+%conf.feature_step   = (conf.feature_max-conf.feature_min)./(conf.Nfeatures-[1 1 1 1]);
+conf.feature_step   = [50, 10, 20, 600];
 % -------------------------------------------------------------------------
 conf.sync.nash = 1;
 conf.sync.TL   = 1;
@@ -96,6 +90,11 @@ RL.param.k         = x(7);      % 1.5 Lenience parameter
 RL.param.aScale    = x(10);     % Scale factor for the action space in neash
 
 %% Inwalk-Passing parameters.----------------------------------------------
+% Target and ball position.------------------------------------------------
+conf.Pt = [0 0];          % Target Position
+conf.Pb = [1800 0];       % Initial ball poition
+% -------------------------------------------------------------------------
+
 % Parameters of the Robot Initial position.--------------------------------
 conf.r_int = 700;
 conf.r_ext = 1200;
@@ -114,6 +113,7 @@ conf.Rvar  = 500;
 mu         = [conf.Pt(1)  conf.Pt(2)];
 sigma      = [conf.Rvar^2 0 ; 0 conf.Rvar^2];
 conf.f_gmm = @(x,y)mvnpdf([x y],mu,sigma);
+% -------------------------------------------------------------------------
 
 
 %% -----------------------------------------------------------------------
@@ -137,9 +137,7 @@ elseif ~conf.nash && conf.TRANSFER
 end
 
 % ------------------------------------------------------------------------
-loadFile        = [folder loadFile];
 evolutionFile   = [folder fileName ];
-performanceFile = loadFile;
 conf.fileName   = fileName;
 
 %% ------------------------------------------------------------------------
@@ -205,13 +203,14 @@ f = mean(pf); % Fitness function: percentage of distance from ball to target
 results.mean_dbt = mean(dBT,2);
 results.std_dbt  = std(dBT,0,2);
 
-Tth=conf.episodes;
+% -------------------------------------------------------------------------
+Tth = conf.episodes;
 if conf.thT>=min(results.mean_dbt)
     tth=find(results.mean_dbt<conf.thT);
     Tth=tth(1);
 end
 results.performance(1,2)=Tth;
-
+% -------------------------------------------------------------------------
 
 if conf.fuzzQ
     stringName=['fuz-' stringName];

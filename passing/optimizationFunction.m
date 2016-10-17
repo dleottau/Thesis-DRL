@@ -1,20 +1,20 @@
-% function f = optimizationFunction(x)
-% global RUNS;
-% global opti;
-% global prueba;
-
-clc
-clf
-clear all
-close all
-tic
-
+function f = optimizationFunction(x)
+global RUNS;
 global opti;
-opti = 0;
-global test;
-test=0;
 global prueba;
-prueba = 1;
+
+% clc
+% clf
+% clear all
+% close all
+% tic
+% 
+% global opti;
+% opti = 0;
+% global test;
+% test=0;
+% global prueba;
+% prueba = 1;
 
 if ~opti
     RUNS = 25;        
@@ -36,7 +36,7 @@ x0 = [];
 %% Algorithm parameters.-
 
 xname{1}  = 'alpha';
-x0(1)     = 0.2;
+x0(1)     = 0.2;            % Optimizado.-
 
 xname{2}  = 'softmax';
 x0(2)     = 5;              % 11
@@ -57,7 +57,7 @@ xname{7}  = 'k-lenient';
 x0(7)     = 1.5;
 
 xname{8}  = 'Transfer';
-x0(8)     = 1;      % =1 transfer, >1 acts gready from source policy, =0 learns from scratch, =-1 just for test performance from stored policies
+x0(8)     = 0;      % =1 transfer, >1 acts gready from source policy, =0 learns from scratch, =-1 just for test performance from stored policies
 
 xname{9}  = 'NeASh';
 x0(9)     = 0;      % 0 COntrol sharing, 1 NASh
@@ -68,15 +68,20 @@ x0(10)    = 9;             % 20    % 0.04 scale factor for the action space in n
 % -------------------------------------------------------------------------
 
 if opti
-    x0(2)  = x(1);
-    x0(3)  = x(2);
-    %x0(10) = x(3);    
-    x0(1) = x(3);    
+    x0(11)  = x(1);
+    x0(12)  = x(2);
+    x0(13)  = x(3);
+    x0(14)  = x(4);   
 end
+
+xname{11} = 'STP1_';
+xname{12} = 'STP2_';
+xname{13} = 'STP3_';
+xname{14} = 'STP4_';
 
 stringName = [];
 
-for i = length(x0) : -1 : 1
+for i = length(x0) : -1 : 11
     stringName = [stringName '; ' xname{i} num2str(x0(i)) ];
 end
 stringName = [stringName(3:end) '; ' num2str(RUNS) 'RUNS'];
@@ -89,7 +94,6 @@ end
 
 %% Se ejecuta RUN_SCRIPT.-
 [f] = RUN_SCRIPT(x0,RUNS,stringName);
-
 
 if ~opti
     disp('-');
