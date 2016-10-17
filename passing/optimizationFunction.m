@@ -39,10 +39,10 @@ xname{1}  = 'alpha';
 x0(1)     = 0.2;            % Optimizado.-
 
 xname{2}  = 'softmax';
-x0(2)     = 5;              % 11
+x0(2)     = 1;              % 11
 
 xname{3}  = 'decay';
-x0(3)     = 5;              % 8
+x0(3)     = 13;              % 8
 
 xname{4}  = 'lambda';
 x0(4)     = 0.95;

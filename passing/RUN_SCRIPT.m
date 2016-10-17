@@ -34,12 +34,13 @@ conf.thT           = 50;     % threshold to compute Time to threshold
 conf.Q_INIT = 0;                    % Q table initial values
 
 if conf.TRANSFER && conf.nash
-    conf.Q_INIT = 5;                % if NeASh, optimistic initialization
+    conf.Q_INIT = 0;                % if NeASh, optimistic initialization
 elseif conf.TRANSFER && ~conf.nash
-    conf.Q_INIT = -5;               % if CoSh, pessimistic initialization
+    conf.Q_INIT = -0;               % if CoSh, pessimistic initialization
 end
 
 % -------------------------------------------------------------------------
+conf.Pb = [1800 0];       % Initial ball poition
 conf.deltaVw   = 2;
 conf.Vr_max    = [100 40 40];    % x,y,rot Max Speed achieved by the robot.-
 conf.Vr_min    = -conf.Vr_max;
@@ -48,6 +49,9 @@ conf.Fr        = 150;            % Friction coefficient
 % -------------------------------------------------------------------------
 conf.maxDeltaV = conf.Vr_max .* [1/3 1/3 1/3];    % mm/s/Ts
 conf.Nactios   = [12,13,8];
+conf.V_action_steps = (conf.Vr_max-conf.Vr_min)./(conf.Nactios-[1 1 1]);
+conf.feature_min    = [0, -60, -90, 0];
+conf.feature_max    = [1000, 60, 90 conf.Pb(1)];
 %conf.Nfeatures      = [20, 12, 10, 4];
 %conf.feature_step   = (conf.feature_max-conf.feature_min)./(conf.Nfeatures-[1 1 1 1]);
 conf.feature_step   = [50, 10, 20, 600];
@@ -108,7 +112,7 @@ conf.r3  = 500;
 % -------------------------------------------------------------------------
 
 % Parameters of Gaussian Distribution.-------------------------------------
-conf.Rgain = 1e8;
+conf.Rgain = 200000000;
 conf.Rvar  = 500;
 mu         = [conf.Pt(1)  conf.Pt(2)];
 sigma      = [conf.Rvar^2 0 ; 0 conf.Rvar^2];
