@@ -13,7 +13,7 @@ global flagFirst;
 global opti;
 conf.opti=opti;
 
-interval=0.3;
+conf.interval=0.3;
 thT=20; %Threshold to compute the Time to threshold
 
 %dbstop in softmax_selection.m at 38
@@ -61,8 +61,9 @@ RL.param.softmax    = x(2);   % Boltzmann temperature (50 by default), if <= 0 e
 RL.param.exp_decay  = x(3);   % 8 exploration decay parameter
 RL.param.k          = x(7);   % 1.5 lenience parameter
 RL.param.beta       = x(5);   % 0.9 lenience discount factor
-RL.param.aScale      = x(10);    % scale factor for the action space in neash
-
+RL.param.aScale     = x(10);    % scale factor for the action space in neash
+RL.sinFreq          = x(11);  % Frequency for sin wave in transfer. No of cicles 
+ 
 conf.maxDistance =6000;       % maximum ball distance permited before to end the episode X FIELD DIMENSION
 conf.th_max = [250 15 15];    % maximum pho desired
 
@@ -130,13 +131,13 @@ v_min=Inf;
 pf_max=-Inf;
 
 if conf.TRANSFER < 0
-    interval=0.1;
+    conf.interval=0.1;
 end
 
 for i=1:RUNS
 
-    et(i) = mean(e_time(ceil(interval*conf.episodes):end,i))/1.5;
-    et_sd(i) = std(e_time(ceil(interval*conf.episodes):end,i))/1.5;
+    et(i) = mean(e_time(ceil(conf.interval*conf.episodes):end,i))/1.5;
+    et_sd(i) = std(e_time(ceil(conf.interval*conf.episodes):end,i))/1.5;
     if et(i) < et_min
         et_min=et(i);
     end
@@ -144,8 +145,8 @@ for i=1:RUNS
         et_max=et(i);
     end
        
-    vm(i) = mean(Vavg(ceil(interval*conf.episodes):end,i));
-    vm_sd(i) = std(Vavg(ceil(interval*conf.episodes):end,i));
+    vm(i) = mean(Vavg(ceil(conf.interval*conf.episodes):end,i));
+    vm_sd(i) = std(Vavg(ceil(conf.interval*conf.episodes):end,i));
     if vm(i) > v_max
         v_max=vm(i);
     end
@@ -153,8 +154,8 @@ for i=1:RUNS
         v_min=vm(i);
     end
      
-    pf(i) = mean(tp_faults(ceil(interval*conf.episodes):end,i));
-    pf_sd(i) = std(tp_faults(ceil(interval*conf.episodes):end,i));
+    pf(i) = mean(tp_faults(ceil(conf.interval*conf.episodes):end,i));
+    pf_sd(i) = std(tp_faults(ceil(conf.interval*conf.episodes):end,i));
     if pf(i) < pf_min
         pf_min=pf(i);
     end
@@ -162,7 +163,7 @@ for i=1:RUNS
         pf_max=pf(i);
     end
            
-    cr(i) = mean(reward(ceil(interval*conf.episodes):end,1,i)) + mean(reward(ceil(interval*conf.episodes):end,2,i)) + mean(reward(ceil(interval*conf.episodes):end,3,i));
+    cr(i) = mean(reward(ceil(conf.interval*conf.episodes):end,1,i)) + mean(reward(ceil(conf.interval*conf.episodes):end,2,i)) + mean(reward(ceil(conf.interval*conf.episodes):end,3,i));
     if cr(i) > cr_max
         cr_max=cr(i);
         et_xxx=et(i);
@@ -178,7 +179,7 @@ for i=1:RUNS
     
 end
 
-tested_episodes=round(conf.episodes-ceil(interval*conf.episodes));
+tested_episodes=round(conf.episodes-ceil(conf.interval*conf.episodes));
 
 results.time = e_time;
 results.faults = tp_faults;
@@ -259,7 +260,10 @@ if conf.TRANSFER >= 0
         title('Mean Cum.Reward')
 
         subplot(2,2,3)
-        plot((100-results.mean_Vavg+results.mean_faults)/2)
+        gfitness=(100-results.mean_Vavg+results.mean_faults)/2 ;
+        plot(smooth(gfitness, 0.07,'rloess'))
+        %plot((100-results.mean_Vavg+results.mean_faults)/2 )
+        
         title('Mean Global Fitness(%)')
 
         subplot(2,2,1)

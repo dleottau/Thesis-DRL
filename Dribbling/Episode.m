@@ -54,6 +54,11 @@ btd=0;
 
 Fr=150;
 
+rnd.nash=0;
+rnd.nashExpl=0;
+rnd.expl=0;
+rnd.TL=0;
+
 Pa=[0 0 0];
 pa = 0;
 
@@ -73,18 +78,16 @@ x = [Pr(i,1),Pb(i,1),Vb(i,1),Vr(i,1),ro(i,1),dV,gama(i,1),fi(i,1)];
 [RL.V_src] = controller (x,Vr_min,Vr_max);
 
 % convert the continous state variables to an index of the statelist
-%s   = DiscretizeState(x,statelist);
 s  = DiscretizeStateDLF(x,cores,feature_step,div_disc);
 
 % selects an action using the epsilon greedy selection strategy
 a(1)   = e_greedy_selection(RL.Q, s, RL.param.epsilon, rand());
 a(2) = e_greedy_selection(RL.Q_y,s, RL.param.epsilon, rand());
 a(3) = e_greedy_selection(RL.Q_rot,s, RL.param.epsilon, rand());
-%action = ones(1,3);
+
 ap(1)=a(1);
 ap(2)=a(2);
 ap(3)=a(3);
-
 
 while 1  
     steps=i;
@@ -92,7 +95,7 @@ while 1
     time(i) = time(i-1) + Ts; 
          
     % convert the index of the action into an action value
-    %action = actionlist(a,:);    
+    
     action(1) = actionlist(a(1),1);    
     action(2) = actionlist(a(2),2);    
     action(3) = actionlist(a(3),3);    
@@ -125,8 +128,7 @@ while 1
     dV = Vb(i,1) * cosd( Pr(i,3)-dirb(i,1) ) - Vr(i,1);
     % Ground thruth state vector
     x = [Pr(i,1),Pb(i,1),Vb(i,1),Vr(i,1),ro(i,1),dV,gama(i,1),fi(i,1)];
-    
-    
+        
     %Adding noise to the ball and target perceptions
     np = (rand()*2*NoisePerception - NoisePerception) + 1;
     % Observed state vector x_obs
@@ -147,18 +149,12 @@ while 1
     total_reward = total_reward + r;
            
     % convert the continous state variables in [xp] to an index of the statelist    
-    %sp  = DiscretizeState(x_obs,statelist);
     sp  = DiscretizeStateDLF(x_obs,cores,feature_step,div_disc);
-        
+    
     % select action prime
     [ap, Pap] = p_source_selection2(RL,sp,conf);
-    
-    %[ap(1), Pap(1)] = p_source_selection(RL.Q, RL.T, sp,RL.param, A_src(1), RL.param.Beta(1), conf, rnd);
-    %[ap(2), Pap(2)] = p_source_selection(RL.Q_y, RL.T_y, sp, RL.param, A_src(2), RL.param.Beta(2), conf, rnd);
-    %[ap(3), Pap(3)] = p_source_selection(RL.Q_rot, RL.T_rot, sp, RL.param, A_src(3), RL.param.Beta(3), conf, rnd);
-    
-    % Temporal for NeASh adaptive >>
-    
+        
+   % Temporal for NeASh adaptive >>
     RL.cum_Pa = RL.cum_Pa + Pap;
     dPa=abs(Pap-Pa);
     RL.cum_dPa = RL.cum_dPa + dPa;

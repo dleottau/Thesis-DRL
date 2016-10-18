@@ -6,9 +6,9 @@ clc
 
 %record =  true;
 
-spot={':r' '-g' '-.c' '--k'  ':b' '-m' '-.r' '--g'};
-spot_dot={'.r' '.g' '.c' '.k' '.b' '.m' '.r' '.g'};
-lineW=[2 1 1 1 2 1 1 1];
+spot={':r' '-g' '-.c' '--k'  ':b' '-m' '-.r' '--g' ':r' '-g' '-.c' '--k'  ':b' '-m' '-.r' '--g' ':r' '-g' '-.c' '--k'  ':b' '-m' '-.r' '--g' ':r' '-g' '-.c' '--k'  ':b' '-m' '-.r' '--g' ':r' '-g' '-.c' '--k'  ':b' '-m' '-.r' '--g' ':r' '-g' '-.c' '--k'  ':b' '-m' '-.r' '--g'};
+spot_dot={'.r' '.g' '.c' '.k' '.b' '.m' '.r' '.g' '.r' '.g' '.c' '.k' '.b' '.m' '.r' '.g' '.r' '.g' '.c' '.k' '.b' '.m' '.r' '.g' '.r' '.g' '.c' '.k' '.b' '.m' '.r' '.g' '.r' '.g' '.c' '.k' '.b' '.m' '.r' '.g' '.r' '.g' '.c' '.k' '.b' '.m' '.r' '.g'};
+lineW=[2 1 1 1 2 1 1 1 2 1 1 1 2 1 1 1 2 1 1 1 2 1 1 1 2 1 1 1 2 1 1 1 2 1 1 1 2 1 1 1 2 1 1 1 2 1 1 1];
 
 
 legendN=[];
@@ -20,9 +20,7 @@ M=[];
 S=[];
 
 % ----------
-% spot={':r' '-g' '-.c' '--k'  ':b' '-m' '-.r' '--g' ':r' '-g' '-.c' '--k'  ':b' '-m' '-.r' '--g' ':r' '-g' '-.c' '--k'  ':b' '-m' '-.r' '--g' ':r' '-g' '-.c' '--k'  ':b' '-m' '-.r' '--g' ':r' '-g' '-.c' '--k'  ':b' '-m' '-.r' '--g' ':r' '-g' '-.c' '--k'  ':b' '-m' '-.r' '--g'};
-% spot_dot={'.r' '.g' '.c' '.k' '.b' '.m' '.r' '.g' '.r' '.g' '.c' '.k' '.b' '.m' '.r' '.g' '.r' '.g' '.c' '.k' '.b' '.m' '.r' '.g' '.r' '.g' '.c' '.k' '.b' '.m' '.r' '.g' '.r' '.g' '.c' '.k' '.b' '.m' '.r' '.g' '.r' '.g' '.c' '.k' '.b' '.m' '.r' '.g'};
-% lineW=[2 1 1 1 2 1 1 1 2 1 1 1 2 1 1 1 2 1 1 1 2 1 1 1 2 1 1 1 2 1 1 1 2 1 1 1 2 1 1 1 2 1 1 1 2 1 1 1];
+
 % 
 % folder = 'opti/CoSh/test03/'; %triang1Sat03  test303
 % files = dir(fullfile([folder '*.mat']));
@@ -32,21 +30,32 @@ S=[];
 %     [M,S,n,legendN] = load_results(results,M,S,n,legendN,files(i).name);
 % end
 % ----------
+load 'opti/NeASh/sin1/sinFreq35; ScaleNeash6; NeASh1; Transfer1; k-lenient1.5; MAapproach0; beta0.9; lambda0.8; decay7; softmax2; alpha0.3.mat'
+[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL+NeASh-sin-Best'); %Fitness=12.1148; T_th=158
 
-load opti/NeASh/triang1Sat03/DRL_8Runs_Noise0.1_MA0_alpha0.3_lambda0.8_softmax4_decay9_NeASh9.mat;
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL+NeASh-triangSat-Best');
+load 'opti/NeASh/sin1/sinFreq30; ScaleNeash31; NeASh1; Transfer1; k-lenient1.5; MAapproach0; beta0.9; lambda0.8; decay7; softmax2; alpha0.3.mat'
+[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL+NeASh-sin-Fast'); %T_th=1; Fitness=16.0208
 
-load opti/NeASh/triang1Sat03/DRL_8Runs_Noise0.1_MA0_alpha0.3_lambda0.8_softmax4_decay11_NeASh9.mat;
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL+NeASh-triangSat-Fast');
+load 'opti/NeASh/test4/sinFreq0; ScaleNeash9; NeASh1; Transfer1; k-lenient1.5; MAapproach0; beta0.9; lambda0.8; decay9; softmax2; alpha0.3.mat'
+[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL+NeASh-invExpl-Best'); %Fitness=13.3351; T_th=156
+
+load 'opti/NeASh/test4/sinFreq0; ScaleNeash15; NeASh1; Transfer1; k-lenient1.5; MAapproach0; beta0.9; lambda0.8; decay11; softmax2; alpha0.3.mat'
+[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL+NeASh-invExpl-Fast'); %T_th=94; Fitness=15.8793
+
+%load opti/NeASh/triang1Sat03/DRL_8Runs_Noise0.1_MA0_alpha0.3_lambda0.8_softmax4_decay9_NeASh9.mat;
+%[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL+NeASh-triangSat-Best');
+
+%load opti/NeASh/triang1Sat03/DRL_8Runs_Noise0.1_MA0_alpha0.3_lambda0.8_softmax4_decay11_NeASh9.mat;
+%[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL+NeASh-triangSat-Fast');
 
 load 'opti/NeASh/test303/ScaleNeash19; NeASh1; Transfer1; k-lenient1.5; MAapproach0; beta0.9; lambda0.8; decay13; softmax6; alpha0.3.mat'
 [M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL+NeASh-Gauss-Best&Fast');
 
-load 'opti/CoSh/test03/ScaleNeash2; NeASh0; Transfer1; k-lenient1.5; MAapproach0; beta0.9; lambda0.8; decay6; softmax2; alpha0.3.mat'
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL+CoSh-Best');
+%load 'opti/CoSh/test03/ScaleNeash2; NeASh0; Transfer1; k-lenient1.5; MAapproach0; beta0.9; lambda0.8; decay6; softmax2; alpha0.3.mat'
+%[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL+CoSh-Best');
 
-load 'opti/CoSh/test03/ScaleNeash2; NeASh0; Transfer1; k-lenient1.5; MAapproach0; beta0.9; lambda0.8; decay11; softmax2; alpha0.3.mat'
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL+CoSh-Fast');
+%load 'opti/CoSh/test03/ScaleNeash2; NeASh0; Transfer1; k-lenient1.5; MAapproach0; beta0.9; lambda0.8; decay11; softmax2; alpha0.3.mat'
+%[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL+CoSh-Fast');
 
 % load opti/CoSh/DRL_8Runs_Noise0.1_MA0_alpha0.3_lambda0.8_softmax11_decay11_CoSh.mat
 % [M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL+CoSh');

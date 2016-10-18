@@ -1,20 +1,20 @@
-function f = optimizationFunction(x)
-global RUNS;
-global opti;
-global prueba;
-
-% clc
-% clf
-% clear all
-% close all
-% tic
-% 
+% function f = optimizationFunction(x)
+% global RUNS;
 % global opti;
-% opti = 0;
-% global test;
-% test=0;
 % global prueba;
-% prueba = 1;
+
+clc
+clf
+clear all
+close all
+tic
+
+global opti;
+opti = 0;
+global test;
+test=0;
+global prueba;
+prueba = 1;
 
 if ~opti
     RUNS = 25;        
@@ -36,19 +36,19 @@ x0 = [];
 %% Algorithm parameters.-
 
 xname{1}  = 'alpha';
-x0(1)     = 0.2;            % Optimizado.-
+x0(1)     = 0.2;
 
 xname{2}  = 'softmax';
 x0(2)     = 3;              % 11
 
 xname{3}  = 'decay';
-x0(3)     = 6;              % 8
+x0(3)     = 9;              % 8
 
 xname{4}  = 'lambda';
 x0(4)     = 0.95;
 
 xname{5}  = 'beta';
-x0(5)     = 0.9;
+x0(5)     = 0.6;
 
 xname{6}  = 'MAapproach';
 x0(6)     = 0;      % 0 no cordination, 1 frequency adjusted, 2 lenient
@@ -60,22 +60,23 @@ xname{8}  = 'Transfer';
 x0(8)     = 1;      % =1 transfer, >1 acts gready from source policy, =0 learns from scratch, =-1 just for test performance from stored policies
 
 xname{9}  = 'NeASh';
-x0(9)     = 0;      % 0 COntrol sharing, 1 NASh
+x0(9)     = 1;      % 0 COntrol sharing, 1 NASh, 2 Nash triangular
 
 xname{10} = 'ScaleNeash';
-x0(10)    = 9;             % 20    % 0.04 scale factor for the action space in neash
+x0(10)    = 10;             % 20    % 0.04 scale factor for the action space in neash
 
 % -------------------------------------------------------------------------
 
 if opti
-    x0(3)  = x(1);
-    x0(2)  = x(2);
-       
+    x0(2)  = x(1);
+    x0(3)  = x(2);
+    %x0(10) = x(3);    
+    %x0(1) = x(3);    
 end
 
 stringName = [];
 
-for i = length(x0) : -1 : 11
+for i = length(x0) : -1 : 1
     stringName = [stringName '; ' xname{i} num2str(x0(i)) ];
 end
 stringName = [stringName(3:end) '; ' num2str(RUNS) 'RUNS'];
@@ -88,6 +89,7 @@ end
 
 %% Se ejecuta RUN_SCRIPT.-
 [f] = RUN_SCRIPT(x0,RUNS,stringName);
+
 
 if ~opti
     disp('-');

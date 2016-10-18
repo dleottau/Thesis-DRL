@@ -4,7 +4,9 @@ clf
 close all
 
 %folder = 'opti/CoSh/test03/';
-folder = 'opti/NeASh/test303/';
+%folder = 'opti/NeASh/test303/';
+%folder = 'opti/NeASh/test4/';
+folder = 'opti/NeASh/sin1/';
 %folder = 'opti/NeASh/triang1Sat03/';
 
 sort_1f_0t=1;
@@ -17,8 +19,9 @@ interval=0.7;
 
 
 files = dir(fullfile([folder '*.mat']));
-f=[];
+f=[]; t=[];
 j=1;
+
 for i=1:size(files,1)
     result=importdata([folder files(i).name]);
 %     rth = find(result.<th);

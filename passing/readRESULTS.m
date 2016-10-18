@@ -6,12 +6,12 @@ close all
 sort_1f_0t = 0;  % sort by best fitness (0) or by fastest convergence (1)
 thT = 55; % threshold to time to threshold from 0-100%
 
-%folder = 'opti/cosh/test1/';
+folder = 'opti/cosh/test1/';
 %folder = 'opti/drl/test1/';
 
 record=0;
 interval=0.7;
-m=10;
+m=1;
 span=0.1;
 
 files = dir(fullfile([folder '*.mat']));
@@ -21,9 +21,10 @@ for i=1:size(files,1)
     
     result=importdata([folder files(i).name]);
        
-    F = result.mean_dbt;
+    %F = result.mean_dbt;
     %Tth=result.performance(1,2);
-    %F = smooth(result.mean_goals, span,'rloess');
+    
+    F = smooth(result.mean_goals, span,'rloess');
     Tth = size(F,1);
     %keyboard
     if sum(F<thT) && (sum(F<thT)>m)
