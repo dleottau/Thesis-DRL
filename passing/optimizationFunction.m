@@ -39,10 +39,10 @@ xname{1}  = 'alpha';
 x0(1)     = 0.2;            % Optimizado.-
 
 xname{2}  = 'softmax';
-x0(2)     = 1;              % 11
+x0(2)     = 3;              % 11
 
 xname{3}  = 'decay';
-x0(3)     = 13;              % 8
+x0(3)     = 6;              % 8
 
 xname{4}  = 'lambda';
 x0(4)     = 0.95;
@@ -57,7 +57,7 @@ xname{7}  = 'k-lenient';
 x0(7)     = 1.5;
 
 xname{8}  = 'Transfer';
-x0(8)     = 0;      % =1 transfer, >1 acts gready from source policy, =0 learns from scratch, =-1 just for test performance from stored policies
+x0(8)     = 1;      % =1 transfer, >1 acts gready from source policy, =0 learns from scratch, =-1 just for test performance from stored policies
 
 xname{9}  = 'NeASh';
 x0(9)     = 0;      % 0 COntrol sharing, 1 NASh
@@ -68,16 +68,10 @@ x0(10)    = 9;             % 20    % 0.04 scale factor for the action space in n
 % -------------------------------------------------------------------------
 
 if opti
-    x0(11)  = x(1);
-    x0(12)  = x(2);
-    x0(13)  = x(3);
-    x0(14)  = x(4);   
+    x0(3)  = x(1);
+    x0(2)  = x(2);
+       
 end
-
-xname{11} = 'STP1_';
-xname{12} = 'STP2_';
-xname{13} = 'STP3_';
-xname{14} = 'STP4_';
 
 stringName = [];
 

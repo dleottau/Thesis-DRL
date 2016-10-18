@@ -4,10 +4,10 @@ clf
 close all
 
 %folder = 'opti/CoSh/test03/';
-%folder = 'opti/NeASh/test303/';
-folder = 'opti/NeASh/triang1Sat03/';
+folder = 'opti/NeASh/test303/';
+%folder = 'opti/NeASh/triang1Sat03/';
 
-sort_1f_0t=0;
+sort_1f_0t=1;
 
 
 record=0;

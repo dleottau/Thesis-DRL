@@ -1,4 +1,4 @@
-function [a, p] = p_source_selection( Q,T, s, RLparam, a_sh, beta, sync, rnd)
+function [a, p] = p_source_selection( Q,T, s, RLparam, a_sh, beta, conf, rnd)
 
 % source_action_selection selects an action using p probability
 % Q: the Qtable
@@ -7,8 +7,9 @@ function [a, p] = p_source_selection( Q,T, s, RLparam, a_sh, beta, sync, rnd)
 % at transferred action
 % p probability for choosing transferred action
 
-if ~sync.expl, rnd.expl=rand(); end
-if ~sync.TL, rnd.TL=rand(); end
+if ~conf.sync.nash, rnd.nash=randn(); rnd.nashExpl=randn(); end
+if ~conf.sync.expl, rnd.expl=rand(); end
+if ~conf.sync.TL, rnd.TL=rand(); end
 
 N = size(Q,2); % number of actions
 Qs=Q(s,:);
@@ -16,9 +17,11 @@ Qs=Q(s,:);
 
 a_source = a_sh;
 
-RLparam.softmax=beta;
+%RLparam.softmax=beta;
 [a_target, P] = softmax_selection(Qs, T, s, RLparam, rnd.expl);
-a_target = clipDLF( round(GetBestAction(Q,s) + RLparam.aScale*rnd.nash*beta), 1,N );
+
+RLparam.aScale=1;
+a_target = clipDLF( round(GetBestAction(Q,s) + RLparam.aScale*rnd.nashExpl*beta), 1,N );
 
 if RLparam.softmax <= 0
     a_target = e_greedy_selection(Q, s, RLparam.epsilon, rnd.expl);

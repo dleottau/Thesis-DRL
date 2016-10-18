@@ -18,7 +18,7 @@ thT=20; %Threshold to compute the Time to threshold
 
 %dbstop in softmax_selection.m at 38
 
-conf.episodes = 2000; %  maximum number of  episode
+conf.episodes = 1000; %  maximum number of  episode
 conf.Runs = RUNS;
 conf.record = 1;
 conf.DRAWS = 0;

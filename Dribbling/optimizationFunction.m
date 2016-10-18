@@ -38,9 +38,9 @@ x0 = [];
 xname{1}='alpha';
 x0(1) = 0.3;
 xname{2}='softmax';
-x0(2) = 2;
+x0(2) = 6;
 xname{3}='decay';
-x0(3) = 11; 
+x0(3) = 9; 
 xname{4}='lambda';
 x0(4) = 0.8; 
 % ------
@@ -53,9 +53,9 @@ x0(5) = 0.9;
 xname{8}='Transfer';
 x0(8) = 1;   %=1 transfer, >1 acts gready from source policy, =0 learns from scratch, =-1 just for test performance from stored policies
 xname{9}='NeASh';
-x0(9) = 0;   % 0 COntrol sharing, 1 NASh
+x0(9) = 1;   % 0 COntrol sharing, 1 NASh
 xname{10}='ScaleNeash';
-x0(10) = 20;    % 0.04 scale factor for the action space in neash
+x0(10) = 19;    % 0.04 scale factor for the action space in neash
 
 if opti
     %x0(10) = x(1);

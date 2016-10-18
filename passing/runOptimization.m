@@ -26,26 +26,22 @@ test = 0;
 
 % -------------------------------------------------------------------------
 desired_Cluster = parcluster('local');
-desired_Cluster.NumWorkers = 4;
+desired_Cluster.NumWorkers = 2;
 matlabpool('open',desired_Cluster.NumWorkers);
 % -------------------------------------------------------------------------
 
 x0 = [];
 
-xname{11} = 'STP1_';
-x0(1)    = 4;
-xname{12} = 'STP2_';
-x0(2)    = 2;
-xname{13} = 'STP3_';
-x0(3)    = 3;
-xname{14} = 'STP4_';
-x0(4)    = 9;
+xname{1} = 'decay';
+x0(1)    = 6;
+xname{2} = 'softmax';
+x0(2)    = 3;
 %------------------------------------------
 
 options = hilloptions('TimeLimit', 600);
 
-options.step         = [1; 1; 1; 1];
-options.space        = [[1; 1; 1; 1], [5; 7; 6; 9]];
+options.step         = [1; 1];
+options.space        = [[2; 0], [15; 20]];
 options.peaks        = 4;
 options.oneDimPerTry = 1;
 

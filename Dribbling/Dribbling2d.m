@@ -82,8 +82,12 @@ for i=1:conf.episodes
     fitness=0.5*(100-Vavg+tp_faults);
         
     dec = exp(-i*epsDec);
+    %sinScale=10;
+    %dec = exp(-i*epsDec)*(1+cos(2*pi*i*sinScale/EXPLORATION))/2;
+    
     dec2 = exp(-i*epsDec2);
     inc2 = 1-exp(-i*epsInc2);
+    
     RL.param.epsilon = epsilon0*dec;
     RL.param.softmax = temp0*dec;
     
