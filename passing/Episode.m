@@ -80,7 +80,8 @@ X     = clipDLF(X, conf.feature_min, conf.feature_max);
 FV = getFeatureVector(X, conf.cores);
 
 % Get velocity from Linear Controller
-[V_src] = controller_dribbling (xG,Vr_min,Vr_max);
+% [V_src] = controller_dribbling (xG,Vr_min,Vr_max);
+[RL.V_src] = controller_dribbling (xG,Vr_min,Vr_max);
 
 ballState = 0;
 
@@ -146,8 +147,6 @@ while 1
         updateSarsaFlag=0; %do not update SARSA until ball stops
     end
     
-    
-        
     % Add Noise =========
     % Vr is the current robot speed
     dVelReq = Vr_req - Vr(i-1,:);
@@ -178,8 +177,8 @@ while 1
     elseif dVb < -2
         ballState = 2;                      % Deaccelerating
     elseif ballState == 2 && Vb(i,1) < 2
-        ballState = 3;                      % Ball stops after it moves
-        updateSarsaFlag=1; % last update SARSA 
+        ballState       = 3;                % Ball stops after it moves
+        updateSarsaFlag = 1;                % Last update SARSA
     end
     
     % Ground truth state vector
@@ -211,54 +210,13 @@ while 1
     [r,f]        = GetReward(Xp, Pr(i,:), Pb(i,:), Pt, checkGoal, Pbi, ballState, conf);
     total_reward = total_reward + r;
     
-    % keyboard
+    % Select action prime
+    [a_sc, Pap] = p_source_selection2(RL,sp,conf);
     
-    %% --------------------------------------------------------------------
-    % syncronizing exploration and transferring
-    % Syncronizing exploration and transfer between agents
-    if conf.sync.nash, rnd.nash=randn(); end
-    if conf.sync.expl, rnd.expl=rand(); end
-    if conf.sync.TL, rnd.TL=rand(); end
-    
-    % Transfer knowledge
-    if conf.TRANSFER && conf.nash
-        if ~conf.sync.nash, rnd.nash=randn(1,3); end
-        if conf.nash==2
-            V_src(1) = triang_dist(Vr_min(1),V_src(1),Vr_max(1),RL.param.p,RL.param.aScale);
-            V_src(2) = triang_dist(Vr_min(2),V_src(2),Vr_max(2),RL.param.p,RL.param.aScale);
-            V_src(3) = triang_dist(Vr_min(3),V_src(3),Vr_max(3),RL.param.p,RL.param.aScale);
-        else
-            V_src = V_src + ((Vr_max-Vr_min)/RL.param.aScale)*rnd.nash.*(1 - RL.param.p);
-        end
-    end
-      
-    V_src = clipDLF( V_src,Vr_min,Vr_max);
-    A_src(1) = 1 + round(V_src(1)/V_action_steps(1));  % from controller
-    A_src(2) = 1 + round(V_src(2)/V_action_steps(2)  + Vr_max(2)/V_action_steps(2));
-    A_src(3) = 1 + round(V_src(3)/V_action_steps(3) + Vr_max(3)/V_action_steps(3));
-       
-    [ap, fa]         = p_source_selection_FLC(RL.Q     , RL.T     , FVp , RL.param , A_src(1) , conf.sync , rnd);
-    [ap_y, fa_y]     = p_source_selection_FLC(RL.Qy    , RL.T_y   , FVp , RL.param , A_src(2) , conf.sync , rnd);
-    [ap_rot, fa_rot] = p_source_selection_FLC(RL.Q_rot , RL.T_rot , FVp , RL.param , A_src(3) , conf.sync , rnd);
-    % ¿ Qué pasa en 245 con ap y fa?
-    %% --------------------------------------------------------------------
-    %     % Select action prime
-    %     [ap, fa] = action_selection(RL.Q, RL.T, FVp, RL.param);
-    %     if conf.DRL
-    %         [ap_rot, fa_rot] = action_selection(RL.Q_rot, RL.T_rot, FVp, RL.param);
-    %         % -----------------------------------------------------------------
-    %         [ap_y, fa_y]     = action_selection(RL.Qy, RL.T_y, FVp, RL.param);
-    %         % -----------------------------------------------------------------
-    %
-    %         fap = 1;
-    %         if conf.MAapproach == 1
-    %             fap = 1-min([(fa-1/conf.nactions_x), (fa_y-1/conf.nactions_y), (fa_rot-1/conf.nactions_w)])+1E-3;
-    %         elseif conf.MAapproach == 3
-    %             fap = min([(fa-1/conf.nactions_x), (fa_y-1/conf.nactions_y), (fa_rot-1/conf.nactions_w)])+1E-3;
-    %         end
-    %         fap = clipDLF(fap, 0, 1);
-    %     end
-    
+    ap     = a_sc(1);
+    ap_y   = a_sc(2);
+    ap_rot = a_sc(3);
+    % --------------------------------------------------------------------    
     
     % Update the Qtable, that is,  learn from the experience
     if ~conf.Test && updateSarsaFlag
