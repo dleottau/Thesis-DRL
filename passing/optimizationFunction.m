@@ -1,20 +1,20 @@
-% function f = optimizationFunction(x)
-% global RUNS;
-% global opti;
-% global prueba;
-
-clc
-clf
-clear all
-close all
-tic
-
+function f = optimizationFunction(x)
+global RUNS;
 global opti;
-opti = 0;
-global test;
-test=0;
 global prueba;
-prueba = 1;
+
+% clc
+% clf
+% clear all
+% close all
+% tic
+% 
+% global opti;
+% opti = 0;
+% global test;
+% test=0;
+% global prueba;
+% prueba = 1;
 
 if ~opti
     RUNS = 25;        
@@ -68,13 +68,13 @@ x0(10)    = 10;             % 20    % 0.04 scale factor for the action space in 
 % -------------------------------------------------------------------------
 
 if opti
-    x0(2)  = x(1);
-    x0(3)  = x(2);  
+    x0(3)  = x(1);
+    x0(10) = x(2);  
 end
 
 stringName = [];
 
-for i = length(x0) : -1 : 1
+for i = length(x0) : -1 : 3
     stringName = [stringName '; ' xname{i} num2str(x0(i)) ];
 end
 stringName = [stringName(3:end) '; ' num2str(RUNS) 'RUNS'];
@@ -88,7 +88,6 @@ end
 %% Se ejecuta RUN_SCRIPT.-
 [f] = RUN_SCRIPT(x0,RUNS,stringName);
 
-
 if ~opti
     disp('-');
     disp(['%Distance BT: ',num2str(f)]);
@@ -99,4 +98,3 @@ else
     disp(['%Distance BT: ',num2str(f), '; ', stringName]);
     %disp(['%Distance BT: ',num2str(f), '; Time_th: ',num2str(tth), '; ' stringName]);
 end
-

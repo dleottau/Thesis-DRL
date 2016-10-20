@@ -29,34 +29,27 @@ else
     rnd.TL = rand(1,3);
 end
 
-N(1)    = size(RL.Q,2); % number of actions x
-Qs(1,:) = RL.Q(s,:);
-N(2)    = size(RL.Q_y,2); % number of actions y
-Qs(2,:) = RL.Q_y(s,:);
-N(3)    = size(RL.Q_rot,2); % number of actions w
-Qs(3,:) = RL.Q_rot(s,:);
-
 V_src          = RL.V_src;
 Vr_min         = conf.Vr_min;
 Vr_max         = conf.Vr_max;
 V_action_steps = conf.V_action_steps;
 actionlist     = conf.Actions;
 
-[A_target(1), P(1,:)] = softmax_selection(Qs(1,:), RL.T, s, RL.param, rnd.expl(1));
-[A_target(2), P(2,:)] = softmax_selection(Qs(2,:), RL.T_y, s, RL.param, rnd.expl(2));
-[A_target(3), P(3,:)] = softmax_selection(Qs(3,:), RL.T_rot, s, RL.param, rnd.expl(3));
+[A_target(1), P(1,:)] = softmax_selectionRBF(RL.Q     , s , RL.param.softmax , RL.T);
+[A_target(2), P(2,:)] = softmax_selectionRBF(RL.Qy    , s , RL.param.softmax , RL.T);
+[A_target(3), P(3,:)] = softmax_selectionRBF(RL.Q_rot , s , RL.param.softmax , RL.T);
 
 if RL.param.softmax < 0
-    A_target(1) = e_greedy_selection(RL.Q, s, RL.param.epsilon, rnd.expl(1));
-    A_target(2) = e_greedy_selection(RL.Q_y, s, RL.param.epsilon, rnd.expl(2));
-    A_target(3) = e_greedy_selection(RL.Q_rot, s, RL.param.epsilon, rnd.expl(3));
+    A_target(1) = e_greedy_selection(RL.Q     , s , RL.param.epsilon);
+    A_target(2) = e_greedy_selection(RL.Qy   , s , RL.param.epsilon);
+    A_target(3) = e_greedy_selection(RL.Q_rot , s , RL.param.epsilon);            
 end
 
 % Transfer knowledge
 if conf.TRANSFER && conf.nash
-    V_tgt(1) = actionlist(GetBestAction(RL.Q,s),1);
-    V_tgt(2) = actionlist(GetBestAction(RL.Q_y,s),2);
-    V_tgt(3) = actionlist(GetBestAction(RL.Q_rot,s),3);
+    V_tgt(1) = actionlist.x(GetBestAction(RL.Q,s));
+    V_tgt(2) = actionlist.y(GetBestAction(RL.Qy,s));
+    V_tgt(3) = actionlist.w(GetBestAction(RL.Q_rot,s));
     
     if conf.nash == 2
         V_src(1) = triang_dist(Vr_min(1),V_src(1),Vr_max(1),1-RL.param.p,RL.param.aScale);
@@ -72,13 +65,13 @@ if conf.TRANSFER && conf.nash
     
     V_tgt       = clipDLF( V_tgt,Vr_min,Vr_max);
     A_target(1) = 1 + round(V_tgt(1)/V_action_steps(1));
-    A_target(2) = 1 + round(V_tgt(2)/V_action_steps(2)  + Vr_max(2)/V_action_steps(2));
+    A_target(2) = 1 + round(V_tgt(2)/V_action_steps(2) + Vr_max(2)/V_action_steps(2));
     A_target(3) = 1 + round(V_tgt(3)/V_action_steps(3) + Vr_max(3)/V_action_steps(3));
 end
 
 V_src    = clipDLF( V_src,Vr_min,Vr_max);
 A_src(1) = 1 + round(V_src(1)/V_action_steps(1));
-A_src(2) = 1 + round(V_src(2)/V_action_steps(2)  + Vr_max(2)/V_action_steps(2));
+A_src(2) = 1 + round(V_src(2)/V_action_steps(2) + Vr_max(2)/V_action_steps(2));
 A_src(3) = 1 + round(V_src(3)/V_action_steps(3) + Vr_max(3)/V_action_steps(3));
 
 if (rnd.TL >= RL.param.p)

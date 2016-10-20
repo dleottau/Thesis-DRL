@@ -80,7 +80,6 @@ X     = clipDLF(X, conf.feature_min, conf.feature_max);
 FV = getFeatureVector(X, conf.cores);
 
 % Get velocity from Linear Controller
-% [V_src] = controller_dribbling (xG,Vr_min,Vr_max);
 [RL.V_src] = controller_dribbling (xG,Vr_min,Vr_max);
 
 ballState = 0;
@@ -90,10 +89,10 @@ ballState = 0;
 [a_y , p_y]    = action_selection(RL.Qy    , RL.T_y   , FV, RL.param);
 [a_rot, p_rot] = action_selection(RL.Q_rot , RL.T_rot , FV, RL.param);
 
-U           = 1;
-Qv          = 0;
-RL.param.fa = 0;
-updateSarsaFlag=1;
+U               = 1;
+Qv              = 0;
+RL.param.fa     = 0;
+updateSarsaFlag = 1;
 
 while 1
     steps   = i;
@@ -143,8 +142,8 @@ while 1
     
     % Ball state = [0 stoped, 1 accelerating, 2 deaccelerating, 3 stoped after it was moved]
     if ballState ~= 0
-        Vr_req = [0,0,0];
-        updateSarsaFlag=0; %do not update SARSA until ball stops
+        Vr_req          = [0,0,0];
+        updateSarsaFlag = 0; %do not update SARSA until ball stops
     end
     
     % Add Noise =========
@@ -211,7 +210,7 @@ while 1
     total_reward = total_reward + r;
     
     % Select action prime
-    [a_sc, Pap] = p_source_selection2(RL,sp,conf);
+    [a_sc, Pap] = p_source_selection2(RL,FVp,conf);
     
     ap     = a_sc(1);
     ap_y   = a_sc(2);
