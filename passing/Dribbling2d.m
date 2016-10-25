@@ -178,7 +178,7 @@ for i = 1:conf.episodes
         dist_BT(i) = 0;
     end
     
-    RL.break = max(mean(reward,2))<0 && i>700 && conf.opti;  % PARA ACELERAR OPTIMIZACIÓN, si no converge antes de 700 episodios, no seguir entrenando
+    RL.break = min(dist_BT)>50 && i>conf.episodes/2;% && conf.opti;  % PARA ACELERAR OPTIMIZACIÓN, si no converge antes de 700 episodios, no seguir entrenando
     % ---------------------------------------------------------------------
     
     %% Training plot.------------------------------------------------------

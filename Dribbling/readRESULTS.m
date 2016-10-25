@@ -3,13 +3,17 @@ clc
 clf
 close all
 
-%folder = 'opti/CoSh/test03/';
-%folder = 'opti/NeASh/test303/';
-%folder = 'opti/NeASh/test4/';
-folder = 'opti/NeASh/sin1/';
-%folder = 'opti/NeASh/triang1Sat03/';
+%folder = 'opti/NeASh/sin1/';
+%folder = 'opti/NeASh/triangFinal/';
+%folder = 'opti/NeASh/triangSrc2Final/';
+%folder = 'opti/NeASh/gaussFinal/';
+folder = 'opti/NeASh/gaussSrc2Final/';
+%folder = 'opti/DRL0/';
+%folder = 'opti/LRL/';
 
-sort_1f_0t=1;
+
+
+sort_1f_0t=0;
 
 
 record=0;

@@ -48,6 +48,7 @@ r(1) = - 1 * ( sum([ro abs(gama) abs(fi) dBT] .* 1/feature_max));
 if checkGoal
      f    = true;
      r(1) = conf.Rgain * f_gmm(Pbi(1),Pbi(2));
+     %r(1) = 1 + ( 1 - dBT/conf.Rvar );
 end
 
  r(2) = r(1);

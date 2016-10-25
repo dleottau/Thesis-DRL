@@ -28,7 +28,7 @@ conf.MAapproach    = x(6);   % 0 no cordination, 1 frequency adjusted, 2 leninet
 conf.TRANSFER      = x(8);   % =1 transfer, >1 acts gready from source policy, =0 learns from scratch, =-1 just for test performance from stored policies
 conf.nash          = x(9);   % 0 COntrol sharing, 1 NASh, 2 Nash triang
 conf.Mtimes        = 0;      % State-action pair must be visited M times before Q being updated
-conf.flag_Vr       = 1;      % 1 learning ; 0  controller.-
+conf.flag_Vr       =1;      % 1 learning ; 0  controller.-
 conf.thT           = 50;     % threshold to compute Time to threshold
 % -------------------------------------------------------------------------
 conf.Q_INIT = 0;                    % Q table initial values

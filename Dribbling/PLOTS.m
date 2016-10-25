@@ -30,17 +30,59 @@ S=[];
 %     [M,S,n,legendN] = load_results(results,M,S,n,legendN,files(i).name);
 % end
 % ----------
-load 'opti/NeASh/sin1/sinFreq35; ScaleNeash6; NeASh1; Transfer1; k-lenient1.5; MAapproach0; beta0.9; lambda0.8; decay7; softmax2; alpha0.3.mat'
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL+NeASh-sin-Best'); %Fitness=12.1148; T_th=158
 
-load 'opti/NeASh/sin1/sinFreq30; ScaleNeash31; NeASh1; Transfer1; k-lenient1.5; MAapproach0; beta0.9; lambda0.8; decay7; softmax2; alpha0.3.mat'
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL+NeASh-sin-Fast'); %T_th=1; Fitness=16.0208
+%load 'opti/NeASh/gaussSrc2Final/sinFreq0; ScaleNeash5; NeASh1; Transfer1; k-lenient1.5; MAapproach0; beta0.9; lambda0.8; decay9; softmax2; alpha0.3.mat';
+%[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL+NeASh-invExplSrc2-Best'); 
+% 
+load 'opti/NeASh/gaussSrc2Final/sinFreq0; ScaleNeash5; NeASh1; Transfer1; k-lenient1.5; MAapproach0; beta0.9; lambda0.8; decay12; softmax2; alpha0.3.mat';
+[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL+NeASh-invExplSrc2-Fast');
 
-load 'opti/NeASh/test4/sinFreq0; ScaleNeash9; NeASh1; Transfer1; k-lenient1.5; MAapproach0; beta0.9; lambda0.8; decay9; softmax2; alpha0.3.mat'
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL+NeASh-invExpl-Best'); %Fitness=13.3351; T_th=156
+%load 'opti/NeASh/triangSrc2Final/sinFreq0; ScaleNeash1; NeASh2; Transfer1; k-lenient1.5; MAapproach0; beta0.9; lambda0.8; decay9; softmax2; alpha0.3.mat';
+%[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL+NeASh-triangSat-Src2-Best');
 
-load 'opti/NeASh/test4/sinFreq0; ScaleNeash15; NeASh1; Transfer1; k-lenient1.5; MAapproach0; beta0.9; lambda0.8; decay11; softmax2; alpha0.3.mat'
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL+NeASh-invExpl-Fast'); %T_th=94; Fitness=15.8793
+load 'opti/NeASh/triangSrc2Final/sinFreq0; ScaleNeash1; NeASh2; Transfer1; k-lenient1.5; MAapproach0; beta0.9; lambda0.8; decay13; softmax2; alpha0.3.mat';
+[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL+NeASh-triangSat-Src2-Fast');
+
+%load 'opti/NeASh/gaussFinal/sinFreq0; ScaleNeash5; NeASh1; Transfer1; k-lenient1.5; MAapproach0; beta0.9; lambda0.8; decay10; softmax2; alpha0.3.mat';
+%[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL+NeASh-invExpl-Best'); 
+% 
+load 'opti/NeASh/gaussFinal/sinFreq0; ScaleNeash9; NeASh1; Transfer1; k-lenient1.5; MAapproach0; beta0.9; lambda0.8; decay19; softmax2; alpha0.3.mat';
+[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL+NeASh-invExpl-Fast'); 
+
+load 'opti/NeASh/triangFinal/sinFreq0; ScaleNeash9; NeASh2; Transfer1; k-lenient1.5; MAapproach0; beta0.9; lambda0.8; decay16; softmax2; alpha0.3.mat';
+[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL+NeASh-triang-Best');
+
+%load 'opti/NeASh/triangFinal/sinFreq0; ScaleNeash13; NeASh2; Transfer1; k-lenient1.5; MAapproach0; beta0.9; lambda0.8; decay16; softmax2; alpha0.3.mat';
+%[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL+NeASh-triangS-Fast');
+
+%load finalTests/DRL_25Runs_Noise0.1_MA2_alpha0.1_lambda0.9_k1.5_beta0.9_softmax70_decay6-1500E.mat
+%[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-Lenient-Best');
+
+load 'finalTests/DRL_4Runs_Noise0.1_MA2_alpha0.2_lambda0.9_k1.5_beta0.9_softmax71_decay6-1500E.mat'
+[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-Lenient-Fast');
+
+load finalTests/DRL_25Runs_Noise0.1_MA0_alpha0.5_lambda0.9_softmax70_decay6-1500E.mat
+[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-Ind-Best');
+
+%load 'finalTests/DRL_4Runs_Noise0.1_MA0_alpha0.3_lambda0.9_softmax51_decay6-1500E.mat';
+%[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-Ind-Fast');
+
+% load 'opti/DRL0/DRL_4Runs_Noise0.1_MA0_alpha0.3_lambda0.9_softmax51_decay6.mat';
+% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-Ind-Fast');
+
+
+
+% load 'opti/NeASh/sin1/sinFreq35; ScaleNeash6; NeASh1; Transfer1; k-lenient1.5; MAapproach0; beta0.9; lambda0.8; decay7; softmax2; alpha0.3.mat'
+% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL+NeASh-sin-Best'); %Fitness=12.1148; T_th=158
+% 
+% load 'opti/NeASh/sin1/sinFreq30; ScaleNeash31; NeASh1; Transfer1; k-lenient1.5; MAapproach0; beta0.9; lambda0.8; decay7; softmax2; alpha0.3.mat'
+% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL+NeASh-sin-Fast'); %T_th=1; Fitness=16.0208
+% 
+% load 'opti/NeASh/test4/sinFreq0; ScaleNeash9; NeASh1; Transfer1; k-lenient1.5; MAapproach0; beta0.9; lambda0.8; decay9; softmax2; alpha0.3.mat'
+% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL+NeASh-invExpl-Best'); %Fitness=13.3351; T_th=156
+% 
+% load 'opti/NeASh/test4/sinFreq0; ScaleNeash15; NeASh1; Transfer1; k-lenient1.5; MAapproach0; beta0.9; lambda0.8; decay11; softmax2; alpha0.3.mat'
+% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL+NeASh-invExpl-Fast'); %T_th=94; Fitness=15.8793
 
 %load opti/NeASh/triang1Sat03/DRL_8Runs_Noise0.1_MA0_alpha0.3_lambda0.8_softmax4_decay9_NeASh9.mat;
 %[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL+NeASh-triangSat-Best');
@@ -48,8 +90,8 @@ load 'opti/NeASh/test4/sinFreq0; ScaleNeash15; NeASh1; Transfer1; k-lenient1.5; 
 %load opti/NeASh/triang1Sat03/DRL_8Runs_Noise0.1_MA0_alpha0.3_lambda0.8_softmax4_decay11_NeASh9.mat;
 %[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL+NeASh-triangSat-Fast');
 
-load 'opti/NeASh/test303/ScaleNeash19; NeASh1; Transfer1; k-lenient1.5; MAapproach0; beta0.9; lambda0.8; decay13; softmax6; alpha0.3.mat'
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL+NeASh-Gauss-Best&Fast');
+%load 'opti/NeASh/test303/ScaleNeash19; NeASh1; Transfer1; k-lenient1.5; MAapproach0; beta0.9; lambda0.8; decay13; softmax6; alpha0.3.mat'
+%[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL+NeASh-Gauss-Best&Fast');
 
 %load 'opti/CoSh/test03/ScaleNeash2; NeASh0; Transfer1; k-lenient1.5; MAapproach0; beta0.9; lambda0.8; decay6; softmax2; alpha0.3.mat'
 %[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL+CoSh-Best');
@@ -172,7 +214,6 @@ function [M, S, n, legendN] = load_results(results, M, S, n, legendN, leg)
     %A= (results.time>60) .* (6000./(results.time));
     %M(:,n,1) = mean(A,2)';
     N=size(results.faults,2);
-    
     M(:,n,1) = results.mean_Vavg';
     M(:,n,2) = results.mean_faults';
     %M(:,n,3) = results.mean_rewX';
@@ -191,161 +232,3 @@ function [M, S, n, legendN] = load_results(results, M, S, n, legendN, leg)
     %results.performance(1,3)  %To see fitness
     %results.performance(1,6)  %To see time to threshold
 end
-
-% load boltzmann/Vx-5runs-Noise02-50exp10-NoSync-boltzmann20.mat
-% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'temp20-50expl10');
-% 
-% 
-% load boltzmann/Vx-5runs-Noise02-50exp5-NoSync-boltzmann20.mat
-% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'temp20-50expl5');
-% 
-% load boltzmann/Vx-20runs-Noise02-50exp5-NoSync-boltzmann5.mat
-% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'temp5-50expl5');
-% 
-% load boltzmann/Vx-20runs-Noise02-50exp10-NoSync-boltzmann5.mat
-% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'temp5-50expl10');
-% 
-% load boltzmann/Vx-20runs-Noise02-50exp10-NoSync-egready.mat
-% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'egreedy-50expl10');
-% 
-% load boltzmann/Vx-20runs-Noise02-50exp30-NoSync-egready.mat
-% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'egreedy-50expl30');
-
-
-% load boltzmann/Vx-3runs-Noise02-50exp5-NoSync-boltzmann5.mat
-% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'temp5-50expl5');
-% 
-% load boltzmann/Vx-3runs-Noise02-50exp10-NoSync-boltzmann5.mat
-% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'temp5-50expl10');
-% 
-% load boltzmann/Vx-3runs-Noise02-50exp5-NoSync-boltzmann10.mat
-% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'temp10-50expl5');
-% 
-% load boltzmann/Vx-3runs-Noise02-50exp10-NoSync-boltzmann10.mat
-% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'temp10-50expl10');
-
-
-% load boltzmann/Vx-3runs-Noise01-50exp30-NoSync-boltzmann5.mat
-% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'temp5-50expl30');
-% 
-% load boltzmann/Vx-3runs-Noise01-50exp50-NoSync-boltzmann5.mat
-% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'temp5-50expl50');
-% 
-% load boltzmann/Vx-3runs-Noise01-50exp10-NoSync-boltzmann10.mat
-% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'temp10-50expl10');
-% 
-% load boltzmann/Vx-3runs-Noise01-50exp30-NoSync-boltzmann10.mat
-% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'temp10-50expl30');
-% 
-% load boltzmann/Vx-3runs-Noise01-50exp50-NoSync-boltzmann10.mat
-% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'temp10-50expl50');
-
-
-% load NASh/NASh-10runs-Noise01-1200exp7-NoSync.mat
-% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'NASh-NoSync');
-% 
-% load NASh/NASh-10runs-Noise01-1200exp7-NAShExplSync.mat
-% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'NASh-nashExplSync');
-% 
-% load NASh/NASh-10runs-Noise01-1200exp7-TLSync.mat
-% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'NASh-TLSync');
-% 
-% load NASh/NASh-10runs-Noise01-1200exp7-FullSync.mat
-% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'NASh-FullSync');
-
-%load NASh/NASh-10runs-Noise01-1200exp6-NAShTLSync.mat
-%[M,S,n,legendN] = load_results(results,M,S,n,legendN,'NASh-nashTLSync');
-
-
-
-%load NASh/NASh-3runs-Noise01-1000exp6-NashSync.mat
-%[M,S,n,legendN] = load_results(results,M,S,n,legendN,'NASh-nashSync');
-
-%load NASh/NASh-3runs-Noise01-1000exp6-explSync.mat
-%[M,S,n,legendN] = load_results(results,M,S,n,legendN,'NASh-explSync');
-
-% 
-% load NASh/NASh-3runs-Noise01-1000exp6-TLSync.mat
-% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'NASh-TLSync');
-% 
-% load NASh/NASh-3runs-Noise01-1000exp6-NashTLSync.mat
-% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'NASh-nashTLSync');
-
-%load NASh/NASh-3runs-Noise01-1000exp6-explTLSync.mat
-%[M,S,n,legendN] = load_results(results,M,S,n,legendN,'NASh-explTLSync');
-
-% load NASh/NASh-3runs-Noise01-1000exp6-FullSync.mat
-% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'NASh-FullSync');
-
-
-
-%=========
-
-%load RC-2015/results/resultsFull_DRL-v2-20runs-Noise07-exp7.mat
-%[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL');
-
-%load RC-2015/resultsFull_DRL-NASh-v5-10runs-Noise012-exp8-phoK3.mat
-%[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-NASh');
-
-%load RC-2015/resultsFull_RL-FLC-v2-20runs-Noise02-exp20.mat
-%[M,S,n,legendN] = load_results(results,M,S,n,legendN,'RL-FLC');
-
-%load RC-2015/results/resultsFull_NASh-v2-20runs-Noise01-exp8.mat
-%[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-NASh');
-
-%load RC-2015/results/resultsFull_DRLpre.mat
-%[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRLpre');
-
-%load RC-2015/results/resultsFull_NASh.mat
-%[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-NASh');
- 
-%load RC-2015/results/resultsFull_eRL-FLC.mat
-%[M,S,n,legendN] = load_results(results,M,S,n,legendN,'eRL-FLC');
-% 
-%load RC-2015/results/resultsFull_RL-FLC.mat
-%[M,S,n,legendN] = load_results(results,M,S,n,legendN,'RL-FLC');
-
-
-
-% load resultsFull-DRL-Qi-5.mat
-% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'DL Pessimistic');
-% load resultsFull-DRL-Qi0.mat
-% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'DL Zeros');
-% load resultsFull-DRL-Qi5.mat
-% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'DL Optimistic');
-
-
-% load resultsFull_Learn_CoSh-TD-RL-Qi-5.mat
-% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'CoSh Pessimistic');
-% load resultsFull_Learn_CoSh-TD-RL-Qi0.mat
-% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'CoSh Zeros');
-% load resultsFull_Learn_CoSh-TD-RL-Qi5.mat
-% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'CoSh Optimistic');
-% 
-% load resultsFull_Learn_NASh-TD-RL-Qi-5.mat
-% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'NASh Pessimistic');
-% load resultsFull_Learn_NASh-TD-RL-Qi0.mat
-% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'NASh Zeros');
-% load resultsFull_Learn_NASh-TD-RL-Qi5.mat
-% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'NASh Optimistic');
-
-% load resultsFull_Learn_CoSh-TD-RL-Qi-5.mat
-% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'CoSh Pessimistic');
-% load resultsFull_Learn_NASh-TD-RL-Qi5.mat
-% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'NaSh Optimistic');
-% load resultsCoSh-5FastCtrl.mat
-% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'FastSrc CoSh Pessimistic');
-% load resultsNaSh5FastCtrl.mat
-% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'FastSrc NASh Optimistic');
-% load resultsCoSh-5SlowCtrl.mat
-% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'SlowSrc CoSh Pessimistic');
-% load resultsNaSh5SlowCtrl.mat
-% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'SlowSrc NASh Optimistic');
-
-% load resultsFull-DRL-Qi-5.mat
-% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL Pessimistic');
-% load resultsFull_Learn_CoSh-TD-RL-Qi-5.mat
-% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'CoSh Pessimistic');
-% load resultsFull_Learn_NASh-TD-RL-Qi5.mat
-% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'NaSh Optimistic');
-

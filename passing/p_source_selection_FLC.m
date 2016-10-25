@@ -17,7 +17,7 @@ if sync.TL <= 0
     rnd.TL = rand();
 end
 
-[a_target, p] = softmax_selectionRBF(Q, FV, RLparam.softmax, T);    % Revisar los parámetros de la función!
+[a_target, p] = softmax_selectionRBF(Q, FV, RLparam.softmax, T, RLparam.k);    % Revisar los parámetros de la función!
 if RLparam.softmax <= 0     
     a_target = e_greedy_selection(Q, FV, RLparam.epsilon);          % Revisar los parámetros de la función!
 end

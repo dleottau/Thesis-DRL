@@ -17,7 +17,7 @@ global test;
 test = 0;
 
 myCluster = parcluster('local');
-myCluster.NumWorkers = 2;  % 'Modified' property now TRUE
+myCluster.NumWorkers = 4;  % 'Modified' property now TRUE
 saveProfile(myCluster);    % 'local' profile now updated, 'Modified' property now FALSE
 if isempty(gcp('nocreate')) == 0        % checking to see if my pool is already open
      parpool('local',myCluster.NumWorkers)
@@ -30,10 +30,10 @@ end
 
 x0 = [];
 
-xname{1} = 'softmax';
-x0(1)    = 3;              % Epsilon
-xname{2} = 'decay';
-x0(2)    = 5;               % Exploration decay
+xname{1} = 'lenientK';
+x0(1)    = 2;              % Epsilon
+xname{2} = 'lenientDec';
+x0(2)    = 0.9;               % Exploration decay
 % xname{3} = 'aScale';
 % x0(3)    = 9;
 %xname{3} = 'alpha';
@@ -44,8 +44,8 @@ options = hilloptions('TimeLimit', 600);
 
 % options.step         = [10; 1; 5];
 % options.space        = [[1; 2; 5], [80; 16; 30]];
-options.step         = [1; 1;];
-options.space        = [[1; 2;], [20; 16;]];
+options.step         = [0.5; 0.1;];
+options.space        = [[0.5; 0.1;], [10; 0.99;]];
 options.peaks        = 4;
 options.oneDimPerTry = 1;
 
