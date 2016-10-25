@@ -119,8 +119,6 @@ conf.feature_step   = [50, 10, 20, 600];
 conf.feature_max    = [1000, 60, 90 conf.Pb(1)];
 conf.feature_min    = [0, -60, -90, 0];
 
-
-
 %% -----------------------------------------------------------------------
 fileNameP = ['DRL_' int2str(conf.Runs) 'Runs_Noise' num2str(conf.NOISE) '_MA' int2str(conf.MAapproach) '_alpha' num2str(RL.param.alpha) '_lambda' num2str(RL.param.lambda)];
 if RL.param.softmax > 0
