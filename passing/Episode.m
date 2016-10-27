@@ -85,9 +85,9 @@ FV = getFeatureVector(X, conf.cores);
 ballState = 0;
 
 % Selects an action
-[a  , p]       = action_selection(RL.Q     , RL.T     , FV, RL.param);
-[a_y , p_y]    = action_selection(RL.Qy    , RL.T_y   , FV, RL.param);
-[a_rot, p_rot] = action_selection(RL.Q_rot , RL.T_rot , FV, RL.param);
+a=1;
+a_y=1;
+a_rot=1;
 
 U               = 1;
 Qv              = 0;
