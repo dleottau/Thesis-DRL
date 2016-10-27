@@ -2,7 +2,8 @@ function i_dist = triang_dist(Vmin,b,Vmax,beta,scale)
 
 %keyboard
 
-r_supp = 1/scale*(Vmax-Vmin)*(1 - beta + 10e-10); %
+%r_supp = 1/scale*(Vmax-Vmin)*(1 - beta + 10e-10); %
+r_supp = 1/scale*(Vmax-Vmin)*(beta + 10e-10); % quité el 1-beta para implementar la exploración inversa y no confundirnos
 
 
 % Case a < Vmin.-----------------------------------------------------------

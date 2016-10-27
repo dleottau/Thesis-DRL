@@ -1,0 +1,35 @@
+Starting matlabpool using the 'local' profile ... connected to 4 workers.
+-
+opti/DRL_4_STP1_200_STP2_10_STP3_20_STP4_600
+-
+%Distance BT: 47.303; STP4_9; STP3_3; STP2_2; STP1_4; 4RUNS
+%Distance BT: 44.6919; STP4_9; STP3_3; STP2_2; STP1_3; 4RUNS
+%Distance BT: 64.1183; STP4_9; STP3_3; STP2_2; STP1_2; 4RUNS
+%Distance BT: 35.1427; STP4_9; STP3_3; STP2_2; STP1_1; 4RUNS
+%Distance BT: 63.5401; STP4_9; STP3_3; STP2_2; STP1_5; 4RUNS
+%Distance BT: 100; STP4_9; STP3_3; STP2_1; STP1_1; 4RUNS
+%Distance BT: 87.4819; STP4_9; STP3_3; STP2_3; STP1_1; 4RUNS
+%Distance BT: 38.5522; STP4_9; STP3_3; STP2_4; STP1_1; 4RUNS
+%Distance BT: 66.4819; STP4_9; STP3_3; STP2_5; STP1_1; 4RUNS
+%Distance BT: 93.3942; STP4_9; STP3_3; STP2_6; STP1_1; 4RUNS
+%Distance BT: 100; STP4_9; STP3_2; STP2_2; STP1_1; 4RUNS
+%Distance BT: 100; STP4_9; STP3_1; STP2_2; STP1_1; 4RUNS
+%Distance BT: 66.7497; STP4_9; STP3_4; STP2_2; STP1_1; 4RUNS
+%Distance BT: 36.775; STP4_9; STP3_5; STP2_2; STP1_1; 4RUNS
+%Distance BT: 65.992; STP4_9; STP3_6; STP2_2; STP1_1; 4RUNS
+%Distance BT: 89.6477; STP4_8; STP3_3; STP2_2; STP1_1; 4RUNS
+%Distance BT: 83.2179; STP4_7; STP3_3; STP2_2; STP1_1; 4RUNS
+%Distance BT: 66.5711; STP4_6; STP3_3; STP2_2; STP1_1; 4RUNS
+%Distance BT: 100; STP4_5; STP3_3; STP2_2; STP1_1; 4RUNS
+
+x =
+
+     1
+     2
+     3
+     9
+
+
+fval =
+
+   35.1427
