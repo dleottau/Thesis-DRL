@@ -42,15 +42,12 @@ end
 % -------------------------------------------------------------------------
 if conf.TRANSFER >= 0
     RL.Q         = QTable( conf.nstates,conf.nactions_x, conf.Q_INIT );  % the Qtable for the vx agent
-    %     RL.Qy        = RL.Q;  % the Qtable for the vy agent
-    %     RL.Q_rot     = RL.Q;  % the Qtable for the v_rot agent
     RL.Qy    = QTable( conf.nstates, conf.nactions_y, conf.Q_INIT );   % The Qtable for the vy agent
     RL.Q_rot = QTable( conf.nstates, conf.nactions_w, conf.Q_INIT );   % The Qtable for the v_rot agent
-    
-    
+        
     RL.trace     = QTable( conf.nstates,conf.nactions_x,0 );  % the elegibility trace for the vx agent
-    RL.trace_y   = RL.trace;  % the elegibility trace for the vy agent
-    RL.trace_rot = RL.trace;  % the elegibility trace for the v_rot agent
+    RL.trace_y   = QTable( conf.nstates,conf.nactions_y,0 );  % the elegibility trace for the vx agent
+    RL.trace_rot = QTable( conf.nstates,conf.nactions_w,0 );  % the elegibility trace for the vx agent
 end
 % -------------------------------------------------------------------------
 
@@ -58,7 +55,7 @@ RL.T        = 0;
 RL.T_y      = 0;
 RL.T_rot    = 0;
 
-if conf.MAapproach == 2 && conf.DRL
+if conf.MAapproach == 2
     RL.T     = QTable( conf.nstates, conf.nactions_x, 1);
     RL.T_y   = QTable( conf.nstates, conf.nactions_y, 1 );
     RL.T_rot = QTable( conf.nstates, conf.nactions_w, 1 );

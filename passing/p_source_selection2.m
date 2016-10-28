@@ -1,4 +1,4 @@
-function [A, P] = p_source_selection2( RL,s,conf)
+function [A, P] = p_source_selection2( RL,FV,conf)
 % source_action_selection selects an action using p probability
 % Q: the Qtable
 % s: the current state
@@ -35,21 +35,21 @@ Vr_max         = conf.Vr_max;
 V_action_steps = conf.V_action_steps;
 actionlist     = conf.Actions;
 
-[A_target(1), P(1,:)] = softmax_selectionRBF(RL.Q     , s , RL.param.softmax , RL.T);
-[A_target(2), P(2,:)] = softmax_selectionRBF(RL.Qy    , s , RL.param.softmax , RL.T);
-[A_target(3), P(3,:)] = softmax_selectionRBF(RL.Q_rot , s , RL.param.softmax , RL.T);
+[A_target(1), P(1,:)] = softmax_selectionRBF(RL.Q     , FV , RL.param , RL.T);
+[A_target(2), P(2,:)] = softmax_selectionRBF(RL.Qy    , FV , RL.param , RL.T_y);
+[A_target(3), P(3,:)] = softmax_selectionRBF(RL.Q_rot , FV , RL.param , RL.T_rot);
 
 if RL.param.softmax < 0
-    A_target(1) = e_greedy_selection(RL.Q     , s , RL.param.epsilon);
-    A_target(2) = e_greedy_selection(RL.Qy   , s , RL.param.epsilon);
-    A_target(3) = e_greedy_selection(RL.Q_rot , s , RL.param.epsilon);            
+    A_target(1) = e_greedy_selection(RL.Q     , FV , RL.param.epsilon);
+    A_target(2) = e_greedy_selection(RL.Qy   , FV , RL.param.epsilon);
+    A_target(3) = e_greedy_selection(RL.Q_rot , FV , RL.param.epsilon);            
 end
 
 % Transfer knowledge
 if conf.TRANSFER && conf.nash
-    V_tgt(1) = actionlist.x(GetBestAction(RL.Q,s));
-    V_tgt(2) = actionlist.y(GetBestAction(RL.Qy,s));
-    V_tgt(3) = actionlist.w(GetBestAction(RL.Q_rot,s));
+    V_tgt(1) = actionlist.x(GetBestAction(RL.Q,FV));
+    V_tgt(2) = actionlist.y(GetBestAction(RL.Qy,FV));
+    V_tgt(3) = actionlist.w(GetBestAction(RL.Q_rot,FV));
     
     if conf.nash == 2
         V_src(1) = triang_dist(Vr_min(1),V_src(1),Vr_max(1),1-RL.param.p,RL.param.aScale);
