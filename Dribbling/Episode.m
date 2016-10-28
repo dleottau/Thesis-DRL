@@ -206,7 +206,7 @@ while 1
     goal=0;
     
     %if (conf.TRANSFER >= 0 && (time(i)>100 || abs(Pr(i,2))>maxDistance/2 || abs(Pb(i,2))>maxDistance/2 || Pr(i,1)>maxDistance || Pr(i,1)<0 || Pb(i,1)<0 || abs(gamma_) > 90 || abs(phi_) > 150))
-    if (time(i)>1000 || abs(Pr(i,2))>maxDistance/2 || abs(Pb(i,2))>maxDistance/2 || Pr(i,1)>maxDistance || Pr(i,1)<0 || Pb(i,1)<0 || abs(gamma_) > 90 || abs(phi_) > 150)
+    if (time(i)>200 || abs(Pr(i,2))>maxDistance/2 || abs(Pb(i,2))>maxDistance/2 || Pr(i,1)>maxDistance || Pr(i,1)<0 || Pb(i,1)<0 || abs(gamma_) > 175 || abs(phi_) > 175)
     Vavg=0;
         break
     end

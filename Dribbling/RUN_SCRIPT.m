@@ -18,7 +18,7 @@ thT=20; %Threshold to compute the Time to threshold
 
 %dbstop in softmax_selection.m at 38
 
-conf.episodes = 1000; %  maximum number of  episode
+conf.episodes = 3000; %  maximum number of  episode
 conf.Runs = RUNS;
 conf.record = 1;
 conf.DRAWS = 0;
@@ -73,8 +73,8 @@ conf.Vr_max = [100 40 40]; %x,y,rot Max Speed achieved by the robot
 conf.Vr_min = -conf.Vr_max;
 conf.Vr_min(1) = conf.Voffset;
 conf.feature_step = [50, 10, 10];
-conf.feature_min = [0, -40, -40]; %-30, -30
-conf.feature_max = [600, 40, 40]; %30, 30
+conf.feature_min = [0, -70, -90]; %-40, -40
+conf.feature_max = [600, 70, 90]; %40, 40
 conf.maxDeltaV = conf.Vr_max.*[1/3 1/3 1/2]; %mm/s/Ts
 conf.Ts = 0.2; %Sample time of a RL step
 
@@ -135,7 +135,6 @@ if conf.TRANSFER < 0
 end
 
 for i=1:RUNS
-
     et(i) = mean(e_time(ceil(conf.interval*conf.episodes):end,i))/1.5;
     et_sd(i) = std(e_time(ceil(conf.interval*conf.episodes):end,i))/1.5;
     if et(i) < et_min

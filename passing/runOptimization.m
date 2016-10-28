@@ -30,10 +30,10 @@ end
 
 x0 = [];
 
-xname{1} = 'lenientK';
-x0(1)    = 2;              % Epsilon
-xname{2} = 'lenientDec';
-x0(2)    = 0.9;               % Exploration decay
+xname{1} = 'decay';
+x0(1)    = 10;              
+xname{2} = 'aScale';
+x0(2)    = 10;               % Exploration decay
 % xname{3} = 'aScale';
 % x0(3)    = 9;
 %xname{3} = 'alpha';
@@ -44,8 +44,8 @@ options = hilloptions('TimeLimit', 600);
 
 % options.step         = [10; 1; 5];
 % options.space        = [[1; 2; 5], [80; 16; 30]];
-options.step         = [0.5; 0.1;];
-options.space        = [[0.5; 0.1;], [10; 0.99;]];
+options.step         = [1; 2;];
+options.space        = [[2; 1;], [20; 30;]];
 options.peaks        = 4;
 options.oneDimPerTry = 1;
 

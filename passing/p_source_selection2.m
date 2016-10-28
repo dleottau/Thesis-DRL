@@ -55,6 +55,7 @@ if conf.TRANSFER && conf.nash
         V_src(1) = triang_dist(Vr_min(1),V_src(1),Vr_max(1),1-RL.param.p,RL.param.aScale);
         V_src(2) = triang_dist(Vr_min(2),V_src(2),Vr_max(2),1-RL.param.p,RL.param.aScale);
         V_src(3) = triang_dist(Vr_min(3),V_src(3),Vr_max(3),1-RL.param.p,RL.param.aScale);
+        
         V_tgt(1) = triang_dist(Vr_min(1),V_tgt(1),Vr_max(1),RL.param.p,RL.param.aScale);
         V_tgt(2) = triang_dist(Vr_min(2),V_tgt(2),Vr_max(2),RL.param.p,RL.param.aScale);
         V_tgt(3) = triang_dist(Vr_min(3),V_tgt(3),Vr_max(3),RL.param.p,RL.param.aScale);

@@ -29,13 +29,15 @@ end
 
 
 if abs(fi) > angleFactor*th_max(3)
-    r(2) = -1;
+    %r(2) = -1;
+    r(2) = -( 1 + (1-(angleFactor*th_max(3))/abs(fi)) );
 else
     r(2) = 1 + ( 1 - abs(fi)/(angleFactor*th_max(3)) );
 end
 
 if abs(gama) > angleFactor*th_max(2) || abs(fi) > angleFactor*th_max(3)
-    r(3) = -1;
+    %r(3) = -1;
+    r(3) = -( 1 + (1 - abs(gama)/(angleFactor*th_max(2))) + (1 - abs(fi)/(angleFactor*th_max(3))) );
 else
     r(3) = 1 + ( 1 - abs(gama)/(angleFactor*th_max(2)) ) + ( 1 - abs(fi)/(angleFactor*th_max(3)) );
 end

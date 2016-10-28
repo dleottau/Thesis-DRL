@@ -137,7 +137,8 @@ while 1
         Vr_req(3) = action_rot;
         % -------------------------------------------------------------
     else
-        Vr_req = V_src;
+        Vr_req = RL.V_src;
+        
     end
     
     % Ball state = [0 stoped, 1 accelerating, 2 deaccelerating, 3 stoped after it was moved]
@@ -198,7 +199,7 @@ while 1
     FVp = getFeatureVector(Xp, conf.cores);
     
     % Get velocity From Linear Controller
-    [V_src] = controller_dribbling (Xp,Vr_min,Vr_max);
+    [RL.V_src] = controller_dribbling (Xp,Vr_min,Vr_max);
     % ---------------------------------------
     
     %% Check if it is a Goal.----------------------------------------------
