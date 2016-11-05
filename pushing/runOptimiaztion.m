@@ -13,15 +13,15 @@ global opti;
 opti=1;
 
 myCluster = parcluster('local');
-if matlabpool('size') == 0 % checking to see if my pool is already open
-    matlabpool(myCluster.NumWorkers)
-else
-    matlabpool close
-    matlabpool(myCluster.NumWorkers)
+%if matlabpool('size') == 0 % checking to see if my pool is already open
+    parpool(myCluster.NumWorkers)
+%else
+ %   matlabpool close
+ %   matlabpool(myCluster.NumWorkers)
 % myCluster = parcluster('local');
 % myCluster.NumWorkers = 4;  % 'Modified' property now TRUE
 % saveProfile(myCluster);    % 'local' profile now updated, 'Modified' property now FALSE 
-end
+%end
 
 x0 = [];
 
@@ -37,8 +37,8 @@ x0(4) = 7;   % exploration decay
 %----------  
 
 options = hilloptions('TimeLimit', 600);
-options.step = [0.5; 1; 0.5; 1];
-options.space = [[0.5; 2; 0.5; 2], [10; 20; 10; 20]];
+options.step = [0.5; 0.5; 1; 1];
+options.space = [[0.5; 0.5; 2; 2], [10; 10; 20; 20]];
 options.peaks = 4;
 options.oneDimPerTry = 1;
 
