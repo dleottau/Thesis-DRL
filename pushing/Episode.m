@@ -69,10 +69,10 @@ ballState=0;
 
 % selects an action 
 if conf.DRL
-    [a, p] = action_selection(RL.Q, RL.T, FVx, RL.param);
-    [a_rot, p_rot] = action_selection(RL.Q_rot, RL.T_rot, FVw, RL.param);
+    [a, p] = action_selection(RL.Q, RL.T, FVx, RL.param,1);
+    [a_rot, p_rot] = action_selection(RL.Q_rot, RL.T_rot, FVw, RL.param,2);
 else
-    [a, p] = action_selection(RL.Q, RL.T, FV, RL.param);
+    [a, p] = action_selection(RL.Q, RL.T, FV, RL.param,1);
 end
 
 U=1;
@@ -178,15 +178,15 @@ while 1
     % select action prime
     
     if conf.DRL
-        [ap, fa] = action_selection(RL.Q, RL.T, FVxp, RL.param);
-        [ap_rot, fa_rot] = action_selection(RL.Q_rot, RL.T_rot, FVwp, RL.param);
+        [ap, fa] = action_selection(RL.Q, RL.T, FVxp, RL.param,1);
+        [ap_rot, fa_rot] = action_selection(RL.Q_rot, RL.T_rot, FVwp, RL.param,2);
         fap = min([(fa-1/conf.nactions_x), (fa_rot-1/conf.nactions_w)]); %CAinc
         if conf.MAapproach==1
             fap = 1-fap; %CAdec
         end
         fap = clipDLF(fap, 1E-3, 1);
     else
-        [ap, fa] = action_selection(RL.Q, RL.T, FVp, RL.param);
+        [ap, fa] = action_selection(RL.Q, RL.T, FVp, RL.param,1);
     end
     
     if conf.MAapproach~=1 && conf.MAapproach~=3

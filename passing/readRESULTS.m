@@ -4,9 +4,10 @@ clf
 close all
 
 sort_1f_0t = 0;  % sort by best fitness (0) or by fastest convergence (1)
-thT = 55; % threshold to time to threshold from 0-100%
+thT = 40; % threshold to time to threshold from 0-100%
 
-folder = 'opti/cosh/test1/';
+%folder = 'Opti/neash/gauss/';
+folder = 'Opti/neash/triang/';
 %folder = 'opti/drl/test1/';
 
 record=0;
@@ -21,16 +22,16 @@ for i=1:size(files,1)
     
     result=importdata([folder files(i).name]);
        
-    %F = result.mean_dbt;
+    F = result.mean_dbt;
     %Tth=result.performance(1,2);
     
-    F = smooth(result.mean_goals, span,'rloess');
-    Tth = size(F,1);
-    %keyboard
-    if sum(F<thT) && (sum(F<thT)>m)
-        tth=find(F<thT);
-        Tth=tth(m);
-    end
+    F = smooth(result.mean_dbt, span,'rloess');
+     Tth = size(F,1);
+     %keyboard
+     if sum(F<thT) && (sum(F<thT)>m)
+         tth=find(F<thT);
+         Tth=tth(m);
+     end
        
     if record
         save([result.stringName], 'results');

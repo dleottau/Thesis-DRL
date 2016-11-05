@@ -16,7 +16,7 @@ conf.maxDistance = 800;    % maximum ball distance permited before to end the ep
 conf.Runs = RUNS;
 conf.NOISE = 0.01;
 conf.DRL = x(7); %Decentralized RL(1) or Centralized RL(0)
-conf.DRAWS = 1;
+conf.DRAWS = 0;
 conf.record = 0;
 conf.fuzzQ = 0;
 conf.jointState = x(8); % Selects joint state or individual states spaces per agent.
@@ -35,15 +35,24 @@ if finalTest
     folder = 'final/';
 end 
 
+if RUNS==1
+    conf.DRAWS = 1;
+    conf.record = 0;
+end
+
 conf.Q_INIT = 0;
-conf.EXPL_EPISODES_FACTOR = x(2);%x(3);
+conf.EXPL_EPISODES_FACTOR(1) = x(2);%x(3);
+RL.param.softmax(1) = x(1);%x(5);
 RL.param.alpha       = x(3);%x(4);   % learning rate
 RL.param.gamma       = 0.99;   % discount factor
 RL.param.lambda      = x(6);   % the decaying elegibiliy trace parameter
 RL.param.epsilon = 1;
-RL.param.softmax = x(1);%x(5);
+
 RL.param.k          = x(4); %x(1);   %1.5 lenience parameter
 RL.param.beta       = x(5); %x(2); %   %0.9 lenience discount factor
+
+RL.param.softmax(2) = x(10);%x(5);
+conf.EXPL_EPISODES_FACTOR(2) = x(11);%x(3);
 
 if conf.Test %Para pruebas de performance
     RL.param.epsilon = 0;

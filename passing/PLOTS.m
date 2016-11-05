@@ -14,7 +14,7 @@ legendN  = [];
 
 K        = 10; % # points ploted for errobar
 % span     = 0.00001;
-span     = 0.1;
+span     = 0.10;
 % span = 0.07;
 
 n = 1;
@@ -31,28 +31,40 @@ S = [];
 % end
 % ----------
 
-load opti/drl/test1/DRL_8Runs_Noise0.01_MA0_alpha0.2_lambda0.95_softmax10_decay5.mat;
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-Ind-Best1');
+%load 'Opti/neash/gauss/ScaleNeash9; NeASh1; Transfer1; k-lenient5; MAapproach0; beta0.9; lambda0.95; decay7; 4RUNS.mat';
+%[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-Neash-gauss-Best');
 
-load opti/drl/test1/DRL_8Runs_Noise0.01_MA0_alpha0.2_lambda0.95_softmax6_decay5.mat;
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-Ind-Best2');
+load 'Opti/neash/gauss/ScaleNeash11; NeASh1; Transfer1; k-lenient5; MAapproach0; beta0.9; lambda0.95; decay7; 4RUNS.mat';
+[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-Neash-gauss-Fast');
 
-load opti/drl/test1/DRL_8Runs_Noise0.01_MA0_alpha0.2_lambda0.95_softmax10_decay7.mat;
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-Ind-Fast1');
+load 'Opti/neash/triang/ScaleNeash9; NeASh2; Transfer1; k-lenient5; MAapproach0; beta0.9; lambda0.95; decay7; 4RUNS.mat';
+[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-Neash-triang-Best');
 
-load opti/drl/test1/DRL_8Runs_Noise0.01_MA0_alpha0.2_lambda0.95_softmax10_decay6.mat;
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-Ind-Fast2');
+% load 'Opti/neash/triang/ScaleNeash9; NeASh2; Transfer1; k-lenient5; MAapproach0; beta0.9; lambda0.95; decay11; 4RUNS.mat';
+% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-Neash-triang-Fast');
 
-
-load opti/cosh/test1/DRL_8Runs_Noise0.01_MA0_alpha0.2_lambda0.95_softmax10_decay5_CoSh.mat;
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-Neash-Best1');
-
-load opti/cosh/test1/DRL_8Runs_Noise0.01_MA0_alpha0.2_lambda0.95_softmax10_decay4_CoSh.mat;
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-Neash-Fast1');
-
-load opti/cosh/test1/DRL_8Runs_Noise0.01_MA0_alpha0.2_lambda0.95_softmax8_decay5_CoSh.mat;
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-Neash-Fast2');
-
+load 'Opti/drl/STD500; Radius500; Gain200000000; 4RUNS';
+[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-Ind-Best');
+ 
+% load opti/drl/test1/DRL_8Runs_Noise0.01_MA0_alpha0.2_lambda0.95_softmax6_decay5.mat;
+% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-Ind-Best2');
+% 
+% load opti/drl/test1/DRL_8Runs_Noise0.01_MA0_alpha0.2_lambda0.95_softmax10_decay7.mat;
+% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-Ind-Fast1');
+% 
+% load opti/drl/test1/DRL_8Runs_Noise0.01_MA0_alpha0.2_lambda0.95_softmax10_decay6.mat;
+% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-Ind-Fast2');
+% 
+% 
+% load opti/cosh/test1/DRL_8Runs_Noise0.01_MA0_alpha0.2_lambda0.95_softmax10_decay5_CoSh.mat;
+% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-Neash-Best1');
+% 
+% load opti/cosh/test1/DRL_8Runs_Noise0.01_MA0_alpha0.2_lambda0.95_softmax10_decay4_CoSh.mat;
+% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-Neash-Fast1');
+% 
+% load opti/cosh/test1/DRL_8Runs_Noise0.01_MA0_alpha0.2_lambda0.95_softmax8_decay5_CoSh.mat;
+% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-Neash-Fast2');
+% 
 
 
 Ms = M;%Smoothed means
@@ -104,13 +116,13 @@ end
 
 function [M, S, n, legendN] = load_results(results, M, S, n, legendN, leg)
 
-% N = size(results.mean_dbt,2);
-% M(:,n,1) = results.mean_dbt';
-% S(:,n,1) = results.std_dbt'/sqrt(N);  % Computing standard error
+N = size(results.mean_dbt,2);
+M(:,n,1) = results.mean_dbt';
+S(:,n,1) = results.std_dbt'/sqrt(N);  % Computing standard error
 
-N = size(results.mean_goals,2);
-M(:,n,1) = results.mean_goals';
-S(:,n,1) = results.std_goals'/sqrt(N);  % Computing standard error
+% N = size(results.mean_goals,2);
+% M(:,n,1) = results.mean_goals';
+% S(:,n,1) = results.std_goals'/sqrt(N);  % Computing standard error
 
 legendN{n} = leg;
 n          = n+1;

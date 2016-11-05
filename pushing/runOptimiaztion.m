@@ -5,7 +5,7 @@ close all
 
 tic
 global RUNS;
-RUNS=10;
+RUNS=8;
 
 global flagFirst;
 flagFirst=true;
@@ -25,30 +25,21 @@ end
 
 x0 = [];
 
-xname{1}='softmax';
-x0(1)  = 2;  % epsilon
-xname{2}='decay';
-x0(2) = 8;   % exploration decay
-xname{3}='alpha';
-x0(3) = 0.3;   % learning rate
-
-% xname{1}='k-leninet';
-% x0(1) = 1.5;   %
-% xname{2}='beta';
-% x0(2) = 0.9;   % 
-%xname{3}='decay';
-%x0(3) = 8;   % exploration decay
-%xname{4}='alpha';
-%x0(4) = 0.3;   % learning rate
+xname{1}='softmaxX';
+x0(1)  = 1;  % epsilon
+xname{2}='softmaxW';
+x0(2)  = 2;  % epsilon
+xname{3}='decayX';
+x0(3) = 10;   % exploration decay
+xname{4}='decayW';
+x0(4) = 7;   % exploration decay
 
 %----------  
 
 options = hilloptions('TimeLimit', 600);
-options.step = [1; 1; 0.1];
-options.space = [[0; 2; 0.1], [10; 15; 0.6]];
-%options.step = [0.5; 0.1; 1; 0.1];
-%options.space = [[0.5; 0.4; 0; 0.1], [5; 0.99; 15; 0.7]];
-options.peaks = 2;
+options.step = [0.5; 1; 0.5; 1];
+options.space = [[0.5; 2; 0.5; 2], [10; 20; 10; 20]];
+options.peaks = 4;
 options.oneDimPerTry = 1;
 
 

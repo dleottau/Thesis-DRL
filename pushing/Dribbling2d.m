@@ -48,8 +48,8 @@ if conf.MAapproach == 2 && conf.DRL
     end
 end
 
-EXPLORATION = conf.episodes/conf.EXPL_EPISODES_FACTOR;
-epsDec = -log(0.05) * 1/EXPLORATION;  %epsilon decrece a un 5% (0.005) en maxEpisodes cuartos (maxepisodes/4), de esta manera el decrecimiento de epsilon es independiente del numero de episodios
+EXPLORATION = conf.episodes./conf.EXPL_EPISODES_FACTOR;
+epsDec = -log(0.05) * 1./EXPLORATION;  %epsilon decrece a un 5% (0.005) en maxEpisodes cuartos (maxepisodes/4), de esta manera el decrecimiento de epsilon es independiente del numero de episodios
 
 RL.param.fuzzQ = conf.fuzzQ;
 
@@ -86,8 +86,8 @@ conf.episodeN=i;
     [RL, Vr,ro,fi,gama,Pt,Pb,Pbi,Pr,Vb,total_reward,steps,Vavg_k,time,scored_] = Episode( RL, conf);
     
       
-    RL.param.epsilon = epsilon0 * exp(-i*epsDec);
-    RL.param.softmax = softmax0 * exp(-i*epsDec);
+    RL.param.epsilon = epsilon0 * exp(-i*epsDec(1));
+    RL.param.softmax = softmax0 .* exp(-i*epsDec);
     
     xpoints(i)=i-1;
     reward(i,:)=total_reward/steps;
