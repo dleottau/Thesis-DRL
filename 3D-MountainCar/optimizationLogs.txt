@@ -1,3 +1,48 @@
+
+
+-
+x,x',y'
+y,y',x'
+25 Run Final test: cumRew=-331.34, ElapsedTime 243.4429
+opti/DRL3_8RUNS_epsilon0.06_decay0.99_alpha0.2_lambda0.95_MA-Inc0
+-
+cumRew:-291.2667; ITAE:34101.5502; scale2-0.5; scale1-1; pDec0.5; transfer0; 5actions0; MAapproach-Inc0; DRL3; beta0.8; k-lenient3.5; epsilon0.06; lambda0.95; alpha0.2
+cumRew:-333.0167; ITAE:38321.9058; scale2-0.5; scale1-1; pDec0.5; transfer0; 5actions0; MAapproach-Inc0; DRL3; beta0.8; k-lenient3.5; epsilon0.05; lambda0.95; alpha0.2
+cumRew:-307.6992; ITAE:35245.824; scale2-0.5; scale1-1; pDec0.5; transfer0; 5actions0; MAapproach-Inc0; DRL3; beta0.8; k-lenient3.5; epsilon0.04; lambda0.95; alpha0.2
+cumRew:-269.899; ITAE:31947.0027; scale2-0.5; scale1-1; pDec0.5; transfer0; 5actions0; MAapproach-Inc0; DRL3; beta0.8; k-lenient3.5; epsilon0.03; lambda0.95; alpha0.2
+cumRew:-300.0079; ITAE:34369.0106; scale2-0.5; scale1-1; pDec0.5; transfer0; 5actions0; MAapproach-Inc0; DRL3; beta0.8; k-lenient3.5; epsilon0.02; lambda0.95; alpha0.2
+cumRew:-349.384; ITAE:45430.1206; scale2-0.5; scale1-1; pDec0.5; transfer0; 5actions0; MAapproach-Inc0; DRL3; beta0.8; k-lenient3.5; epsilon0.07; lambda0.95; alpha0.2
+cumRew:-325.2152; ITAE:38359.4865; scale2-0.5; scale1-1; pDec0.5; transfer0; 5actions0; MAapproach-Inc0; DRL3; beta0.8; k-lenient3.5; epsilon0.08; lambda0.95; alpha0.2
+cumRew:-336.7642; ITAE:36675.0885; scale2-0.5; scale1-1; pDec0.5; transfer0; 5actions0; MAapproach-Inc0; DRL3; beta0.8; k-lenient3.5; epsilon0.09; lambda0.95; alpha0.2
+cumRew:-430.175; ITAE:46353.8887; scale2-0.5; scale1-1; pDec0.5; transfer0; 5actions0; MAapproach-Inc0; DRL3; beta0.8; k-lenient3.5; epsilon0.1; lambda0.95; alpha0.2
+cumRew:-300.8315; ITAE:35794.4421; scale2-0.5; scale1-1; pDec0.5; transfer0; 5actions0; MAapproach-Inc0; DRL3; beta0.8; k-lenient3.5; epsilon0.01; lambda0.95; alpha0.2
+cumRew:-284.3333; ITAE:34065.045; scale2-0.5; scale1-1; pDec0.5; transfer0; 5actions0; MAapproach-Inc0; DRL3; beta0.8; k-lenient3.5; epsilon0.03; lambda0.95; alpha0.15
+cumRew:-344.7531; ITAE:45719.0127; scale2-0.5; scale1-1; pDec0.5; transfer0; 5actions0; MAapproach-Inc0; DRL3; beta0.8; k-lenient3.5; epsilon0.03; lambda0.95; alpha0.1
+cumRew:-331.7883; ITAE:36360.4304; scale2-0.5; scale1-1; pDec0.5; transfer0; 5actions0; MAapproach-Inc0; DRL3; beta0.8; k-lenient3.5; epsilon0.03; lambda0.95; alpha0.05
+cumRew:-311.2129; ITAE:34405.6673; scale2-0.5; scale1-1; pDec0.5; transfer0; 5actions0; MAapproach-Inc0; DRL3; beta0.8; k-lenient3.5; epsilon0.03; lambda0.95; alpha0.25
+cumRew:-336.6106; ITAE:38524.511; scale2-0.5; scale1-1; pDec0.5; transfer0; 5actions0; MAapproach-Inc0; DRL3; beta0.8; k-lenient3.5; epsilon0.03; lambda0.95; alpha0.3
+cumRew:-433.1525; ITAE:47459.095; scale2-0.5; scale1-1; pDec0.5; transfer0; 5actions0; MAapproach-Inc0; DRL3; beta0.8; k-lenient3.5; epsilon0.03; lambda0.95; alpha0.35
+cumRew:-578.0077; ITAE:69978.8013; scale2-0.5; scale1-1; pDec0.5; transfer0; 5actions0; MAapproach-Inc0; DRL3; beta0.8; k-lenient3.5; epsilon0.03; lambda0.95; alpha0.4
+cumRew:-291.0225; ITAE:35864.0779; scale2-0.5; scale1-1; pDec0.5; transfer0; 5actions0; MAapproach-Inc0; DRL3; beta0.8; k-lenient3.5; epsilon0.03; lambda0.9; alpha0.2
+cumRew:-313.184; ITAE:39441.1621; scale2-0.5; scale1-1; pDec0.5; transfer0; 5actions0; MAapproach-Inc0; DRL3; beta0.8; k-lenient3.5; epsilon0.03; lambda0.85; alpha0.2
+cumRew:-323.0292; ITAE:43782.495; scale2-0.5; scale1-1; pDec0.5; transfer0; 5actions0; MAapproach-Inc0; DRL3; beta0.8; k-lenient3.5; epsilon0.03; lambda0.8; alpha0.2
+cumRew:-340.4958; ITAE:43780.8404; scale2-0.5; scale1-1; pDec0.5; transfer0; 5actions0; MAapproach-Inc0; DRL3; beta0.8; k-lenient3.5; epsilon0.03; lambda0.75; alpha0.2
+
+x =
+
+    0.0300
+    0.2000
+    0.9500
+
+
+fval =
+
+  269.8990
+
+
+--------
+
+
 -
 opti/DRL2_5RUNS_epsilon0.06_decay0.99_alpha0.2_lambda0.95_MA-Inc1
 -

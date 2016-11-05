@@ -11,7 +11,7 @@ global opti;
 % opti=0;
 
 if ~opti
-    RUNS=1;
+    RUNS=25;
 
 %     myCluster = parcluster('local');
 %     if matlabpool('size') == 0 % checking to see if my pool is already open
@@ -29,7 +29,7 @@ x0(1) = 0.20;
 xname{2}='lambda';
 x0(2) = 0.95;
 xname{3}='epsilon';
-x0(3) = 0.06;  
+x0(3) = 0.03;  
 xname{4}='k-lenient';
 x0(4) = 3.5;  
 xname{5}='beta';

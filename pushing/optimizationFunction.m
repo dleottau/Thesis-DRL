@@ -1,19 +1,19 @@
-function f = optimizationFunction(x)
-global RUNS;
-global opti;
-
-% clc
-% clf
-% clear all
-% close all
-% tic
+% function f = optimizationFunction(x)
+% global RUNS;
 % global opti;
-% opti=0;
-% global finalTest;
-% finalTest=1;
+
+clc
+clf
+clear all
+close all
+tic
+global opti;
+opti=0;
+global finalTest;
+finalTest=1;
 
 if ~opti
-     RUNS=1;
+     RUNS=25;
 %     myCluster = parcluster('local');
 %     if matlabpool('size') == 0 % checking to see if my pool is already open
 %         matlabpool(myCluster.NumWorkers)
@@ -55,14 +55,14 @@ x0(6) = 0.9;   % lambda
 xname{7}='DRL'; 
 x0(7) = 1;  % 0 for CRL, 1 for DRL
 xname{8}='jointState'; 
-x0(8) = 0; % Selects joint state(1) or individual states spaces per agent(0).
+x0(8) = 1; % Selects joint state(1) or individual states spaces per agent(0).
 xname{9}='MAapproach'; 
 x0(9) = 0; % MAapproach, 0 DRL, 1 CAdec, 2 Lenient, 3 CAdec ;
 
 xname{10}='softmaxW'; % or "k-leninet"
-x0(10)  = 2;  % 
+x0(10)  = 1;  % 
 xname{11}='decayW'; % exploration decay or "beta lenient decay"
-x0(11) = 7;   
+x0(11) = 10;   
 
 if opti
     x0(1) = x(1);

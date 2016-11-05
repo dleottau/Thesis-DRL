@@ -13,15 +13,15 @@ global opti;
 opti=1;
 
 myCluster = parcluster('local');
-if matlabpool('size') == 0 % checking to see if my pool is already open
-    matlabpool(myCluster.NumWorkers)
-else
-    matlabpool close
-    matlabpool(myCluster.NumWorkers)
-% myCluster = parcluster('local');
-% myCluster.NumWorkers = 4;  % 'Modified' property now TRUE
-% saveProfile(myCluster);    % 'local' profile now updated, 'Modified' property now FALSE 
-end
+% if matlabpool('size') == 0 % checking to see if my pool is already open
+    %parpool(myCluster.NumWorkers)
+% else
+%     matlabpool close
+%     matlabpool(myCluster.NumWorkers)
+% % myCluster = parcluster('local');
+% % myCluster.NumWorkers = 4;  % 'Modified' property now TRUE
+% % saveProfile(myCluster);    % 'local' profile now updated, 'Modified' property now FALSE 
+% end
 
 x0 = [];
 xname{1}='epsilon';

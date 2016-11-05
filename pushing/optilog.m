@@ -1,3 +1,86 @@
+DRL Delft en pc carlos cumGoals=35.011, 
+elapsed time= 655.96
+-
+decayW7; softmaxW0.5; MAapproach0; jointState0; DRL1; lambda0.9; beta9; k-leninet1; alpha0.3; decayX9; softmaxX1; 25RUNS
+-
+cumGoals:39.9839
+-
+Elapsed time is 670.790694 seconds.
+
+
+Starting parallel pool (parpool) using the 'local' profile ... connected to 4 workers.
+
+ans = 
+
+ Pool with properties: 
+
+            Connected: true
+           NumWorkers: 4
+              Cluster: local
+        AttachedFiles: {}
+          IdleTimeout: 30 minute(s) (30 minutes remaining)
+          SpmdEnabled: true
+
+cumGoals:40.8174; decayW7; softmaxW2; MAapproach0; jointState0; DRL1; lambda0.9; beta10; k-leninet1; alpha0.3; decayX10; softmaxX1; 8RUNS
+cumGoals:39.9344; decayW7; softmaxW2; MAapproach0; jointState0; DRL1; lambda0.9; beta10; k-leninet1; alpha0.3; decayX10; softmaxX0.5; 8RUNS
+cumGoals:39.4803; decayW7; softmaxW2; MAapproach0; jointState0; DRL1; lambda0.9; beta10; k-leninet1; alpha0.3; decayX10; softmaxX1.5; 8RUNS
+cumGoals:41.9273; decayW7; softmaxW2; MAapproach0; jointState0; DRL1; lambda0.9; beta10; k-leninet1; alpha0.3; decayX10; softmaxX2; 8RUNS
+cumGoals:40.275; decayW7; softmaxW2; MAapproach0; jointState0; DRL1; lambda0.9; beta10; k-leninet1; alpha0.3; decayX10; softmaxX2.5; 8RUNS
+cumGoals:40.7164; decayW7; softmaxW2; MAapproach0; jointState0; DRL1; lambda0.9; beta10; k-leninet1; alpha0.3; decayX10; softmaxX3; 8RUNS
+cumGoals:41.2588; decayW7; softmaxW2; MAapproach0; jointState0; DRL1; lambda0.9; beta10; k-leninet1; alpha0.3; decayX10; softmaxX3.5; 8RUNS
+cumGoals:40.3885; decayW7; softmaxW2; MAapproach0; jointState0; DRL1; lambda0.9; beta10; k-leninet1; alpha0.3; decayX10; softmaxX4; 8RUNS
+cumGoals:41.8643; decayW7; softmaxW1.5; MAapproach0; jointState0; DRL1; lambda0.9; beta10; k-leninet1; alpha0.3; decayX10; softmaxX2; 8RUNS
+cumGoals:39.4173; decayW7; softmaxW1; MAapproach0; jointState0; DRL1; lambda0.9; beta10; k-leninet1; alpha0.3; decayX10; softmaxX2; 8RUNS
+cumGoals:43.0247; decayW7; softmaxW0.5; MAapproach0; jointState0; DRL1; lambda0.9; beta10; k-leninet1; alpha0.3; decayX10; softmaxX2; 8RUNS
+cumGoals:41.7508; decayW7; softmaxW2.5; MAapproach0; jointState0; DRL1; lambda0.9; beta10; k-leninet1; alpha0.3; decayX10; softmaxX2; 8RUNS
+cumGoals:41.5237; decayW7; softmaxW3; MAapproach0; jointState0; DRL1; lambda0.9; beta10; k-leninet1; alpha0.3; decayX10; softmaxX2; 8RUNS
+cumGoals:40.2876; decayW7; softmaxW3.5; MAapproach0; jointState0; DRL1; lambda0.9; beta10; k-leninet1; alpha0.3; decayX10; softmaxX2; 8RUNS
+cumGoals:40.9183; decayW7; softmaxW4; MAapproach0; jointState0; DRL1; lambda0.9; beta10; k-leninet1; alpha0.3; decayX10; softmaxX2; 8RUNS
+cumGoals:43.2139; decayW7; softmaxW0.5; MAapproach0; jointState0; DRL1; lambda0.9; beta10; k-leninet1; alpha0.3; decayX9; softmaxX2; 8RUNS
+cumGoals:39.4046; decayW7; softmaxW0.5; MAapproach0; jointState0; DRL1; lambda0.9; beta10; k-leninet1; alpha0.3; decayX8; softmaxX2; 8RUNS
+cumGoals:40.1993; decayW7; softmaxW0.5; MAapproach0; jointState0; DRL1; lambda0.9; beta10; k-leninet1; alpha0.3; decayX7; softmaxX2; 8RUNS
+cumGoals:39.6317; decayW7; softmaxW0.5; MAapproach0; jointState0; DRL1; lambda0.9; beta10; k-leninet1; alpha0.3; decayX6; softmaxX2; 8RUNS
+cumGoals:41.6625; decayW7; softmaxW0.5; MAapproach0; jointState0; DRL1; lambda0.9; beta10; k-leninet1; alpha0.3; decayX11; softmaxX2; 8RUNS
+cumGoals:40.0479; decayW7; softmaxW0.5; MAapproach0; jointState0; DRL1; lambda0.9; beta10; k-leninet1; alpha0.3; decayX12; softmaxX2; 8RUNS
+cumGoals:38.7109; decayW7; softmaxW0.5; MAapproach0; jointState0; DRL1; lambda0.9; beta10; k-leninet1; alpha0.3; decayX13; softmaxX2; 8RUNS
+cumGoals:40.0858; decayW7; softmaxW0.5; MAapproach0; jointState0; DRL1; lambda0.9; beta10; k-leninet1; alpha0.3; decayX14; softmaxX2; 8RUNS
+cumGoals:41.1075; decayW7; softmaxW0.5; MAapproach0; jointState0; DRL1; lambda0.9; beta10; k-leninet1; alpha0.3; decayX5; softmaxX2; 8RUNS
+cumGoals:40.2497; decayW6; softmaxW0.5; MAapproach0; jointState0; DRL1; lambda0.9; beta10; k-leninet1; alpha0.3; decayX9; softmaxX2; 8RUNS
+cumGoals:42.1165; decayW5; softmaxW0.5; MAapproach0; jointState0; DRL1; lambda0.9; beta10; k-leninet1; alpha0.3; decayX9; softmaxX2; 8RUNS
+cumGoals:42.4571; decayW4; softmaxW0.5; MAapproach0; jointState0; DRL1; lambda0.9; beta10; k-leninet1; alpha0.3; decayX9; softmaxX2; 8RUNS
+cumGoals:39.9723; decayW3; softmaxW0.5; MAapproach0; jointState0; DRL1; lambda0.9; beta10; k-leninet1; alpha0.3; decayX9; softmaxX2; 8RUNS
+cumGoals:40.8552; decayW8; softmaxW0.5; MAapproach0; jointState0; DRL1; lambda0.9; beta10; k-leninet1; alpha0.3; decayX9; softmaxX2; 8RUNS
+cumGoals:41.2841; decayW9; softmaxW0.5; MAapproach0; jointState0; DRL1; lambda0.9; beta10; k-leninet1; alpha0.3; decayX9; softmaxX2; 8RUNS
+cumGoals:41.7381; decayW10; softmaxW0.5; MAapproach0; jointState0; DRL1; lambda0.9; beta10; k-leninet1; alpha0.3; decayX9; softmaxX2; 8RUNS
+cumGoals:41.2084; decayW11; softmaxW0.5; MAapproach0; jointState0; DRL1; lambda0.9; beta10; k-leninet1; alpha0.3; decayX9; softmaxX2; 8RUNS
+cumGoals:40.4768; decayW7; softmaxW0.5; MAapproach0; jointState0; DRL1; lambda0.9; beta10; k-leninet1; alpha0.3; decayX9; softmaxX1.5; 8RUNS
+cumGoals:42.4697; decayW7; softmaxW0.5; MAapproach0; jointState0; DRL1; lambda0.9; beta10; k-leninet1; alpha0.3; decayX9; softmaxX1; 8RUNS
+cumGoals:40.9435; decayW7; softmaxW0.5; MAapproach0; jointState0; DRL1; lambda0.9; beta10; k-leninet1; alpha0.3; decayX9; softmaxX0.5; 8RUNS
+cumGoals:40.3885; decayW7; softmaxW0.5; MAapproach0; jointState0; DRL1; lambda0.9; beta10; k-leninet1; alpha0.3; decayX9; softmaxX2.5; 8RUNS
+cumGoals:38.8623; decayW7; softmaxW0.5; MAapproach0; jointState0; DRL1; lambda0.9; beta10; k-leninet1; alpha0.3; decayX9; softmaxX3; 8RUNS
+cumGoals:41.8769; decayW7; softmaxW0.5; MAapproach0; jointState0; DRL1; lambda0.9; beta10; k-leninet1; alpha0.3; decayX9; softmaxX3.5; 8RUNS
+cumGoals:36.5792; decayW7; softmaxW0.5; MAapproach0; jointState0; DRL1; lambda0.9; beta10; k-leninet1; alpha0.3; decayX9; softmaxX4; 8RUNS
+cumGoals:41.1453; decayW7; softmaxW1; MAapproach0; jointState0; DRL1; lambda0.9; beta10; k-leninet1; alpha0.3; decayX9; softmaxX2; 8RUNS
+cumGoals:42.9238; decayW7; softmaxW1.5; MAapproach0; jointState0; DRL1; lambda0.9; beta10; k-leninet1; alpha0.3; decayX9; softmaxX2; 8RUNS
+cumGoals:39.884; decayW7; softmaxW2; MAapproach0; jointState0; DRL1; lambda0.9; beta10; k-leninet1; alpha0.3; decayX9; softmaxX2; 8RUNS
+cumGoals:41.1705; decayW7; softmaxW2.5; MAapproach0; jointState0; DRL1; lambda0.9; beta10; k-leninet1; alpha0.3; decayX9; softmaxX2; 8RUNS
+
+x =
+
+    2.0000
+    0.5000
+    9.0000
+    7.0000
+
+
+fval =
+
+  -43.2139
+
+Elapsed time is 2805.763862 seconds.
+
+
+
 Starting matlabpool using the 'local' profile ... connected to 4 workers.
 cumGoals:24.9546; MAapproach3; jointState0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.3; decay8; softmax2; 10RUNS
 cumGoals:26.4178; MAapproach3; jointState0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.3; decay8; softmax1; 10RUNS
