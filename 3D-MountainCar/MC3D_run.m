@@ -10,10 +10,19 @@ cfg.ac5= x(8);%1;  % enable original proposal which uses 5 actions instead of 9
 %RUNS = 1;
 cfg.DRAWS = 1;
 cfg.record = 0;
+
+folder = 'experimentsFull/';
+
 if opti
+    folder = 'opti/';
     cfg.DRAWS = 0;
     cfg.record = 1;
 end;
+
+if RUNS==1
+    cfg.DRAWS = 1;
+    cfg.record = 0;
+end
 
 RL.q_init = 0;
 RL.param.softmax = 0;  %3 >0 Boltzmann temperature, <= 0 e-greaddy
@@ -32,7 +41,7 @@ RL.param.scale(1) = x(11); % nash scalization
 RL.param.scale(2) = x(12); % nash scalization
 
 cfg.transfer = x(9);  % flag for trasferring: 0 no-transfer; 1 cosh;
-cfg.episodes = 100;
+cfg.episodes = 300;
 cfg.feature_min = [-1.2 -0.07  -1.2 -0.07];
 cfg.feature_max = [ 0.6  0.07   0.6  0.07];
 cfg.init_condition = [-pi()/6   0.0 -pi()/6 0.0];
@@ -41,8 +50,6 @@ cfg.stdDiv = 0.5;
 cfg.actionStep = [1 1];
 cfg.goalState = [0.5 0.5];
 cfg.maxsteps    = 5000;              % maximum number of steps per episode
-
-folder = 'experimentsFull/Delft/';  
 
 if RL.param.softmax > 0
     fileName = ['DRL' int2str(cfg.DRL) '_' int2str(RUNS) 'RUNS_softmax' int2str(RL.param.softmax) '_decay' num2str(RL.param.exp_decay) '_alpha' num2str(RL.param.alpha) '_lambda' num2str(RL.param.lambda) '_MA' num2str(cfg.MAapproach)];
@@ -73,12 +80,17 @@ if flagFirst
     disp('-');
 end
 
-%parfor n=1:RUNS
-for n=1:RUNS
-    %cfg.runs=n;
-    [reward{n}, itae(n), x_{n}, Qx{n}, Qy{n}] = MountainCarDemo(cfg, RL, n);
+if RUNS==1
+    for n=1:RUNS
+        %cfg.runs=n;
+        [reward{n}, itae(n), x_{n}, Qx{n}, Qy{n}] = MountainCarDemo(cfg, RL, n);
+    end
+else
+    parfor n=1:RUNS
+        [reward{n}, itae(n), x_{n}, Qx{n}, Qy{n}] = MountainCarDemo(cfg, RL, n);
+    end
 end
-
+        
 cr_best=-Inf;
 cr_worst=Inf;
 itae_best=Inf;

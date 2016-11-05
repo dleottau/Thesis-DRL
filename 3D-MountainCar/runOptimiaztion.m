@@ -24,16 +24,16 @@ else
 end
 
 x0 = [];
-xname{1}='pDec';
-x0(1)  = 0.9;  % factor to decay transfer knowledge probability
-xname{2}='scale1-';
-x0(2)  = 1.0;  % nash scalization
-xname{3}='scale2-';
-x0(3)  = 1.0;  % nash scalization
+xname{1}='epsilon';
+x0(1) = 0.06; 
+xname{2}='alpha';
+x0(2) = 0.20;
+xname{3}='lambda';
+x0(3) = 0.95;
 
 options = hilloptions('TimeLimit', 600);
-options.step = [0.05; 0.25; 0.25];
-options.space = [[0.2; 0.5; 0.5], [0.99; 2; 2]];
+options.step = [0.01; 0.05; 0.05];
+options.space = [[0.01; 0.05; 0.5], [0.2; .6; 0.95]];
 options.peaks = 4;
 options.oneDimPerTry = 1;
 
