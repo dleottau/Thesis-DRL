@@ -7,17 +7,16 @@ cfg.opti=opti;
 cfg.DRL = x(6);  % 0 for CRL, 1 for DRL, 2 for DRL with joint states
 cfg.MAapproach = x(7);   % 0 no cordination, 1 frequency adjusted, 2 leninet
 cfg.ac5= x(8);%1;  % enable original proposal which uses 5 actions instead of 9
-%RUNS = 1;
-cfg.DRAWS = 1;
-cfg.record = 0;
 
+cfg.DRAWS = 0;
+cfg.record = 1;
 folder = 'experimentsFull/';
 
 if opti
     folder = 'opti/';
     cfg.DRAWS = 0;
     cfg.record = 1;
-end;
+end
 
 if RUNS==1
     cfg.DRAWS = 1;
@@ -36,11 +35,11 @@ RL.param.exp_decay = 0.99;
 RL.param.k = x(4);  % exponent coeficient for leniency
 RL.param.beta = x(5);  % exponent coeficient for leniency
 RL.param.p=1; % Transfer knowledge probability
-RL.param.p_decay   = x(10); % factor to decay transfer knowledge probability
-RL.param.scale(1) = x(11); % nash scalization
-RL.param.scale(2) = x(12); % nash scalization
+RL.param.p_decay   = 0.5; % factor to decay transfer knowledge probability
+RL.param.scale(1) = 1; % nash scalization
+RL.param.scale(2) = 1; % nash scalization
 
-cfg.transfer = x(9);  % flag for trasferring: 0 no-transfer; 1 cosh;
+cfg.transfer = 0;  % flag for trasferring: 0 no-transfer; 1 cosh;
 cfg.episodes = 300;
 cfg.feature_min = [-1.2 -0.07  -1.2 -0.07];
 cfg.feature_max = [ 0.6  0.07   0.6  0.07];

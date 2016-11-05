@@ -24,5 +24,5 @@ cores.std.yp = stdvs{4};
 if cfg.DRL==1
     nstates=length(means{1})*length(means{2});
 elseif cfg.DRL==3
-    nstates=length(means{1})*length(means{2})*length(means{4}); 
+    nstates=length(means{1})*length(means{2})*length(means{3}); 
 end

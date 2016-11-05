@@ -25,22 +25,10 @@ end
 
 x0 = [];
 
-% xname{1}='k-leninet';
-% x0(1) = 1;   %
-% xname{2}='beta';
-% x0(2) = 0.7;   % 
-% xname{3}='decay';
-% x0(3) = 10;   % exploration decay
-% xname{4}='alpha';
-% x0(4) = 0.3;   % learning rate
-% xname{5}='softmax';
-% x0(5)  = 1;  % epsilon
-
-
 xname{1}='softmaxX'; % or "k-leninet"
-x0(1)  = 1;  % 
+x0(1)  = 3;  % 
 xname{2}='decayX'; % exploration decay or "beta lenient decay"
-x0(2) = 10;   
+x0(2) = 8;   
 
 xname{3}='alpha';
 x0(3) = 0.3;   % learning rate
@@ -55,14 +43,14 @@ x0(6) = 0.9;   % lambda
 xname{7}='DRL'; 
 x0(7) = 1;  % 0 for CRL, 1 for DRL
 xname{8}='jointState'; 
-x0(8) = 1; % Selects joint state(1) or individual states spaces per agent(0).
+x0(8) = 0; % Selects joint state(1) or individual states spaces per agent(0).
 xname{9}='MAapproach'; 
 x0(9) = 0; % MAapproach, 0 DRL, 1 CAdec, 2 Lenient, 3 CAdec ;
 
 xname{10}='softmaxW'; % or "k-leninet"
-x0(10)  = 1;  % 
+x0(10)  = 3;  % 
 xname{11}='decayW'; % exploration decay or "beta lenient decay"
-x0(11) = 10;   
+x0(11) = 8;   
 
 if opti
     x0(1) = x(1);

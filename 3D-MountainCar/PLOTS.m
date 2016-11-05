@@ -4,7 +4,7 @@ function PLOTS()
 close all
 clc
 
-folder = 'NASSh/'; 
+folder = 'experimentsFull/Delft/'; 
 files = dir(fullfile([folder '*.mat']));
 
 spot={':r' '-g' '-.c' '--k'  ':b' '-m' '-.r' '--g'};
@@ -77,16 +77,10 @@ legend(pt,legendN);
 end
 
 function [M, S, n, legendN] = load_results(results, M, S, n, legendN, leg)
-    
     %A= (results.time>60) .* (6000./(results.time));
-    
-    %N=size(results.mean_goals,2);
-    
+    N=size(results.reward,2);
     M(:,n,1) = results.mean_cumReward';
-          
-    S(:,n,1) = (results.std_cumReward');
-    %S(:,n,2) = results.std_faults';
-    
+    S(:,n,1) = (results.std_cumReward')/sqrt(N);
     legendN{n} = leg;
     n = n+1;
 end

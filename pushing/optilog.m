@@ -73,14 +73,17 @@ x =
     7.0000
 
 
-fval =
+fval = 
 
   -43.2139
 
 Elapsed time is 2805.763862 seconds.
 
+25 runs for final test: cumGoals 41.1665%, Elapsed time = 858.462375 seconds
+It was measured for: DRL indstates
 
 
+%---------------------
 Starting matlabpool using the 'local' profile ... connected to 4 workers.
 cumGoals:24.9546; MAapproach3; jointState0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.3; decay8; softmax2; 10RUNS
 cumGoals:26.4178; MAapproach3; jointState0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.3; decay8; softmax1; 10RUNS

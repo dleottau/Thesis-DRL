@@ -16,13 +16,13 @@ if DRL==1
     end
     end
 elseif  DRL==3
-    FV=zeros(length(mf1)*length(mf2)*length(mf4),2);
+    FV=zeros(length(mf1)*length(mf2)*length(mf3),2);
     for d1=1:length(mf1)
     for d2=1:length(mf2)
-    for d4=1:length(mf4)
+    for d3=1:length(mf3)
     %for d4=1:length(mf4)
-        FV(index,1) = mf1(d1)*mf2(d2)*mf4(d4);
-        FV(index,2) = mf3(d1)*mf4(d4)*mf2(d2);
+        FV(index,1) = mf1(d1)*mf2(d2)*mf3(d3);
+        FV(index,2) = mf3(d3)*mf4(d2)*mf1(d1);
         index=index+1;
     %end
     end

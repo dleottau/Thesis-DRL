@@ -44,10 +44,6 @@ stringName = 'MAapproach0; jointState0; DRL1; lambda0.9; beta0.7; k-leninet1; al
 results=importdata([folder stringName]);
 [M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-IndivStates');
 
-% stringName = 'decayW7; softmaxW0.5; MAapproach0; jointState0; DRL1; lambda0.9; beta9; k-leninet1; alpha0.3; decayX9; softmaxX1; 25RUNS.mat';
-% results=importdata([folder stringName]);
-% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-indivStates-Fast');
-
 % stringName = 'decayW7; softmaxW0.5; MAapproach0; jointState0; DRL1; lambda0.9; beta9; k-leninet2; alpha0.3; decayX9; softmaxX2; 25RUNS.mat';
 % results=importdata([folder stringName]);
 % [M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-indepStates-Best');
