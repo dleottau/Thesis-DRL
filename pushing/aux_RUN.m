@@ -5,7 +5,7 @@ clf
 close all
 
 conf.Test=1;
-sfolder = 'final/'; % Source folder
+sfolder = 'final/Delft/'; % Source folder
 folder = 'tests/'; % To record the test result
 
 % Just uncomment file (policy) to use
@@ -16,9 +16,11 @@ folder = 'tests/'; % To record the test result
 %stringName = 'MAapproach0; DRL1; lambda0.9; softmax1; alpha0.3; decay10; beta0.7; k-leninet1; 25RUNS.mat'
 %conf.DRL = 1; conf.fuzzQ = 0; conf.MAapproach = 0; conf.jointState = 1;
 
-stringName = 'fuz-DRL1; lambda0.95; softmax1.1; decay9; alpha0.3; Nactions3; 25RUNS.mat';
-conf.DRL = 1; conf.fuzzQ = 1; conf.MAapproach = 0; conf.jointState = 1;
+%stringName = 'fuz-DRL1; lambda0.95; softmax1.1; decay9; alpha0.3; Nactions3; 25RUNS.mat';
+%conf.DRL = 1; conf.fuzzQ = 1; conf.MAapproach = 0; conf.jointState = 1;
 
+stringName = 'MAapproach0; jointState0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.5; decay8; softmax3; 25RUNS.mat';
+conf.DRL = 1; conf.fuzzQ = 0; conf.MAapproach = 0; conf.jointState = 0;
 
 %% **** These were for my thesis, just ignore them
 %stringName = 'MAapproach1; DRL1; lambda0.95; alpha0.4; softmax1.1; decay10; 25RUNS.mat';
@@ -55,17 +57,19 @@ conf.Runs = RUNS;
 conf.NOISE = 0.01;
 
 conf.Q_INIT = 0;
-conf.EXPL_EPISODES_FACTOR = 10;
+conf.EXPL_EPISODES_FACTOR(1) = 10;
+conf.EXPL_EPISODES_FACTOR(2) = 10;
 RL.param.alpha       = 0.4;   % learning rate
 RL.param.gamma       = 0.99;   % discount factor
 RL.param.lambda      = 0.9;   % the decaying elegibiliy trace parameter
 RL.param.epsilon = 1;
-RL.param.softmax = 1;
+RL.param.softmax(1) = 1;
+RL.param.softmax(2) = 1;
 
 
 if conf.Test %Para pruebas de performance
-    RL.param.epsilon = 0;
-    RL.param.softmax = 0;
+    RL.param.epsilon = RL.param.epsilon*0;
+    RL.param.softmax = RL.param.softmax*0;
 end
 
 conf.Pt=[conf.maxDistance/2 0];

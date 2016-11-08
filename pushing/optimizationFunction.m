@@ -10,10 +10,10 @@ tic
 global opti;
 opti=0;
 global finalTest;
-finalTest=1;
+finalTest=0;
 
 if ~opti
-     RUNS=25;
+     RUNS=1;
 %     myCluster = parcluster('local');
 %     if matlabpool('size') == 0 % checking to see if my pool is already open
 %         matlabpool(myCluster.NumWorkers)
@@ -26,9 +26,9 @@ end
 x0 = [];
 
 xname{1}='softmaxX'; % or "k-leninet"
-x0(1)  = 3;  % 
+x0(1)  = 0.5;  % 
 xname{2}='decayX'; % exploration decay or "beta lenient decay"
-x0(2) = 8;   
+x0(2) = 15;   
 
 xname{3}='alpha';
 x0(3) = 0.3;   % learning rate
@@ -39,7 +39,7 @@ xname{5}='beta';
 x0(5) = x0(2);   %
 
 xname{6}='lambda';
-x0(6) = 0.9;   % lambda
+x0(6) = 0.95;   % lambda
 xname{7}='DRL'; 
 x0(7) = 1;  % 0 for CRL, 1 for DRL
 xname{8}='jointState'; 
@@ -48,9 +48,9 @@ xname{9}='MAapproach';
 x0(9) = 0; % MAapproach, 0 DRL, 1 CAdec, 2 Lenient, 3 CAdec ;
 
 xname{10}='softmaxW'; % or "k-leninet"
-x0(10)  = 3;  % 
+x0(10)  = 1;  % 
 xname{11}='decayW'; % exploration decay or "beta lenient decay"
-x0(11) = 8;   
+x0(11) = 10;   
 
 if opti
     x0(1) = x(1);

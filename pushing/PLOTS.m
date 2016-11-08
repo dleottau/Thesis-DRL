@@ -32,17 +32,15 @@ S=[];
 folder='final/Delft/';
 stringName = 'MAapproach0; DRL1; lambda0.9; softmax1; alpha0.3; decay10; beta0.7; k-leninet1; 25RUNS.mat';
 results=importdata([folder stringName]);
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL');
+[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-jointS');
 
 stringName = 'MAapproach0; DRL0; lambda0.9; softmax2; alpha0.5; decay7; beta0.7; k-leninet1; 25RUNS.mat';
 results=importdata([folder stringName]);
 [M,S,n,legendN] = load_results(results,M,S,n,legendN,'CRL');
 
-folder='final/';
-
 stringName = 'MAapproach0; jointState0; DRL1; lambda0.9; beta0.7; k-leninet1; alpha0.5; decay8; softmax3; 25RUNS.mat';
 results=importdata([folder stringName]);
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-IndivStates');
+[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-indvS');
 
 % stringName = 'decayW7; softmaxW0.5; MAapproach0; jointState0; DRL1; lambda0.9; beta9; k-leninet2; alpha0.3; decayX9; softmaxX2; 25RUNS.mat';
 % results=importdata([folder stringName]);

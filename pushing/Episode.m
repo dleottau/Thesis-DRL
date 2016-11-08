@@ -199,7 +199,7 @@ while 1
         if conf.DRL % Decentralized
             [RL.Q_rot, trace_rot, RL.T_rot] = UpdateSARSA(FVw, a_rot, r(2), FVwp, ap_rot, RL.Q_rot, trace_rot, RL.param, RL.T_rot, conf.MAapproach);
             if conf.fuzzQ %Fuzzy Q learning
-                [ RL.Q, trace, U, Qv] = UpdateQfuzzy(FVx, r(1), RL.Q, trace, RL.param, Qv);
+                [ RL.Q, trace, U, Qv] = UpdateQfuzzy(FVx, r(1), RL.Q, trace, RL.param, Qv, 1);
             else % SARSA
                 [RL.Q, trace, RL.T] = UpdateSARSA(FVx, a, r(1), FVxp, ap, RL.Q, trace, RL.param, RL.T, conf.MAapproach);
             end

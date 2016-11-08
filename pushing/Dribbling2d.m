@@ -86,7 +86,7 @@ conf.episodeN=i;
     [RL, Vr,ro,fi,gama,Pt,Pb,Pbi,Pr,Vb,total_reward,steps,Vavg_k,time,scored_] = Episode( RL, conf);
     
       
-    RL.param.epsilon = epsilon0 * exp(-i*epsDec(1));
+    RL.param.epsilon = epsilon0 .* exp(-i*epsDec);
     RL.param.softmax = softmax0 .* exp(-i*epsDec);
     
     xpoints(i)=i-1;

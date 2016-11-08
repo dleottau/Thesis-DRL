@@ -18,7 +18,7 @@ conf.NOISE = 0.01;
 conf.DRL = x(7); %Decentralized RL(1) or Centralized RL(0)
 conf.DRAWS = 0;
 conf.record = 0;
-conf.fuzzQ = 0;
+conf.fuzzQ = 1;
 conf.jointState = x(8); % Selects joint state or individual states spaces per agent.
 conf.MAapproach = x(9);
 
@@ -46,8 +46,8 @@ RL.param.softmax(1) = x(1);%x(5);
 RL.param.alpha       = x(3);%x(4);   % learning rate
 RL.param.gamma       = 0.99;   % discount factor
 RL.param.lambda      = x(6);   % the decaying elegibiliy trace parameter
-RL.param.epsilon = 1;
-
+RL.param.epsilon(1) = 0.2;
+RL.param.epsilon(2) = RL.param.epsilon(1);
 RL.param.k          = x(4); %x(1);   %1.5 lenience parameter
 RL.param.beta       = x(5); %x(2); %   %0.9 lenience discount factor
 
