@@ -70,8 +70,6 @@ load finalTests/DRL_25Runs_Noise0.1_MA0_alpha0.5_lambda0.9_softmax70_decay6-1500
 % load 'opti/DRL0/DRL_4Runs_Noise0.1_MA0_alpha0.3_lambda0.9_softmax51_decay6.mat';
 % [M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-Ind-Fast');
 
-
-
 % load 'opti/NeASh/sin1/sinFreq35; ScaleNeash6; NeASh1; Transfer1; k-lenient1.5; MAapproach0; beta0.9; lambda0.8; decay7; softmax2; alpha0.3.mat'
 % [M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL+NeASh-sin-Best'); %Fitness=12.1148; T_th=158
 % 

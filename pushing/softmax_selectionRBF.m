@@ -38,6 +38,7 @@ a = find(rand <= cumsum(Ps),1);
 p = Ps(a);
 
 if isempty(a)
+    keyboard
     Ps
 end
     

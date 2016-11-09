@@ -1,16 +1,16 @@
-% function f = optimizationFunction(x)
-% global RUNS;
-% global opti;
-
-clc
-clf
-clear all
-close all
-tic
+function f = optimizationFunction(x)
+global RUNS;
 global opti;
-opti=0;
-global finalTest;
-finalTest=0;
+
+% clc
+% clf
+% clear all
+% close all
+% tic
+% global opti;
+% opti=0;
+% global finalTest;
+% finalTest=0;
 
 if ~opti
      RUNS=1;
@@ -57,6 +57,7 @@ if opti
     x0(10) = x(2);
     x0(2) = x(3);
     x0(11) = x(4);
+    x0(3) = x(5);
 end
 
 stringName=[];
