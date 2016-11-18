@@ -1,23 +1,23 @@
-function f = optimizationFunction(x)
-global RUNS;
-global opti;
-global prueba;
-
-% clc
-% clf
-% clear all
-% close all
-% tic
-% 
+% function f = optimizationFunction(x)
+% global RUNS;
 % global opti;
-% opti = 0;
-% global test;
-% test=0;
 % global prueba;
-% prueba = 1;
+
+clc
+clf
+clear all
+close all
+tic
+
+global opti;
+opti = 0;
+global test;
+test=0;
+global prueba;
+prueba = 1;
 
 if ~opti
-    RUNS = 25;        
+    RUNS = 1;        
 %         myCluster = parcluster('local');
 %         if isempty(gcp('nocreate')) == 0        % checking to see if my pool is already open
 %             parpool('local',myCluster.NumWorkers)
@@ -42,7 +42,7 @@ xname{2}  = 'softmax';
 x0(2)     = 1;              % 11
 
 xname{3}  = 'decay';
-x0(3)     = 10;              % 8
+x0(3)     = 13;              % 13 for DRL basic, 7 dor transfer woth Neash
 
 xname{4}  = 'lambda';
 x0(4)     = 0.95;
@@ -57,7 +57,7 @@ xname{7}  = 'k-lenient';
 x0(7)     = 5;
 
 xname{8}  = 'Transfer';
-x0(8)     = 1;              % =1 transfer, >1 acts gready from source policy, =0 learns from scratch, =-1 just for test performance from stored policies
+x0(8)     = 0;              % =1 transfer, >1 acts gready from source policy, =0 learns from scratch, =-1 just for test performance from stored policies
 
 xname{9}  = 'NeASh';
 x0(9)     = 1;              % 0 COntrol sharing, 1 NASh, 2 Nash triangular
