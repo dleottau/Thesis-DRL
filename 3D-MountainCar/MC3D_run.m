@@ -1,4 +1,4 @@
-function [cumR, itaeM] = MC3D_run (x,RUNS,stringName)
+function [cumR, itaeM, elapsedTime] = MC3D_run (x,RUNS,stringName)
 
 global flagFirst;
 global opti;
@@ -10,6 +10,7 @@ cfg.ac5= x(8);%1;  % enable original proposal which uses 5 actions instead of 9
 
 cfg.DRAWS = 0;
 cfg.record = 1;
+cfg.timeCounter = 0;
 folder = 'experimentsFull/';
 
 if opti
@@ -79,17 +80,20 @@ if flagFirst
     disp('-');
 end
 
+
+    
 if RUNS==1
     for n=1:RUNS
         %cfg.runs=n;
-        [reward{n}, itae(n), x_{n}, Qx{n}, Qy{n}] = MountainCarDemo(cfg, RL, n);
+        [reward{n}, itae(n), x_{n}, Qx{n}, Qy{n}, eTime(n)] = MountainCarDemo(cfg, RL, n);
     end
 else
     parfor n=1:RUNS
-        [reward{n}, itae(n), x_{n}, Qx{n}, Qy{n}] = MountainCarDemo(cfg, RL, n);
+        [reward{n}, itae(n), x_{n}, Qx{n}, Qy{n}, eTime(n)] = MountainCarDemo(cfg, RL, n);
     end
 end
-        
+
+      
 cr_best=-Inf;
 cr_worst=Inf;
 itae_best=Inf;
@@ -166,4 +170,5 @@ clear Qx Qy reward x_ mRew;
 
 cumR=mean(cr);
 itaeM=mean(itaem);
-%disp(['  MeanCumRew:',num2str(mean(cr)), ';  Fitness: ',num2str(mean(fm))])
+elapsedTime=mean(eTime);
+%disp(['  RL time: ',num2str(cfg.timeCounter)])

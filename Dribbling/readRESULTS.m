@@ -7,18 +7,18 @@ close all
 %folder = 'opti/NeASh/triangFinal/';
 %folder = 'opti/NeASh/triangSrc2Final/';
 %folder = 'opti/NeASh/gaussFinal/';
-folder = 'opti/NeASh/gaussSrc2Final/';
+folder = 'finalTests/';
 %folder = 'opti/DRL0/';
 %folder = 'opti/LRL/';
 
 
 
-sort_1f_0t=0;
+sort_1f_0t=1;
 
 
 record=0;
-thT=20; % threshold to time to threshold
-interval=0.7;
+thT=27; % threshold to time to threshold
+interval=0.9;
 %m=1;
 
 
@@ -34,7 +34,8 @@ for i=1:size(files,1)
 %     else time_th=inf;
 %     end
     gf=0.5*(100-result.mean_Vavg+result.mean_faults);
-    Tth=result.conf.episodes;
+    %Tth=result.conf.episodes;
+    Tth=2000;
     if thT>=min(gf)
         tth=find(gf<thT);
         Tth=tth(1);

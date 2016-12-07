@@ -11,7 +11,7 @@ global opti;
 opti=0;
 
 if ~opti
-    RUNS=30;
+    RUNS=8;
 
 %     myCluster = parcluster('local');
 %     if matlabpool('size') == 0 % checking to see if my pool is already open
@@ -25,17 +25,17 @@ end
 x0 = [];
 
 xname{1}='alpha';
-x0(1) = 0.20;
+x0(1) = 0.25;
 xname{2}='lambda';
-x0(2) = 0.95;
+x0(2) = 0.8;
 xname{3}='epsilon';
-x0(3) = 0.03;  
+x0(3) = 0.06;  
 xname{4}='k-lenient';
 x0(4) = 3.5;  
 xname{5}='beta';
 x0(5) = 0.8; 
 xname{6}='DRL'; 
-x0(6)= 3;  % 0 for CRL, 1 for DRL, 2 for DRL with joint states
+x0(6)= 2;  % 0 for CRL, 1 for DRL, 2 for DRL with joint states
 xname{7}='MAapproach-Inc';
 x0(7) = 0;   % 0 no cordination, 1 frequency adjusted, 2 leninet
 xname{8}='5actions';
@@ -69,13 +69,13 @@ if ~opti
 end
 
 
-[cumR, itae] = MC3D_run(x0,RUNS,stringName);
+[cumR, itae, elapsedTime] = MC3D_run(x0,RUNS,stringName);
 f=-cumR;
 %f=itae;
 
 if ~opti
     disp('-');
-    disp(['cumRew:',num2str(cumR), '; ITAE:',num2str(itae)]);
+    disp(['cumRew:',num2str(cumR), '; ITAE:',num2str(itae), '; ElapsedTime:',num2str(elapsedTime) ]);
     disp('-');
     toc
     matlabpool close;

@@ -1,4 +1,4 @@
-function [ RL, Vr,ro,fi,gama,Pt,Pb,Pbi,Pr,Vb,total_reward,steps,Vavg,time,scored] = Episode(RL, conf)
+function [ RL, Vr,ro,fi,gama,Pt,Pb,Pbi,Pr,Vb,total_reward,steps,Vavg,time,scored,conf] = Episode(RL, conf)
          
 %Dribbling1d do one episode  with sarsa learning              
 % maxDistance: the maximum number of steps per episode
@@ -158,11 +158,14 @@ while 1
     Xp = [x_obs(5), x_obs(7), x_obs(8), x_obs(13)];
     Xp = clipDLF(Xp, conf.feature_min, conf.feature_max);
     
+    % Get velocity From Linear Controller
+    [V_FLC] = controller_dribbling (Xp,Vr_min,Vr_max);
+    
+    
+    tic;
     [FVxp, FVwp] = getFeatureVector(Xp, conf.cores, conf.jointState);
     FVp=FVwp;
     
-    % Get velocity From Linear Controller
-    [V_FLC] = controller_dribbling (Xp,Vr_min,Vr_max);
     %---------------------------------------        
           
     % observe the reward at state xp and the final state flag
@@ -195,6 +198,7 @@ while 1
                      
 	% Update the Qtable, that is,  learn from the experience
     %if ballState==0 || ballState==3
+    
     if ~conf.Test
         if conf.DRL % Decentralized
             [RL.Q_rot, trace_rot, RL.T_rot] = UpdateSARSA(FVw, a_rot, r(2), FVwp, ap_rot, RL.Q_rot, trace_rot, RL.param, RL.T_rot, conf.MAapproach);
@@ -207,7 +211,7 @@ while 1
             [RL.Q, trace, RL.T] = UpdateSARSA(FV, a, r(1), FVp, ap, RL.Q, trace, RL.param, RL.T, conf.MAapproach);
         end
     end
-        
+    conf.timeCounter=conf.timeCounter+toc;    
           
     %update the current variables
     X = Xp;

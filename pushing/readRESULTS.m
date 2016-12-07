@@ -3,11 +3,11 @@ clc
 clf
 close all
 
-sort_1f_0t = 0;  % sort by best fitness (0) or by fastest convergence (1)
+sort_1f_0t = 1;  % sort by best fitness (0) or by fastest convergence (1)
 thT = 30; % threshold to time to threshold from 0-100%
 
-folder = 'opti/';
-%folder = 'final/Delft/';
+%folder = 'opti/';
+folder = 'final/Delft/';
 
 
 record=0;

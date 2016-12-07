@@ -1,4 +1,4 @@
-function  [pscored, scored, Qx, Qw] = Dribbling2d( nRun, conf, RL)
+function  [pscored, scored, Qx, Qw, elapsedTime] = Dribbling2d( nRun, conf, RL)
 %Dribbling1d SARSA, the main function of the trainning
 
 set(gcf,'name',['Differential Robot ' conf.fileName])
@@ -83,7 +83,7 @@ conf.episodeN=i;
     end
     
     
-    [RL, Vr,ro,fi,gama,Pt,Pb,Pbi,Pr,Vb,total_reward,steps,Vavg_k,time,scored_] = Episode( RL, conf);
+    [RL, Vr,ro,fi,gama,Pt,Pb,Pbi,Pr,Vb,total_reward,steps,Vavg_k,time,scored_,conf] = Episode( RL, conf);
     
       
     RL.param.epsilon = epsilon0 .* exp(-i*epsDec);
@@ -204,6 +204,7 @@ end
 
 Qx=RL.Q;
 Qw=RL.Q_rot;
+elapsedTime=conf.timeCounter;
 
 if ~conf.opti
     disp(['RUN: ' int2str(nRun) '; cumGoals: ',num2str(pscored(end))]);

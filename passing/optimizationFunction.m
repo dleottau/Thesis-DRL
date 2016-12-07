@@ -42,7 +42,7 @@ xname{2}  = 'softmax';
 x0(2)     = 1;              % 11
 
 xname{3}  = 'decay';
-x0(3)     = 13;              % 13 for DRL basic, 7 dor transfer woth Neash
+x0(3)     = 7;              % 13 for DRL basic, 7 dor transfer with Neash
 
 xname{4}  = 'lambda';
 x0(4)     = 0.95;
@@ -57,7 +57,7 @@ xname{7}  = 'k-lenient';
 x0(7)     = 5;
 
 xname{8}  = 'Transfer';
-x0(8)     = 0;              % =1 transfer, >1 acts gready from source policy, =0 learns from scratch, =-1 just for test performance from stored policies
+x0(8)     = 1;              % =1 transfer learning, >1 acts gready from source policy, =0 learns from scratch, =-1 just for test performance from stored policies
 
 xname{9}  = 'NeASh';
 x0(9)     = 1;              % 0 COntrol sharing, 1 NASh, 2 Nash triangular

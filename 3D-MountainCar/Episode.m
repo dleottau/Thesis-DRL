@@ -1,4 +1,4 @@
-function [total_reward,steps,RL,x_] = Episode( cfg, RL)
+function [total_reward,steps,RL,x_,cfg] = Episode( cfg, RL)
 %maxsteps, Q , alpha, gamma,lambda,epsilon,statelist,dev,actionlist,grafic )
 
 %MountainCarEpisode do one episode of the mountain car with sarsa learning
@@ -66,7 +66,10 @@ for i = 1: cfg.maxsteps
     
     %do the selected action and get the next car state    
     xp  = DoAction( action, x, cfg);  
+    
+    
     % extrat feature vectore and select action prime
+    tic;
     FVp = getFeatureVector(xp, cfg.cores, cfg.DRL);
     if cfg.DRL
         [apx, fa_x] = action_selection(RL.Q, FVp(:,1), RL.param, RL.Tx);
@@ -93,8 +96,9 @@ for i = 1: cfg.maxsteps
     
     
     % Update the Qtable, that is,  learn from the experience
+    
     if cfg.DRL   
-                                                          
+                                   
         [ RL.Q, e_trace, RL.Tx] = UpdateSARSA(FV(:,1), ax, r(1), FVp(:,1), apx, RL.Q, e_trace, RL.param,RL.Tx, cfg.MAapproach);
         [ RL.Qy, e_trace_y, RL.Ty] = UpdateSARSA(FV(:,2), ay, r(2), FVp(:,2), apy, RL.Qy, e_trace_y, RL.param,RL.Ty, cfg.MAapproach);
         %update the current variables
@@ -105,7 +109,8 @@ for i = 1: cfg.maxsteps
         %update the current variables
         a = ap;
     end
-    
+    cfg.timeCounter=cfg.timeCounter+toc;
+        
     %update the current variables
     FV = FVp;
     x = xp;

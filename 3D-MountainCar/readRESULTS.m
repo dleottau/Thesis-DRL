@@ -4,9 +4,10 @@ clf
 close all
 
 th=-300;
-m=10;
+m=1;
+interval=0.9;
 
-folder='egreedy_opti/';
+folder='experimentsFull/fig3/';
 files = dir(fullfile([folder '*.mat']));
 
 j=1;
@@ -19,7 +20,8 @@ for i=1:size(files,1)
     end
     results1{i}.name=files(i).name;
     results1{i}.time_th=time_th;
-    results1{i}.meanRew=result.performance(1,1);
+    %results1{i}.meanRew=result.performance(1,1);
+    results1{i}.meanRew = mean(result.mean_cumReward(ceil(interval*length(result.mean_cumReward)):end));
     itae(i)=-result.performance(1,2);
     results1{i}.meanITAE=itae(i);
     clear result rth;

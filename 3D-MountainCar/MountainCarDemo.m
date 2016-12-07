@@ -1,4 +1,4 @@
-function [cR, itae, x_best, Qx, Qy] =  MountainCarDemo( cfg, RL, run)
+function [cR, itae, x_best, Qx, Qy, elapsedTime] =  MountainCarDemo( cfg, RL, run)
 %MountainCarDemo, the main function of the demo
 %maxepisodes: maximum number of episodes to run the demo
 
@@ -49,7 +49,7 @@ cfg.grafica     = false; % indicates if display the graphical interface
     
 for i=1:maxepisodes    
 
-    [total_reward, steps, RL, x_] = Episode( cfg, RL );  
+    [total_reward, steps, RL, x_, cfg] = Episode( cfg, RL );  
     RL.stepsCum = RL.stepsCum+steps;
 
     %disp(['Espisode: ',int2str(i),'  Steps:',int2str(steps),'  Reward:',num2str(total_reward),' epsilon: ',num2str(RL.param.epsilon)])
@@ -99,8 +99,9 @@ else Qy=0;
 end
 itae = itae/maxepisodes;
 cR = ypoints;
+elapsedTime=cfg.timeCounter;
 %mR = mean(mean(ypoints(ceil(maxepisodes*0.9):end)));
 
 if ~cfg.opti
-    disp(['RUN: ',int2str(run), '; MeanCumRew: ',num2str(mean(cR(ceil(maxepisodes*0.7):end))), ';  ITAE: ',num2str(itae)])
+    disp(['RUN: ',int2str(run), '; MeanCumRew: ',num2str(mean(cR(ceil(maxepisodes*0.7):end))), ';  ITAE: ',num2str(itae), ';  eTime: ',num2str(elapsedTime)])
 end

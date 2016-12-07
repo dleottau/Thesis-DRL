@@ -1,4 +1,4 @@
-function f = RUN_SCRIPT(x,RUNS,stringName)
+function [f, elapsedTime] = RUN_SCRIPT(x,RUNS,stringName)
 
 conf.Test=0;
 
@@ -67,7 +67,7 @@ conf.Vr_max = [60 5]; %x,y,rot Max Speed achieved by the robot
 conf.Vr_min = -conf.Vr_max;
 conf.Vr_min(1) = 0;
 conf.maxDeltaV = conf.Vr_max.*[1/2 1/2]; %mm/s/Ts
-conf.Nactios = [5,5];
+conf.Nactios = [5,3];
 if conf.fuzzQ && conf.DRL
     conf.Nactios = [3,3];
 end
@@ -93,14 +93,17 @@ if conf.Test
 end 
 conf.fileName = stringName;
 
-if opti
-    parfor n=1:RUNS
-        [pscored(:,n) scored(:, n) Q{n} Qw{n}] = Dribbling2d( n, conf, RL);
+conf.timeCounter = 0;
+
+if RUNS==1
+    for n=1:RUNS
+        [pscored(:,n) scored(:, n) Q{n} Qw{n}, eTime(n)] = Dribbling2d( n, conf, RL);
     end
 else
-    for n=1:RUNS
-        [pscored(:,n) scored(:, n) Q{n} Qw{n}] = Dribbling2d( n, conf, RL);
+    parfor n=1:RUNS
+        [pscored(:,n) scored(:, n) Q{n} Qw{n}, eTime(n)] = Dribbling2d( n, conf, RL);
     end
+    
 end
 
 
@@ -133,6 +136,7 @@ f=mean(pf); % Fitness function: percentage of goals scored
 
 results.mean_goals = mean(pscored,2);
 results.std_goals = std(pscored,0,2);
+elapsedTime=mean(eTime);
 
 if conf.DRAWS==1
      figure,plot(mean(pscored,2))
