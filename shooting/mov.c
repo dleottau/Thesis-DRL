@@ -64,7 +64,7 @@ void mover(double dt, double Pr[], double Pt[], double Pb[], double Vcxr,double 
         //Vbo[0]=                                 (570.46+78.24*ran[1])   *cos( (dirbi*pii/180-(atan2(Vyr*Vyrmax,Vxr*Vxrmax) + Pr[2]*pii/180)) ) *( pow(( pow(Vxr*Vxrmax/100,2) + pow(Vyr*Vyrmax/100,2)),0.5) )/Vxrmax;
         //Vbo[0]=( 10*(pow(pow(Vyr,2) +pow(Vxr,2) ,0.5)) +78.24*ran[1])   *cos( (dirbi*pii/180-(atan2(Vyr*Vyrmax,Vxr*Vxrmax) + Pr[2]*pii/180)) ) *( pow(( pow(Vxr*Vxrmax/100,2) + pow(Vyr*Vyrmax/100,2)),0.5) )/Vxrmax;
         dirbo[0] = 20*ran[0] + atan2((Pb[1]-Pro[1]),(Pb[0]-Pro[0]))*180/pii;
-        Vbo[0] = ( 5*(pow(pow(Vyr,2) +pow(Vxr,2) ,0.5)) +78.24*ran[1])   *cos( (dirbi*pii/180-(atan2(Vyr*Vyrmax,Vxr*Vxrmax) + Pr[2]*pii/180)) ) *( pow(( pow(Vxr*Vxrmax/100,2) + pow(Vyr*Vyrmax/100,2)),0.5) )/Vxrmax;
+        Vbo[0] = ( 5 *(pow(pow(Vyr,2) +pow(Vxr,2) ,0.5)) +78.24*ran[1])   *cos( (dirbi*pii/180-(atan2(Vyr*Vyrmax,Vxr*Vxrmax) + Pr[2]*pii/180)) ) *( pow(( pow(Vxr*Vxrmax/100,2) + pow(Vyr*Vyrmax/100,2)),0.5) )/Vxrmax;
         if (Vbo[0]<0)
         {Vbo[0]=0;}
     }

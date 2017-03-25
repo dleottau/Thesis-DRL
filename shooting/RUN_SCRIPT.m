@@ -44,7 +44,7 @@ conf.deltaVw   = 2;
 conf.Vr_max    = [150 50 45];    % x,y,rot Max Speed achieved by the robot.-
 conf.Vr_min    = -conf.Vr_max;
 conf.Vr_min(1) = 0;
-conf.Fr        = 1000;            % Friction coefficient
+conf.Fr        = 150*26;            % Friction coefficient
 % -------------------------------------------------------------------------
 conf.maxDeltaV = conf.Vr_max .* [1/3 1/3 1/3];    % mm/s/Ts
 conf.Nactios   = [12,13,8];
