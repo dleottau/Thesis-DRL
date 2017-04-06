@@ -70,18 +70,19 @@ end
 % ------------------------------------------------------
 
 % ----------------------------------------------------------------------- %
-EXPLORATION = conf.episodes/RL.param.exp_decay;
+EXPLORATION = abs(conf.episodes/RL.param.exp_decay);
 % ----------------------------------------------------------------------- %
 epsDec      = -log(0.05) * 1/EXPLORATION;  % Epsilon decrece a un 5% (0.005) en maxEpisodes cuartos (maxepisodes/4), de esta manera el decrecimiento de epsilon es independiente del numero de episodios.-
 
 RL.param.fuzzQ  = conf.fuzzQ;
-conf.goalSize   = 150;
-conf.PgoalPostR = [conf.Pt(1)+conf.goalSize/2 conf.Pt(2)]; % Right Goal Post position
-conf.PgoalPostL = [conf.Pt(1)-conf.goalSize/2 conf.Pt(2)]; % Left Goal Post position
+
+conf.goalSize   = 1500;
+conf.PgoalPostR = [conf.Pt(1)+300, conf.Pt(2)+conf.goalSize/2]; % Right Goal Post position
+conf.PgoalPostL = [conf.Pt(1)+300, conf.Pt(2)-conf.goalSize/2]; % Left Goal Post position
 
 % ------------------------------------------------
 RL.param.M       = conf.Mtimes;
-RL.param.epsilon = epsilon0;
+RL.param.epsilon = abs(epsilon0);
 RL.param.p       = p0;
 RL.break = 0;
 % -----------------------------------------------
@@ -94,21 +95,23 @@ for i = 1:conf.episodes
     elseif conf.TRANSFER == 0,
         RL.param.p = 0;         % Learns from scratch
     end                         % Else Transfer from source decaying as p
+   
+    conf.checkGoal=0;
     
     while 1
         if ~conf.Test
             uB         = [conf.Pb(1)+1000 conf.Pb(2)+1000  180];
-            lB         = [conf.Pb(1)-1000 conf.Pb(2)-1000 -180];
+            lB         = [conf.Pb(1)+ 00 conf.Pb(2)-1000 -180];
             conf.Pr    = rand(1,3).*(uB-lB) + lB;
             
-            conf.Pr    = [conf.Pb(1)+800 conf.Pb(2) 180];
+            %conf.Pr    = [conf.Pb(1)+1000 conf.Pb(2) 180];
             conf.Pr(3) = moduloPiDLF(atan2(conf.Pb(2)-conf.Pr(2),conf.Pb(1)-conf.Pr(1)),'r2d');
             
             %% Robot movement.---------------------------------------------
             [~, ~, ~, ~, phi, gamma, pho, ~, ~, ~] = mov(Ts,conf.Pr,conf.Pt,conf.Pb,0,0,0,100,100,100,0,0,conf.Fr,zeros(2,1));
             % -------------------------------------------------------------
             
-            if (pho <= conf.r_ext && conf.r_int <= pho) && (abs(phi) < conf.c_ang) && (abs(gamma) < 45)
+            if (pho <= conf.r_ext && conf.r_int <= pho) && (abs(phi) < conf.c_ang) && (abs(gamma) < 30)
                 break
             end
         else
@@ -148,13 +151,13 @@ for i = 1:conf.episodes
     
     [RL, Vr,ro,fi,gama,Pt,Pb,Pbi,Pr,Vb,total_reward,steps,Vavg_k,time,scored_] = Episode( RL, conf );
     
-    dec = exp(-i*epsDec);
+    %dec = exp(-i*epsDec);
     %dec = exp(-i*epsDec)*(1+cos(2*pi*i*10/EXPLORATION))/2;
-    
+    dec = exp(-i*RL.param.exp_decay/conf.episodes);
     %keyboard
     
-    RL.param.epsilon = epsilon0 * dec;
-    RL.param.softmax = softmax0 * dec;
+    RL.param.epsilon = abs(epsilon0) * dec;
+    RL.param.softmax = abs(softmax0) * dec;
     RL.param.p       = p0*dec;
     
     xpoints(i)   = i-1;
@@ -162,7 +165,11 @@ for i = 1:conf.episodes
     e_time(i,1)  = steps*Ts;
     Vavg(i,1)    = Vavg_k;
     scored(i)    = scored_;
-    pscored(i,1) = mean(scored);
+    if i > conf.episodes*0.1;
+        pscored(i,1) = mean(scored(i-conf.episodes*0.1:i));
+    else
+        pscored(i,1) = mean(scored);
+    end
     DEC(i)=RL.param.softmax;
     
     % ---------------------------------------------------------------------
@@ -193,7 +200,7 @@ for i = 1:conf.episodes
         title('Reward')
                 
         subplot(2,3,6)
-        plot(smooth( dist_BT, 0.08,'rloess'),'k','LineWidth',2)
+        plot(smooth( dist_BT, 0.04,'rloess'),'k','LineWidth',2)
         ylim([0 110])
         grid
         title('Distance Ball-Target')
@@ -208,11 +215,12 @@ for i = 1:conf.episodes
         
         % Robot Movement Plot.----------------------------------------
         subplot(2,3,[1,4])
-        plot(Pt(1),Pt(2),'.k','LineWidth',2)                % Target Position
+        
+         plot(Pb(:,1),Pb(:,2),'*r')  % Ball Position
         hold on
         view(90,90)
-        plot(Pb(:,1),Pb(:,2),'*r')                          % Ball Position
         plot(Pr(:,1),Pr(:,2),'gx')                          % Robot Positions
+        %plot(Pt(1),Pt(2),'.k','LineWidth',2)                % Target Position
         xlim([-conf.maxDistance_x/2 conf.maxDistance_x/2])
         ylim([-conf.maxDistance_y/2 conf.maxDistance_y/2])
         grid
@@ -220,7 +228,9 @@ for i = 1:conf.episodes
         
         % Circle plot.-----------------------------------------------------
         h_figur = gcf;
-        circle_plot(conf.Pt(1), conf.Pt(2), conf.a3, conf.b3, conf.r3, 0, 2 * pi, h_figur, 'k',2);
+        %circle_plot(conf.Pt(1), conf.Pt(2), conf.a3, conf.b3, conf.r3, 0, 2 * pi, h_figur, 'k',2);
+        circle_plot(conf.PgoalPostR(1), conf.PgoalPostR(2), conf.a3, conf.b3, 50, 0, 2 * pi, h_figur, 'k',2);
+        circle_plot(conf.PgoalPostL(1), conf.PgoalPostL(2), conf.a3, conf.b3, 50, 0, 2 * pi, h_figur, 'k',2);
         
         [xci1,xci2,yci1,yci2] = circle_plot(conf.Pb(1), conf.Pb(2), 1, 1, conf.r_int, -conf.c_ang * pi / 180, conf.c_ang * pi / 180, h_figur, 'c',1);
         [xce1,xce2,yce1,yce2] = circle_plot(conf.Pb(1), conf.Pb(2), 1, 1, conf.r_ext, -conf.c_ang * pi / 180, conf.c_ang * pi / 180, h_figur, 'c',1);
@@ -231,6 +241,11 @@ for i = 1:conf.episodes
         title('X-Y Plane');
         hold off
         drawnow
+        
+        if scored_;
+           % keyboard
+        end
+        
     end
 end
 

@@ -16,23 +16,24 @@ fi_std   = fi*0 + feature_step(3)*0.5;
 %fi   = [feature_min(3) -50 -15 0 15 50 feature_max(3)];
 %fi_std   = [50 30 15 8 15 30 50];
 
-dBT     = feature_min(4) : feature_step(4) : feature_max(4);
-dBT_std = dBT*0 + feature_step(4)*0.5;
+%dBT     = feature_min(4) : feature_step(4) : feature_max(4);
+%dBT_std = dBT*0 + feature_step(4)*0.5;
 
 
 cores.mean.ro   = ro;
 cores.mean.gama = gama;
 cores.mean.fi   = fi;
-cores.mean.dBT  = dBT;
-cores.std.dBT   = dBT_std;
+%cores.mean.dBT  = dBT;
+%cores.std.dBT   = dBT_std;
 cores.std.ro    = ro_std;
 cores.std.gama  = gama_std;
 cores.std.fi    = fi_std;
 
-nstates = length(ro)*length(gama)*length(fi)*length(dBT);
-
+%nstates = length(ro)*length(gama)*length(fi)*length(dBT);
+nstates = length(ro)*length(gama)*length(fi);
 % ----------------------------------------------------------------- %
-div_disc_ = [size(cores.mean.ro,2) size(cores.mean.gama,2) size(cores.mean.fi,2) size(cores.mean.dBT,2)];
+%div_disc_ = [size(cores.mean.ro,2) size(cores.mean.gama,2) size(cores.mean.fi,2) size(cores.mean.dBT,2)];
+div_disc_ = [size(cores.mean.ro,2) size(cores.mean.gama,2) size(cores.mean.fi,2)];
 
 for i = 1:size(div_disc_,2)-1
     div_disc(i) = prod(div_disc_(i+1:size(div_disc_,2)));

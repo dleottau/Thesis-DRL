@@ -12,13 +12,13 @@ conf.opti = opti;
 conf.Test = test;
 
 conf.fileName = stringName;
-
+conf.auxRewFlag=0;
 %% Parameters.-------------------------------------------------------------
 conf.episodes      = 2000;   % Maximum number of episodes
 conf.Ts            = 0.2;    % Sample time of a RL step
 conf.maxDistance   = 4000;   % Max ball distance permited before to end the episode X FIELD DIMENSION
-conf.maxDistance_x = 6000;   % Max ball distance permited before to end the episode X FIELD DIMENSION
-conf.maxDistance_y = 4000;   % Max ball distance permited before to end the episode Y FIELD DIMENSION
+conf.maxDistance_x = 9000;   % Max ball distance permited before to end the episode X FIELD DIMENSION
+conf.maxDistance_y = 6000;   % Max ball distance permited before to end the episode Y FIELD DIMENSION
 conf.Runs          = RUNS;   % # of runs
 conf.NOISE         = 0.01;   % Noise 0-1
 conf.DRL           = 1;      % Decentralized RL(1) or Centralized RL(0)
@@ -28,7 +28,7 @@ conf.MAapproach    = x(6);   % 0 no cordination, 1 frequency adjusted, 2 leninet
 conf.TRANSFER      = x(8);   % =1 transfer, >1 acts gready from source policy, =0 learns from scratch, =-1 just for test performance from stored policies
 conf.nash          = x(9);   % 0 COntrol sharing, 1 NASh, 2 Nash triang
 conf.Mtimes        = 0;      % State-action pair must be visited M times before Q being updated
-conf.flag_Vr       = 0;      % 1 learning ; 0  controller.-
+conf.flag_Vr       = 1;      % 1 learning ; 0  controller.-
 conf.thT           = 50;     % threshold to compute Time to threshold
 % -------------------------------------------------------------------------
 conf.Q_INIT = 0;                    % Q table initial values
@@ -41,13 +41,13 @@ end
 
 % -------------------------------------------------------------------------
 conf.deltaVw   = 2;
-conf.Vr_max    = [150 50 45];    % x,y,rot Max Speed achieved by the robot.-
+conf.Vr_max    = [120 70 30];    % x,y,rot Max Speed achieved by the robot.-
 conf.Vr_min    = -conf.Vr_max;
 conf.Vr_min(1) = 0;
-conf.Fr        = 150*26;            % Friction coefficient
+conf.Fr        = 150*5;            % Friction coefficient
 % -------------------------------------------------------------------------
 conf.maxDeltaV = conf.Vr_max .* [1/3 1/3 1/3];    % mm/s/Ts
-conf.Nactios   = [12,13,8];
+conf.Nactios   = [16,15,17];
 % -------------------------------------------------------------------------
 
 conf.sync.nash = 1;
@@ -94,9 +94,9 @@ conf.Pb = [1800 0];       % Initial ball poition
 % -------------------------------------------------------------------------
 
 % Parameters of the Robot Initial position.--------------------------------
-conf.r_int = 700;
-conf.r_ext = 1200;
-conf.c_ang = 100;
+conf.r_int = 950;
+conf.r_ext = 1050;
+conf.c_ang = 90;
 % -------------------------------------------------------------------------
 
 % Parameters of the circle.------------------------------------------------
@@ -106,8 +106,8 @@ conf.r3  = 500;
 % -------------------------------------------------------------------------
 
 % Parameters of Gaussian Distribution.-------------------------------------
-conf.Rgain = 200000000;
-conf.Rvar  = 500;
+conf.Rgain = 50;
+conf.Rvar  = 300;
 mu         = [conf.Pt(1)  conf.Pt(2)];
 sigma      = [conf.Rvar^2 0 ; 0 conf.Rvar^2];
 conf.f_gmm = @(x,y)mvnpdf([x y],mu,sigma);
@@ -115,9 +115,11 @@ conf.f_gmm = @(x,y)mvnpdf([x y],mu,sigma);
 
 %% Other parameters.-------------------------------------------------------
 conf.V_action_steps = (conf.Vr_max-conf.Vr_min)./(conf.Nactios-[1 1 1]);
-conf.feature_step   = [50, 10, 20, 600];
-conf.feature_max    = [1000, 60, 90 conf.Pb(1)];
-conf.feature_min    = [0, -60, -90, 0];
+%conf.feature_step   = [50, 10, 20, 600];
+conf.feature_max    = [800, 70, 90 conf.Pb(1)];
+conf.feature_min    = [0, -70, -90, 0];
+conf.Nfeatures      = [15, 11, 13, 10];
+conf.feature_step   = (conf.feature_max - conf.feature_min )./(conf.Nfeatures-[1 1 1 1]);
 
 %% -----------------------------------------------------------------------
 fileNameP = ['DRL_' int2str(conf.Runs) 'Runs_Noise' num2str(conf.NOISE) '_MA' int2str(conf.MAapproach) '_alpha' num2str(RL.param.alpha) '_lambda' num2str(RL.param.lambda)];

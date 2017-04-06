@@ -204,11 +204,12 @@ while 1
     
     %% Check if it is a Goal.----------------------------------------------
     balline          = Pb(i,:);
-    [checkGoal, Pbi] = goal1( conf , balline , ballState );
+    [conf.checkGoal, Pbi] = goal1( conf , balline , ballState );
     
     %% Observe the reward at state xp and the final state flag.------------
-    [r,f]        = GetReward(Xp, Pr(i,:), Pb(i,:), Pt, checkGoal, Pbi, ballState, conf);
+    [r,f]        = GetReward(Xp, Pr(i,:), Pb(i,:), Pt, conf.checkGoal, Pbi, ballState, conf);
     total_reward = total_reward + r;
+    if f, updateSarsaFlag = 1; end
     
     % Select action prime
     [a_sc, Pap] = p_source_selection2(RL,FVp,conf);
@@ -257,8 +258,8 @@ while 1
     Vavg   = xG(1)/time(i);
     
     % Terminal state?
-    if ( f == true || time(i) > 100 || RL.break)
-        if checkGoal
+    if ( f == true || time(i) > 200 || RL.break)
+        if conf.checkGoal
             scored = 100;   % 100*(1-abs(Pbi(1)-Pt(1))/(conf.goalSize/2));
         end
         break
