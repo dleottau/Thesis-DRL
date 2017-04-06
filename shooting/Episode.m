@@ -80,7 +80,7 @@ X     = clipDLF(X, conf.feature_min, conf.feature_max);
 FV = getFeatureVector(X, conf.cores);
 
 % Get velocity from Linear Controller
-[RL.V_src] = controller_dribbling (xG,Vr_min,Vr_max);
+[RL.V_src] = controller_dribbling (xG,Vr_min,Vr_max,conf.Controller);
 
 ballState = 0;
 
@@ -199,7 +199,7 @@ while 1
     FVp = getFeatureVector(Xp, conf.cores);
     
     % Get velocity From Linear Controller
-    [RL.V_src] = controller_dribbling (Xp,Vr_min,Vr_max);
+    [RL.V_src] = controller_dribbling (Xp,Vr_min,Vr_max,conf.Controller);
     % ---------------------------------------
     
     %% Check if it is a Goal.----------------------------------------------

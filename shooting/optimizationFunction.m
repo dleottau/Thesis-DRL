@@ -36,13 +36,13 @@ x0 = [];
 %% Algorithm parameters.-
 
 xname{1}  = 'alpha';
-x0(1)     = 0.2;
+x0(1)     = 0.1;
 
 xname{2}  = 'softmax';
 x0(2)     = -1;              % 11
 
 xname{3}  = 'decay';
-x0(3)     = 20;              % 8
+x0(3)     = 15;              % 8
 
 xname{4}  = 'lambda';
 x0(4)     = 0.9;
@@ -59,11 +59,11 @@ x0(7)     = 5;
 xname{8}  = 'Transfer';
 x0(8)     = 0;              % =1 transfer, >1 acts gready from source policy, =0 learns from scratch, =-1 just for test performance from stored policies
 
-xname{9}  = 'NeASh';
-x0(9)     = 0;              % 0 COntrol sharing, 1 NASh, 2 Nash triangular
+xname{9}  = 'Controller';
+x0(9)     = 0;              % HiQ=0 or lowQ=1 Controlller
 
 xname{10} = 'ScaleNeash';
-x0(10)    = 10;             % 20    % 0.04 scale factor for the action space in neash
+x0(10)    = 0;             % 10    % scale factor for the action space in neash
 
 % -------------------------------------------------------------------------
 

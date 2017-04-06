@@ -19,8 +19,8 @@ f    = false;
 %r(1) = - 1 * ( sum([ro abs(gama) abs(fi) dBT] .* 1/feature_max));
 r(1) = - 1 * ( sum([ro abs(gama) abs(fi)] .* 1/feature_max(1:3)));
 
-if checkGoal
-    r(1) = 500*exp(-abs(Pbi(2))/500);
+if checkGoal %&& abs(Pb(2))<abs(conf.PgoalPostR(2)-conf.PgoalPostL(2))*0.7
+    r(1) = conf.Rgain*exp(-abs(Pbi(2))/500);
 %if ballState > 0 % || checkGoal
      %r(1) = conf.Rgain * f_gmm(Pbi(1),Pbi(2))
      %r(1) = 50*exp(-500/ro)*exp(-abs(Pbi(2))/750);

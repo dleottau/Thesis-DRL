@@ -1,4 +1,4 @@
-function V_FLC = controller_dribbling (X,Vr_min,Vr_max)
+function V_FLC = controller_dribbling (X,Vr_min,Vr_max, controllerType)
 
 ro   = X(1);
 gama = X(2);
@@ -48,9 +48,16 @@ dbt   = X(4);
 % -------------------------------------------------------------------------
 
 % Parámetros Controlador Lineal optimizados manual.--------------------------------------------------
-Vx     = 0.1*dbt  -   0.5*abs(gama)   -   0.5*abs(fi);
-Vy     = -10*fi; 
-Vtheta =  1*gama    -   0.3*fi;
+ 
+if ro<200 && ~controllerType
+    Vx     = 150  -   0*abs(gama)   -   0*abs(fi);
+    Vy     = 4*fi;
+    Vtheta = 100*fi;
+else
+    Vx     = 100  -   0*abs(gama)   -   0*abs(fi);
+    Vy     = 4*fi;
+    Vtheta =  2*gama + 0.3*fi;
+end
 % -------------------------------------------------------------------------
 
 V_FLC = clipDLF([ Vx, Vy, Vtheta ],Vr_min,Vr_max);

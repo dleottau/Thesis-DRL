@@ -25,18 +25,19 @@ conf.DRL           = 1;      % Decentralized RL(1) or Centralized RL(0)
 conf.DRAWS1        = 1;      % Enable disable graphics
 conf.fuzzQ         = 0;      % Enables fuzzy Q learning algorithm
 conf.MAapproach    = x(6);   % 0 no cordination, 1 frequency adjusted, 2 leninet
-conf.TRANSFER      = x(8);   % =1 transfer, >1 acts gready from source policy, =0 learns from scratch, =-1 just for test performance from stored policies
-conf.nash          = x(9);   % 0 COntrol sharing, 1 NASh, 2 Nash triang
 conf.Mtimes        = 0;      % State-action pair must be visited M times before Q being updated
-conf.flag_Vr       = 1;      % 1 learning ; 0  controller.-
+conf.flag_Vr       = 0;      % 1 learning ; 0  controller.-
 conf.thT           = 50;     % threshold to compute Time to threshold
+conf.TRANSFER      = x(8);   % =1 transfer, >1 acts gready from source policy, =0 learns from scratch, =-1 just for test performance from stored policies
+RL.param.aScale    = x(10);     % Scale factor for the action space in neash
+conf.nash          = RL.param.aScale;   % 0 COntrol sharing, 1 NASh, 2 Nash triang
 % -------------------------------------------------------------------------
 conf.Q_INIT = 0;                    % Q table initial values
 
 if conf.TRANSFER && conf.nash
     conf.Q_INIT = 5;                % if NeASh, optimistic initialization
 elseif conf.TRANSFER && ~conf.nash
-    conf.Q_INIT = -5;               % if CoSh, pessimistic initialization
+    conf.Q_INIT = 0;               % if CoSh, pessimistic initialization
 end
 
 % -------------------------------------------------------------------------
@@ -44,7 +45,8 @@ conf.deltaVw   = 2;
 conf.Vr_max    = [120 70 30];    % x,y,rot Max Speed achieved by the robot.-
 conf.Vr_min    = -conf.Vr_max;
 conf.Vr_min(1) = 0;
-conf.Fr        = 150*6;            % Friction coefficient
+conf.Fr        = 150*4.6;            % Friction coefficient
+conf.Controller = x(9);         % % HiQ=0 or lowQ=1 Controlller
 % -------------------------------------------------------------------------
 conf.maxDeltaV = conf.Vr_max .* [1/3 1/3 1/3];    % mm/s/Ts
 conf.Nactios   = [16,15,17];
@@ -85,8 +87,6 @@ RL.param.softmax   = x(2);
 RL.param.exp_decay = x(3);      % Exploration decay parameter
 RL.param.beta      = x(5);      % 0.9 Lenience discount factor
 RL.param.k         = x(7);      % 1.5 Lenience parameter
-RL.param.aScale    = x(10);     % Scale factor for the action space in neash
-
 %% Inwalk-Passing parameters.----------------------------------------------
 % Target and ball position.------------------------------------------------
 conf.Pt = [0 0];          % Target Position
@@ -106,7 +106,7 @@ conf.r3  = 500;
 % -------------------------------------------------------------------------
 
 % Parameters of Gaussian Distribution.-------------------------------------
-conf.Rgain = 50;
+conf.Rgain = 100;
 conf.Rvar  = 300;
 mu         = [conf.Pt(1)  conf.Pt(2)];
 sigma      = [conf.Rvar^2 0 ; 0 conf.Rvar^2];

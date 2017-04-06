@@ -17,19 +17,25 @@ D3 = length(m3);
 
 %FV  = zeros(D1*D2*D3*D4,1);
 FV  = zeros(D1*D2*D3,1);
-mf1 = zeros(1,D1);
 
-for i = 1:D1
-    mf1(i) = exp((-0.5*(X(1)-m1(i))^2)/(s1(i)^2));
-end
-mf2 = zeros(1,D2);
-for i = 1:D2
-    mf2(i) = exp((-0.5*(X(2)-m2(i))^2)/(s2(i)^2));
-end
-mf3 = zeros(1,D3);
-for i = 1:D3
-    mf3(i) = exp((-0.5*(X(3)-m3(i))^2)/(s3(i)^2));
-end
+%mf1 = zeros(1,D1);
+%for i = 1:D1
+%    mf1(i) = exp((-0.5*(X(1)-m1(i))^2)/(s1(i)^2));
+%end
+mf1 = exp((-0.5*(X(1)-m1).^2)./(s1.^2));
+
+%mf2 = zeros(1,D2);
+% for i = 1:D2
+%     mf2(i) = exp((-0.5*(X(2)-m2(i))^2)/(s2(i)^2));
+% end
+mf2 = exp((-0.5*(X(2)-m2).^2)./(s2.^2));
+
+%mf3 = zeros(1,D3);
+% for i = 1:D3
+%     mf3(i) = exp((-0.5*(X(3)-m3(i))^2)/(s3(i)^2));
+% end
+mf3 = exp((-0.5*(X(3)-m3).^2)./(s3.^2));
+
 %mf4 = zeros(1,D4);
 %for i = 1:D4
 %    mf4(i) = exp((-0.5*(X(4)-m4(i))^2)/(s4(i)^2));
