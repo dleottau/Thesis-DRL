@@ -42,7 +42,7 @@ xname{2}  = 'softmax';
 x0(2)     = -1;              % 11
 
 xname{3}  = 'decay';
-x0(3)     = 15;              % 8
+x0(3)     = 20;              % 8
 
 xname{4}  = 'lambda';
 x0(4)     = 0.9;
