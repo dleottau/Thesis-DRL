@@ -26,7 +26,7 @@ conf.DRAWS1        = 1;      % Enable disable graphics
 conf.fuzzQ         = 0;      % Enables fuzzy Q learning algorithm
 conf.MAapproach    = x(6);   % 0 no cordination, 1 frequency adjusted, 2 leninet
 conf.Mtimes        = 0;      % State-action pair must be visited M times before Q being updated
-conf.flag_Vr       = 0;      % 1 learning ; 0  controller.-
+conf.flag_Vr       = 1;      % 1 learning ; 0  controller.-
 conf.thT           = 50;     % threshold to compute Time to threshold
 conf.TRANSFER      = x(8);   % =1 transfer, >1 acts gready from source policy, =0 learns from scratch, =-1 just for test performance from stored policies
 RL.param.aScale    = x(10);     % Scale factor for the action space in neash
@@ -45,7 +45,7 @@ conf.deltaVw   = 2;
 conf.Vr_max    = [120 70 30];    % x,y,rot Max Speed achieved by the robot.-
 conf.Vr_min    = -conf.Vr_max;
 conf.Vr_min(1) = 0;
-conf.Fr        = 150*5;            % Friction coefficient
+conf.Fr        = 150*6;            % Friction coefficient
 conf.Controller = x(9);         % % HiQ=0 or lowQ=1 Controlller
 % -------------------------------------------------------------------------
 conf.maxDeltaV = conf.Vr_max .* [1/3 1/3 1/3];    % mm/s/Ts
@@ -63,6 +63,8 @@ if conf.TRANSFER < 0
     conf.episodes = 100;
 end
 % -------------------------------------------------------------------------
+conf.DRAWS1  = 1;
+conf.record = 0;
 if conf.opti
     conf.DRAWS1  = 0;
     conf.record = 1;
@@ -186,10 +188,12 @@ pf_max   = -Inf;
 interval = 0.7;
 
 for i = 1:RUNS
-    pf(i)    = mean(dBT(ceil(interval*conf.episodes):end,i));
-    pf_sd(i) = std(dBT(ceil(interval*conf.episodes):end,i));
+    %pf(i)    = mean(dBT(ceil(interval*conf.episodes):end,i));
+    %pf_sd(i) = std(dBT(ceil(interval*conf.episodes):end,i));
+    pf(i)    = mean(100-pscored(ceil(interval*conf.episodes):end,i));
+    pf_sd(i) = std(100-pscored(ceil(interval*conf.episodes):end,i));
     
-    if pf(i) < pf_min
+    if pf(i) > pf_min
         pf_min = pf(i);
     end
     if pf(i) > pf_max

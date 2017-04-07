@@ -3,6 +3,7 @@
 % global opti;
 % global prueba;
 
+% Comentar desde acá para optimizar
 clc
 clf
 clear all
@@ -15,6 +16,7 @@ global test;
 test=0;
 global prueba;
 prueba = 1;
+% Comentar hasta acá para optimizar
 
 if ~opti
     RUNS = 25;        
@@ -42,7 +44,7 @@ xname{2}  = 'softmax';
 x0(2)     = -1;              % 11
 
 xname{3}  = 'decay';
-x0(3)     = 15;              % 8
+x0(3)     = 10;              % 8
 
 xname{4}  = 'lambda';
 x0(4)     = 0.9;
@@ -90,7 +92,7 @@ end
 
 if ~opti
     disp('-');
-    disp(['%Distance BT: ',num2str(f)]);
+    disp(['%Failed Goals: ',num2str(f)]);
     disp('-');
     % delete(gcp)
     toc
