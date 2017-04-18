@@ -52,6 +52,8 @@ for i=1:maxepisodes
     [total_reward, steps, RL, x_, cfg] = Episode( cfg, RL );  
     RL.stepsCum = RL.stepsCum+steps;
 
+    %keyboard  
+    
     %disp(['Espisode: ',int2str(i),'  Steps:',int2str(steps),'  Reward:',num2str(total_reward),' epsilon: ',num2str(RL.param.epsilon)])
     
     if RL.param.exp_decay<1
@@ -65,7 +67,11 @@ for i=1:maxepisodes
     
     xpoints(i)=i;
     ypoints(i,:)=total_reward;
-       
+    dpa(i,:)=RL.param.dpaAvg/steps;
+    %alpha(i,:)=RL.param.alpha*RL.param.caAvg/steps;
+    alpha(i,:)=RL.param.caAvg/steps;
+    TD(i,:)=RL.TDavg/steps;
+           
     itae = itae + i*abs(mean(total_reward));
     
     if mean(total_reward)>r_best
@@ -74,19 +80,35 @@ for i=1:maxepisodes
     end
     
     if cfg.DRAWS
-        subplot(2,1,1)
+        subplot(2,2,1)
         plot(xpoints,ypoints)
         if RL.param.softmax > 0
             title(['Run: ',int2str(run),'; Episode: ',int2str(i),'; temp: ', num2str(RL.param.softmax) ])    
         else
              title(['Run: ',int2str(run),'; Episode: ',int2str(i), '; eps: ', num2str(RL.param.epsilon) ])    
         end
-
-        subplot(2,1,2)
+         %axis([1  maxepisodes  cfg.maxsteps 0])
+         
+        subplot(2,2,2)
         plot(x_(:,1),x_(:,3),'ok')
         axis([1.1*cfg.feature_min(1) 1.1*cfg.feature_max(1) 1.1*cfg.feature_min(3) 1.1*cfg.feature_max(3)])
         title('Top view (x-y)')    
-
+        
+        subplot(2,2,3)
+        plot(TD)
+        hold on
+        plot(alpha*RL.param.alpha)
+        title('TD Avg and alphaAvg') 
+        %axis([1  maxepisodes  -1 1])
+        
+        subplot(2,2,4)
+        %plot(RL.CA, 'r')
+        %hold on
+        plot(RL.TD)
+        title('CA-DPA and TD') 
+        %axis([1  steps  -1 1])
+        %hold off
+        
         drawnow
     end
     

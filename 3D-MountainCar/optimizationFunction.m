@@ -11,7 +11,7 @@ global opti;
 opti=0;
 
 if ~opti
-    RUNS=8;
+    RUNS=1;
 
 %     myCluster = parcluster('local');
 %     if matlabpool('size') == 0 % checking to see if my pool is already open
@@ -25,7 +25,7 @@ end
 x0 = [];
 
 xname{1}='alpha';
-x0(1) = 0.25;
+x0(1) = 1;
 xname{2}='lambda';
 x0(2) = 0.8;
 xname{3}='epsilon';
@@ -36,8 +36,8 @@ xname{5}='beta';
 x0(5) = 0.8; 
 xname{6}='DRL'; 
 x0(6)= 2;  % 0 for CRL, 1 for DRL, 2 for DRL with joint states
-xname{7}='MAapproach-Inc';
-x0(7) = 0;   % 0 no cordination, 1 frequency adjusted, 2 leninet
+xname{7}='MAapproach';
+x0(7) = 4;   % 0 no cordination, 1 CAdec, 2 leninet, 3 CAinc, 4 CA enhanced
 xname{8}='5actions';
 x0(8) = 0; % enable original proposal which uses 5 actions instead of 9
 % xname{9}='transfer';
@@ -78,7 +78,7 @@ if ~opti
     disp(['cumRew:',num2str(cumR), '; ITAE:',num2str(itae), '; ElapsedTime:',num2str(elapsedTime) ]);
     disp('-');
     toc
-    matlabpool close;
+    %matlabpool close;
 else
     disp(['cumRew:',num2str(cumR), '; ITAE:',num2str(itae), '; ' stringName]);
 end

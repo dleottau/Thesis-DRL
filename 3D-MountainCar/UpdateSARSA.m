@@ -1,4 +1,4 @@
-function [ Q, e_trace, T] = UpdateSARSA( FV, a, r, FVp, ap, Q, e_trace , param, T, MAapproach)
+function [ Q, e_trace, T, TD] = UpdateSARSA( FV, a, r, FVp, ap, Q, e_trace , param, T, MAapproach)
                                       
 % UpdateQ update de Qtable and return it using Whatkins QLearing
 % s1: previous state before taking action (a)
@@ -27,8 +27,8 @@ end
 TD = r + param.gamma*Qap - Qa;
 e_trace = e_trace* param.gamma * param.lambda + FVT;
 
-if MAapproach == 0 || MAapproach == 1  || MAapproach == 2 && ( TD>0 || rand()>1-exp(-param.k*Ta)) 
-    Q = Q + param.fa*param.alpha * ( e_trace*TD);
+if MAapproach == 0 || MAapproach == 1  || MAapproach == 3  || MAapproach == 4 ||  (MAapproach == 2 && ( TD>0 || rand()>1-exp(-param.k*Ta)) )
+    Q = Q + param.ca*param.alpha * ( e_trace*TD);
 end
 e_trace = e_trace* param.gamma * param.lambda + FVT;
 
@@ -45,6 +45,6 @@ end
 % 
 % TD = r + param.gamma*Qap - Qa;
 % e_trace = e_trace* param.gamma * param.lambda + FVT;
-% Q = Q + param.fa*param.alpha * ( e_trace*TD);
+% Q = Q + param.ca*param.alpha * ( e_trace*TD);
 
 
