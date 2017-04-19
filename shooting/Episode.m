@@ -1,4 +1,4 @@
-function [ RL, Vr,ro,fi,gama,Pt,Pb,Pbi,Pr,Vb,total_reward,steps,Vavg,time,scored] = Episode(RL, conf)
+function [ RL, Vr,ro,fi,gama,Pt,Pb,Pbi,Pr,Vb,total_reward,steps,Vavg,time,scored,f_shoot] = Episode(RL, conf)
 % Dribbling1d do one episode with sarsa learning
 % maxDistance : the maximum number of steps per episode
 % Q           : the current QTable
@@ -9,13 +9,13 @@ function [ RL, Vr,ro,fi,gama,Pt,Pb,Pbi,Pr,Vb,total_reward,steps,Vavg,time,scored
 % actionlist  : the list of actions
 
 %% Dribbling2d with SARSA
-Vr_max      = conf.Vr_max;    % x,y,rot Max Speed achieved by the robot
-Vr_min      = conf.Vr_min;
-maxDeltaV   = conf.maxDeltaV; % mm/s/Ts
+Vr_max         = conf.Vr_max;    % x,y,rot Max Speed achieved by the robot
+Vr_min         = conf.Vr_min;
+maxDeltaV      = conf.maxDeltaV; % mm/s/Ts
 % th_max = conf.th_max;
-Ts          = conf.Ts;
-NOISE       = conf.NOISE;
-maxDistance = conf.maxDistance;
+Ts             = conf.Ts;
+NOISE          = conf.NOISE;
+maxDistance    = conf.maxDistance;
 V_action_steps = conf.V_action_steps;
 
 if conf.DRL
@@ -85,9 +85,9 @@ FV = getFeatureVector(X, conf.cores);
 ballState = 0;
 
 % Selects an action
-a=1;
-a_y=1;
-a_rot=1;
+a     = 1;
+a_y   = 1;
+a_rot = 1;
 
 U               = 1;
 Qv              = 0;
@@ -106,6 +106,8 @@ while 1
         action_y   = actionlist_y(a_y);
         % -----------------------------------------------------------------
         action_rot = actionlist_w(a_rot);
+        % -----------------------------------------------------------------
+        
         if conf.fuzzQ
             if conf.Test
                 MF       = FV/sum(FV);
@@ -138,13 +140,12 @@ while 1
         % -------------------------------------------------------------
     else
         Vr_req = RL.V_src;
-        
     end
     
     % Ball state = [0 stoped, 1 accelerating, 2 deaccelerating, 3 stoped after it was moved]
     if ballState ~= 0
         Vr_req          = [0,0,0];
-        updateSarsaFlag = 0; %do not update SARSA until ball stops
+        updateSarsaFlag = 0;        % do not update SARSA until ball stops
     end
     
     % Add Noise =========
@@ -203,13 +204,16 @@ while 1
     % ---------------------------------------
     
     %% Check if it is a Goal.----------------------------------------------
-    balline          = Pb(i,:);
-    [conf.checkGoal, Pbi] = goal1( conf , balline , ballState );
+    balline               = Pb(i,:);
+    [conf.checkGoal, Pbi] = goal1( conf , balline );
     
     %% Observe the reward at state xp and the final state flag.------------
-    [r,f]        = GetReward(Xp, Pr(i,:), Pb(i,:), Pt, conf.checkGoal, Pbi, ballState, conf);
-    total_reward = total_reward + r;
-    if f, updateSarsaFlag = 1; end
+    [r,f,f_shoot] = GetReward(Xp, Pr(i,:), Pb(i,:), Pt, conf.checkGoal, Pbi, ballState, conf);
+    total_reward     = total_reward + r;
+    
+    if f
+        updateSarsaFlag = 1;
+    end
     
     % Select action prime
     [a_sc, Pap] = p_source_selection2(RL,FVp,conf);
@@ -217,7 +221,7 @@ while 1
     ap     = a_sc(1);
     ap_y   = a_sc(2);
     ap_rot = a_sc(3);
-    % --------------------------------------------------------------------    
+    % --------------------------------------------------------------------
     
     % Update the Qtable, that is,  learn from the experience
     if ~conf.Test && updateSarsaFlag

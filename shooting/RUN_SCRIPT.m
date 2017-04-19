@@ -11,10 +11,10 @@ global prueba;
 conf.opti = opti;
 conf.Test = test;
 
-conf.fileName = stringName;
-conf.auxRewFlag=0;
+conf.fileName   = stringName;
+conf.auxRewFlag =0;
 %% Parameters.-------------------------------------------------------------
-conf.episodes      = 2000;   % Maximum number of episodes
+conf.episodes      = 100;   % Maximum number of episodes
 conf.Ts            = 0.2;    % Sample time of a RL step
 conf.maxDistance   = 4000;   % Max ball distance permited before to end the episode X FIELD DIMENSION
 conf.maxDistance_x = 9000;   % Max ball distance permited before to end the episode X FIELD DIMENSION
@@ -22,11 +22,11 @@ conf.maxDistance_y = 6000;   % Max ball distance permited before to end the epis
 conf.Runs          = RUNS;   % # of runs
 conf.NOISE         = 0.01;   % Noise 0-1
 conf.DRL           = 1;      % Decentralized RL(1) or Centralized RL(0)
-conf.DRAWS1        = 1;      % Enable disable graphics
+conf.DRAWS1        = 0;      % Enable disable graphics
 conf.fuzzQ         = 0;      % Enables fuzzy Q learning algorithm
 conf.MAapproach    = x(6);   % 0 no cordination, 1 frequency adjusted, 2 leninet
 conf.Mtimes        = 0;      % State-action pair must be visited M times before Q being updated
-conf.flag_Vr       = 1;      % 1 learning ; 0  controller.-
+conf.flag_Vr       = 0;      % 1 learning ; 0  controller.-
 conf.thT           = 50;     % threshold to compute Time to threshold
 conf.TRANSFER      = x(8);   % =1 transfer, >1 acts gready from source policy, =0 learns from scratch, =-1 just for test performance from stored policies
 RL.param.aScale    = x(10);     % Scale factor for the action space in neash
@@ -41,20 +41,20 @@ elseif conf.TRANSFER && ~conf.nash
 end
 
 % -------------------------------------------------------------------------
-conf.deltaVw   = 2;
-conf.Vr_max    = [120 70 30];    % x,y,rot Max Speed achieved by the robot.-
-conf.Vr_min    = -conf.Vr_max;
-conf.Vr_min(1) = 0;
-conf.Fr        = 150*6;            % Friction coefficient
+conf.deltaVw    = 2;
+conf.Vr_max     = [130 70 30];    % x,y,rot Max Speed achieved by the robot.-
+conf.Vr_min     = -conf.Vr_max;
+conf.Vr_min(1)  = 0;
+conf.Fr         = 150*x(11);    % Friction coefficient
 conf.Controller = x(9);         % % HiQ=0 or lowQ=1 Controlller
 % -------------------------------------------------------------------------
-conf.maxDeltaV = conf.Vr_max .* [1/3 1/3 1/3];    % mm/s/Ts
-conf.Nactios   = [16,15,17];
+conf.maxDeltaV  = conf.Vr_max .* [1/3 1/3 1/3];    % mm/s/Ts
+conf.Nactios    = [16,15,17];
 % -------------------------------------------------------------------------
-
 conf.sync.nash = 1;
 conf.sync.TL   = 1;
 conf.sync.expl = 1;
+% -------------------------------------------------------------------------
 
 if conf.TRANSFER
     conf.sync.expl = 1;
@@ -62,11 +62,13 @@ end
 if conf.TRANSFER < 0
     conf.episodes = 100;
 end
+
 % -------------------------------------------------------------------------
-conf.DRAWS1  = 1;
+conf.DRAWS1 = 1;
 conf.record = 0;
+
 if conf.opti
-    conf.DRAWS1  = 0;
+    conf.DRAWS1 = 0;
     conf.record = 1;
     folder = 'Opti/';
 end
@@ -89,15 +91,22 @@ RL.param.softmax   = x(2);
 RL.param.exp_decay = x(3);      % Exploration decay parameter
 RL.param.beta      = x(5);      % 0.9 Lenience discount factor
 RL.param.k         = x(7);      % 1.5 Lenience parameter
+
 %% Inwalk-Passing parameters.----------------------------------------------
 % Target and ball position.------------------------------------------------
 conf.Pt = [0 0];          % Target Position
-conf.Pb = [1800 0];       % Initial ball poition
+conf.Pb = [1500 0];       % Initial ball position
+% -------------------------------------------------------------------------
+
+% -------------------------------------------------------------------------
+conf.goalSize   = 1500;
+conf.PgoalPostR = [conf.Pt(1), conf.Pt(2)+conf.goalSize/2];     % Right Goal Post position
+conf.PgoalPostL = [conf.Pt(1), conf.Pt(2)-conf.goalSize/2];     % Left Goal Post position
 % -------------------------------------------------------------------------
 
 % Parameters of the Robot Initial position.--------------------------------
-conf.r_int = 950;
-conf.r_ext = 1050;
+conf.r_int = 950;   % 950;
+conf.r_ext = 1050;   % 1050;
 conf.c_ang = 90;
 % -------------------------------------------------------------------------
 
@@ -108,7 +117,7 @@ conf.r3  = 500;
 % -------------------------------------------------------------------------
 
 % Parameters of Gaussian Distribution.-------------------------------------
-conf.Rgain = 100;
+conf.Rgain = 200;           % 100;
 conf.Rvar  = 300;
 mu         = [conf.Pt(1)  conf.Pt(2)];
 sigma      = [conf.Rvar^2 0 ; 0 conf.Rvar^2];
@@ -214,16 +223,20 @@ f = mean(pf); % Fitness function: percentage of distance from ball to target
 results.mean_dbt = mean(dBT,2);
 results.std_dbt  = std(dBT,0,2);
 
-Tth=conf.episodes;
-if conf.thT>=min(results.mean_dbt)
-    tth=find(results.mean_dbt<conf.thT);
-    Tth=tth(1);
-end
-results.performance(1,2)=Tth;
+% -----------------------------------------
+results.mean_goals = mean(pscored,2);
+results.std_goals  = std(pscored,0,2);
+% -----------------------------------------
 
+Tth = conf.episodes;
+if conf.thT >= min(results.mean_dbt)
+    tth = find(results.mean_dbt < conf.thT);
+    Tth = tth(1);
+end
+results.performance(1,2)= Tth;
 
 if conf.fuzzQ
-    stringName=['fuz-' stringName];
+    stringName = ['fuz-' stringName];
 end
 
 results.conf = conf;

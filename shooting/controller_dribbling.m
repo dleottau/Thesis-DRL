@@ -50,13 +50,13 @@ dbt   = X(4);
 % Parámetros Controlador Lineal optimizados manual.--------------------------------------------------
  
 if ro<200 && ~controllerType
-    Vx     = 150  -   0*abs(gama)   -   0*abs(fi);
-    Vy     = 4*fi;
-    Vtheta = 100*fi;
+    Vx     = 140;
+    Vy     = -2*fi;
+    Vtheta = 5*fi;
 else
-    Vx     = 100  -   0*abs(gama)   -   0*abs(fi);
-    Vy     = 4*fi;
-    Vtheta =  2*gama + 0.3*fi;
+    Vx     = 100;
+    Vy     = -1*fi;
+    Vtheta =  .3*gama + 0.1*fi; %2*gama + 0.3*fi;
 end
 % -------------------------------------------------------------------------
 

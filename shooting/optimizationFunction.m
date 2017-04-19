@@ -13,7 +13,7 @@ tic
 global opti;
 opti = 0;
 global test;
-test=0;
+test = 0;
 global prueba;
 prueba = 1;
 % Comentar hasta acá para optimizar
@@ -44,7 +44,7 @@ xname{2}  = 'softmax';
 x0(2)     = -1;              % 11
 
 xname{3}  = 'decay';
-x0(3)     = 10;              % 8
+x0(3)     = 15;              % 8
 
 xname{4}  = 'lambda';
 x0(4)     = 0.9;
@@ -59,19 +59,21 @@ xname{7}  = 'k-lenient';
 x0(7)     = 5;
 
 xname{8}  = 'Transfer';
-x0(8)     = 0;              % =1 transfer, >1 acts gready from source policy, =0 learns from scratch, =-1 just for test performance from stored policies
+x0(8)     = 1;              % =1 transfer, >1 acts gready from source policy, =0 learns from scratch, =-1 just for test performance from stored policies
 
 xname{9}  = 'Controller';
 x0(9)     = 0;              % HiQ=0 or lowQ=1 Controlller
 
 xname{10} = 'ScaleNeash';
-x0(10)    = 0;             % 10    % scale factor for the action space in neash
+x0(10)    = 10;             % 10    % scale factor for the action space in neash
 
+xname{11} = 'Fr';
+x0(11)    = 5;             % 6    % Friction Coefficient.-
 % -------------------------------------------------------------------------
 
 if opti
     x0(3)  = x(1);
-    x0(10) = x(2);  
+    x0(11) = x(2);  
 end
 
 stringName = [];
