@@ -14,7 +14,7 @@ conf.Test = test;
 conf.fileName   = stringName;
 conf.auxRewFlag =0;
 %% Parameters.-------------------------------------------------------------
-conf.episodes      = 100;   % Maximum number of episodes
+conf.episodes      = 2000;   % Maximum number of episodes
 conf.Ts            = 0.2;    % Sample time of a RL step
 conf.maxDistance   = 4000;   % Max ball distance permited before to end the episode X FIELD DIMENSION
 conf.maxDistance_x = 9000;   % Max ball distance permited before to end the episode X FIELD DIMENSION
@@ -26,7 +26,7 @@ conf.DRAWS1        = 0;      % Enable disable graphics
 conf.fuzzQ         = 0;      % Enables fuzzy Q learning algorithm
 conf.MAapproach    = x(6);   % 0 no cordination, 1 frequency adjusted, 2 leninet
 conf.Mtimes        = 0;      % State-action pair must be visited M times before Q being updated
-conf.flag_Vr       = 0;      % 1 learning ; 0  controller.-
+conf.flag_Vr       = 1;      % 1 learning ; 0  controller.-
 conf.thT           = 50;     % threshold to compute Time to threshold
 conf.TRANSFER      = x(8);   % =1 transfer, >1 acts gready from source policy, =0 learns from scratch, =-1 just for test performance from stored policies
 RL.param.aScale    = x(10);     % Scale factor for the action space in neash
@@ -35,7 +35,7 @@ conf.nash          = RL.param.aScale;   % 0 COntrol sharing, 1 NASh, 2 Nash tria
 conf.Q_INIT = 0;                    % Q table initial values
 
 if conf.TRANSFER && conf.nash
-    conf.Q_INIT = 5;                % if NeASh, optimistic initialization
+    conf.Q_INIT = 0;                % if NeASh, optimistic initialization
 elseif conf.TRANSFER && ~conf.nash
     conf.Q_INIT = 0;               % if CoSh, pessimistic initialization
 end

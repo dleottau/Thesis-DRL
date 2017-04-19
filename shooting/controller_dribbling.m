@@ -49,15 +49,19 @@ dbt   = X(4);
 
 % Parámetros Controlador Lineal optimizados manual.--------------------------------------------------
  
-if ro<100 && ~controllerType
+if ~controllerType && ro<100
     Vx     = Vr_max(1);
-    Vy     = -10*fi;
-    Vtheta = -50*fi;
+    Vy     = -.9*fi;
+    Vtheta = -1*fi;
 else
     Vx     = Vr_max(1);
-    Vy     = -.1*fi  ;
-    Vtheta =  1*gama;% - .3*sign(gama)*ro; %0.3*gama + 0.1*fi;
+    Vy     = -.1*fi;
+    Vtheta =  1*gama;
 end
+
+
+
+
 % -------------------------------------------------------------------------
 
 V_FLC = clipDLF([ Vx, Vy, Vtheta ],Vr_min,Vr_max);
