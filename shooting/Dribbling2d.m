@@ -101,14 +101,15 @@ for i = 1:conf.episodes
             lB      = [conf.Pb(1)-1100  conf.Pb(2)-1200  -180];       % lB = [conf.Pb(1)+ 00 conf.Pb(2)-1000 -180];
             conf.Pr = rand(1,3).*(uB-lB) + lB;                        % conf.Pr = rand(1,3).*(uB-lB) + lB;                             
             
-            % conf.Pr    = [conf.Pb(1)+1000 conf.Pb(2) 180];
-            % conf.Pr(3) = moduloPiDLF(atan2(conf.Pb(2)-conf.Pr(2),conf.Pb(1)-conf.Pr(1)),'r2d');                       
+            %conf.Pr    = [conf.Pb(1)+1000 conf.Pb(2) 180];
+            %conf.Pr(3) = moduloPiDLF(atan2(conf.Pb(2)-conf.Pr(2),conf.Pb(1)-conf.Pr(1)),'r2d') + (rand-.5)*(5);                       
             
             %% Robot movement.---------------------------------------------
             [~, ~, ~, ~, phi, gamma, pho, ~, ~, ~] = mov(Ts,conf.Pr,conf.Pt,conf.Pb,0,0,0,100,100,100,0,0,conf.Fr,zeros(2,1));
             % -------------------------------------------------------------
             
             if (pho <= conf.r_ext && conf.r_int <= pho) && (abs(phi) < conf.c_ang) && (abs(gamma) < 30)            
+            %if (pho <= conf.r_ext && conf.r_int <= pho) && (abs(phi) < 40) && (abs(gamma) < 5)            
                 break
             end
         else 
@@ -187,10 +188,17 @@ for i = 1:conf.episodes
     if conf.DRAWS1 == 1
         
         subplot(2,3,5);
-        plot(xpoints,DEC)
+        plot(Vr)
         %ylim([0 1])
         grid
-        title('Decay')
+        title('Vr')
+        
+        subplot(2,3,4);
+        plot([ro/2,fi,gama])
+        %ylim([0 1])
+        grid
+        title('.5*ro.b fi.r gama.y')
+        
         
         subplot(2,3,3)
         plot(reward)
@@ -211,7 +219,7 @@ for i = 1:conf.episodes
         % -----------------------------------------------------------------
                 
         % Robot Movement Plot.----------------------------------------
-        subplot(2,3,[1,4])
+        subplot(2,3,1) %[1,4]
         
         plot(conf.PgoalPostR(1),conf.PgoalPostR(2),'ok','MarkerFaceColor',[0 0 0],'LineWidth',4)   % Goal post right
         hold on
@@ -224,7 +232,7 @@ for i = 1:conf.episodes
         view(90,90)
         plot(Pb(:,1),Pb(:,2),'*r','MarkerSize',8,'LineWidth',4)  % Ball Position
         plot(Pr(:,1),Pr(:,2),'gx','MarkerSize',8,'LineWidth',4)  % Robot Positions
-        xlim([-conf.maxDistance_x/2-500 conf.maxDistance_x/2+500])
+        xlim([-conf.maxDistance_x/30 conf.maxDistance_x/3.5])
         ylim([-conf.maxDistance_y/2 conf.maxDistance_y/2])
         grid
         % -----------------------------------------------------------------       

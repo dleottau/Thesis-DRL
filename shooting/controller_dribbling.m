@@ -49,14 +49,14 @@ dbt   = X(4);
 
 % Parámetros Controlador Lineal optimizados manual.--------------------------------------------------
  
-if ro<200 && ~controllerType
-    Vx     = 140;
-    Vy     = -2*fi;
-    Vtheta = 5*fi;
+if ro<100 && ~controllerType
+    Vx     = Vr_max(1);
+    Vy     = -10*fi;
+    Vtheta = -50*fi;
 else
-    Vx     = 100;
-    Vy     = -1*fi;
-    Vtheta =  .3*gama + 0.1*fi; %2*gama + 0.3*fi;
+    Vx     = Vr_max(1);
+    Vy     = -.1*fi  ;
+    Vtheta =  1*gama;% - .3*sign(gama)*ro; %0.3*gama + 0.1*fi;
 end
 % -------------------------------------------------------------------------
 
