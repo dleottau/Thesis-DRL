@@ -3,7 +3,7 @@
 % global opti;
 % global prueba;
 
-% Comentar desde acá para optimizar
+%Comentar desde acá para optimizar
 clc
 clf
 clear all
@@ -38,7 +38,7 @@ x0 = [];
 %% Algorithm parameters.-
 
 xname{1}  = 'alpha';
-x0(1)     = 0.1;
+x0(1)     = 0.2;
 
 xname{2}  = 'softmax';
 x0(2)     = -1;              % 11
@@ -67,8 +67,7 @@ x0(9)     = 0;              % HiQ=0 or lowQ=1 Controlller
 xname{10} = 'ScaleNeash';
 x0(10)    = 0;             % 10    % scale factor for the action space in neash
 
-xname{11} = 'Fr';
-x0(11)    = 5;             % 6    % Friction Coefficient.-
+
 % -------------------------------------------------------------------------
 
 if opti

@@ -31,21 +31,13 @@ conf.thT           = 50;     % threshold to compute Time to threshold
 conf.TRANSFER      = x(8);   % =1 transfer, >1 acts gready from source policy, =0 learns from scratch, =-1 just for test performance from stored policies
 RL.param.aScale    = x(10);     % Scale factor for the action space in neash
 conf.nash          = RL.param.aScale;   % 0 COntrol sharing, 1 NASh, 2 Nash triang
-% -------------------------------------------------------------------------
-conf.Q_INIT = 0;                    % Q table initial values
-
-if conf.TRANSFER && conf.nash
-    conf.Q_INIT = 0;                % if NeASh, optimistic initialization
-elseif conf.TRANSFER && ~conf.nash
-    conf.Q_INIT = 0;               % if CoSh, pessimistic initialization
-end
 
 % -------------------------------------------------------------------------
 conf.deltaVw    = 2;
 conf.Vr_max     = [120 70 30];    % x,y,rot Max Speed achieved by the robot.-
 conf.Vr_min     = -conf.Vr_max;
 conf.Vr_min(1)  = 0;
-conf.Fr         = 150*x(11);    % Friction coefficient
+conf.Fr         = 150*5;    % Friction coefficient
 conf.Controller = x(9);         % % HiQ=0 or lowQ=1 Controlller
 % -------------------------------------------------------------------------
 conf.maxDeltaV  = conf.Vr_max .* [1/3 1/3 1/3];    % mm/s/Ts
@@ -131,7 +123,13 @@ conf.feature_max    = [800, 70, 90 conf.Pb(1)];
 conf.feature_min    = [0, -70, -90, 0];
 conf.Nfeatures      = [15, 11, 13, 10];
 conf.feature_step   = (conf.feature_max - conf.feature_min )./(conf.Nfeatures-[1 1 1 1]);
-
+% -------------------------------------------------------------------------
+conf.Q_INIT = 0;                    % Q table initial values
+if conf.TRANSFER && conf.nash
+    conf.Q_INIT = 5;                % if NeASh, optimistic initialization
+elseif conf.TRANSFER && ~conf.nash
+    conf.Q_INIT = -3;               % if CoSh, pessimistic initialization
+end
 %% -----------------------------------------------------------------------
 fileNameP = ['DRL_' int2str(conf.Runs) 'Runs_Noise' num2str(conf.NOISE) '_MA' int2str(conf.MAapproach) '_alpha' num2str(RL.param.alpha) '_lambda' num2str(RL.param.lambda)];
 if RL.param.softmax > 0
@@ -199,9 +197,12 @@ interval = 0.7;
 for i = 1:RUNS
     %pf(i)    = mean(dBT(ceil(interval*conf.episodes):end,i));
     %pf_sd(i) = std(dBT(ceil(interval*conf.episodes):end,i));
-    pf(i)    = mean(100-pscored(ceil(interval*conf.episodes):end,i));
-    pf_sd(i) = std(100-pscored(ceil(interval*conf.episodes):end,i));
+    %pf(i)    = mean(100-pscored(ceil(interval*conf.episodes):end,i));
+    %pf_sd(i) = std(100-pscored(ceil(interval*conf.episodes):end,i));
+    pf(i)    = mean(100-pscored(end,i));
+    pf_sd(i) = std(100-pscored(end,i));
     
+          
     if pf(i) > pf_min
         pf_min = pf(i);
     end
@@ -226,6 +227,9 @@ results.std_dbt  = std(dBT,0,2);
 % -----------------------------------------
 results.mean_goals = mean(pscored,2);
 results.std_goals  = std(pscored,0,2);
+
+results.mean_goalsC = mean(scored,2);
+results.std_goalsC  = std(scored,0,2);
 % -----------------------------------------
 
 Tth = conf.episodes;
@@ -264,3 +268,4 @@ else
         save ([stringName '.mat'], 'results');
     end
 end
+

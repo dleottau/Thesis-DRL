@@ -161,7 +161,7 @@ for i = 1:conf.episodes
     reward(i,:)  = total_reward/steps;
     e_time(i,1)  = steps*Ts;                                   %#ok<*NASGU>
     Vavg(i,1)    = Vavg_k;
-    scored(i)    = scored_;
+    scored(i,1)    = scored_;
     
     if i > conf.episodes*0.1;
         pscored(i,1) = mean(scored(i-conf.episodes*0.1:i));
@@ -224,16 +224,23 @@ for i = 1:conf.episodes
         plot(conf.PgoalPostR(1),conf.PgoalPostR(2),'ok','MarkerFaceColor',[0 0 0],'LineWidth',4)   % Goal post right
         hold on
         plot(conf.PgoalPostL(1),conf.PgoalPostL(2),'ok','MarkerFaceColor',[0 0 0],'LineWidth',4)   % Goal post Left
-        line([conf.PgoalPostR(1) conf.PgoalPostL(1)],[conf.PgoalPostR(2) conf.PgoalPostL(2)],'Color',[1 0 1],'LineWidth',2)
+        line([conf.PgoalPostR(1) conf.PgoalPostL(1)],[conf.PgoalPostR(2) conf.PgoalPostL(2)],'Color',[0.5 0.5 0.5],'LineWidth',2)
         
-        line([conf.PgoalPostR(1) conf.Pb(1)],[conf.PgoalPostR(2) conf.Pb(2)],'Color',[0 1 0],'LineWidth',2)
-        line([conf.PgoalPostL(1) conf.Pb(1)],[conf.PgoalPostL(2) conf.Pb(2)],'Color',[0 1 0],'LineWidth',2)                
+        line([conf.PgoalPostR(1) conf.Pb(1)],[conf.PgoalPostR(2) conf.Pb(2)],'Color',[0.5 0.5 0.5],'LineWidth',2)
+        line([conf.PgoalPostL(1) conf.Pb(1)],[conf.PgoalPostL(2) conf.Pb(2)],'Color',[0.5 0.5 0.5],'LineWidth',2)                
+        
+        if scored_
+            line([conf.PgoalPostR(1) conf.PgoalPostL(1)],[conf.PgoalPostR(2) conf.PgoalPostL(2)],'Color',[0 1 0],'LineWidth',4)
+        end
         
         view(90,90)
         plot(Pb(:,1),Pb(:,2),'*r','MarkerSize',8,'LineWidth',4)  % Ball Position
-        plot(Pr(:,1),Pr(:,2),'gx','MarkerSize',8,'LineWidth',4)  % Robot Positions
+        plot(Pr(:,1),Pr(:,2),'bx','MarkerSize',8,'LineWidth',4)  % Robot Positions
         xlim([-conf.maxDistance_x/30 conf.maxDistance_x/3.5])
         ylim([-conf.maxDistance_y/2 conf.maxDistance_y/2])
+        
+        
+        
         grid
         % -----------------------------------------------------------------       
         
