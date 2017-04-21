@@ -98,7 +98,7 @@ for i = 1: cfg.maxsteps
         if cfg.MAapproach==1;
             cap = 1-cap;
         elseif cfg.MAapproach==4
-            if min([fa_x, fa_y])>=0.999 && RL.caFlag==0
+            if min([fa_x, fa_y])>=0.995 && RL.caFlag==0
                 RL.caFlag=1; 
             end
             if RL.caFlag==1, cap = 1-cap; end
@@ -139,7 +139,7 @@ for i = 1: cfg.maxsteps
     FV = FVp;
     x = xp;
     x_(i,:)=x;
-    RL.param.ca = cap;
+    RL.param.ca = .5*(RL.param.ca+cap);
     RL.param.pa = pap;
     
     %increment the step counter.
