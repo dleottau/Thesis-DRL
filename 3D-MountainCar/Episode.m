@@ -35,6 +35,7 @@ TDx=0;
 TDy=0;
 
 
+
 % convert the continous state variables to an index of the statelist
 % selects an action using the epsilon greedy selection strategy
 x = cfg.init_condition;
@@ -84,25 +85,23 @@ for i = 1: cfg.maxsteps
     if cfg.DRL
         [apx, fa_x] = action_selection(RL.Q, FVp(:,1), RL.param, RL.Tx);
         [apy, fa_y] = action_selection(RL.Qy, FVp(:,2), RL.param, RL.Ty);
-        apx = sourcePolicy(x(1:2),apx,cfg.transfer,RL.param);
-        apy = sourcePolicy(x(3:4),apy,cfg.transfer,RL.param);
+        %apx = sourcePolicy(x(1:2),apx,cfg.transfer,RL.param);
+        %apy = sourcePolicy(x(3:4),apy,cfg.transfer,RL.param);
         
         % Frequency adjusted param
-        pap = min([fa_x, fa_y])+1E-6;
+        pap = min([fa_x, fa_y])+1E-3;
         cap = pap;
         RL.param.dpa = pap-RL.param.pa; % gradient of prob. from boltzman
         %keyboard
-        
         RL.param.caAvg = RL.param.ca + RL.param.caAvg;
         RL.param.dpaAvg = RL.param.dpa + RL.param.dpaAvg;
         if cfg.MAapproach==1;
             cap = 1-cap;
         elseif cfg.MAapproach==4
-            dpa=min(TDx,TDy);%abs(RL.param.dpa);
-            if      dpa<-1, cap = 1-cap;
-            elseif  abs(dpa)<0.2, cap = 1-cap;
-                %organizar dpa individuales, el minimo ca para el mejor dpa
+            if min([fa_x, fa_y])>=0.999 && RL.caFlag==0
+                RL.caFlag=1; 
             end
+            if RL.caFlag==1, cap = 1-cap; end
         end
     else
         [ap, pap] = action_selection(RL.Q, FVp, RL.param, 0);

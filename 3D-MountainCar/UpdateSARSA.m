@@ -25,15 +25,17 @@ if MAapproach == 2
 end
 
 TD = r + param.gamma*Qap - Qa;
+%e_trace(:,a) = FV;
 e_trace = e_trace* param.gamma * param.lambda + FVT;
 
 if MAapproach == 0 || MAapproach == 1  || MAapproach == 3  || MAapproach == 4 ||  (MAapproach == 2 && ( TD>0 || rand()>1-exp(-param.k*Ta)) )
     Q = Q + param.ca*param.alpha * ( e_trace*TD);
 end
-e_trace = e_trace* param.gamma * param.lambda + FVT;
+%e_trace = e_trace* param.gamma * param.lambda + FVT;
+%e_trace = e_trace* param.gamma * param.lambda;
 
 
-if isnan(sum(sum(Q)))
+if isnan(sum(sum(Q))) || isinf(sum(sum(Q)))
     a;
 end
 

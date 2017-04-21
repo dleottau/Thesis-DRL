@@ -54,7 +54,7 @@ cfg.maxsteps    = 5000;              % maximum number of steps per episode
 if RL.param.softmax > 0
     fileName = ['DRL' int2str(cfg.DRL) '_' int2str(RUNS) 'RUNS_softmax' int2str(RL.param.softmax) '_decay' num2str(RL.param.exp_decay) '_alpha' num2str(RL.param.alpha) '_lambda' num2str(RL.param.lambda) '_MA' num2str(cfg.MAapproach)];
 else
-    fileName = ['DRL' int2str(cfg.DRL) '_' int2str(RUNS) 'RUNS_epsilon' num2str(RL.param.epsilon) '_decay' num2str(RL.param.exp_decay) '_alpha' num2str(RL.param.alpha) '_lambda' num2str(RL.param.lambda) '_MA-Inc' num2str(cfg.MAapproach)]; 
+    fileName = ['DRL' int2str(cfg.DRL) '_' int2str(RUNS) 'RUNS_epsilon' num2str(RL.param.epsilon) '_decay' num2str(RL.param.exp_decay) '_alpha' num2str(RL.param.alpha) '_lambda' num2str(RL.param.lambda) '_MA' num2str(cfg.MAapproach)]; 
 end
 
 if cfg.ac5

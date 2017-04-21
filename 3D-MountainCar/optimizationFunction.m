@@ -4,7 +4,7 @@
 
 clc
 clf
-clear all
+%clear all
 close all
 tic
 global opti;
@@ -27,9 +27,9 @@ x0 = [];
 xname{1}='alpha';
 x0(1) = 1;
 xname{2}='lambda';
-x0(2) = 0.8;
+x0(2) = 0.9;
 xname{3}='epsilon';
-x0(3) = 0.06;  
+x0(3) = 0.05;  
 xname{4}='k-lenient';
 x0(4) = 3.5;  
 xname{5}='beta';

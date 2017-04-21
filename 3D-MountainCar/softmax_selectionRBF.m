@@ -22,15 +22,15 @@ if T ~= 0
 %     minTemp = (10E-6 + (1-min(Ts)))*2;
 %     v_qa = exp( (Qs-max(Qs))*minTemp);
 %     sum_qa = sum( exp((Qs-max(Qs))*minTemp) );
-else
-    temp=10E-6+tempdec;
-    % if temp<=0
-    %     temp=realmin;
-    % end
+elseif tempdec>0
+    temp = 10E-6+tempdec;
     v_qa = exp( (Qs-max(Qs))/temp );
     sum_qa = sum( exp( (Qs-max(Qs))/temp ));
-    %v_qa = exp( (Qs)/temp );
-    %sum_qa = sum( exp( (Qs)/temp ));
+else
+    Qss = Qs-max(Qs);
+    Qss = Qss/max([abs(Qss) 1E-3]);
+    v_qa = exp(Qss);
+    sum_qa = sum(exp(Qss));
 end
 
 if sum_qa==0
@@ -46,7 +46,10 @@ p = Ps(a);
 if isempty(a)
     Ps
 end
-    
+  
+if p==1, 
+    p=1;
+end
 
 
 

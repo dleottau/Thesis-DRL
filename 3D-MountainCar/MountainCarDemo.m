@@ -46,6 +46,7 @@ cfg.grafica     = false; % indicates if display the graphical interface
     itae=0;
     r_best=-inf;
     RL.stepsCum=0;
+    RL.caFlag=[0];
     
 for i=1:maxepisodes    
 
@@ -95,16 +96,16 @@ for i=1:maxepisodes
         title('Top view (x-y)')    
         
         subplot(2,2,3)
-        plot(TD)
-        hold on
+        %plot(TD)
+        %hold on
         plot(alpha*RL.param.alpha)
         title('TD Avg and alphaAvg') 
         %axis([1  maxepisodes  -1 1])
         
         subplot(2,2,4)
-        %plot(RL.CA, 'r')
+        plot(RL.CA(:,1))
         %hold on
-        plot(RL.TD)
+        %plot(RL.TD)
         title('CA-DPA and TD') 
         %axis([1  steps  -1 1])
         %hold off
