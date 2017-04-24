@@ -1,7 +1,15 @@
-record = 0;
-draw = 0;
+% clear all
+% clc
+% close all
+% 
+% evolutionFile='D:\Documents_DLF\Publications_DLF\Dribbling\Matlab\Dribbling-2D\Dribbling-2D v20\3D-MountainCar\experimentsFull\5actions0; MAapproach4; DRL2; beta0.8; k-lenient3.5; epsilon0.02; lambda0.9; alpha1';
+% 
+% load([evolutionFile '.mat']);
 
-interval=0.7;
+record = 1;
+draw = 1;
+
+interval=0.9;
 for n=1:length(results.reward)
     mRew(:,n) =  mean(results.reward{n}(:,:),2);
     cr(n) = mean(mRew(ceil(interval*length(mRew)):end,n));
@@ -14,10 +22,8 @@ cr_worst=Inf;
 itae_best=Inf;
 itae_worst=-Inf;
 
-interval=0.7;
+interval=0.9;
 for n=1:length(results.reward)
-    
-       
     mRew(:,n) =  mean(results.reward{n}(:,:),2);
     cr(n) = mean(mRew(ceil(interval*length(mRew)):end,n));
     if cr(n) > cr_best
@@ -40,8 +46,6 @@ mean(cr)
 
 results.mean_cumReward = mean(mRew,2);
 results.std_cumReward = std(mRew,0,2);
-    
-evolutionFile='/media/dlf/Data_DLF/Documents_DLF/Publications_DLF/Dribbling/Matlab/Dribbling-2D/Dribbling-2D v20/RL-TestBedProblems/SARSA_continuo MountainCar/experimentsFull/fig3/4DRL2_29RUNS_epsilon0.02_decay0.99_alpha0.3_lambda0.95_MA-Inc1';
 
 if draw
     cfg.feature_min = [-1.2 -0.07  -1.2 -0.07];

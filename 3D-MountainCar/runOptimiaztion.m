@@ -5,7 +5,7 @@ close all
 
 tic
 global RUNS;
-RUNS=8;
+RUNS=4;
 
 global flagFirst;
 flagFirst=true;
@@ -13,27 +13,27 @@ global opti;
 opti=1;
 
 myCluster = parcluster('local');
-% if matlabpool('size') == 0 % checking to see if my pool is already open
-    %parpool(myCluster.NumWorkers)
-% else
-%     matlabpool close
-%     matlabpool(myCluster.NumWorkers)
-% % myCluster = parcluster('local');
-% % myCluster.NumWorkers = 4;  % 'Modified' property now TRUE
-% % saveProfile(myCluster);    % 'local' profile now updated, 'Modified' property now FALSE 
-% end
+if matlabpool('size') == 0 % checking to see if my pool is already open
+    parpool(myCluster.NumWorkers)
+else
+    matlabpool close
+    matlabpool(myCluster.NumWorkers)
+% myCluster = parcluster('local');
+% myCluster.NumWorkers = 4;  % 'Modified' property now TRUE
+% saveProfile(myCluster);    % 'local' profile now updated, 'Modified' property now FALSE 
+end
 
 x0 = [];
 xname{1}='epsilon';
-x0(1) = 0.06; 
-xname{2}='alpha';
-x0(2) = 0.20;
-xname{3}='lambda';
-x0(3) = 0.95;
+x0(1) = 0.05; 
+%xname{2}='alpha';
+%x0(2) = 0.20;
+xname{2}='lambda';
+x0(2) = 0.9;
 
 options = hilloptions('TimeLimit', 600);
-options.step = [0.01; 0.05; 0.05];
-options.space = [[0.01; 0.05; 0.5], [0.2; .6; 0.95]];
+options.step = [0.01; 0.1];
+options.space = [[0.01; 0.5], [0.2; 0.9]];
 options.peaks = 4;
 options.oneDimPerTry = 1;
 

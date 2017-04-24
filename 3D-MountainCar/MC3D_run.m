@@ -100,7 +100,7 @@ itae_best=Inf;
 itae_worst=-Inf;
 
 for n=1:RUNS
-    interval=0.0001; %0.7
+    interval=0.9; %0.7
     itaem(n) = itae(n);
     if itaem(n) < itae_best
         itae_best=itaem(n);

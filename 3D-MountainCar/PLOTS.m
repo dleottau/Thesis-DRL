@@ -4,7 +4,7 @@ function PLOTS()
 close all
 clc
 
-folder = 'experimentsFull/Delft/'; 
+folder = 'experimentsFull/figB/'; 
 files = dir(fullfile([folder '*.mat']));
 
 spot={':r' '-g' '-.c' '--k'  ':b' '-m' '-.r' '--g'};

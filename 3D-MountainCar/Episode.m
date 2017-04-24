@@ -24,7 +24,7 @@ end
 
 steps        = 0;
 total_reward = 0;
-RL.param.ca = 1/3;
+RL.param.ca = [1/cfg.nactions 1/cfg.nactions];
 RL.param.pa = 1/3;
 RL.param.dpaAvg = 0;
 RL.param.caAvg = 0;
@@ -33,6 +33,7 @@ RL.TDavg(2)=0;
 %RL.param.dpa = 0;
 TDx=0;
 TDy=0;
+
 
 
 
@@ -83,22 +84,27 @@ for i = 1: cfg.maxsteps
     tic;
     FVp = getFeatureVector(xp, cfg.cores, cfg.DRL);
     if cfg.DRL
-        [apx, fa_x] = action_selection(RL.Q, FVp(:,1), RL.param, RL.Tx);
-        [apy, fa_y] = action_selection(RL.Qy, FVp(:,2), RL.param, RL.Ty);
+        [apx, pa_x] = action_selection(RL.Q, FVp(:,1), RL.param, RL.Tx);
+        [apy, pa_y] = action_selection(RL.Qy, FVp(:,2), RL.param, RL.Ty);
         %apx = sourcePolicy(x(1:2),apx,cfg.transfer,RL.param);
         %apy = sourcePolicy(x(3:4),apy,cfg.transfer,RL.param);
         
         % Frequency adjusted param
-        pap = min([fa_x, fa_y])+1E-3;
+        pap = [min([pa_x, pa_y]), min([pa_x, pa_y])];
+        %pap = [pa_x, pa_y]; % Best P for adjusting alpha of the worst agent and viceversa.
+        
         cap = pap;
-        RL.param.dpa = pap-RL.param.pa; % gradient of prob. from boltzman
-        %keyboard
+        %RL.param.dpa = pap-RL.param.pa; % gradient of prob. from boltzman
         RL.param.caAvg = RL.param.ca + RL.param.caAvg;
-        RL.param.dpaAvg = RL.param.dpa + RL.param.dpaAvg;
+        %RL.param.dpaAvg = RL.param.dpa + RL.param.dpaAvg;
+        
         if cfg.MAapproach==1;
             cap = 1-cap;
         elseif cfg.MAapproach==4
-            if min([fa_x, fa_y])>=0.995 && RL.caFlag==0
+            %if RL.param.softmaxCA<max([pa_x, pa_y])
+            %    RL.param.softmaxCA=max([pa_x, pa_y]); 
+            %end
+            if min([pa_x, pa_y])>=0.999 && RL.caFlag==0  %0.995
                 RL.caFlag=1; 
             end
             if RL.caFlag==1, cap = 1-cap; end
@@ -119,11 +125,10 @@ for i = 1: cfg.maxsteps
     total_reward = total_reward + r;
         
     % Update the Qtable, that is,  learn from the experience
-    
     if cfg.DRL   
                                    
-        [ RL.Q, e_trace, RL.Tx, TDx] = UpdateSARSA(FV(:,1), ax, r(1), FVp(:,1), apx, RL.Q, e_trace, RL.param,RL.Tx, cfg.MAapproach);
-        [ RL.Qy, e_trace_y, RL.Ty, TDy] = UpdateSARSA(FV(:,2), ay, r(2), FVp(:,2), apy, RL.Qy, e_trace_y, RL.param,RL.Ty, cfg.MAapproach);
+        [ RL.Q, e_trace, RL.Tx, TDx] = UpdateSARSA(FV(:,1), ax, r(1), FVp(:,1), apx, RL.Q, e_trace, RL.param, RL.Tx, cfg.MAapproach, RL.param.ca(2));
+        [ RL.Qy, e_trace_y, RL.Ty, TDy] = UpdateSARSA(FV(:,2), ay, r(2), FVp(:,2), apy, RL.Qy, e_trace_y, RL.param, RL.Ty, cfg.MAapproach, RL.param.ca(1));
         %update the current variables
         ax = apx;
         ay = apy;
@@ -145,8 +150,8 @@ for i = 1: cfg.maxsteps
     %increment the step counter.
     steps=steps+1;
     
-    RL.CA(steps,1)=RL.param.ca; 
-    RL.CA(steps,2)=RL.param.dpa;
+    RL.CA(steps,1)=RL.param.ca(1); 
+    RL.CA(steps,2)=RL.param.ca(2);
     RL.TD(steps,1)=TDx;
     RL.TD(steps,2)=TDy;
     RL.TDavg(1)=RL.TDavg(1)+TDx;

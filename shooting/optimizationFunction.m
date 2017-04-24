@@ -1,22 +1,22 @@
-% function f = optimizationFunction(x)
-% global RUNS;
-% global opti;
-% global prueba;
+function f = optimizationFunction(x)
+global RUNS;
+global opti;
+global prueba;
 
 %Comentar desde acá para optimizar
-clc
-clf
-clear all
-close all
-tic
-
-global opti;
-opti = 0;
-global test;
-test = 0;
-global prueba;
-prueba = 1;
-% Comentar hasta acá para optimizar
+% clc
+% clf
+% clear all
+% close all
+% tic
+% 
+% global opti;
+% opti = 0;
+% global test;
+% test = 0;
+% global prueba;
+% prueba = 1;
+%Comentar hasta acá para optimizar
 
 if ~opti
     RUNS = 25;        
@@ -44,7 +44,7 @@ xname{2}  = 'softmax';
 x0(2)     = -1;              % 11
 
 xname{3}  = 'decay';
-x0(3)     = 15;              % 8
+x0(3)     = 12;              % 8
 
 xname{4}  = 'lambda';
 x0(4)     = 0.9;
@@ -72,7 +72,7 @@ x0(10)    = 0;             % 10    % scale factor for the action space in neash
 
 if opti
     x0(3)  = x(1);
-    x0(11) = x(2);  
+    %x0(10) = x(2);  
 end
 
 stringName = [];
@@ -98,6 +98,6 @@ if ~opti
     % delete(gcp)
     toc
 else
-    disp(['%Distance BT: ',num2str(f), '; ', stringName]);
+    disp(['%Failed Goals: ',num2str(f), '; ', stringName]);
     %disp(['%Distance BT: ',num2str(f), '; Time_th: ',num2str(tth), '; ' stringName]);
 end

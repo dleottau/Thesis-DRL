@@ -5,7 +5,7 @@ close all
 
 tic
 global RUNS;
-RUNS = 8;
+RUNS = 4;
 
 global flagFirst;
 flagFirst = true;
@@ -31,16 +31,16 @@ end
 x0 = [];
 
 xname{1} = 'decay';
-x0(1)    = 3;
-xname{2} = 'Fr';
-x0(2)    = 7;                 % Friction coefficient
+x0(1)    = 15;
+%xname{2} = 'scaleNeash';
+%x0(2)    = 16;                 % Friction coefficient
 
 %------------------------------------------
 
 options = hilloptions('TimeLimit', 600);
 
-options.step         = [1 ; 1];
-options.space        = [[3 ; 7], [15; 7]];
+options.step         = [1 ; ];
+options.space        = [[3 ; ], [15; ]];
 options.peaks        = 4;
 options.oneDimPerTry = 1;
 

@@ -23,7 +23,7 @@ if T ~= 0
 %     v_qa = exp( (Qs-max(Qs))*minTemp);
 %     sum_qa = sum( exp((Qs-max(Qs))*minTemp) );
 elseif tempdec>0
-    temp = 10E-6+tempdec;
+    temp = tempdec;
     v_qa = exp( (Qs-max(Qs))/temp );
     sum_qa = sum( exp( (Qs-max(Qs))/temp ));
 else
@@ -42,6 +42,10 @@ if sum(Ps)==0
 end
 a = find(rand <= cumsum(Ps),1);
 p = Ps(a);
+
+if p>0.99999
+    p;
+end
 
 if isempty(a)
     Ps

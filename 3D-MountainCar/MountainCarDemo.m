@@ -34,6 +34,7 @@ end
 
 epsilon0 = RL.param.epsilon;
 softmaxT0 = RL.param.softmax;
+RL.param.softmaxCA = 1;
 
 EXPLORATION = maxepisodes/RL.param.exp_decay;
 epsDec = -log(0.05) * 1/EXPLORATION;  %epsilon decrece a un 5% (0.005) en maxEpisodes cuartos (maxepisodes/4), de esta manera el decrecimiento de epsilon es independiente del numero de episodios
@@ -103,7 +104,7 @@ for i=1:maxepisodes
         %axis([1  maxepisodes  -1 1])
         
         subplot(2,2,4)
-        plot(RL.CA(:,1))
+        plot(RL.CA)
         %hold on
         %plot(RL.TD)
         title('CA-DPA and TD') 

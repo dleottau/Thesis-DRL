@@ -11,7 +11,7 @@ global opti;
 opti=0;
 
 if ~opti
-    RUNS=1;
+    RUNS=30;
 
 %     myCluster = parcluster('local');
 %     if matlabpool('size') == 0 % checking to see if my pool is already open
@@ -29,7 +29,7 @@ x0(1) = 1;
 xname{2}='lambda';
 x0(2) = 0.9;
 xname{3}='epsilon';
-x0(3) = 0.05;  
+x0(3) = 0.02;  
 xname{4}='k-lenient';
 x0(4) = 3.5;  
 xname{5}='beta';
@@ -51,8 +51,7 @@ x0(8) = 0; % enable original proposal which uses 5 actions instead of 9
 
 if opti
     x0(3) = x(1);
-    x0(1) = x(2);
-    x0(2) = x(3);
+    x0(2) = x(2);
 end
 
 stringName=[];

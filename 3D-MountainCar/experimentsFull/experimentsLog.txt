@@ -1,7 +1,43 @@
-
-
-
-
+-
+5actions0; MAapproach4; DRL2; beta0.8; k-lenient3.5; epsilon0.02; lambda0.9; alpha1
+-
+Starting parallel pool (parpool) using the 'local' profile ... connected to 4 workers.
+RUN: 10; MeanCumRew: -215.954;  ITAE: 28219.35;  eTime: 181.8347
+RUN: 19; MeanCumRew: -238.3376;  ITAE: 30553.7517;  eTime: 195.0886
+RUN: 15; MeanCumRew: -275.0742;  ITAE: 30616.6633;  eTime: 214.3606
+RUN: 14; MeanCumRew: -216.3069;  ITAE: 26258.0567;  eTime: 201.5747
+RUN: 9; MeanCumRew: -300.8261;  ITAE: 35341.7;  eTime: 247.1694
+RUN: 5; MeanCumRew: -351.023;  ITAE: 65604.405;  eTime: 432.548
+RUN: 18; MeanCumRew: -310.8031;  ITAE: 36225.79;  eTime: 243.1339
+RUN: 13; MeanCumRew: -260.1611;  ITAE: 27279.7867;  eTime: 234.488
+RUN: 8; MeanCumRew: -236.7033;  ITAE: 28744.12;  eTime: 236.6386
+RUN: 17; MeanCumRew: -270.8133;  ITAE: 34670.7283;  eTime: 273.3486
+RUN: 4; MeanCumRew: -470.2225;  ITAE: 54369.1683;  eTime: 414.4538
+RUN: 7; MeanCumRew: -263.5166;  ITAE: 27763.8883;  eTime: 226.2641
+RUN: 12; MeanCumRew: -317.2685;  ITAE: 33148.9917;  eTime: 275.7453
+RUN: 16; MeanCumRew: -317.8849;  ITAE: 29238.4383;  eTime: 305.6125
+RUN: 3; MeanCumRew: -292.7417;  ITAE: 33808.5767;  eTime: 268.9536
+RUN: 6; MeanCumRew: -247.0742;  ITAE: 30723.2417;  eTime: 263.586
+RUN: 11; MeanCumRew: -246.1944;  ITAE: 40069.83;  eTime: 375.1805
+RUN: 22; MeanCumRew: -289.6573;  ITAE: 45341.9767;  eTime: 363.8109
+RUN: 2; MeanCumRew: -284.0537;  ITAE: 33901.3833;  eTime: 264.8196
+RUN: 24; MeanCumRew: -237.491;  ITAE: 29747.325;  eTime: 260.6412
+RUN: 26; MeanCumRew: -218.8389;  ITAE: 29029.635;  eTime: 262.1748
+RUN: 21; MeanCumRew: -269.6292;  ITAE: 28586.8967;  eTime: 244.717
+RUN: 1; MeanCumRew: -247.6061;  ITAE: 37371.845;  eTime: 325.0282
+RUN: 25; MeanCumRew: -267.3913;  ITAE: 31943.92;  eTime: 276.8012
+RUN: 20; MeanCumRew: -224.9821;  ITAE: 27092.28;  eTime: 251.974
+RUN: 27; MeanCumRew: -274.4041;  ITAE: 31377.915;  eTime: 254.7227
+RUN: 28; MeanCumRew: -258.9233;  ITAE: 26162.3517;  eTime: 233.5633
+RUN: 23; MeanCumRew: -717.1049;  ITAE: 46769.9067;  eTime: 675.8201
+RUN: 29; MeanCumRew: -271.6829;  ITAE: 30768.3133;  eTime: 239.6871
+RUN: 30; MeanCumRew: -282.1816;  ITAE: 31259.48;  eTime: 191.1381
+-
+cumRew:-202.8226; ITAE:34066.3238; ElapsedTime:281.1626
+-
+Elapsed time is 2599.030875 seconds.
+IdleTimeout has been reached.
+Parallel pool using the 'local' profile is shutting down.
 
 ---------------------------
 -

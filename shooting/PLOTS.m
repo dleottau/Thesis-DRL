@@ -24,94 +24,28 @@ n = 1;
 M = [];
 S = [];
 
-% ----------
-% folder = 'Opti/Fr5/';
+%----------
+% folder = 'Opti/neash/lq/';
 % files = dir(fullfile([folder '*.mat']));
 % 
 % for i=1:size(files,1)
 %     results=importdata([folder files(i).name]);
 %     [M,S,n,legendN] = load_results(results,M,S,n,legendN,files(i).name);
 % end
-% ----------
+%----------
 
 % ----------------------------
-% load 'Fr5; ScaleNeash0; Controller0; Transfer0; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay3; 8RUNS.mat';
-% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'Fr5; decay3');
-% 
-load 'Fr5; ScaleNeash0; Controller0; Transfer0; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay4; 8RUNS.mat';
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'Fr5; decay4');
-% 
-% load 'Fr5; ScaleNeash0; Controller0; Transfer0; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay5; 8RUNS.mat';
-% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'Fr5; decay5');
-% 
-%load 'Fr5; ScaleNeash0; Controller0; Transfer0; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay6; 8RUNS.mat';
-%[M,S,n,legendN] = load_results(results,M,S,n,legendN,'Fr5; decay6');
-% 
-%load 'Fr5; ScaleNeash0; Controller0; Transfer0; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay7; 8RUNS.mat';
-%[M,S,n,legendN] = load_results(results,M,S,n,legendN,'Fr5; decay7');
-% 
-load 'Fr5; ScaleNeash0; Controller0; Transfer0; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay8; 8RUNS.mat';
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'Fr5; decay8');
-% 
-%load 'Fr5; ScaleNeash0; Controller0; Transfer0; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay9; 8RUNS.mat';
-%[M,S,n,legendN] = load_results(results,M,S,n,legendN,'Fr5; decay9');
-% 
-load 'Fr5; ScaleNeash0; Controller0; Transfer0; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay10; 8RUNS.mat';
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'Fr5; decay10');
-% 
-%load 'Fr5; ScaleNeash0; Controller0; Transfer0; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay11; 8RUNS.mat';
-%[M,S,n,legendN] = load_results(results,M,S,n,legendN,'Fr5; decay11');
-% 
-% load 'Fr5; ScaleNeash0; Controller0; Transfer0; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay12; 8RUNS.mat';
-% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'Fr5; decay12');
-% 
-load 'Fr5; ScaleNeash0; Controller0; Transfer0; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay13; 8RUNS.mat';
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'Fr5; decay13');
-% 
-load 'Fr5; ScaleNeash0; Controller0; Transfer0; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay14; 8RUNS.mat';
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'Fr5; decay14');
-% 
-load 'Fr5; ScaleNeash0; Controller0; Transfer0; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay15; 8RUNS.mat';
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'Fr5; decay15');
-% 
-% load 'Fr6; ScaleNeash0; Controller0; Transfer0; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay3; 8RUNS.mat';
-% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'Fr6; decay3');
-% 
-% load 'Fr6; ScaleNeash0; Controller0; Transfer0; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay4; 8RUNS.mat';
-% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'Fr6; decay4');
-% 
-% load 'Fr6; ScaleNeash0; Controller0; Transfer0; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay7; 8RUNS.mat';
-% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'Fr6; decay7');
-% 
-% load 'Fr6; ScaleNeash0; Controller0; Transfer0; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay13; 8RUNS.mat';
-% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'Fr6; decay13');
-% 
-% load 'Fr6; ScaleNeash0; Controller0; Transfer0; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay5; 8RUNS.mat';
-% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'Fr6; decay5');
-% 
-% load 'Fr6; ScaleNeash0; Controller0; Transfer0; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay6; 8RUNS.mat';
-% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'Fr6; decay6');
-% 
-% load 'Fr6; ScaleNeash0; Controller0; Transfer0; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay8; 8RUNS.mat';
-% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'Fr6; decay8');
-% 
-% load 'Fr6; ScaleNeash0; Controller0; Transfer0; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay9; 8RUNS.mat';
-% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'Fr6; decay9');
-% 
-% load 'Fr6; ScaleNeash0; Controller0; Transfer0; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay10; 8RUNS.mat';
-% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'Fr6; decay10');
-% 
-% load 'Fr6; ScaleNeash0; Controller0; Transfer0; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay11; 8RUNS.mat';
-% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'Fr6; decay11');
-% 
-% load 'Fr6; ScaleNeash0; Controller0; Transfer0; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay12; 8RUNS.mat';
-% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'Fr6; decay12');
-% 
-% load 'Fr6; ScaleNeash0; Controller0; Transfer0; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay14; 8RUNS.mat';
-% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'Fr6; decay14');
-% 
-% load 'Fr6; ScaleNeash0; Controller0; Transfer0; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay15; 8RUNS.mat';
-% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'Fr6; decay15');
+load 'Opti/neash/lq/ScaleNeash16; Controller1; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay12; 4RUNS.mat';
+[M,S,n,legendN] = load_results(results,M,S,n,legendN,'scaleNeash16; decay12');
+
+load 'Opti/neash/lq/ScaleNeash16; Controller1; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay13; 4RUNS.mat';
+[M,S,n,legendN] = load_results(results,M,S,n,legendN,'scaleNeash16; decay13');
+
+load 'Opti/neash/lq/ScaleNeash22; Controller1; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay12; 4RUNS.mat';
+[M,S,n,legendN] = load_results(results,M,S,n,legendN,'scaleNeash22; decay12');
+
+load 'Opti/DRL/Fr5/Fr5; ScaleNeash0; Controller0; Transfer0; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay15; 8RUNS.mat'
+[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-Ind decay15');
 % ----------------------------
 
 Ms = M;     % Smoothed means
