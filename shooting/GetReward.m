@@ -46,7 +46,7 @@ else
 end
 % --------------------------------------------------
 
-% r(1) = - 1 * ( sum([ro abs(gama) abs(fi)] .* 1/feature_max(1:3)));
+%r(1) = - 1 * ( sum([ro abs(gama) abs(fi)] .* 1/feature_max(1:3)));
 r(1) = - 1 * ( sum([ro abs(gama) abs(fi)] ./feature_max(1:3))) + R_shoot;
 
 if checkGoal

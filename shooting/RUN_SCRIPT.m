@@ -58,15 +58,13 @@ end
 % -------------------------------------------------------------------------
 conf.DRAWS1 = 1;
 conf.record = 0;
-
 if conf.opti
     conf.DRAWS1 = 0;
     conf.record = 1;
     folder = 'Opti/';
-end
-if prueba
-    conf.DRAWS1  = 1;
-    conf.record = 0;
+elseif ~prueba && ~conf.opti
+    conf.DRAWS1  = 0;
+    conf.record = 1;
     folder = 'tests/';
 end
 
@@ -126,9 +124,11 @@ conf.feature_step   = (conf.feature_max - conf.feature_min )./(conf.Nfeatures-[1
 % -------------------------------------------------------------------------
 conf.Q_INIT = 0;                    % Q table initial values
 if conf.TRANSFER && conf.nash
-    conf.Q_INIT = 5;                % if NeASh, optimistic initialization
+    %conf.Q_INIT = 5;                % if NeASh, optimistic initialization
+    conf.Q_INIT = 3;
+    %conf.Q_INIT = 0;
 elseif conf.TRANSFER && ~conf.nash
-    conf.Q_INIT = -3;               % if CoSh, pessimistic initialization
+    conf.Q_INIT = -3/RL.param.gamma;               % if CoSh, pessimistic initialization
 end
 %% -----------------------------------------------------------------------
 fileNameP = ['DRL_' int2str(conf.Runs) 'Runs_Noise' num2str(conf.NOISE) '_MA' int2str(conf.MAapproach) '_alpha' num2str(RL.param.alpha) '_lambda' num2str(RL.param.lambda)];
@@ -180,7 +180,7 @@ if flagFirst
 end
 
 %% Run Inwalk-Passing.-----------------------------------------------------
-if prueba
+if conf.Runs==1
     for n = 1:conf.Runs
         [pscored(:,n),scored(:, n),dBT(:, n),Q{n},Qy{n},Qw{n}] = Dribbling2d( n, conf, RL );
     end
@@ -249,7 +249,7 @@ results.RLparam = RL.param;
 if conf.TRANSFER >= 0
     if conf.record >0
         %save ([evolutionFile  '.mat'], 'results');
-        save ([stringName  '.mat'], 'results');
+        save ([folder stringName  '.mat'], 'results');
     end
     
     if conf.DRAWS1 == 1
@@ -258,14 +258,14 @@ if conf.TRANSFER >= 0
         
         if conf.record > 0
             %saveas(gcf,[evolutionFile '.fig'])
-            saveas(gcf,[stringName '.fig'])
+            saveas(gcf,[folder stringName '.fig'])
         end
     end
     close(gcf)
 else
     if conf.record > 0
         %save ([performanceFile '.mat'], 'results');
-        save ([stringName '.mat'], 'results');
+        save ([folder stringName '.mat'], 'results');
     end
 end
 

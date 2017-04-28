@@ -31,16 +31,16 @@ end
 x0 = [];
 
 xname{1} = 'decay';
-x0(1)    = 15;
-%xname{2} = 'scaleNeash';
-%x0(2)    = 16;                 % Friction coefficient
+x0(1)    = 10;
+xname{2} = 'scaleNeash';
+x0(2)    = 16;                 % Friction coefficient
 
 %------------------------------------------
 
 options = hilloptions('TimeLimit', 600);
 
-options.step         = [1 ; ];
-options.space        = [[3 ; ], [15; ]];
+options.step         = [1 ; 3];
+options.space        = [[3 ; 1], [15; 31]];
 options.peaks        = 4;
 options.oneDimPerTry = 1;
 

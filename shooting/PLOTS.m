@@ -16,8 +16,7 @@ lineW    = [3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 1 1 1 2 1 1 1 2 1 
 legendN  = [];
 
 K    = 10;  % # points ploted for errobar
-span = 0.10;
-% span = 0.00001;
+%span = 0.00001;
 % span = 0.07;
 
 n = 1;
@@ -26,26 +25,32 @@ S = [];
 
 %----------
 % folder = 'Opti/neash/lq/';
-% files = dir(fullfile([folder '*.mat']));
-% 
-% for i=1:size(files,1)
-%     results=importdata([folder files(i).name]);
-%     [M,S,n,legendN] = load_results(results,M,S,n,legendN,files(i).name);
-% end
+folder = 'tests/';
+files = dir(fullfile([folder '*.mat']));
+
+for i=1:size(files,1)
+    results=importdata([folder files(i).name]);
+    [M,S,n,legendN] = load_results(results,M,S,n,legendN,files(i).name);
+end
 %----------
 
 % ----------------------------
-load 'Opti/neash/lq/ScaleNeash16; Controller1; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay12; 4RUNS.mat';
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'scaleNeash16; decay12');
 
-load 'Opti/neash/lq/ScaleNeash16; Controller1; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay13; 4RUNS.mat';
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'scaleNeash16; decay13');
 
-load 'Opti/neash/lq/ScaleNeash22; Controller1; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay12; 4RUNS.mat';
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'scaleNeash22; decay12');
-
-load 'Opti/DRL/Fr5/Fr5; ScaleNeash0; Controller0; Transfer0; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay15; 8RUNS.mat'
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-Ind decay15');
+% load 'Opti/neash/hq/ScaleNeash28; Controller0; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay14; 4RUNS.mat';
+% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'C0 scaleNeash28; decay14 4runs'); %Fitness=56.627; T_th=822
+% 
+% load 'Opti/neash/hq/ScaleNeash31; Controller0; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay12; 4RUNS.mat';
+% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'C0 scaleNeash31; decay12'); %Fitness=57.1413; T_th=976
+% 
+% load 'tests/ScaleNeash28; Controller0; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay14; 25RUNS.mat';
+% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL+NeASh-Src1');
+% 
+% load 'Opti/neash/lq/ScaleNeash16; Controller1; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay12; 4RUNS.mat';
+% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'C1 scaleNeash16; decay12');
+% 
+% load 'Opti/DRL/Fr5/Fr5; ScaleNeash0; Controller0; Transfer0; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay15; 8RUNS.mat'
+% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-Ind decay15');
 % ----------------------------
 
 Ms = M;     % Smoothed means
@@ -53,9 +58,11 @@ Ss = S;     % Smoothed stdevs
 
 for i = 1:size(M,3)
     for j = 1:size(M,2)
-        Ms(:,j,i) = smooth( M(:,j,i), span,'rloess');
-        Ss(:,j,i) = smooth( S(:,j,i), span,'rloess');
+        %Ms(:,j,i) = smooth( M(:,j,i), span,'rloess');
+        %Ss(:,j,i) = smooth( S(:,j,i), span,'rloess');
         %sR(:,i) = std(M(:,:,i),0,2);
+        Ms(:,j,i) = M(:,j,i); % no smooth
+        Ss(:,j,i) = S(:,j,i);
     end
 end
 

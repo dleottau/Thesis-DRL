@@ -18,6 +18,12 @@ NOISE          = conf.NOISE;
 maxDistance    = conf.maxDistance;
 V_action_steps = conf.V_action_steps;
 
+RL.param.ca = [1/conf.nactions_x, 1/conf.nactions_y, 1/conf.nactions_w];
+RL.param.pa = 1/3;
+%RL.param.dpaAvg = 0;
+RL.param.caAvg = [0 0 0];
+RL.CA=zeros(3);
+
 if conf.DRL
     actionlist_x = conf.Actions.x;
     % ---------------------------------------------------------------------
@@ -217,26 +223,48 @@ while 1
     
     % Select action prime
     [a_sc, Pap] = p_source_selection2(RL,FVp,conf);
-    
     ap     = a_sc(1);
     ap_y   = a_sc(2);
     ap_rot = a_sc(3);
+        
     % --------------------------------------------------------------------
+    RL.CA(steps,1)=Pap(1); 
+    RL.CA(steps,2)=Pap(2);
+    RL.CA(steps,3)=Pap(3);
+    
+    % Frequency adjusted param
+        pap = [min(Pap), min(Pap), min(Pap)];
+        cap = pap + 0.05;
+        RL.param.caAvg = RL.param.ca + RL.param.caAvg;
+                
+        if conf.MAapproach==1;
+            cap = 1-cap;
+        elseif conf.MAapproach==4
+            if min(Pap)>=1 && RL.caFlag==0  %0.99999
+                RL.caFlag=1; 
+            end
+            if RL.caFlag==1, cap = 1-cap; end
+        end
+        
+    % select MA approach
+    if conf.MAapproach==0 || conf.MAapproach==2
+        pap=1;
+    end
     
     % Update the Qtable, that is,  learn from the experience
     if ~conf.Test && updateSarsaFlag
         if conf.DRL                                                                                                                 % Decentralized
-            [RL.Q_rot, trace_rot] = UpdateSARSA(FV, a_rot, r(2), FVp, ap_rot, RL.Q_rot, trace_rot, RL.param, RL.T_rot, conf.MAapproach);
+            [RL.Q_rot, trace_rot] = UpdateSARSA(FV, a_rot, r(2), FVp, ap_rot, RL.Q_rot, trace_rot, RL.param, RL.T_rot, conf.MAapproach, RL.param.ca(1));
             % -------------------------------------------------------------
-            [RL.Qy, trace_y] = UpdateSARSA(FV, a_y, r(2), FVp, ap_y, RL.Qy, trace_y, RL.param, RL.T_y, conf.MAapproach);
+            [RL.Qy, trace_y] = UpdateSARSA(FV, a_y, r(2), FVp, ap_y, RL.Qy, trace_y, RL.param, RL.T_y, conf.MAapproach, RL.param.ca(1));
             % -------------------------------------------------------------
             if conf.fuzzQ                                                                                                           % Fuzzy Q learning
                 [ RL.Q, trace, U, Qv] = UpdateQfuzzy(FV, r(1), RL.Q, trace, RL.param, Qv);
             else                                                                                                                    % SARSA
-                [RL.Q, trace] = UpdateSARSA(FV, a, r(1), FVp, ap, RL.Q, trace, RL.param, RL.T, conf.MAapproach);
+                [RL.Q, trace] = UpdateSARSA(FV, a, r(1), FVp, ap, RL.Q, trace, RL.param, RL.T, conf.MAapproach, RL.param.ca(1));
             end
         else % Centralized
-            [RL.Q, trace] = UpdateSARSA(FV, a, r(1), FVp, ap, RL.Q, trace, RL.param, RL.T, conf.MAapproach);
+            [RL.Q, trace] = UpdateSARSA(FV, a, r(1), FVp, ap, RL.Q, trace, RL.param, RL.T, conf.MAapproach, RL.param.ca(1));
         end
     end
     
@@ -252,7 +280,10 @@ while 1
     end
     FV          = FVp;
     % RL.param.fa = fap;
-    RL.param.fa = 1;
+    %RL.param.fa = 1;
+    RL.param.ca = .5*(RL.param.ca+cap);
+    RL.param.pa = pap;
+    
     
     % Compute performance index
     Vrx    = xG(4);

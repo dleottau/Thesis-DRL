@@ -12,6 +12,8 @@ rnd.nashExpl = ones(1,3);
 rnd.expl     = ones(1,3);
 rnd.TL       = ones(1,3);
 
+%P = [1 1 1];
+Ps=zeros(3,max([conf.nactions_x, conf.nactions_y, conf.nactions_w]));
 if conf.sync.nash
     rnd.nash     = rnd.nash*randn();
     rnd.nashExpl = rnd.nashExpl*randn();
@@ -35,14 +37,22 @@ Vr_max         = conf.Vr_max;
 V_action_steps = conf.V_action_steps;
 actionlist     = conf.Actions;
 
-[A_target(1), P(1,:)] = softmax_selectionRBF(RL.Q     , FV , RL.param , RL.T);
-[A_target(2), P(2,:)] = softmax_selectionRBF(RL.Qy    , FV , RL.param , RL.T_y);
-[A_target(3), P(3,:)] = softmax_selectionRBF(RL.Q_rot , FV , RL.param , RL.T_rot);
-
-if RL.param.softmax < 0
-    A_target(1) = e_greedy_selection(RL.Q     , FV , RL.param.epsilon);
-    A_target(2) = e_greedy_selection(RL.Qy   , FV , RL.param.epsilon);
-    A_target(3) = e_greedy_selection(RL.Q_rot , FV , RL.param.epsilon);            
+if RL.param.softmax > 0
+    [A_target(1), Ps(1,1:conf.nactions_x)] = softmax_selectionRBF(RL.Q     , FV , RL.param , RL.T);
+    [A_target(2), Ps(2,1:conf.nactions_y)] = softmax_selectionRBF(RL.Qy    , FV , RL.param , RL.T_y);
+    [A_target(3), Ps(3,1:conf.nactions_w)] = softmax_selectionRBF(RL.Q_rot , FV , RL.param , RL.T_rot);
+    P=Ps(A_target);
+else
+    aux=RL.param.softmax;
+    RL.param.softmax=1;
+    [A_target(1), Ps(1,1:conf.nactions_x)] = softmax_selectionRBF(RL.Q     , FV , RL.param , RL.T);
+    [A_target(2), Ps(2,1:conf.nactions_y)] = softmax_selectionRBF(RL.Qy    , FV , RL.param , RL.T_y);
+    [A_target(3), Ps(3,1:conf.nactions_w)] = softmax_selectionRBF(RL.Q_rot , FV , RL.param , RL.T_rot);
+    RL.param.softmax=aux;
+    A_target(1) = e_greedy_selection(RL.Q, FV, RL.param.epsilon);
+    A_target(2) = e_greedy_selection(RL.Qy, FV, RL.param.epsilon);
+    A_target(3) = e_greedy_selection(RL.Q_rot, FV, RL.param.epsilon);            
+    P=Ps(A_target);
 end
 
 % Transfer knowledge
@@ -82,4 +92,4 @@ else
     A = A_src;
 end
 
-P = [1 1 1];
+%

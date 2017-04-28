@@ -21,10 +21,15 @@ if T ~= 0
     %     minTemp = (10E-6 + (1-min(Ts)))*2;
     %     v_qa = exp( (Qs-max(Qs))*minTemp);
     %     sum_qa = sum( exp((Qs-max(Qs))*minTemp) );
-else
-    temp   = 10E-12 + RLparam.softmax;
+elseif RLparam.softmax>0
+    temp   = RLparam.softmax;
     v_qa   = exp( (Qs-max(Qs))/temp );
     sum_qa = sum( exp( (Qs-max(Qs))/temp ));
+else
+    Qss = Qs-max(Qs);
+    Qss = Qss/max(0.05*[abs(Qs) 1E-6]);
+    v_qa = exp(Qss);
+    sum_qa = sum(exp(Qss));
 end
 
 if sum_qa == 0
@@ -38,10 +43,15 @@ if sum(Ps) == 0
 end
 
 a = find(rand <= cumsum(Ps),1);
-p = Ps(a);
+%p = Ps(a);
+p = Ps;
+
+if p==1
+   Qs'
+end
 
 if isempty(a)
-    Ps
+    Ps'
     keyboard
 end
 

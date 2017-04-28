@@ -80,6 +80,7 @@ RL.param.M       = conf.Mtimes;
 RL.param.epsilon = abs(epsilon0);
 RL.param.p       = p0;
 RL.break         = 0;
+RL.caFlag=0;
 % -----------------------------------------------
 
 for i = 1:conf.episodes
@@ -154,15 +155,16 @@ for i = 1:conf.episodes
     %keyboard
     
     RL.param.epsilon = abs(epsilon0) * dec;
-    RL.param.softmax = abs(softmax0) * dec;
     RL.param.p       = p0*dec;
+    if softmax0>0,     RL.param.softmax = abs(softmax0) * dec; end
     
     xpoints(i)   = i-1;                                        %#ok<*AGROW>
     reward(i,:)  = total_reward/steps;
     e_time(i,1)  = steps*Ts;                                   %#ok<*NASGU>
     Vavg(i,1)    = Vavg_k;
     scored(i,1)    = scored_;
-    
+    caAvg(i,:)=RL.param.caAvg/steps;
+            
     if i > conf.episodes*0.1;
         pscored(i,1) = mean(scored(i-conf.episodes*0.1:i));
     else
@@ -188,16 +190,21 @@ for i = 1:conf.episodes
     if conf.DRAWS1 == 1
         
         subplot(2,3,5);
-        plot(Vr)
-        %ylim([0 1])
-        grid
-        title('Vr')
+%         plot(Vr)
+%         %ylim([0 1])
+%         grid
+%         title('Vr')
+         plot(caAvg*RL.param.alpha)
+        title('alphaAvg')
+        %axis([1  i  0 1])
         
         subplot(2,3,4);
-        plot([ro/2,fi,gama])
+        plot(RL.CA)
+        title('CA per step')
+        %plot([ro/2,fi,gama])
         %ylim([0 1])
         grid
-        title('.5*ro.b fi.r gama.y')
+        %title('.5*ro.b fi.r gama.y')
         
         
         subplot(2,3,3)
@@ -274,7 +281,7 @@ Qy = RL.Qy;
 Qw = RL.Q_rot;
 % -------------------------
 
-% if ~conf.opti
-% disp(['RUN: ' int2str(nRun) '; cumGoals: ',num2str(m_dBT(end))]);
+if ~conf.opti
+disp(['RUN: ' int2str(nRun) '; FailedGoals: ',num2str(100-pscored(end))]);
 % disp(['RUN: ' int2str(nRun) '; cumGoals: ',num2str(dist_BT)]);
-% end
+end
