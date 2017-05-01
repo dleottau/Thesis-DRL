@@ -24,33 +24,32 @@ M = [];
 S = [];
 
 %----------
-% folder = 'Opti/neash/lq/';
-folder = 'tests/';
-files = dir(fullfile([folder '*.mat']));
-
-for i=1:size(files,1)
-    results=importdata([folder files(i).name]);
-    [M,S,n,legendN] = load_results(results,M,S,n,legendN,files(i).name);
-end
+% folder = 'Opti/cosh/hq/';
+% % folder = 'Opti/neash/lq/';
+% %folder = 'tests/';
+% files = dir(fullfile([folder '*.mat']));
+% 
+% for i=1:size(files,1)
+%     results=importdata([folder files(i).name]);
+%     [M,S,n,legendN] = load_results(results,M,S,n,legendN,files(i).name);
+% end
 %----------
 
 % ----------------------------
+load 'Opti/neash/hq/ScaleNeash31; Controller0; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay12; 4RUNS.mat';
+[M,S,n,legendN] = load_results(results,M,S,n,legendN,'Src1 scaleNeash31; decay12'); %Fitness=57.1413; T_th=976
 
+load 'Opti/cosh/hq/ScaleNeash0; Controller0; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay19; 8RUNS.mat';
+[M,S,n,legendN] = load_results(results,M,S,n,legendN,'Src1 cosh; decay19'); %Fitness=57.0439; T_th=947
 
-% load 'Opti/neash/hq/ScaleNeash28; Controller0; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay14; 4RUNS.mat';
-% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'C0 scaleNeash28; decay14 4runs'); %Fitness=56.627; T_th=822
-% 
-% load 'Opti/neash/hq/ScaleNeash31; Controller0; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay12; 4RUNS.mat';
-% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'C0 scaleNeash31; decay12'); %Fitness=57.1413; T_th=976
-% 
-% load 'tests/ScaleNeash28; Controller0; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay14; 25RUNS.mat';
-% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL+NeASh-Src1');
-% 
-% load 'Opti/neash/lq/ScaleNeash16; Controller1; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay12; 4RUNS.mat';
-% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'C1 scaleNeash16; decay12');
-% 
-% load 'Opti/DRL/Fr5/Fr5; ScaleNeash0; Controller0; Transfer0; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay15; 8RUNS.mat'
-% [M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-Ind decay15');
+load 'Opti/neash/lq/ScaleNeash16; Controller1; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay12; 4RUNS.mat';
+[M,S,n,legendN] = load_results(results,M,S,n,legendN,'Src2 scaleNeash16; decay12'); %T_th=956; Fitness=57.3516
+
+load 'Opti/cosh/lq/ScaleNeash0; Controller1; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay14; 8RUNS.mat';
+[M,S,n,legendN] = load_results(results,M,S,n,legendN,'Src2 cosh; decay14'); %T_th=1209; Fitness=55.0285
+
+load 'Opti/DRL/Fr5/Fr5; ScaleNeash0; Controller0; Transfer0; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay15; 8RUNS.mat'
+[M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-Ind decay15');
 % ----------------------------
 
 Ms = M;     % Smoothed means

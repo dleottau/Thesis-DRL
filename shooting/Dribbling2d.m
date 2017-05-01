@@ -81,6 +81,7 @@ RL.param.epsilon = abs(epsilon0);
 RL.param.p       = p0;
 RL.break         = 0;
 RL.caFlag=0;
+RL.minPap=0;
 % -----------------------------------------------
 
 for i = 1:conf.episodes

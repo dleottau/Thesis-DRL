@@ -2,7 +2,7 @@ function PLOTS()
 
 %clear all
 close all
-clc
+%clc
 
 folder = 'experimentsFull/figB/'; 
 files = dir(fullfile([folder '*.mat']));

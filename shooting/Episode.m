@@ -24,6 +24,7 @@ RL.param.pa = 1/3;
 RL.param.caAvg = [0 0 0];
 RL.CA=zeros(3);
 
+
 if conf.DRL
     actionlist_x = conf.Actions.x;
     % ---------------------------------------------------------------------
@@ -234,13 +235,16 @@ while 1
     
     % Frequency adjusted param
         pap = [min(Pap), min(Pap), min(Pap)];
-        cap = pap + 0.05;
+        cap = clipDLF(pap+0.05,0.05,1);
         RL.param.caAvg = RL.param.ca + RL.param.caAvg;
                 
         if conf.MAapproach==1;
             cap = 1-cap;
         elseif conf.MAapproach==4
-            if min(Pap)>=1 && RL.caFlag==0  %0.99999
+            if min(Pap)> RL.minPap, RL.minPap=min(Pap);  min(Pap)
+            end
+             
+            if min(Pap)>=0.99 && RL.caFlag==0  %0.99999
                 RL.caFlag=1; 
             end
             if RL.caFlag==1, cap = 1-cap; end

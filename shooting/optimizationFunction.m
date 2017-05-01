@@ -38,13 +38,13 @@ x0 = [];
 %% Algorithm parameters.-
 
 xname{1}  = 'alpha';
-x0(1)     = 1;
+x0(1)     = 0.2;
 
 xname{2}  = 'softmax';
 x0(2)     = -1;              % 11
 
 xname{3}  = 'decay';
-x0(3)     = 15;              % 8
+x0(3)     = 19;              % 8
 
 xname{4}  = 'lambda';
 x0(4)     = 0.9;
@@ -53,13 +53,13 @@ xname{5}  = 'beta';
 x0(5)     = 0.99;
 
 xname{6}  = 'MAapproach';
-x0(6)     = 4;              % 0 no cordination, 1 frequency adjusted, 2 lenient
+x0(6)     = 0;              % 0 no cordination, 1 frequency adjusted, 2 lenient
 
 xname{7}  = 'k-lenient';
 x0(7)     = 5;
 
 xname{8}  = 'Transfer';
-x0(8)     = 0;              % =1 transfer, >1 acts gready from source policy, =0 learns from scratch, =-1 just for test performance from stored policies
+x0(8)     = 1;              % =1 transfer, >1 acts gready from source policy, =0 learns from scratch, =-1 just for test performance from stored policies
 
 xname{9}  = 'Controller';
 x0(9)     = 0;              % HiQ=0 or lowQ=1 Controlller

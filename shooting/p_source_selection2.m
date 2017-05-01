@@ -44,7 +44,7 @@ if RL.param.softmax > 0
     P=Ps(A_target);
 else
     aux=RL.param.softmax;
-    RL.param.softmax=1;
+    RL.param.softmax = 1;
     [A_target(1), Ps(1,1:conf.nactions_x)] = softmax_selectionRBF(RL.Q     , FV , RL.param , RL.T);
     [A_target(2), Ps(2,1:conf.nactions_y)] = softmax_selectionRBF(RL.Qy    , FV , RL.param , RL.T_y);
     [A_target(3), Ps(3,1:conf.nactions_w)] = softmax_selectionRBF(RL.Q_rot , FV , RL.param , RL.T_rot);
@@ -56,12 +56,12 @@ else
 end
 
 % Transfer knowledge
-if conf.TRANSFER && conf.nash
+if conf.TRANSFER && conf.nash 
+if RL.param.aScale<100        
     V_tgt(1) = actionlist.x(GetBestAction(RL.Q,FV));
     V_tgt(2) = actionlist.y(GetBestAction(RL.Qy,FV));
     V_tgt(3) = actionlist.w(GetBestAction(RL.Q_rot,FV));
-    
-    
+        
     if conf.nash == 2
         V_src(1) = triang_dist(Vr_min(1),V_src(1),Vr_max(1),1-RL.param.p,RL.param.aScale);
         V_src(2) = triang_dist(Vr_min(2),V_src(2),Vr_max(2),1-RL.param.p,RL.param.aScale);
@@ -79,6 +79,9 @@ if conf.TRANSFER && conf.nash
     A_target(1) = 1 + round(V_tgt(1)/V_action_steps(1));
     A_target(2) = 1 + round(V_tgt(2)/V_action_steps(2) + Vr_max(2)/V_action_steps(2));
     A_target(3) = 1 + round(V_tgt(3)/V_action_steps(3) + Vr_max(3)/V_action_steps(3));
+else
+    V_src = V_src + ((Vr_max-Vr_min)/(RL.param.aScale-100)).*rnd.nash*(1 - RL.param.p);
+end
 end
 
 V_src    = clipDLF( V_src,Vr_min,Vr_max);

@@ -3,11 +3,11 @@ clc
 clf
 close all
 
-th=-300;
+th=-216;
 m=1;
 interval=0.9;
 
-folder='experimentsFull/fig3/';
+folder='experimentsFull/figB/';
 files = dir(fullfile([folder '*.mat']));
 
 j=1;
