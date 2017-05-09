@@ -27,7 +27,7 @@ elseif RLparam.softmax>0
     sum_qa = sum( exp( (Qs-max(Qs))/temp ));
 else
     Qss = Qs-max(Qs);
-    Qss = Qss/max(0.05*[abs(Qs) 1E-6]);
+    Qss = Qss/max([abs(Qs) 1E-6]);
     v_qa = exp(Qss);
     sum_qa = sum(exp(Qss));
 end

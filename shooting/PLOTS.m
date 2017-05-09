@@ -24,8 +24,8 @@ M = [];
 S = [];
 
 %----------
-% folder = 'Opti/cosh/hq/';
-% % folder = 'Opti/neash/lq/';
+% %folder = 'Opti/cosh/hq/';
+% folder = 'Opti/neash/';
 % %folder = 'tests/';
 % files = dir(fullfile([folder '*.mat']));
 % 
@@ -36,18 +36,25 @@ S = [];
 %----------
 
 % ----------------------------
-load 'Opti/neash/hq/ScaleNeash31; Controller0; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay12; 4RUNS.mat';
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'Src1 scaleNeash31; decay12'); %Fitness=57.1413; T_th=976
+load 'Opti/neash/ScaleNeash29; Controller0; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay14; 8RUNS.mat';
+[M,S,n,legendN] = load_results(results,M,S,n,legendN,'Src1 scaleNeash25; decay29'); %Fitness=57.1413; T_th=976
 
+%load 'Opti/neash/ScaleNeash25; Controller0; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay29; 8RUNS.mat';
+%[M,S,n,legendN] = load_results(results,M,S,n,legendN,'Src1 scaleNeash25; decay29'); %Fitness=57.1413; T_th=976
+
+load 'Opti/neash/ScaleNeash15; Controller1; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay14; 8RUNS.mat';
+[M,S,n,legendN] = load_results(results,M,S,n,legendN,'Src2 scaleNeash15; decay14'); %T_th=956; Fitness=57.3516
+
+%load 'Opti/neash/ScaleNeash17; Controller1; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay8; 8RUNS.mat';
+%[M,S,n,legendN] = load_results(results,M,S,n,legendN,'Src2 scaleNeash17; decay8'); %T_th=956; Fitness=57.3516
+
+% 
 load 'Opti/cosh/hq/ScaleNeash0; Controller0; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay19; 8RUNS.mat';
 [M,S,n,legendN] = load_results(results,M,S,n,legendN,'Src1 cosh; decay19'); %Fitness=57.0439; T_th=947
-
-load 'Opti/neash/lq/ScaleNeash16; Controller1; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay12; 4RUNS.mat';
-[M,S,n,legendN] = load_results(results,M,S,n,legendN,'Src2 scaleNeash16; decay12'); %T_th=956; Fitness=57.3516
-
+% 
 load 'Opti/cosh/lq/ScaleNeash0; Controller1; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay14; 8RUNS.mat';
 [M,S,n,legendN] = load_results(results,M,S,n,legendN,'Src2 cosh; decay14'); %T_th=1209; Fitness=55.0285
-
+% 
 load 'Opti/DRL/Fr5/Fr5; ScaleNeash0; Controller0; Transfer0; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay15; 8RUNS.mat'
 [M,S,n,legendN] = load_results(results,M,S,n,legendN,'DRL-Ind decay15');
 % ----------------------------
