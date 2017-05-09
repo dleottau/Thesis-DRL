@@ -234,21 +234,26 @@ while 1
     % --------------------------------------------------------------------
         
     % Frequency adjusted param
-        pap = [min(Pap), min(Pap), min(Pap)];
-        cap = clipDLF(pap+0.1,0,1);
+        %pap = [min(Pap), min(Pap), min(Pap)];
+        [vsp, index]=sort(Pap,'descend');
+        vsp=sort(Pap);
+        pap(index)=vsp;
+        
+        cap = clipDLF(pap,0.05,1);
           
         if conf.MAapproach==1;
             cap = 1-cap;
         elseif conf.MAapproach==4
-%             if RL.param.dpa>=0
-%                 cap = 1-cap;
-%             end
-            if min(Pap)> RL.minPap, RL.minPap=min(Pap);  min(Pap)
+            if min(Pap)> RL.minPap, 
+                RL.minPap=min(Pap);  
+                min(Pap)
+                conf.episodeN
             end
             if min(Pap)>=1 && RL.caFlag==0  %0.99999
-                RL.caFlag=1; 
+                RL.caFlag=1;
+                conf.episodeN
             end
-            %if RL.caFlag==1, cap = 1-cap; end
+            if RL.caFlag==1, cap = 1-cap; end
         end
         
     % select MA approach
@@ -264,9 +269,9 @@ while 1
     % Update the Qtable, that is,  learn from the experience
     if ~conf.Test && updateSarsaFlag
         if conf.DRL                                                                                                                 % Decentralized
-            [RL.Q_rot, trace_rot, TD(3)] = UpdateSARSA(FV, a_rot, r(2), FVp, ap_rot, RL.Q_rot, trace_rot, RL.param, RL.T_rot, conf.MAapproach, RL.param.ca(1));
+            [RL.Q_rot, trace_rot, TD(3)] = UpdateSARSA(FV, a_rot, r(2), FVp, ap_rot, RL.Q_rot, trace_rot, RL.param, RL.T_rot, conf.MAapproach, RL.param.ca(3));
             % -------------------------------------------------------------
-            [RL.Qy, trace_y, TD(2)] = UpdateSARSA(FV, a_y, r(2), FVp, ap_y, RL.Qy, trace_y, RL.param, RL.T_y, conf.MAapproach, RL.param.ca(1));
+            [RL.Qy, trace_y, TD(2)] = UpdateSARSA(FV, a_y, r(2), FVp, ap_y, RL.Qy, trace_y, RL.param, RL.T_y, conf.MAapproach, RL.param.ca(2));
             % -------------------------------------------------------------
             if conf.fuzzQ                                                                                                           % Fuzzy Q learning
                 [ RL.Q, trace, U, Qv] = UpdateQfuzzy(FV, r(1), RL.Q, trace, RL.param, Qv);

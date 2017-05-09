@@ -41,7 +41,7 @@ if RL.param.softmax > 0
     [A_target(1), Ps(1,1:conf.nactions_x)] = softmax_selectionRBF(RL.Q     , FV , RL.param , RL.T);
     [A_target(2), Ps(2,1:conf.nactions_y)] = softmax_selectionRBF(RL.Qy    , FV , RL.param , RL.T_y);
     [A_target(3), Ps(3,1:conf.nactions_w)] = softmax_selectionRBF(RL.Q_rot , FV , RL.param , RL.T_rot);
-    P=Ps(A_target);
+    P=[Ps(1,A_target(1)) Ps(2,A_target(2)) Ps(3,A_target(3))];
 else
     aux=RL.param.softmax;
     RL.param.softmax = 1;
@@ -52,7 +52,7 @@ else
     A_target(1) = e_greedy_selection(RL.Q, FV, RL.param.epsilon);
     A_target(2) = e_greedy_selection(RL.Qy, FV, RL.param.epsilon);
     A_target(3) = e_greedy_selection(RL.Q_rot, FV, RL.param.epsilon);            
-    P=Ps(A_target);
+    P=[Ps(1,A_target(1)) Ps(2,A_target(2)) Ps(3,A_target(3))];
 end
 
 % Transfer knowledge

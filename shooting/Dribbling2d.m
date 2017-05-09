@@ -167,7 +167,8 @@ for i = 1:conf.episodes
     caAvg(i,:)=RL.param.caAvg/steps;
     dpaAvg(i,:)=RL.param.dpaAvg/steps;
     TDAvg(i,:)=RL.TDAvg/steps;
-            
+    
+        
     if i > conf.episodes*0.1;
         pscored(i,1) = mean(scored(i-conf.episodes*0.1:i));
     else
@@ -194,16 +195,16 @@ for i = 1:conf.episodes
         
         subplot(2,3,5);
         plot(caAvg*RL.param.alpha)
-         hold on
-         plot(TDAvg)
-         hold off
+%          hold on
+%          plot(TDAvg)
+%          hold off
         title('alphaAvg')
         
         subplot(2,3,4);
         plot(RL.CA)
-         hold on
-         plot(RL.TD)
-         hold off
+%          hold on
+%          plot(RL.TD)
+%          hold off
         title('CA per step')
         %ylim([0 1])
         grid

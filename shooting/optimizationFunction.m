@@ -41,7 +41,7 @@ xname{1}  = 'alpha';
 x0(1)     = 1;
 
 xname{2}  = 'softmax';
-x0(2)     = 20;              % 11
+x0(2)     = 30;              % 11
 
 xname{3}  = 'decay';
 x0(3)     = 20;              % 8

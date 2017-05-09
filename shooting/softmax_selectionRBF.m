@@ -14,6 +14,8 @@ for i = 1:actions;
     end
 end
 
+
+
 if T ~= 0
     minTemp = 10E-3 + min(Ts)*RLparam.k;
     v_qa    = exp((Qs-max(Qs))/minTemp);
