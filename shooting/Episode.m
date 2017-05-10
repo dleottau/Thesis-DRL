@@ -240,7 +240,8 @@ while 1
     else
     % Frequency adjusted param
     %if conf.MAapproach==1,3,4
-        pap = [min(Pap), min(Pap), min(Pap)];
+        pap=Pap;
+        %pap = [min(Pap), min(Pap), min(Pap)];
         %[vsp, index]=sort(Pap,'descend');
         %vsp=sort(Pap);
         %pap(index)=vsp;
