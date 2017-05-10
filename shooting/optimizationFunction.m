@@ -38,13 +38,13 @@ x0 = [];
 %% Algorithm parameters.-
 
 xname{1}  = 'alpha';
-x0(1)     = 1;
+x0(1)     = 0.5;
 
 xname{2}  = 'softmax';
-x0(2)     = 30;              % 11
+x0(2)     = 15;              % 11
 
 xname{3}  = 'decay';
-x0(3)     = 20;              % 8
+x0(3)     = 25;              % 8
 
 xname{4}  = 'lambda';
 x0(4)     = 0.9;
@@ -70,13 +70,13 @@ x0(10)    = 0;             % 10    % scale factor for the action space in neash
 % -------------------------------------------------------------------------
 
 if opti
-    x0(3)  = x(1);
-    x0(10) = x(2);  
+    x0(2)  = x(1);
+    x0(3) = x(2);  
 end
 
 stringName = [];
 
-for i = length(x0) : -1 : 3
+for i = length(x0) : -1 : 1
     stringName = [stringName '; ' xname{i} num2str(x0(i)) ];
 end
 stringName = [stringName(3:end) '; ' num2str(RUNS) 'RUNS'];

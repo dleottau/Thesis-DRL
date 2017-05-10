@@ -247,7 +247,7 @@ results.conf = conf;
 results.RLparam = RL.param;
 
 if conf.TRANSFER >= 0
-    if conf.record >0
+    if conf.record
         %save ([evolutionFile  '.mat'], 'results');
         save ([folder stringName  '.mat'], 'results');
     end
@@ -256,7 +256,7 @@ if conf.TRANSFER >= 0
         figure,plot(mean(dBT,2))
         grid
         
-        if conf.record > 0
+        if conf.record
             %saveas(gcf,[evolutionFile '.fig'])
             saveas(gcf,[folder stringName '.fig'])
         end

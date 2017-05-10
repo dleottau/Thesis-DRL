@@ -28,24 +28,13 @@ RL.CA = zeros(3);
 RL.DPA = zeros(3);
 RL.TD = zeros(3);
 
-if conf.DRL
-    actionlist_x = conf.Actions.x;
-    % ---------------------------------------------------------------------
-    actionlist_y = conf.Actions.y;
-    % ---------------------------------------------------------------------
-    actionlist_w = conf.Actions.w;
-else
-    actionlist = conf.Actions.cent;
-end
 
-trace = 0*RL.Q;  % the elegibility trace for the vx agent
-
-if conf.DRL
-    % ---------------------------------------------------------------------
-    trace_y = 0*RL.Qy;  % the elegibility trace for the v_rot agent
-    % ---------------------------------------------------------------------
-    trace_rot = 0*RL.Q_rot;  % the elegibility trace for the v_rot agent
-end
+actionlist_x = conf.Actions.x;
+actionlist_y = conf.Actions.y;
+actionlist_w = conf.Actions.w;
+RL.trace = 0*RL.Q;  % the elegibility trace for the vx agent
+RL.trace_y = 0*RL.Qy;  % the elegibility trace for the v_rot agent
+RL.trace_rot = 0*RL.Q_rot;  % the elegibility trace for the v_rot agent
 
 Pr = conf.Pr;
 Pb = conf.Pb;
@@ -95,13 +84,10 @@ FV = getFeatureVector(X, conf.cores);
 ballState = 0;
 
 % Selects an action
-a     = 1;
-a_y   = 1;
-a_rot = 1;
+A=[1 1 1];
 
-U               = 1;
-Qv              = 0;
-RL.param.fa     = 0;
+RL.U   = 1;
+RL.Qv  = 0;
 updateSarsaFlag = 1;
 
 while 1
@@ -111,22 +97,22 @@ while 1
     
     % Convert the index of the action into an action value
     if conf.DRL
-        action     = actionlist_x(a);
+        action     = actionlist_x(A(1));
         % -----------------------------------------------------------------
-        action_y   = actionlist_y(a_y);
+        action_y   = actionlist_y(A(2));
         % -----------------------------------------------------------------
-        action_rot = actionlist_w(a_rot);
+        action_rot = actionlist_w(A(3));
         % -----------------------------------------------------------------
         
         if conf.fuzzQ
             if conf.Test
                 MF       = FV/sum(FV);
                 [qv, av] = max(RL.Q,[],2);
-                U        = sum( MF .* av);
+                RL.U        = sum( MF .* av);
             end
-            action   = (U-1) * conf.V_action_steps(1);
+            action   = (RL.U-1) * conf.V_action_steps(1);
             % -------------------------------------------------------------
-            action_y = (U-1) * conf.V_action_steps(2);
+            action_y = (RL.U-1) * conf.V_action_steps(2);
             % -------------------------------------------------------------
         end
     else
@@ -226,74 +212,60 @@ while 1
     end
     
     % Select action prime
-    [a_sc, Pap] = p_source_selection2(RL,FVp,conf);
-    ap     = a_sc(1);
-    ap_y   = a_sc(2);
-    ap_rot = a_sc(3);
+    [Ap, Pap] = p_source_selection2(RL,FVp,conf);
+    
         
     % --------------------------------------------------------------------
-        
-    % Frequency adjusted param
-        %pap = [min(Pap), min(Pap), min(Pap)];
-        [vsp, index]=sort(Pap,'descend');
-        vsp=sort(Pap);
-        pap(index)=vsp;
-        
-        cap = clipDLF(pap,0.05,1);
-          
-        if conf.MAapproach==1;
-            cap = 1-cap;
-        elseif conf.MAapproach==4
-            if min(Pap)> RL.minPap, 
-                RL.minPap=min(Pap);  
-                min(Pap)
-                conf.episodeN
-            end
-            if min(Pap)>=1 && RL.caFlag==0  %0.99999
-                RL.caFlag=1;
-                conf.episodeN
-            end
-            if RL.caFlag==1, cap = 1-cap; end
-        end
-        
-    % select MA approach
-    if conf.MAapproach==0 || conf.MAapproach==2
-        pap=[1 1 1];
-        cap=pap;
-    end
-    
-    RL.param.caAvg = RL.param.ca + RL.param.caAvg;
-    RL.param.dpa = Pap-RL.param.pa;
-    RL.param.dpaAvg = RL.param.dpa + RL.param.dpaAvg;
+         
         
     % Update the Qtable, that is,  learn from the experience
     if ~conf.Test && updateSarsaFlag
-        if conf.DRL                                                                                                                 % Decentralized
-            [RL.Q_rot, trace_rot, TD(3)] = UpdateSARSA(FV, a_rot, r(2), FVp, ap_rot, RL.Q_rot, trace_rot, RL.param, RL.T_rot, conf.MAapproach, RL.param.ca(3));
-            % -------------------------------------------------------------
-            [RL.Qy, trace_y, TD(2)] = UpdateSARSA(FV, a_y, r(2), FVp, ap_y, RL.Qy, trace_y, RL.param, RL.T_y, conf.MAapproach, RL.param.ca(2));
-            % -------------------------------------------------------------
-            if conf.fuzzQ                                                                                                           % Fuzzy Q learning
-                [ RL.Q, trace, U, Qv] = UpdateQfuzzy(FV, r(1), RL.Q, trace, RL.param, Qv);
-            else                                                                                                                    % SARSA
-                [RL.Q, trace, TD(1)] = UpdateSARSA(FV, a, r(1), FVp, ap, RL.Q, trace, RL.param, RL.T, conf.MAapproach, RL.param.ca(1));
-            end
-        else % Centralized
-            [RL.Q, trace, TD] = UpdateSARSA(FV, a, r(1), FVp, ap, RL.Q, trace, RL.param, RL.T, conf.MAapproach, RL.param.ca(1));
-        end
+        [RL, TD]=UpdateQ(conf, RL, FV, A, r, FVp, Ap);
     end
     
     % Update the current variables
     X = Xp;
-    a = ap;
-    
+    A(1) = Ap(1);
     if conf.DRL
         % -----------------------------------------------------------------
-        a_y = ap_y;
+        A(2) = Ap(2);
         % -----------------------------------------------------------------
-        a_rot = ap_rot;
+        A(3) = Ap(3);
     end
     FV          = FVp;
+    
+    if conf.MAapproach==0 || conf.MAapproach==2
+        pap=[1 1 1];
+        cap=pap;
+    else
+    % Frequency adjusted param
+    %if conf.MAapproach==1,3,4
+        pap = [min(Pap), min(Pap), min(Pap)];
+        %[vsp, index]=sort(Pap,'descend');
+        %vsp=sort(Pap);
+        %pap(index)=vsp;
+        
+        cap = clipDLF(pap,0,1);
+          
+        if conf.MAapproach==1;
+            cap = 1-cap;
+%         elseif conf.MAapproach==4
+%             if min(Pap)> RL.minPap, 
+%                 RL.minPap=min(Pap);  
+%                 min(Pap)
+%                 conf.episodeN
+%             end
+%             if min(Pap)>=1 && RL.caFlag==0  %0.99999
+%                 RL.caFlag=1;
+%                 %conf.episodeN
+%             end
+%             if RL.caFlag==1, cap = 1-cap; end
+        end
+    end 
+    RL.param.caAvg = RL.param.ca + RL.param.caAvg;
+    RL.param.dpa = Pap-RL.param.pa;
+    RL.param.dpaAvg = RL.param.dpa + RL.param.dpaAvg;
+    
     RL.param.ca = .5*(RL.param.ca+cap);
     RL.param.pa = Pap;
     RL.CA(steps,1)=RL.param.ca(1); 

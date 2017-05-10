@@ -11,10 +11,14 @@ function [ Q, e_trace, TD] = UpdateSARSA( FV, a, r, FVp, ap, Q, e_trace, RLparam
 % gamma: discount factor
 % Q: the resulting Qtable
 
-FVT      = zeros(size(Q,1),size(Q,2));
 Qa       = getQvalue(Q(:,a), FV);
 Qap      = getQvalue(Q(:,ap), FVp);
+
+FVT      = zeros(size(Q,1),size(Q,2));
 FVT(:,a) = FV;
+
+TD = r + RLparam.gamma*Qap - Qa;
+e_trace = e_trace* RLparam.gamma * RLparam.lambda + FVT;
 
 if MAapproach == 2
     Ta     = getQvalue(T(:,a), FV);
@@ -22,9 +26,6 @@ if MAapproach == 2
     T(:,a) = clipDLF(T(:,a),0,1);
     % OJO: quizas necesario vover a calcular Ta o multiplicarlo por beta
 end
-
-TD = r + RLparam.gamma*Qap - Qa;
-e_trace = e_trace* RLparam.gamma * RLparam.lambda + FVT;
 
 if MAapproach == 0 || MAapproach == 1 || MAapproach == 3 || MAapproach == 4 || MAapproach == 2 && ( TD>0 || rand()>1-exp(-RLparam.k*Ta))
     %if MAapproach == 4 && TD>=0, ca=1-ca; end
