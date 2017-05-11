@@ -41,10 +41,10 @@ xname{1}  = 'alpha';
 x0(1)     = 0.5;
 
 xname{2}  = 'softmax';
-x0(2)     = 15;              % 11
+x0(2)     = 36;              % 11
 
 xname{3}  = 'decay';
-x0(3)     = 25;              % 8
+x0(3)     = 15;              % 8
 
 xname{4}  = 'lambda';
 x0(4)     = 0.9;
