@@ -38,13 +38,13 @@ x0 = [];
 %% Algorithm parameters.-
 
 xname{1}  = 'alpha';
-x0(1)     = 0.5;
+x0(1)     = 0.3;
 
 xname{2}  = 'softmax';
-x0(2)     = 36;              % 11
+x0(2)     = 1;              % 35
 
 xname{3}  = 'decay';
-x0(3)     = 15;              % 8
+x0(3)     = 15;              % 15
 
 xname{4}  = 'lambda';
 x0(4)     = 0.9;

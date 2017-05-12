@@ -24,9 +24,14 @@ if T ~= 0
     %     v_qa = exp( (Qs-max(Qs))*minTemp);
     %     sum_qa = sum( exp((Qs-max(Qs))*minTemp) );
 elseif RLparam.softmax>0
-    temp   = 1+RLparam.softmax;
-    v_qa   = exp( (Qs-max(Qs))/temp );
-    sum_qa = sum( exp( (Qs-max(Qs))/temp ));
+%     temp   = 1+RLparam.softmax;
+%     v_qa   = exp( (Qs-max(Qs))/temp );
+%     sum_qa = sum( exp( (Qs-max(Qs))/temp ));
+    temp   = RLparam.softmax;
+    Qss = Qs-max(Qs);
+    Qss = (Qss/max([abs(Qs) 1E-6]))/temp;
+    v_qa = exp(Qss);
+    sum_qa = sum(exp(Qss));
 else
     Qss = Qs-max(Qs);
     Qss = Qss/max([abs(Qs) 1E-6]);
