@@ -3,15 +3,17 @@ clc
 %clf
 %close all
 
-sort_1f_0t = 0;  % sort by best fitness (0) or by fastest convergence (1)
-thT = 44.98; % threshold to time to threshold from 0-100%
+sort_1f_0t = 1;  % sort by best fitness (0) or by fastest convergence (1)
+thT = 40; % threshold to time to threshold from 0-100%
 
 %folder = 'Opti/neash/lq/';
-folder = 'Opti/cosh/lq/';
+%folder = 'Opti/cosh/hq/';
+%folder = 'Opti/DRL/Fr5/';
+folder = 'tests/';
 
 record=0;
 interval=0.7;
-m=7;
+m=1;
 %span=0.000001;
 
 files = dir(fullfile([folder '*.mat']));
@@ -34,8 +36,8 @@ for i=1:size(files,1)
 
     name{i}=files(i).name;
     %resFT(i,1) = result.performance(1,1);
-    resFT(i,1) = mean(F(ceil(interval*length(F)):end));
-    %resFT(i,1) = F(end);
+    %resFT(i,1) = mean(F(ceil(interval*length(F)):end));
+    resFT(i,1) = F(end);
     resFT(i,2) = Tth;
     
     clear result;

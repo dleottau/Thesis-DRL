@@ -31,7 +31,7 @@ conf.thT           = 50;     % threshold to compute Time to threshold
 conf.TRANSFER      = x(8);   % =1 transfer, >1 acts gready from source policy, =0 learns from scratch, =-1 just for test performance from stored policies
 RL.param.aScale    = x(10);     % Scale factor for the action space in neash
 conf.nash          = RL.param.aScale;   % 0 COntrol sharing, 1 NASh, 2 Nash triang
-
+conf.sync.expl     = x(11); % Syncronization of random variables for exploration and transfer learning
 % -------------------------------------------------------------------------
 conf.deltaVw    = 2;
 conf.Vr_max     = [120 70 30];    % x,y,rot Max Speed achieved by the robot.-
@@ -43,14 +43,17 @@ conf.Controller = x(9);         % % HiQ=0 or lowQ=1 Controlller
 conf.maxDeltaV  = conf.Vr_max .* [1/3 1/3 1/3];    % mm/s/Ts
 conf.Nactios    = [16,15,17];
 % -------------------------------------------------------------------------
-conf.sync.nash = 1;
-conf.sync.TL   = 1;
-conf.sync.expl = 1;
+if conf.sync.expl
+    conf.sync.nash = 1;
+    conf.sync.TL   = 1;
+    conf.sync.expl = 1;
+else
+    conf.sync.nash = 0;
+    conf.sync.TL   = 0;
+    conf.sync.expl = 0;
+end
 % -------------------------------------------------------------------------
 
-if conf.TRANSFER
-    conf.sync.expl = 1;
-end
 if conf.TRANSFER < 0
     conf.episodes = 100;
 end
