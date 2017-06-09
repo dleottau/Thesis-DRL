@@ -36,11 +36,11 @@ end
 x0 = [];
 
 xname{1}='alpha';
-x0(1) = 0.5;
+x0(1) = 0.2;
 xname{2}='softmax';
-x0(2) = 70;
+x0(2) = -1;
 xname{3}='decay';
-x0(3) = 4; 
+x0(3) = 15; 
 xname{4}='lambda';
 x0(4) = 0.9; 
 xname{6}='MAapproach';

@@ -15,7 +15,7 @@ opti = 0;
 global test;
 test = 0;
 global prueba;
-prueba = 0;
+prueba = 1;
 %Comentar hasta acá para optimizar
 
 if ~opti
@@ -59,16 +59,19 @@ xname{7}  = 'k-lenient';
 x0(7)     = 5;
 
 xname{8}  = 'Transfer';
-x0(8)     = 1;              % =1 transfer, >1 acts gready from source policy, =0 learns from scratch, =-1 just for test performance from stored policies
+x0(8)     = 0;              % =1 transfer, >1 acts gready from source policy, =0 learns from scratch, =-1 just for test performance from stored policies
 
 xname{9}  = 'Controller';
-x0(9)     = 1;              % HiQ=0 or lowQ=1 Controlller
+x0(9)     = 0;              % HiQ=0 or lowQ=1 Controlller
 
 xname{10} = 'ScaleNeash';
 x0(10)    = 0;             % 10    % scale factor for the action space in neash
 
 xname{11} = 'rndSync';
-x0(11)    = 1;             % Syncronization of random variables for exploration and transfer learning
+x0(11)    = 0;             % Syncronization of random variables for exploration and transfer learning
+
+xname{12} = 'DRL';
+x0(12)    = 1;          % Decentralized RL(1) or Centralized RL(0)
 % -------------------------------------------------------------------------
 
 if opti

@@ -32,7 +32,7 @@ if ~conf.Test
     else
         RL.Q     = QTable( conf.nstates, conf.nactions, conf.Q_INIT );
         % -----------------------------------------------------------------
-        RL.Qy    = QTable( conf.nstates, conf.nactions, conf.Q_INIT );
+        RL.Qy    = 0;
         % -----------------------------------------------------------------
         RL.Q_rot = 0;
     end

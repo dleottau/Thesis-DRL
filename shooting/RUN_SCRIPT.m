@@ -20,8 +20,8 @@ conf.maxDistance   = 4000;   % Max ball distance permited before to end the epis
 conf.maxDistance_x = 9000;   % Max ball distance permited before to end the episode X FIELD DIMENSION
 conf.maxDistance_y = 6000;   % Max ball distance permited before to end the episode Y FIELD DIMENSION
 conf.Runs          = RUNS;   % # of runs
-conf.NOISE         = 0.01;   % Noise 0-1
-conf.DRL           = 1;      % Decentralized RL(1) or Centralized RL(0)
+conf.NOISE         = 0.00;   % Noise 01  (0.01 for DRL experiments)
+conf.DRL           = x(12);      % Decentralized RL(1) or Centralized RL(0)
 conf.DRAWS1        = 0;      % Enable disable graphics
 conf.fuzzQ         = 0;      % Enables fuzzy Q learning algorithm
 conf.MAapproach    = x(6);   % 0 no cordination, 1 frequency adjusted, 2 leninet
@@ -41,7 +41,8 @@ conf.Fr         = 150*5;    % Friction coefficient
 conf.Controller = x(9);         % % HiQ=0 or lowQ=1 Controlller
 % -------------------------------------------------------------------------
 conf.maxDeltaV  = conf.Vr_max .* [1/3 1/3 1/3];    % mm/s/Ts
-conf.Nactios    = [16,15,17];
+if conf.DRL 
+    conf.Nactios    = [16,15,17];
 % -------------------------------------------------------------------------
 if conf.sync.expl
     conf.sync.nash = 1;
