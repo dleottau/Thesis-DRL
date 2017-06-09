@@ -1,0 +1,162 @@
+
+-
+Opti/DRL_4Runs_Noise0.01_MA4_alpha0.3_lambda0.9_softmax1_decay15
+-
+Exp3
+
+if all(TD>=0), RL.param.ca=RL.param.ca;
+    elseif all(TD<0), RL.param.ca = 1-RL.param.ca; 
+    else
+        RL.param.ca = 1-RL.param.ca; 
+    end
+%Failed Goals: 84.204; ScaleNeash0; Controller0; Transfer0; k-lenient5; MAapproach4; beta0.99; lambda0.9; decay15; softmax1; alpha0.3; 4RUNS
+%Failed Goals: 57.0896; ScaleNeash0; Controller0; Transfer0; k-lenient5; MAapproach4; beta0.99; lambda0.9; decay10; softmax1; alpha0.3; 4RUNS
+%Failed Goals: 70.8955; ScaleNeash0; Controller0; Transfer0; k-lenient5; MAapproach4; beta0.99; lambda0.9; decay5; softmax1; alpha0.3; 4RUNS
+%Failed Goals: 72.7612; ScaleNeash0; Controller0; Transfer0; k-lenient5; MAapproach4; beta0.99; lambda0.9; decay20; softmax1; alpha0.3; 4RUNS
+%Failed Goals: 75.6219; ScaleNeash0; Controller0; Transfer0; k-lenient5; MAapproach4; beta0.99; lambda0.9; decay25; softmax1; alpha0.3; 4RUNS
+%Failed Goals: 72.5124; ScaleNeash0; Controller0; Transfer0; k-lenient5; MAapproach4; beta0.99; lambda0.9; decay30; softmax1; alpha0.3; 4RUNS
+%Failed Goals: 84.3284; ScaleNeash0; Controller0; Transfer0; k-lenient5; MAapproach4; beta0.99; lambda0.9; decay35; softmax1; alpha0.3; 4RUNS
+%Failed Goals: 52.1144; ScaleNeash0; Controller0; Transfer0; k-lenient5; MAapproach4; beta0.99; lambda0.9; decay10; softmax1; alpha0.2; 4RUNS
+%Failed Goals: 80.4726; ScaleNeash0; Controller0; Transfer0; k-lenient5; MAapproach4; beta0.99; lambda0.9; decay10; softmax1; alpha0.1; 4RUNS
+%Failed Goals: 64.1791; ScaleNeash0; Controller0; Transfer0; k-lenient5; MAapproach4; beta0.99; lambda0.9; decay10; softmax1; alpha0.4; 4RUNS
+%Failed Goals: 91.1692; ScaleNeash0; Controller0; Transfer0; k-lenient5; MAapproach4; beta0.99; lambda0.9; decay10; softmax1; alpha0.5; 4RUNS
+%Failed Goals: 51.4925; ScaleNeash0; Controller0; Transfer0; k-lenient5; MAapproach4; beta0.99; lambda0.9; decay10; softmax1; alpha0.6; 4RUNS
+%Failed Goals: 82.5871; ScaleNeash0; Controller0; Transfer0; k-lenient5; MAapproach4; beta0.99; lambda0.9; decay10; softmax1; alpha0.7; 4RUNS
+%Failed Goals: 71.8905; ScaleNeash0; Controller0; Transfer0; k-lenient5; MAapproach4; beta0.99; lambda0.9; decay10; softmax1; alpha0.8; 4RUNS
+%Failed Goals: 87.3134; ScaleNeash0; Controller0; Transfer0; k-lenient5; MAapproach4; beta0.99; lambda0.9; decay10; softmax1; alpha0.9; 4RUNS
+%Failed Goals: 80.2239; ScaleNeash0; Controller0; Transfer0; k-lenient5; MAapproach4; beta0.99; lambda0.9; decay10; softmax1; alpha1; 4RUNS
+%Failed Goals: 81.0945; ScaleNeash0; Controller0; Transfer0; k-lenient5; MAapproach4; beta0.99; lambda0.9; decay5; softmax1; alpha0.6; 4RUNS
+%Failed Goals: 79.4776; ScaleNeash0; Controller0; Transfer0; k-lenient5; MAapproach4; beta0.99; lambda0.9; decay15; softmax1; alpha0.6; 4RUNS
+%Failed Goals: 70.0249; ScaleNeash0; Controller0; Transfer0; k-lenient5; MAapproach4; beta0.99; lambda0.9; decay20; softmax1; alpha0.6; 4RUNS
+%Failed Goals: 75.995; ScaleNeash0; Controller0; Transfer0; k-lenient5; MAapproach4; beta0.99; lambda0.9; decay25; softmax1; alpha0.6; 4RUNS
+%Failed Goals: 62.3134; ScaleNeash0; Controller0; Transfer0; k-lenient5; MAapproach4; beta0.99; lambda0.9; decay30; softmax1; alpha0.6; 4RUNS
+
+x =
+
+   10.0000
+    0.6000
+
+
+fval =
+
+   51.4925
+
+Elapsed time is 79127.414569 seconds.
+Parallel pool using the 'local' profile is shutting down.
+
+
+
+-
+Opti/DRL_2Runs_Noise0.01_MA4_alpha0.5_lambda0.9_softmax15_decay15
+-
+Exp1
+if all(TD>=0), RL.param.ca=RL.param.ca;
+    elseif all(TD<0), RL.param.ca = 1-RL.param.ca; 
+    else
+        RL.param.ca = RL.param.ca; 
+    end
+
+%Failed Goals: 93.2836; ScaleNeash0; Controller0; Transfer0; k-lenient5; MAapproach4; beta0.99; lambda0.9; decay15; softmax15; alpha0.5; 2RUNS
+%Failed Goals: 74.1294; ScaleNeash0; Controller0; Transfer0; k-lenient5; MAapproach4; beta0.99; lambda0.9; decay15; softmax11; alpha0.5; 2RUNS
+%Failed Goals: 53.2338; ScaleNeash0; Controller0; Transfer0; k-lenient5; MAapproach4; beta0.99; lambda0.9; decay15; softmax6; alpha0.5; 2RUNS
+%Failed Goals: 71.8905; ScaleNeash0; Controller0; Transfer0; k-lenient5; MAapproach4; beta0.99; lambda0.9; decay15; softmax1; alpha0.5; 2RUNS
+%Failed Goals: 47.5124; ScaleNeash0; Controller0; Transfer0; k-lenient5; MAapproach4; beta0.99; lambda0.9; decay15; softmax21; alpha0.5; 2RUNS
+%Failed Goals: 58.4577; ScaleNeash0; Controller0; Transfer0; k-lenient5; MAapproach4; beta0.99; lambda0.9; decay15; softmax26; alpha0.5; 2RUNS
+%Failed Goals: 47.7612; ScaleNeash0; Controller0; Transfer0; k-lenient5; MAapproach4; beta0.99; lambda0.9; decay15; softmax31; alpha0.5; 2RUNS
+
+ans =
+
+   NaN
+   NaN
+   NaN
+   NaN
+   NaN
+   NaN
+   NaN
+   NaN
+   NaN
+   NaN
+   NaN
+   NaN
+   NaN
+   NaN
+   NaN
+   NaN
+
+-
+Opti/DRL_2Runs_Noise0.01_MA4_alpha0.5_lambda0.9_softmax15_decay15
+-
+Exp2
+if all(TD>=0), RL.param.ca=RL.param.ca;
+    elseif all(TD<0), RL.param.ca = 1-RL.param.ca; 
+    else
+        RL.param.ca = 1-RL.param.ca; 
+    end
+
+Starting parallel pool (parpool) using the 'local' profile ... connected to 2 workers.
+%Failed Goals: 53.7313; ScaleNeash0; Controller0; Transfer0; k-lenient5; MAapproach4; beta0.99; lambda0.9; decay15; softmax15; alpha0.5; 2RUNS
+%Failed Goals: 85.0746; ScaleNeash0; Controller0; Transfer0; k-lenient5; MAapproach4; beta0.99; lambda0.9; decay15; softmax10; alpha0.5; 2RUNS
+%Failed Goals: 87.8109; ScaleNeash0; Controller0; Transfer0; k-lenient5; MAapproach4; beta0.99; lambda0.9; decay15; softmax5; alpha0.5; 2RUNS
+%Failed Goals: 100; ScaleNeash0; Controller0; Transfer0; k-lenient5; MAapproach4; beta0.99; lambda0.9; decay15; softmax20; alpha0.5; 2RUNS
+%Failed Goals: 58.7065; ScaleNeash0; Controller0; Transfer0; k-lenient5; MAapproach4; beta0.99; lambda0.9; decay15; softmax25; alpha0.5; 2RUNS
+%Failed Goals: 63.6816; ScaleNeash0; Controller0; Transfer0; k-lenient5; MAapproach4; beta0.99; lambda0.9; decay15; softmax30; alpha0.5; 2RUNS
+%Failed Goals: 85.0746; ScaleNeash0; Controller0; Transfer0; k-lenient5; MAapproach4; beta0.99; lambda0.9; decay15; softmax35; alpha0.5; 2RUNS
+%Failed Goals: 53.9801; ScaleNeash0; Controller0; Transfer0; k-lenient5; MAapproach4; beta0.99; lambda0.9; decay10; softmax15; alpha0.5; 2RUNS
+%Failed Goals: 67.9104; ScaleNeash0; Controller0; Transfer0; k-lenient5; MAapproach4; beta0.99; lambda0.9; decay5; softmax15; alpha0.5; 2RUNS
+%Failed Goals: 45.2736; ScaleNeash0; Controller0; Transfer0; k-lenient5; MAapproach4; beta0.99; lambda0.9; decay20; softmax15; alpha0.5; 2RUNS
+%Failed Goals: 79.3532; ScaleNeash0; Controller0; Transfer0; k-lenient5; MAapproach4; beta0.99; lambda0.9; decay25; softmax15; alpha0.5; 2RUNS
+%Failed Goals: 77.3632; ScaleNeash0; Controller0; Transfer0; k-lenient5; MAapproach4; beta0.99; lambda0.9; decay30; softmax15; alpha0.5; 2RUNS
+
+ans =
+
+   NaN
+   NaN
+   NaN
+   NaN
+   NaN
+   NaN
+   NaN
+   NaN
+   NaN
+   NaN
+   NaN
+   NaN
+   NaN
+   NaN
+   NaN
+
+-
+Opti/DRL_2Runs_Noise0.01_MA4_alpha0.5_lambda0.9_softmax20_decay15
+-
+
+if all(TD>=0), RL.param.ca = 0*RL.param.ca+min(RL.param.ca);
+    elseif all(TD<0), RL.param.ca = 0*RL.param.ca+(1-max(RL.param.ca)); 
+    else
+        %RL.param.ca = (TD>=0)*(max(RL.param.ca)) + (TD<0)*(1-max(RL.param.ca));
+        RL.param.ca = 0*RL.param.ca+max(RL.param.ca); 
+    end
+
+Starting parallel pool (parpool) using the 'local' profile ... connected to 2 workers.
+%Failed Goals: 75.6219; ScaleNeash0; Controller0; Transfer0; k-lenient5; MAapproach4; beta0.99; lambda0.9; decay15; softmax20; alpha0.5; 2RUNS
+%Failed Goals: 49.005; ScaleNeash0; Controller0; Transfer0; k-lenient5; MAapproach4; beta0.99; lambda0.9; decay15; softmax16; alpha0.5; 2RUNS
+%Failed Goals: 76.6169; ScaleNeash0; Controller0; Transfer0; k-lenient5; MAapproach4; beta0.99; lambda0.9; decay15; softmax11; alpha0.5; 2RUNS
+%Failed Goals: 51.2438; ScaleNeash0; Controller0; Transfer0; k-lenient5; MAapproach4; beta0.99; lambda0.9; decay15; softmax6; alpha0.5; 2RUNS
+
+ans =
+
+   NaN
+   NaN
+   NaN
+   NaN
+   NaN
+   NaN
+   NaN
+   NaN
+   NaN
+   NaN
+   NaN
+   NaN
+   NaN
+   NaN
+   NaN
+   NaN

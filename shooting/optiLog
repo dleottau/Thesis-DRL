@@ -1,0 +1,172 @@
+-
+ScaleNeash31; Controller0; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay12; 28RUNS
+-
+RUN: 5; FailedGoals: 53.7313
+RUN: 19; FailedGoals: 59.204
+RUN: 10; FailedGoals: 51.7413
+RUN: 15; FailedGoals: 48.7562
+RUN: 14; FailedGoals: 69.1542
+RUN: 18; FailedGoals: 60.199
+RUN: 4; FailedGoals: 46.7662
+RUN: 9; FailedGoals: 70.1493
+RUN: 13; FailedGoals: 67.1642
+RUN: 3; FailedGoals: 41.791
+RUN: 17; FailedGoals: 57.2139
+RUN: 8; FailedGoals: 66.1692
+RUN: 2; FailedGoals: 51.2438
+RUN: 12; FailedGoals: 56.2189
+RUN: 7; FailedGoals: 54.2289
+RUN: 16; FailedGoals: 62.1891
+RUN: 11; FailedGoals: 53.7313
+RUN: 1; FailedGoals: 57.7114
+RUN: 22; FailedGoals: 61.6915
+RUN: 6; FailedGoals: 55.2239
+RUN: 24; FailedGoals: 45.2736
+RUN: 25; FailedGoals: 56.2189
+RUN: 21; FailedGoals: 57.2139
+RUN: 26; FailedGoals: 61.6915
+RUN: 27; FailedGoals: 51.7413
+RUN: 23; FailedGoals: 55.7214
+RUN: 20; FailedGoals: 51.2438
+RUN: 28; FailedGoals: 47.2637
+-
+%Failed Goals: 56.0945
+-
+
+-
+ScaleNeash28; Controller0; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay14; 28RUNS
+-
+RUN: 19; FailedGoals: 50.7463
+RUN: 15; FailedGoals: 63.6816
+RUN: 5; FailedGoals: 57.2139
+RUN: 10; FailedGoals: 53.7313
+RUN: 14; FailedGoals: 49.2537
+RUN: 18; FailedGoals: 53.2338
+RUN: 4; FailedGoals: 41.791
+RUN: 9; FailedGoals: 48.7562
+RUN: 17; FailedGoals: 59.204
+RUN: 13; FailedGoals: 42.7861
+RUN: 3; FailedGoals: 51.7413
+RUN: 8; FailedGoals: 55.2239
+RUN: 12; FailedGoals: 57.7114
+RUN: 16; FailedGoals: 61.194
+RUN: 2; FailedGoals: 64.6766
+RUN: 7; FailedGoals: 52.7363
+RUN: 22; FailedGoals: 71.1443
+RUN: 11; FailedGoals: 60.199
+RUN: 1; FailedGoals: 55.7214
+RUN: 6; FailedGoals: 41.791
+RUN: 21; FailedGoals: 55.7214
+RUN: 25; FailedGoals: 57.7114
+RUN: 24; FailedGoals: 52.2388
+RUN: 26; FailedGoals: 56.7164
+RUN: 23; FailedGoals: 55.2239
+RUN: 27; FailedGoals: 57.7114
+RUN: 20; FailedGoals: 61.194
+RUN: 28; FailedGoals: 56.7164
+-
+%Failed Goals: 55.2061
+-
+Elapsed time is 22673.502003 seconds.
+
+-
+ScaleNeash28; Controller0; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay14; 25RUNS
+-
+Starting parallel pool (parpool) using the 'local' profile ... connected to 4 workers.
+-
+%Failed Goals: 48.1592
+-
+Elapsed time is 12148.175528 seconds.
+
+
+
+-
+Opti/DRL_4Runs_Noise0.01_MA0_alpha0.2_lambda0.9_epsilon1_decay10_NeASh16
+-
+%Failed Goals: 56.2189; ScaleNeash16; Controller0; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay10; 4RUNS
+%Failed Goals: 44.403; ScaleNeash16; Controller0; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay9; 4RUNS
+%Failed Goals: 49.2537; ScaleNeash16; Controller0; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay8; 4RUNS
+%Failed Goals: 53.3582; ScaleNeash16; Controller0; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay7; 4RUNS
+%Failed Goals: 64.0547; ScaleNeash16; Controller0; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay6; 4RUNS
+%Failed Goals: 43.6567; ScaleNeash16; Controller0; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay11; 4RUNS
+%Failed Goals: 49.8756; ScaleNeash16; Controller0; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay12; 4RUNS
+%Failed Goals: 52.7363; ScaleNeash16; Controller0; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay13; 4RUNS
+%Failed Goals: 47.6368; ScaleNeash16; Controller0; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay14; 4RUNS
+%Failed Goals: 44.5274; ScaleNeash16; Controller0; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay15; 4RUNS
+%Failed Goals: 43.0348; ScaleNeash13; Controller0; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay11; 4RUNS
+%Failed Goals: 60.4478; ScaleNeash10; Controller0; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay11; 4RUNS
+%Failed Goals: 50.8706; ScaleNeash7; Controller0; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay11; 4RUNS
+%Failed Goals: 44.1542; ScaleNeash4; Controller0; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay11; 4RUNS
+%Failed Goals: 63.5572; ScaleNeash19; Controller0; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay11; 4RUNS
+%Failed Goals: 52.2388; ScaleNeash22; Controller0; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay11; 4RUNS
+%Failed Goals: 58.4577; ScaleNeash25; Controller0; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay11; 4RUNS
+%Failed Goals: 42.6617; ScaleNeash28; Controller0; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay11; 4RUNS
+%Failed Goals: 54.602; ScaleNeash31; Controller0; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay11; 4RUNS
+%Failed Goals: 48.7562; ScaleNeash28; Controller0; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay10; 4RUNS
+%Failed Goals: 59.0796; ScaleNeash28; Controller0; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay9; 4RUNS
+%Failed Goals: 54.602; ScaleNeash28; Controller0; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay8; 4RUNS
+%Failed Goals: 63.5572; ScaleNeash28; Controller0; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay7; 4RUNS
+%Failed Goals: 39.6766; ScaleNeash28; Controller0; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay12; 4RUNS
+%Failed Goals: 47.8856; ScaleNeash28; Controller0; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay13; 4RUNS
+%Failed Goals: 47.3881; ScaleNeash28; Controller0; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay14; 4RUNS
+%Failed Goals: 45.398; ScaleNeash28; Controller0; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay15; 4RUNS
+%Failed Goals: 44.1542; ScaleNeash25; Controller0; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay12; 4RUNS
+%Failed Goals: 46.0199; ScaleNeash22; Controller0; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay12; 4RUNS
+%Failed Goals: 53.7313; ScaleNeash19; Controller0; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay12; 4RUNS
+%Failed Goals: 38.0597; ScaleNeash31; Controller0; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay12; 4RUNS
+%Failed Goals: 57.9602; ScaleNeash31; Controller0; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay10; 4RUNS
+%Failed Goals: 61.6915; ScaleNeash31; Controller0; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay9; 4RUNS
+%Failed Goals: 57.2139; ScaleNeash31; Controller0; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay8; 4RUNS
+%Failed Goals: 48.8806; ScaleNeash31; Controller0; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay13; 4RUNS
+%Failed Goals: 46.6418; ScaleNeash31; Controller0; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay14; 4RUNS
+%Failed Goals: 41.2935; ScaleNeash31; Controller0; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay15; 4RUNS
+
+x =
+
+    12
+    31
+
+
+fval =
+
+   38.0597
+
+Elapsed time is 66159.210367 seconds.
+Parallel pool using the 'local' profile is shutting down.
+
+
+
+-
+Opti/DRL_4Runs_Noise0.01_MA0_alpha0.2_lambda0.9_epsilon1_decay3_NeASh16
+-
+%Failed Goals: 73.6318; ScaleNeash16; Controller1; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay3; 4RUNS
+%Failed Goals: 70.8955; ScaleNeash16; Controller1; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay4; 4RUNS
+%Failed Goals: 75.4975; ScaleNeash16; Controller1; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay5; 4RUNS
+%Failed Goals: 73.7562; ScaleNeash16; Controller1; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay6; 4RUNS
+%Failed Goals: 64.9254; ScaleNeash16; Controller1; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay7; 4RUNS
+%Failed Goals: 63.9303; ScaleNeash16; Controller1; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay8; 4RUNS
+%Failed Goals: 63.5572; ScaleNeash16; Controller1; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay9; 4RUNS
+%Failed Goals: 60.0746; ScaleNeash16; Controller1; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay10; 4RUNS
+%Failed Goals: 58.9552; ScaleNeash16; Controller1; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay11; 4RUNS
+%Failed Goals: 41.6667; ScaleNeash16; Controller1; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay12; 4RUNS
+%Failed Goals: 47.8856; ScaleNeash16; Controller1; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay13; 4RUNS
+%Failed Goals: 71.5174; ScaleNeash16; Controller1; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay14; 4RUNS
+%Failed Goals: 59.204; ScaleNeash16; Controller1; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay15; 4RUNS
+%Failed Goals: 57.7114; ScaleNeash13; Controller1; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay12; 4RUNS
+%Failed Goals: 61.8159; ScaleNeash10; Controller1; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay12; 4RUNS
+%Failed Goals: 88.4328; ScaleNeash7; Controller1; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay12; 4RUNS
+%Failed Goals: 78.3582; ScaleNeash4; Controller1; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay12; 4RUNS
+%Failed Goals: 64.6766; ScaleNeash19; Controller1; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay12; 4RUNS
+%Failed Goals: 50.995; ScaleNeash22; Controller1; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay12; 4RUNS
+%Failed Goals: 73.8806; ScaleNeash25; Controller1; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay12; 4RUNS
+%Failed Goals: 79.1045; ScaleNeash28; Controller1; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay12; 4RUNS
+
+x =
+
+    12
+    16
+
+
+fval =
+
+   41.6667

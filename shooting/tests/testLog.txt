@@ -1,0 +1,528 @@
+-
+ScaleNeash16; Controller1; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay12; softmax-1; alpha0.2; 28RUNS
+-
+Starting parallel pool (parpool) using the 'local' profile ... connected to 4 workers.
+RUN: 19; FailedGoals: 70.6468
+RUN: 5; FailedGoals: 44.2786
+RUN: 10; FailedGoals: 84.5771
+RUN: 15; FailedGoals: 36.3184
+RUN: 4; FailedGoals: 52.2388
+RUN: 14; FailedGoals: 70.6468
+RUN: 18; FailedGoals: 100
+RUN: 9; FailedGoals: 64.6766
+RUN: 3; FailedGoals: 86.0697
+RUN: 13; FailedGoals: 56.7164
+RUN: 17; FailedGoals: 55.7214
+RUN: 8; FailedGoals: 64.6766
+RUN: 12; FailedGoals: 57.7114
+RUN: 7; FailedGoals: 60.199
+RUN: 2; FailedGoals: 73.1343
+RUN: 16; FailedGoals: 54.2289
+RUN: 11; FailedGoals: 85.0746
+RUN: 6; FailedGoals: 49.7512
+RUN: 1; FailedGoals: 32.8358
+RUN: 22; FailedGoals: 46.2687
+RUN: 25; FailedGoals: 48.2587
+RUN: 24; FailedGoals: 84.5771
+RUN: 26; FailedGoals: 96.0199
+RUN: 21; FailedGoals: 51.7413
+RUN: 27; FailedGoals: 71.1443
+RUN: 23; FailedGoals: 57.2139
+RUN: 28; FailedGoals: 100
+RUN: 20; FailedGoals: 94.5274
+-
+%Failed Goals: 66.0448
+-
+Elapsed time is 68816.042267 seconds.
+
+-
+ScaleNeash16; Controller1; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay12; softmax-1; alpha0.2; 28RUNS
+-
+Starting parallel pool (parpool) using the 'local' profile ... connected to 4 workers.
+RUN: 5; FailedGoals: 8.4577
+RUN: 10; FailedGoals: 77.1144
+RUN: 15; FailedGoals: 30.3483
+RUN: 19; FailedGoals: 67.6617
+RUN: 9; FailedGoals: 70.6468
+RUN: 18; FailedGoals: 33.3333
+RUN: 4; FailedGoals: 72.6368
+RUN: 14; FailedGoals: 28.3582
+RUN: 3; FailedGoals: 43.2836
+RUN: 17; FailedGoals: 97.0149
+RUN: 13; FailedGoals: 36.3184
+RUN: 8; FailedGoals: 70.6468
+RUN: 2; FailedGoals: 100
+RUN: 12; FailedGoals: 52.2388
+RUN: 7; FailedGoals: 42.2886
+RUN: 16; FailedGoals: 42.7861
+RUN: 11; FailedGoals: 24.8756
+RUN: 1; FailedGoals: 65.6716
+RUN: 6; FailedGoals: 39.801
+RUN: 22; FailedGoals: 47.7612
+RUN: 24; FailedGoals: 24.3781
+RUN: 25; FailedGoals: 50.2488
+RUN: 26; FailedGoals: 91.0448
+RUN: 21; FailedGoals: 25.3731
+RUN: 23; FailedGoals: 52.2388
+RUN: 20; FailedGoals: 19.403
+RUN: 28; FailedGoals: 17.9104
+RUN: 27; FailedGoals: 78.607
+-
+%Failed Goals: 50.3731
+-
+Elapsed time is 68541.947106 seconds.
+
+-
+ScaleNeash25; Controller0; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay29; softmax-1; alpha0.2; 28RUNS
+-
+Starting parallel pool (parpool) using the 'local' profile ... connected to 4 workers.
+RUN: 19; FailedGoals: 34.8259
+RUN: 5; FailedGoals: 33.3333
+RUN: 15; FailedGoals: 58.209
+RUN: 10; FailedGoals: 56.2189
+RUN: 4; FailedGoals: 71.6418
+RUN: 14; FailedGoals: 73.6318
+RUN: 18; FailedGoals: 83.0846
+RUN: 9; FailedGoals: 49.2537
+RUN: 13; FailedGoals: 36.3184
+RUN: 3; FailedGoals: 55.2239
+RUN: 17; FailedGoals: 20.398
+RUN: 8; FailedGoals: 52.7363
+RUN: 12; FailedGoals: 27.8607
+RUN: 2; FailedGoals: 63.6816
+RUN: 16; FailedGoals: 44.2786
+RUN: 7; FailedGoals: 38.806
+RUN: 11; FailedGoals: 59.7015
+RUN: 1; FailedGoals: 51.2438
+RUN: 22; FailedGoals: 72.6368
+RUN: 6; FailedGoals: 47.7612
+RUN: 24; FailedGoals: 45.2736
+RUN: 25; FailedGoals: 71.1443
+RUN: 26; FailedGoals: 39.3035
+RUN: 21; FailedGoals: 63.6816
+RUN: 23; FailedGoals: 33.8308
+RUN: 27; FailedGoals: 52.2388
+RUN: 28; FailedGoals: 39.3035
+RUN: 20; FailedGoals: 46.2687
+-
+%Failed Goals: 50.7818
+-
+Elapsed time is 65706.341199 seconds.
+
+-
+ScaleNeash29; Controller0; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay14; softmax-1; alpha0.2; 28RUNS
+-
+Starting parallel pool (parpool) using the 'local' profile ... connected to 4 workers.
+RUN: 10; FailedGoals: 45.7711
+RUN: 19; FailedGoals: 52.2388
+RUN: 15; FailedGoals: 58.7065
+RUN: 5; FailedGoals: 68.1592
+RUN: 18; FailedGoals: 55.7214
+RUN: 14; FailedGoals: 69.6517
+RUN: 9; FailedGoals: 40.796
+RUN: 4; FailedGoals: 51.2438
+RUN: 17; FailedGoals: 66.1692
+RUN: 13; FailedGoals: 51.2438
+RUN: 8; FailedGoals: 50.7463
+RUN: 3; FailedGoals: 47.7612
+RUN: 16; FailedGoals: 39.801
+RUN: 12; FailedGoals: 56.2189
+RUN: 2; FailedGoals: 57.2139
+RUN: 7; FailedGoals: 43.2836
+RUN: 22; FailedGoals: 54.7264
+RUN: 11; FailedGoals: 54.7264
+RUN: 1; FailedGoals: 75.6219
+RUN: 6; FailedGoals: 67.6617
+RUN: 21; FailedGoals: 49.7512
+RUN: 24; FailedGoals: 57.2139
+RUN: 25; FailedGoals: 40.796
+RUN: 26; FailedGoals: 40.796
+RUN: 20; FailedGoals: 36.3184
+RUN: 23; FailedGoals: 46.7662
+RUN: 27; FailedGoals: 57.2139
+RUN: 28; FailedGoals: 42.2886
+-
+%Failed Goals: 52.8074
+-
+Elapsed time is 62992.356863 seconds.
+
+-
+ScaleNeash17; Controller1; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay8; softmax-1; alpha0.2; 28RUNS
+-
+Starting parallel pool (parpool) using the 'local' profile ... connected to 4 workers.
+RUN: 5; FailedGoals: 17.4129
+RUN: 15; FailedGoals: 47.2637
+RUN: 10; FailedGoals: 68.6567
+RUN: 19; FailedGoals: 96.5174
+RUN: 4; FailedGoals: 28.3582
+RUN: 14; FailedGoals: 50.2488
+RUN: 9; FailedGoals: 67.1642
+RUN: 18; FailedGoals: 70.6468
+RUN: 3; FailedGoals: 25.3731
+RUN: 13; FailedGoals: 16.9154
+RUN: 17; FailedGoals: 16.4179
+RUN: 8; FailedGoals: 71.1443
+RUN: 2; FailedGoals: 79.602
+RUN: 12; FailedGoals: 8.4577
+RUN: 16; FailedGoals: 64.6766
+RUN: 7; FailedGoals: 71.1443
+RUN: 1; FailedGoals: 61.194
+RUN: 11; FailedGoals: 35.3234
+RUN: 22; FailedGoals: 50.2488
+RUN: 6; FailedGoals: 60.6965
+RUN: 24; FailedGoals: 54.2289
+RUN: 25; FailedGoals: 67.1642
+RUN: 21; FailedGoals: 54.2289
+RUN: 26; FailedGoals: 70.6468
+RUN: 23; FailedGoals: 19.403
+RUN: 27; FailedGoals: 8.4577
+RUN: 20; FailedGoals: 5.9701
+RUN: 28; FailedGoals: 30.3483
+-
+%Failed Goals: 47.0682
+-
+Elapsed time is 52901.846250 seconds.
+
+-
+ScaleNeash29; Controller1; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay14; softmax-1; alpha0.2; 28RUNS
+-
+Starting parallel pool (parpool) using the 'local' profile ... connected to 4 workers.
+RUN: 5; FailedGoals: 25.3731
+RUN: 10; FailedGoals: 48.2587
+RUN: 19; FailedGoals: 73.6318
+RUN: 15; FailedGoals: 76.6169
+RUN: 14; FailedGoals: 48.7562
+RUN: 18; FailedGoals: 58.7065
+RUN: 9; FailedGoals: 46.2687
+RUN: 4; FailedGoals: 48.2587
+RUN: 13; FailedGoals: 10.9453
+RUN: 8; FailedGoals: 59.204
+RUN: 17; FailedGoals: 43.7811
+RUN: 3; FailedGoals: 76.1194
+RUN: 12; FailedGoals: 56.7164
+RUN: 7; FailedGoals: 61.6915
+RUN: 16; FailedGoals: 42.2886
+RUN: 2; FailedGoals: 75.1244
+RUN: 6; FailedGoals: 22.3881
+RUN: 11; FailedGoals: 19.403
+RUN: 22; FailedGoals: 56.7164
+RUN: 1; FailedGoals: 79.1045
+RUN: 24; FailedGoals: 66.6667
+RUN: 25; FailedGoals: 42.7861
+RUN: 21; FailedGoals: 73.6318
+RUN: 26; FailedGoals: 46.2687
+RUN: 23; FailedGoals: 38.806
+RUN: 27; FailedGoals: 100
+RUN: 20; FailedGoals: 52.7363
+RUN: 28; FailedGoals: 14.4279
+-
+%Failed Goals: 52.3099
+-
+Elapsed time is 54066.603416 seconds.
+
+
+-
+ScaleNeash29; Controller1; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay14; softmax-1; alpha0.2; 28RUNS
+-
+Starting parallel pool (parpool) using the 'local' profile ... connected to 4 workers.
+RUN: 5; FailedGoals: 25.3731
+RUN: 10; FailedGoals: 48.2587
+RUN: 19; FailedGoals: 73.6318
+RUN: 15; FailedGoals: 76.6169
+RUN: 14; FailedGoals: 48.7562
+RUN: 18; FailedGoals: 58.7065
+RUN: 9; FailedGoals: 46.2687
+RUN: 4; FailedGoals: 48.2587
+RUN: 13; FailedGoals: 10.9453
+RUN: 8; FailedGoals: 59.204
+RUN: 17; FailedGoals: 43.7811
+RUN: 3; FailedGoals: 76.1194
+RUN: 12; FailedGoals: 56.7164
+RUN: 7; FailedGoals: 61.6915
+RUN: 16; FailedGoals: 42.2886
+RUN: 2; FailedGoals: 75.1244
+RUN: 6; FailedGoals: 22.3881
+RUN: 11; FailedGoals: 19.403
+RUN: 22; FailedGoals: 56.7164
+RUN: 1; FailedGoals: 79.1045
+RUN: 24; FailedGoals: 66.6667
+RUN: 25; FailedGoals: 42.7861
+RUN: 21; FailedGoals: 73.6318
+RUN: 26; FailedGoals: 46.2687
+RUN: 23; FailedGoals: 38.806
+RUN: 27; FailedGoals: 100
+RUN: 20; FailedGoals: 52.7363
+RUN: 28; FailedGoals: 14.4279
+-
+%Failed Goals: 52.3099
+-
+Elapsed time is 54066.603416 seconds.
+
+
+-
+ScaleNeash15; Controller1; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay14; softmax-1; alpha0.2; 28RUNS
+-
+Starting parallel pool (parpool) using the 'local' profile ... connected to 4 workers.
+RUN: 5; FailedGoals: 25.3731
+RUN: 19; FailedGoals: 41.791
+RUN: 10; FailedGoals: 100
+RUN: 15; FailedGoals: 47.2637
+RUN: 14; FailedGoals: 30.8458
+RUN: 4; FailedGoals: 65.1741
+RUN: 18; FailedGoals: 76.6169
+RUN: 9; FailedGoals: 38.3085
+RUN: 13; FailedGoals: 83.5821
+RUN: 8; FailedGoals: 75.1244
+RUN: 17; FailedGoals: 60.199
+RUN: 3; FailedGoals: 44.7761
+RUN: 2; FailedGoals: 26.8657
+RUN: 16; FailedGoals: 39.801
+RUN: 12; FailedGoals: 80.0995
+RUN: 7; FailedGoals: 89.5522
+RUN: 6; FailedGoals: 70.6468
+RUN: 1; FailedGoals: 34.8259
+RUN: 22; FailedGoals: 44.7761
+RUN: 11; FailedGoals: 54.2289
+RUN: 24; FailedGoals: 43.2836
+RUN: 25; FailedGoals: 61.194
+RUN: 21; FailedGoals: 31.8408
+RUN: 26; FailedGoals: 92.5373
+RUN: 23; FailedGoals: 71.6418
+RUN: 27; FailedGoals: 52.2388
+RUN: 20; FailedGoals: 64.1791
+RUN: 28; FailedGoals: 27.3632
+-
+%Failed Goals: 56.2189
+-
+Elapsed time is 36720.937127 seconds.
+
+
+-
+ScaleNeash17; Controller1; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay14; softmax-1; alpha0.2; 28RUNS
+-
+Starting parallel pool (parpool) using the 'local' profile ... connected to 4 workers.
+RUN: 5; FailedGoals: 64.6766
+RUN: 10; FailedGoals: 37.3134
+RUN: 15; FailedGoals: 24.3781
+RUN: 19; FailedGoals: 88.0597
+RUN: 14; FailedGoals: 46.7662
+RUN: 4; FailedGoals: 43.7811
+RUN: 9; FailedGoals: 85.5721
+RUN: 18; FailedGoals: 60.6965
+RUN: 3; FailedGoals: 21.8905
+RUN: 13; FailedGoals: 59.7015
+RUN: 8; FailedGoals: 58.209
+RUN: 17; FailedGoals: 75.6219
+RUN: 12; FailedGoals: 9.4527
+RUN: 2; FailedGoals: 32.8358
+RUN: 7; FailedGoals: 68.6567
+RUN: 16; FailedGoals: 8.4577
+RUN: 11; FailedGoals: 80.0995
+RUN: 1; FailedGoals: 44.2786
+RUN: 22; FailedGoals: 87.0647
+RUN: 6; FailedGoals: 100
+RUN: 24; FailedGoals: 52.2388
+RUN: 25; FailedGoals: 100
+RUN: 26; FailedGoals: 22.8856
+RUN: 21; FailedGoals: 85.0746
+RUN: 23; FailedGoals: 55.7214
+RUN: 27; FailedGoals: 60.199
+RUN: 28; FailedGoals: 34.8259
+RUN: 20; FailedGoals: 68.6567
+-
+%Failed Goals: 56.3255
+-
+Elapsed time is 54555.128646 seconds.
+
+
+
+IdleTimeout has been reached.
+Parallel pool using the 'local' profile is shutting down.
+
+-
+ScaleNeash15; Controller1; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay14; softmax-1; alpha0.2; 28RUNS
+-
+Starting parallel pool (parpool) using the 'local' profile ... connected to 4 workers.
+RUN: 5; FailedGoals: 25.3731
+RUN: 19; FailedGoals: 41.791
+RUN: 10; FailedGoals: 100
+RUN: 15; FailedGoals: 47.2637
+RUN: 14; FailedGoals: 30.8458
+RUN: 4; FailedGoals: 65.1741
+RUN: 18; FailedGoals: 76.6169
+RUN: 9; FailedGoals: 38.3085
+RUN: 13; FailedGoals: 83.5821
+RUN: 8; FailedGoals: 75.1244
+RUN: 17; FailedGoals: 60.199
+RUN: 3; FailedGoals: 44.7761
+RUN: 2; FailedGoals: 26.8657
+RUN: 16; FailedGoals: 39.801
+RUN: 12; FailedGoals: 80.0995
+RUN: 7; FailedGoals: 89.5522
+RUN: 6; FailedGoals: 70.6468
+RUN: 1; FailedGoals: 34.8259
+RUN: 22; FailedGoals: 44.7761
+RUN: 11; FailedGoals: 54.2289
+RUN: 24; FailedGoals: 43.2836
+RUN: 25; FailedGoals: 61.194
+RUN: 21; FailedGoals: 31.8408
+RUN: 26; FailedGoals: 92.5373
+RUN: 23; FailedGoals: 71.6418
+RUN: 27; FailedGoals: 52.2388
+RUN: 20; FailedGoals: 64.1791
+RUN: 28; FailedGoals: 27.3632
+-
+%Failed Goals: 56.2189
+-
+Elapsed time is 36720.937127 seconds.
+
+
+
+-
+ScaleNeash25; Controller0; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay29; softmax-1; alpha0.2; 28RUNS
+-
+RUN: 19; FailedGoals: 31.3433
+RUN: 15; FailedGoals: 54.2289
+RUN: 10; FailedGoals: 49.7512
+RUN: 5; FailedGoals: 23.8806
+RUN: 14; FailedGoals: 36.3184
+RUN: 9; FailedGoals: 61.6915
+RUN: 4; FailedGoals: 17.4129
+RUN: 18; FailedGoals: 83.5821
+RUN: 3; FailedGoals: 44.2786
+RUN: 13; FailedGoals: 37.8109
+RUN: 8; FailedGoals: 73.6318
+RUN: 17; FailedGoals: 37.3134
+RUN: 12; FailedGoals: 22.8856
+RUN: 7; FailedGoals: 27.3632
+RUN: 2; FailedGoals: 77.1144
+RUN: 16; FailedGoals: 25.3731
+RUN: 11; FailedGoals: 54.7264
+RUN: 1; FailedGoals: 40.796
+RUN: 6; FailedGoals: 36.8159
+RUN: 22; FailedGoals: 19.403
+RUN: 24; FailedGoals: 52.7363
+RUN: 26; FailedGoals: 39.801
+RUN: 25; FailedGoals: 57.2139
+RUN: 21; FailedGoals: 89.5522
+RUN: 23; FailedGoals: 28.8557
+RUN: 28; FailedGoals: 34.3284
+RUN: 27; FailedGoals: 56.7164
+RUN: 20; FailedGoals: 57.7114
+-
+%Failed Goals: 45.4513
+-
+Elapsed time is 42211.263123 seconds.
+
+
+-
+ScaleNeash0; Controller0; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay19; softmax-1; alpha0.2; 28RUNS
+-
+RUN: 15; FailedGoals: 58.209
+RUN: 5; FailedGoals: 37.8109
+RUN: 10; FailedGoals: 15.9204
+RUN: 19; FailedGoals: 27.8607
+RUN: 9; FailedGoals: 50.7463
+RUN: 14; FailedGoals: 28.8557
+RUN: 4; FailedGoals: 58.7065
+RUN: 18; FailedGoals: 78.607
+RUN: 8; FailedGoals: 47.2637
+RUN: 17; FailedGoals: 59.7015
+RUN: 3; FailedGoals: 39.801
+RUN: 13; FailedGoals: 64.6766
+RUN: 7; FailedGoals: 54.2289
+RUN: 2; FailedGoals: 46.7662
+RUN: 16; FailedGoals: 33.8308
+RUN: 12; FailedGoals: 36.8159
+RUN: 6; FailedGoals: 56.2189
+RUN: 1; FailedGoals: 37.3134
+RUN: 11; FailedGoals: 64.6766
+RUN: 22; FailedGoals: 71.1443
+RUN: 24; FailedGoals: 54.2289
+RUN: 25; FailedGoals: 44.7761
+RUN: 21; FailedGoals: 51.7413
+RUN: 26; FailedGoals: 35.8209
+RUN: 23; FailedGoals: 25.8706
+RUN: 27; FailedGoals: 49.2537
+RUN: 20; FailedGoals: 80.597
+RUN: 28; FailedGoals: 80.597
+-
+%Failed Goals: 49.7157
+-
+Elapsed time is 34042.280683 seconds.
+
+-
+ScaleNeash0; Controller1; Transfer1; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay14; softmax-1; alpha0.2; 28RUNS
+-
+Starting parallel pool (parpool) using the 'local' profile ... connected to 4 workers.
+RUN: 10; FailedGoals: 38.806
+RUN: 15; FailedGoals: 14.4279
+RUN: 5; FailedGoals: 30.8458
+RUN: 19; FailedGoals: 54.7264
+RUN: 9; FailedGoals: 42.2886
+RUN: 14; FailedGoals: 65.1741
+RUN: 18; FailedGoals: 82.5871
+RUN: 4; FailedGoals: 25.3731
+RUN: 8; FailedGoals: 4.9751
+RUN: 13; FailedGoals: 20.8955
+RUN: 3; FailedGoals: 62.1891
+RUN: 17; FailedGoals: 74.6269
+RUN: 7; FailedGoals: 48.2587
+RUN: 12; FailedGoals: 31.8408
+RUN: 16; FailedGoals: 21.8905
+RUN: 2; FailedGoals: 57.7114
+RUN: 6; FailedGoals: 41.2935
+RUN: 11; FailedGoals: 50.7463
+RUN: 22; FailedGoals: 33.3333
+RUN: 1; FailedGoals: 37.8109
+RUN: 24; FailedGoals: 62.1891
+RUN: 25; FailedGoals: 49.2537
+RUN: 21; FailedGoals: 67.1642
+RUN: 26; FailedGoals: 84.5771
+RUN: 23; FailedGoals: 51.7413
+RUN: 27; FailedGoals: 51.7413
+RUN: 20; FailedGoals: 40.796
+RUN: 28; FailedGoals: 22.3881
+-
+%Failed Goals: 45.3447
+-
+Elapsed time is 24142.178158 seconds.
+
+-
+ScaleNeash0; Controller0; Transfer0; k-lenient5; MAapproach0; beta0.99; lambda0.9; decay15; softmax-1; alpha0.2; 28RUNS
+-
+Starting parallel pool (parpool) using the 'local' profile ... connected to 4 workers.
+RUN: 10; FailedGoals: 67.6617
+RUN: 15; FailedGoals: 73.1343
+RUN: 19; FailedGoals: 66.1692
+RUN: 5; FailedGoals: 74.6269
+RUN: 9; FailedGoals: 70.1493
+RUN: 14; FailedGoals: 57.7114
+RUN: 18; FailedGoals: 8.9552
+RUN: 4; FailedGoals: 46.2687
+RUN: 8; FailedGoals: 31.3433
+RUN: 3; FailedGoals: 62.6866
+RUN: 13; FailedGoals: 30.8458
+RUN: 17; FailedGoals: 60.199
+RUN: 7; FailedGoals: 48.7562
+RUN: 2; FailedGoals: 64.6766
+RUN: 12; FailedGoals: 76.1194
+RUN: 16; FailedGoals: 64.6766
+RUN: 6; FailedGoals: 59.204
+RUN: 11; FailedGoals: 62.1891
+RUN: 1; FailedGoals: 62.6866
+RUN: 22; FailedGoals: 76.1194
+RUN: 24; FailedGoals: 78.607
+RUN: 25; FailedGoals: 52.7363
+RUN: 26; FailedGoals: 61.194
+RUN: 21; FailedGoals: 37.3134
+RUN: 23; FailedGoals: 61.6915
+RUN: 27; FailedGoals: 81.0945
+RUN: 28; FailedGoals: 62.6866
+RUN: 20; FailedGoals: 76.1194
+-
+%Failed Goals: 59.8436
+-
+Elapsed time is 34726.867092 seconds.
+IdleTimeout has been reached.
+Parallel pool using the 'local' profile is shutting down.
